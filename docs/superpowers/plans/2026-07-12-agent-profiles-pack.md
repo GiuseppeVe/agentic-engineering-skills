@@ -139,7 +139,7 @@ git commit -m "test: define agent profile contracts"
 Source directory:
 
 ```text
-/home/aledalin/alfe_App/agentic-harness-workflow-impl-agentic-harness-workflow/agent-profiles
+${AGENT_PROFILE_SOURCE_ROOT}
 ```
 
 Copy exactly the seven approved files into the shared plugin payload. Stop if candidate inventory differs from the authoritative list.
