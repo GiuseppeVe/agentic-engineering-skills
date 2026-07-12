@@ -1,0 +1,32 @@
+{
+  "name": "agentic-engineering-skills",
+  "version": "0.1.0",
+  "description": "A reproducible AI-engineering workflow skill pack.",
+  "author": {
+    "name": "GiuseppeVe",
+    "url": "https://github.com/GiuseppeVe"
+  },
+  "homepage": "https://github.com/GiuseppeVe/agentic-engineering-skills",
+  "repository": "https://github.com/GiuseppeVe/agentic-engineering-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "codex",
+    "claude-code",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agentic Engineering Skills",
+    "shortDescription": "A verified AI-engineering workflow",
+    "longDescription": "Install a reproducible discovery-to-cleanup workflow for Codex and Claude Code.",
+    "developerName": "GiuseppeVe",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/GiuseppeVe/agentic-engineering-skills"
+  }
+}

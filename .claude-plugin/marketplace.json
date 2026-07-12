@@ -1,0 +1,15 @@
+{
+  "name": "agentic-engineering-skills",
+  "owner": {
+    "name": "GiuseppeVe",
+    "url": "https://github.com/GiuseppeVe"
+  },
+  "plugins": [
+    {
+      "name": "agentic-engineering-skills",
+      "description": "A reproducible AI-engineering workflow skill pack.",
+      "version": "0.1.0",
+      "source": "./plugins/agentic-engineering-skills"
+    }
+  ]
+}
