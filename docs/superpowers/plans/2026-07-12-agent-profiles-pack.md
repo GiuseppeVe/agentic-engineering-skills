@@ -139,7 +139,7 @@ git commit -m "test: define agent profile contracts"
 Source directory:
 
 ```text
-${AGENT_PROFILE_SOURCE_ROOT}
+<quarantine-worktree>/agent-profiles
 ```
 
 Copy exactly the seven approved files into the shared plugin payload. Stop if candidate inventory differs from the authoritative list.

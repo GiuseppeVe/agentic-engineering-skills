@@ -14,7 +14,7 @@ Use the smallest skill set needed for current work. Skills guide judgment; they 
 
 ## Workflow
 
-Default lifecycle: **Understand -> Design -> Plan -> Implement -> Verify -> Review -> Clean**. See [workflow guide](docs/workflow.md) for phase-to-skill mapping.
+Default lifecycle: **Understand -> Design -> Plan -> Implement -> Verify -> Review -> Clean**. See [workflow guide](docs/workflow.md) for phase-to-skill mapping and [agent profile guide](docs/agent-profiles.md) for bounded delegation contracts.
 
 ## Install
 
