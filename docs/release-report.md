@@ -31,7 +31,7 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 ## Integrated finish gate
 
-Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate SHA `2d64f81f958f2e4619cd511074a8e3e09fa2bde0` before this report update. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. A separate Windows Node 24 mapped-drive probe enumerated all 67 tests but exposed the known platform-shape mismatch in the portable-root assertion (`Z:\\portable` versus `\\portable`); it was not treated as the release result.
+Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate SHA `2d64f81f958f2e4619cd511074a8e3e09fa2bde0` before this report update. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. Portable-root expectations now derive from platform-native `path.resolve` and `path.relative`; a Windows Node 24 mapped-drive probe passes the manifest and deterministic local provenance tests.
 
 | Command | Tool version | Exit code | Result |
 | --- | --- | --- | --- |
