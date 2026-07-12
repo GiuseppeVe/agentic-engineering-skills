@@ -14,7 +14,7 @@ Seven host-neutral role contracts give workflow skills a shared vocabulary for b
 | `reviewer` | Review through spec, quality, security, and fidelity lenses. | Independent judgment is needed before acceptance. | `lenses`, `verdict`, `findings` |
 | `test-runner` | Execute and interpret named verification commands without fixing failures. | Work needs reproducible verification evidence. | `commands`, `results`, `failedCommands` |
 
-Canonical payloads live under `plugins/agentic-engineering-skills/agent-profiles/`; `manifests/agent-profiles.json` is inventory and integrity source of truth.
+Canonical payloads live under `plugins/agentic-engineering-skills/agent-profiles/`. Repository manifest `manifests/agent-profiles.json` is canonical inventory and integrity source of truth. Installed plugin manifest `plugins/agentic-engineering-skills/manifests/agent-profiles.json` mirrors same seven profiles, provenance, and hashes while using paths relative to installed plugin root (`agent-profiles/<role>.md`).
 
 ## Common result envelope
 
