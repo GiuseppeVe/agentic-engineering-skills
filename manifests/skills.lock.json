@@ -38,7 +38,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
-      "releaseCommit": "",
+      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
       "license": "MIT",
       "dependencies": []
     },
@@ -86,7 +86,7 @@
       "name": "implementing-plans",
       "sourceType": "original",
       "localSha256": "ed8df9ba03e1f4789071f4d81eeea0918a8e99499ca12e0dd091a0c46551d0f7",
-      "releaseCommit": "",
+      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
       "license": "MIT",
       "dependencies": []
     },
