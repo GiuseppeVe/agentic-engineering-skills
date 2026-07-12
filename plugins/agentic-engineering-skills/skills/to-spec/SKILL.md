@@ -1,0 +1,160 @@
+---
+name: to-spec
+description: Turn the current conversation, wayfinder map, or planning context into a standalone user-readable MDX spec and publish/link it through the project issue tracker — no interview, just synthesis of what you've already discussed.
+disable-model-invocation: true
+---
+
+> **Adaptation:** Based on `mattpocock/skills`; adjusted for portable Codex and Claude Code skill-pack use.
+
+This skill takes the current conversation context, wayfinder map, or codebase understanding and produces a spec (you may know this document as a PRD). Do NOT interview the user — just synthesize what you already know.
+
+The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+
+## Output
+
+Write the spec as a standalone `.mdx` artifact, not a `.md` file.
+
+**Save specs to:** `docs/superpowers/specs/YYYY-MM-DD-<feature-name>.mdx`
+- User preferences for spec location override this default, but the file extension stays `.mdx`.
+
+Use the issue tracker as the publication and coordination surface: create or update the relevant spec issue, link the `.mdx` file from it, and apply the `ready-for-agent` triage label. The `.mdx` file is the durable source of truth; the tracker issue points readers and agents to it.
+
+## Agent-Native MDX Discipline
+
+Treat the spec as a reviewable artifact, not chat-only prose. The `.mdx` file must stand alone for a reader who never saw the chat, source discussion, wayfinder map, or prior drafts.
+
+- **Lead with context.** Explain the problem, destination, scope, and user impact before implementation detail.
+- **Link the map.** If this spec follows wayfinder, link the map and material decision tickets in `## Related Work`.
+- **Use MDX blocks only when useful.** Plain Markdown is valid MDX. Add diagrams, file maps, decision tables, callouts, or review surfaces when they make the spec easier to read.
+- **Keep it user-readable.** Prefer short sections, tables for comparisons, and Mermaid diagrams for relationships. Avoid dumping implementation minutiae into prose.
+- **No revision memos.** If adapting an existing `.md`, issue body, or pasted draft, publish a clean standalone `.mdx` proposal. Do not write "unlike the previous version" or "preserve prior spec".
+- **Open questions live at the bottom.** If a decision would affect architecture, UX, data shape, rollout, or scope and cannot be resolved from existing context, either choose a recommended default with rationale or add it to `## Open Questions`.
+
+### Useful MDX Sections
+
+Use these sections when they improve review. Skip empty sections.
+
+````mdx
+## System Context
+
+```mermaid
+flowchart TD
+  A["User need"] --> B["Proposed capability"]
+  B --> C["Existing system"]
+```
+
+## Decision Log
+
+| Decision | Choice | Why | Source |
+| --- | --- | --- | --- |
+| Storage boundary | Existing domain store | Reuses current ownership model | [Decision ticket](...) |
+
+## File Map
+
+| Area | Existing surface | Expected change |
+| --- | --- | --- |
+| Backend API | `backend/...` | Add endpoint contract |
+````
+
+## Process
+
+1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
+
+2. Identify the spec's relationship to surrounding planning artifacts before writing:
+
+- If this spec follows a wayfinder map, link the map and every closed decision ticket that materially shaped the spec. Do not restate ticket bodies; link them and summarize only the decision gist.
+- If this spec splits, supersedes, depends on, or continues another spec, link that spec and state the relationship.
+- If this spec is expected to feed a later implementation plan or ticket split, note that downstream artifact even if it does not exist yet.
+- If no related artifact exists, say so explicitly in the spec.
+
+3. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
+
+Check with the user that these seams match their expectations.
+
+4. Write the spec using the template below as `.mdx`, then publish/link it through the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+
+5. Self-review the `.mdx` before publishing:
+
+- The file extension is `.mdx`, not `.md`.
+- It stands alone without chat context.
+- `## Related Work` links all relevant wayfinder/spec/ticket/plan artifacts.
+- No placeholder text remains.
+- Any Mermaid/table/MDX block renders as valid Markdown-compatible MDX.
+
+<spec-template>
+
+# <Feature Name> Spec
+
+> **For agentic workers:** This `.mdx` spec is the source of truth. Preserve the `## Related Work` links when creating plans or tickets from it.
+
+**Goal:** <one sentence describing what this spec enables>
+
+**Status:** Ready for planning
+
+---
+
+## Problem Statement
+
+The problem that the user is facing, from the user's perspective.
+
+## Related Work
+
+Links to the wayfinder map, decision tickets, predecessor specs, sibling specs, downstream plans, or downstream ticket sets that frame this spec.
+
+For a wayfinder-derived spec, include:
+
+- The wayfinder map.
+- Every closed decision ticket that materially shaped the spec, each with a one-line decision gist.
+- Any open or out-of-scope ticket that explains a boundary of this spec.
+
+For a non-wayfinder spec, include related specs/plans/tickets if they exist. If none exist, write "None."
+
+## Solution
+
+The solution to the problem, from the user's perspective.
+
+## User Stories
+
+A LONG, numbered list of user stories. Each user story should be in the format of:
+
+1. As an <actor>, I want a <feature>, so that <benefit>
+
+<user-story-example>
+1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
+</user-story-example>
+
+This list of user stories should be extremely extensive and cover all aspects of the feature.
+
+## Implementation Decisions
+
+A list of implementation decisions that were made. This can include:
+
+- The modules that will be built/modified
+- The interfaces of those modules that will be modified
+- Technical clarifications from the developer
+- Architectural decisions
+- Schema changes
+- API contracts
+- Specific interactions
+
+Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
+
+Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+
+## Testing Decisions
+
+A list of testing decisions that were made. Include:
+
+- A description of what makes a good test (only test external behavior, not implementation details)
+- Which modules will be tested
+- Prior art for the tests (i.e. similar types of tests in the codebase)
+
+## Out of Scope
+
+A description of the things that are out of scope for this spec.
+
+## Further Notes
+
+Any further notes about the feature.
+
+</spec-template>

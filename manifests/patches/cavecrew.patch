@@ -1,0 +1,12 @@
+diff --git a/cavecrew/SKILL.md b/cavecrew/SKILL.md
+index efa413f..d815625 100644
+--- a/cavecrew/SKILL.md
++++ b/cavecrew/SKILL.md
+@@ -1,4 +1,7 @@
+ ---
++
++> **Adaptation:** Based on `JuliusBrussee/caveman`; adjusted for portable Codex and Claude Code subagent delegation.
++
+ name: cavecrew
+ description: >
+   Decision guide for delegating to caveman-style subagents. Tells the main
