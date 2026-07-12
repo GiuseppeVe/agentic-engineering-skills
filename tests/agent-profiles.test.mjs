@@ -41,6 +41,15 @@ const roleLineMarkers = {
   reviewer: "findings",
   "test-runner": "failedCommands",
 };
+const guideRoleFields = {
+  cleanup: ["resolvedScope", "deletedPaths", "retainedPaths"],
+  controller: ["route", "budget", "attempt", "trace"],
+  implementer: ["taskId", "changedFiles", "redEvidence", "greenEvidence"],
+  planner: ["tasks", "dependencies", "acceptanceCriteria", "unresolvedDecisions"],
+  researcher: ["observations", "inferences", "verifiedFindings"],
+  reviewer: ["lenses", "verdict", "findings"],
+  "test-runner": ["commands", "results", "failedCommands"],
+};
 
 async function loadManifest() {
   const source = await readFile(manifestPath, "utf8").catch((error) => {
@@ -131,8 +140,49 @@ test("profile provenance joins existing cavecrew third-party notice", async () =
   }
 });
 
-test.skip("documentation guide maps every agent profile to role and use case until Task 3", () => {});
-test.skip("workflow documentation maps every agent profile into orchestration until Task 3", () => {});
+function tableProfileNames(markdown, marker) {
+  const table = markdown.split(marker)[1]?.split(/^## /m)[0] ?? "";
+  return [...table.matchAll(/^\| `([^`]+)` \|/gm)].map((match) => match[1]).sort();
+}
+
+test("documentation guide maps exact profile inventory and host boundaries", async () => {
+  const [profiles, guide, readme] = await Promise.all([
+    loadProfiles(),
+    readFile(path.resolve(root, "docs/agent-profiles.md"), "utf8"),
+    readFile(path.resolve(root, "README.md"), "utf8"),
+  ]);
+  assert.deepEqual(profiles.map(({ name }) => name).sort(), expectedProfiles);
+  assert.deepEqual(tableProfileNames(guide, "## Role contracts"), expectedProfiles);
+  const roleTable = guide.split("## Role contracts")[1]?.split(/^## /m)[0] ?? "";
+  for (const [role, fields] of Object.entries(guideRoleFields)) {
+    const row = roleTable.split("\n").find((line) => line.startsWith(`| \`${role}\` |`));
+    assert.ok(row, `${role}: missing authoritative guide row`);
+    for (const field of fields) {
+      assert.ok(row.includes(`\`${field}\``), `${role}: guide row missing exact field ${field}`);
+    }
+  }
+  assert.doesNotMatch(guide, /^\| `(?:builder|tester|orchestrator)` \|/gm,
+    "undeclared aliases must not appear as profile identifiers");
+  assert.match(readme, /\[agent profile guide\]\(docs\/agent-profiles\.md\)/i);
+  await readFile(path.resolve(root, "docs/agent-profiles.md"), "utf8");
+  assert.match(guide, /role contracts are consumed by workflow skills/i);
+  assert.match(guide, /not an executable harness/i);
+  assert.match(guide, /do not guarantee automatic native registration/i);
+  const hostHeadings = [...guide.matchAll(/^## (Codex|Claude Code)$/gm)].map((match) => match[1]);
+  assert.deepEqual(hostHeadings, ["Codex", "Claude Code"]);
+  for (const section of ["Codex", "Claude Code"]) {
+    const body = guide.split(`## ${section}`)[1]?.split(/^## /m)[0] ?? "";
+    assert.match(body, /native delegation/i);
+    assert.match(body, /host-specific commands.*not.*profiles|profiles.*not.*host-specific commands/is);
+  }
+});
+
+test("workflow documentation maps exact profile inventory into orchestration", async () => {
+  const workflow = await readFile(path.resolve(root, "docs/workflow.md"), "utf8");
+  assert.deepEqual(tableProfileNames(workflow, "## Phase-to-profile mapping"), expectedProfiles);
+  assert.doesNotMatch(workflow, /^\| `(?:builder|tester|orchestrator)` \|/gm,
+    "undeclared aliases must not appear as profile identifiers");
+});
 
 test("every profile defines complete contract sections in canonical order", async () => {
   for (const { name, payload } of await loadProfiles()) {

@@ -30,4 +30,18 @@ Seven phases form composable path. Not every skill runs on every task; choose on
 
 `cleaning-repo-with-knip` removes verified dead code and records false positives. `implementing-plans` also checks temporary artifacts and debug residue before delivery.
 
+## Phase-to-profile mapping
+
+Profiles are optional role contracts consumed by workflow skills. They do not make this workflow an executable harness. Exact responsibilities and result envelope: [agent profile guide](agent-profiles.md).
+
+| Profile | Workflow phase | Wiring |
+| --- | --- | --- |
+| `cleanup` | Clean | Removes only explicitly scoped temporary artifacts after verification and review. |
+| `controller` | Cross-phase | Routes bounded work, manages retry and escalation, and assembles trace evidence. |
+| `implementer` | Implement | Owns one planned task and returns test-first change evidence. |
+| `planner` | Design, Plan | Converts findings and requirements into bounded tasks and acceptance criteria. |
+| `researcher` | Understand, Design | Collects read-only evidence before planning or consequential decisions. |
+| `reviewer` | Design, Plan, Review | Applies independent spec, quality, security, or fidelity lenses. |
+| `test-runner` | Verify | Runs named commands and reports results without modifying implementation. |
+
 Return to [README](../README.md).
