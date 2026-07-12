@@ -1,6 +1,6 @@
 # Release Evidence Report
 
-Status: Task 10 native validation complete; Task 11 integrated finish gate pending.
+Status: Task 10 native installation and Claude discovery complete. Codex fresh-session exact discovery remains blocked by ambient-skill catalogue truncation; Task 11 integrated finish gate pending.
 
 ## Included skills
 
@@ -33,10 +33,27 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 | Host | Host version | Validation command | Exit code | Discovered skill names |
 | --- | --- | --- | --- | --- |
-| Codex | `codex-cli 0.139.0` | `plugin-creator/scripts/validate_plugin.py plugins/agentic-engineering-skills` | 0 | 19 skills; exact inventory below. |
-| Claude Code | `2.1.201` | `claude plugin validate .` | 0 | 19 skills; exact inventory below. |
+| Codex | `codex-cli 0.141.0` | `plugin-creator/scripts/validate_plugin.py plugins/agentic-engineering-skills` | 0 | Installed plugin payload contains exact 19 below; fresh model session did not enumerate all 19 (limitation below). |
+| Claude Code | `2.1.201` | `claude plugin validate .` | 0 | Fresh `claude -p` session discovered exact 19 below. |
 
-Claude smoke test used a fresh temporary `CLAUDE_CONFIG_DIR` and left normal configuration unchanged. Codex 0.139.0 ignored temporary `HOME` and `CODEX_HOME` during plugin operations; smoke installation therefore briefly used normal plugin state, then removed the test plugin and marketplace. Final normal `codex plugin list --json` returned an empty installed inventory. Both installed payloads exposed all 19 flat skill directories.
+Every isolated command set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` to a fresh native-Windows profile before execution. Read-only copies of host credential files were placed in those profiles; no credential content was printed or recorded. Before/after normal-host snapshots had identical plugin IDs and marketplace names: Codex retained its 14 normal installed plugins and 3 marketplaces; Claude retained its 12 normal installed plugins and 4 marketplaces. Neither normal host acquired this test marketplace or plugin.
+
+Exact isolated commands and receipts (`$P` = fresh profile, `$S` = native-Windows copy of this repository):
+
+| Host | Command (all six environment variables set immediately before it) | Exit |
+| --- | --- | --- |
+| Codex | `codex --version` | 0 (`codex-cli 0.141.0`) |
+| Codex | `codex plugin marketplace add $S --json` | 0 (`marketplaceName: agentic-engineering-skills`) |
+| Codex | `codex plugin add agentic-engineering-skills@agentic-engineering-skills --json` | 0 (`version: 0.1.0`) |
+| Codex | `codex plugin list --json` | 0 (isolated inventory contained only installed test plugin) |
+| Codex | `codex exec --ephemeral --ignore-user-config --skip-git-repo-check -C $S '<discovery prompt>'` | 0, but one-shot response returned unrelated ambient names; batched candidate sessions also returned incomplete subsets while warning `Skill descriptions were shortened to fit the 2% skills context budget.` |
+| Claude Code | `claude --version` | 0 (`2.1.201 (Claude Code)`) |
+| Claude Code | `claude plugin marketplace add ./source --scope user` | 0 |
+| Claude Code | `claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user` | 0 (`version: 0.1.0`) |
+| Claude Code | `claude plugin list --json` | 0 (isolated inventory contained only installed test plugin) |
+| Claude Code | `claude -p --no-session-persistence --setting-sources user '<discovery prompt>'` | 0; exact 19-name line below |
+
+Codex marketplace installation itself is isolated and successful. However, Windows `codex exec` still exposed ambient skills outside isolated plugin state, and its 2% skill-description budget prevented an exact 19-name model-session receipt. Therefore Codex session discovery is not claimed complete; exact inventory below is payload/native-install inventory cross-checked by `npm run verify:pack`, not fabricated model output.
 
 ### Codex
 
@@ -50,7 +67,7 @@ Claude smoke test used a fresh temporary `CLAUDE_CONFIG_DIR` and left normal con
 
 | Action | Status |
 | --- | --- |
-| Commit | not performed |
+| Commit | performed locally: `d9ab968`, `4ca484c`, `782acad`, `c9e160e`, `41341ac`, `9bade44`, `46a201b`, `943f448`, `0b96c3e`, `d63e110`, `4e07fde`, `fa322bf`, `94159a0`, `af019c7`, `69b88a8`, `e1145b6`, `f2bb15b`, `df62260`, `90b92b1`, `ede7d40`, `4f9cac3`, `492dcd0`, `8a8f9c6` |
 | Push | not performed |
 | Pull request | not performed |
 | Merge | not performed |
