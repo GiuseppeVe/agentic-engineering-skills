@@ -97,6 +97,19 @@ async function loadInstalledProfiles() {
   }));
 }
 
+async function createInstalledFixture(prefix) {
+  const fixture = await mkdtemp(path.join(tmpdir(), prefix));
+  const fixturePluginRoot = path.join(fixture, "plugin");
+  await mkdir(path.join(fixturePluginRoot, "manifests"), { recursive: true });
+  await mkdir(path.join(fixturePluginRoot, "agent-profiles"), { recursive: true });
+  const installedManifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
+  await writeFile(path.join(fixturePluginRoot, "manifests", "agent-profiles.json"), JSON.stringify(installedManifest));
+  for (const entry of installedManifest.profiles) {
+    await writeFile(path.join(fixturePluginRoot, entry.path), await readFile(path.join(pluginRoot, entry.path)));
+  }
+  return { fixture, fixturePluginRoot, installedManifest };
+}
+
 test("profile manifest declares exact profile inventory", async () => {
   const profiles = await loadProfiles();
   assert.deepEqual(profiles.map(({ name }) => name).sort(), expectedProfiles);
@@ -125,17 +138,13 @@ test("installed plugin manifest mirrors canonical inventory, provenance, paths, 
 });
 
 test("installed profile verification rejects symbolic-link payloads", async (t) => {
-  const fixture = await mkdtemp(path.join(tmpdir(), "installed-profile-symlink-"));
+  const { fixture, fixturePluginRoot } = await createInstalledFixture("installed-profile-symlink-");
   try {
-    const fixturePluginRoot = path.join(fixture, "plugin");
-    await mkdir(path.join(fixturePluginRoot, "manifests"), { recursive: true });
-    await mkdir(path.join(fixturePluginRoot, "agent-profiles"), { recursive: true });
-    const installedManifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
-    await writeFile(path.join(fixturePluginRoot, "manifests", "agent-profiles.json"), JSON.stringify(installedManifest));
     const outsidePayload = path.join(fixture, "outside.md");
     await writeFile(outsidePayload, "outside");
+    await rm(path.join(fixturePluginRoot, "agent-profiles", "reviewer.md"));
     try {
-      await symlink(outsidePayload, path.join(fixturePluginRoot, "agent-profiles", "cleanup.md"), "file");
+      await symlink(outsidePayload, path.join(fixturePluginRoot, "agent-profiles", "reviewer.md"), "file");
     } catch (error) {
       if (["EPERM", "EACCES"].includes(error?.code)) { t.skip(`OS disallows symlink creation: ${error.code}`); return; }
       throw error;
@@ -143,6 +152,51 @@ test("installed profile verification rejects symbolic-link payloads", async (t) 
     await assert.rejects(
       verifyInstalledAgentProfiles({ canonicalPath: manifestPath, pluginRoot: fixturePluginRoot, writeSummary: () => {} }),
       /must not be a symbolic link/,
+    );
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});
+
+test("installed profile verification rejects a manifest file symlink", async (t) => {
+  const fixture = await mkdtemp(path.join(tmpdir(), "installed-manifest-symlink-"));
+  try {
+    const fixturePluginRoot = path.join(fixture, "plugin");
+    await mkdir(path.join(fixturePluginRoot, "manifests"), { recursive: true });
+    const outsideManifest = path.join(fixture, "outside-manifest.json");
+    await writeFile(outsideManifest, await readFile(installedManifestPath));
+    try {
+      await symlink(outsideManifest, path.join(fixturePluginRoot, "manifests", "agent-profiles.json"), "file");
+    } catch (error) {
+      if (["EPERM", "EACCES"].includes(error?.code)) { t.skip(`OS disallows symlink creation: ${error.code}`); return; }
+      throw error;
+    }
+    await assert.rejects(
+      verifyInstalledAgentProfiles({ canonicalPath: manifestPath, pluginRoot: fixturePluginRoot, writeSummary: () => {} }),
+      /manifest must not be a symbolic link/,
+    );
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});
+
+test("installed profile verification rejects a manifest parent directory symlink escaping plugin root", async (t) => {
+  const fixture = await mkdtemp(path.join(tmpdir(), "installed-manifest-parent-symlink-"));
+  try {
+    const fixturePluginRoot = path.join(fixture, "plugin");
+    const outsideManifests = path.join(fixture, "outside-manifests");
+    await mkdir(fixturePluginRoot, { recursive: true });
+    await mkdir(outsideManifests, { recursive: true });
+    await writeFile(path.join(outsideManifests, "agent-profiles.json"), await readFile(installedManifestPath));
+    try {
+      await symlink(outsideManifests, path.join(fixturePluginRoot, "manifests"), "dir");
+    } catch (error) {
+      if (["EPERM", "EACCES"].includes(error?.code)) { t.skip(`OS disallows symlink creation: ${error.code}`); return; }
+      throw error;
+    }
+    await assert.rejects(
+      verifyInstalledAgentProfiles({ canonicalPath: manifestPath, pluginRoot: fixturePluginRoot, writeSummary: () => {} }),
+      /manifest real path escapes plugin root/,
     );
   } finally {
     await rm(fixture, { recursive: true, force: true });
