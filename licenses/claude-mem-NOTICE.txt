@@ -1,0 +1,3 @@
+NOTICE
+
+The `learn-codebase` reference is sourced from thedotmack/claude-mem at the revision recorded in `skills/sources.lock.json`. No upstream file is copied into this repository.

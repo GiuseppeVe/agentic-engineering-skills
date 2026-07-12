@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "name": "matt-pocock-workflows",
+      "source": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "license": "MIT",
+      "status": "referenced",
+      "dependencies": ["grilling", "domain-modeling", "codebase-design"]
+    },
+    {
+      "name": "superpowers-workflows",
+      "source": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "license": "MIT",
+      "status": "referenced",
+      "dependencies": ["tdd", "git-worktrees"]
+    },
+    {
+      "name": "caveman-profiles",
+      "source": "https://github.com/JuliusBrussee/caveman",
+      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+      "license": "MIT",
+      "status": "referenced",
+      "dependencies": []
+    },
+    {
+      "name": "ruflo-swarm-orchestration",
+      "source": "https://github.com/ruvnet/ruflo",
+      "revision": "7ef4d4e655d81c0451f6f40f35729cce6c9928e7",
+      "license": "MIT",
+      "status": "referenced",
+      "dependencies": ["swarm-orchestration"]
+    },
+    {
+      "name": "learn-codebase",
+      "source": "https://github.com/thedotmack/claude-mem",
+      "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
+      "license": "Apache-2.0",
+      "status": "referenced",
+      "dependencies": []
+    },
+    {
+      "name": "implementing-plans",
+      "source": "https://github.com/GiuseppeVe/agentic-engineering-skills",
+      "revision": "7b3cb3d",
+      "license": "MIT",
+      "status": "original",
+      "dependencies": ["tdd", "git-worktrees"]
+    },
+    {
+      "name": "cleaning-repo-with-knip",
+      "source": "https://github.com/GiuseppeVe/agentic-engineering-skills",
+      "revision": "7b3cb3d",
+      "license": "MIT",
+      "status": "original",
+      "dependencies": ["knip"]
+    }
+  ]
+}
