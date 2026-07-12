@@ -1,0 +1,4 @@
+plugins/agentic-engineering-skills/agent-profiles/*.md text eol=lf
+LICENSE text eol=lf
+plugins/agentic-engineering-skills/licenses/* text eol=lf
+plugins/agentic-engineering-skills/skills/** text eol=lf
