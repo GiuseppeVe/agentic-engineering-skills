@@ -133,24 +133,24 @@ Exact upstream package paths:
 Local acquisition roots for adapted/original candidates:
 
 ```text
-/home/aledalin/alfe_App/alfe_AI_app/.agents/skills
-/mnt/c/Users/aleda/.agents/skills
-/mnt/c/Users/aleda/.codex/skills
+${AGENTIC_PROJECT_SKILLS_ROOT}
+${AGENTIC_USER_SKILLS_ROOT}
+${CODEX_SKILLS_ROOT}
 ```
 
 Exact local candidates:
 
 | Skill | Local file |
 | --- | --- |
-| `wayfinder` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/wayfinder/SKILL.md` |
-| `to-spec` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/to-spec/SKILL.md` |
-| `brainstorming` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/brainstorming/SKILL.md` |
-| `writing-plans` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/writing-plans/SKILL.md` |
-| `cavecrew` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/cavecrew/SKILL.md` |
-| `swarm-orchestration` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/swarm-orchestration/SKILL.md` |
-| `learn-codebase` | `/mnt/c/Users/aleda/.agents/skills/learn-codebase/SKILL.md` |
-| `implementing-plans` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/implementing-plans/SKILL.md` |
-| `cleaning-repo-with-knip` | `/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/cleaning-repo-with-knip/SKILL.md` |
+| `wayfinder` | `${AGENTIC_PROJECT_SKILLS_ROOT}/wayfinder/SKILL.md` |
+| `to-spec` | `${AGENTIC_PROJECT_SKILLS_ROOT}/to-spec/SKILL.md` |
+| `brainstorming` | `${AGENTIC_PROJECT_SKILLS_ROOT}/brainstorming/SKILL.md` |
+| `writing-plans` | `${AGENTIC_PROJECT_SKILLS_ROOT}/writing-plans/SKILL.md` |
+| `cavecrew` | `${AGENTIC_PROJECT_SKILLS_ROOT}/cavecrew/SKILL.md` |
+| `swarm-orchestration` | `${AGENTIC_PROJECT_SKILLS_ROOT}/swarm-orchestration/SKILL.md` |
+| `learn-codebase` | `${AGENTIC_USER_SKILLS_ROOT}/learn-codebase/SKILL.md` |
+| `implementing-plans` | `${AGENTIC_PROJECT_SKILLS_ROOT}/implementing-plans/SKILL.md` |
+| `cleaning-repo-with-knip` | `${AGENTIC_PROJECT_SKILLS_ROOT}/cleaning-repo-with-knip/SKILL.md` |
 
 ## Tasks
 
@@ -505,7 +505,7 @@ git commit -m "docs: explain workflow and installation"
 
 - [ ] **Step 1: Write failing table-driven fixtures**
 
-Cover `sk-proj-`, `sk-ant-`, `AIza`, `ghp_`, PEM private keys, `.env`, `/home/<user>`, `C:\\Users\\<user>`, non-public URLs, unresolved legal template brackets, logs, generated archives, and files above the configured release limit. Include one clean fixture.
+Cover `sk-proj-`, `sk-ant-`, `AIza`, `ghp_`, PEM private keys, `.env`, Linux and Windows user-home paths, non-public URLs, unresolved legal template brackets, logs, generated archives, and files above the configured release limit. Include one clean fixture.
 
 - [ ] **Step 2: Verify red**
 
