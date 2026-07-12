@@ -50,18 +50,24 @@ agentic-engineering-skills/
 ├── README.md
 ├── LICENSE
 ├── THIRD_PARTY_NOTICES.md
-├── skills/
-│   ├── original/
-│   ├── adapted/
-│   └── vendor/
-├── licenses/
 ├── manifests/
 │   └── skills.lock.json
-├── adapters/
-│   ├── codex/
-│   └── claude-code/
-├── .codex-plugin/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
 ├── .claude-plugin/
+│   └── marketplace.json
+├── plugins/
+│   └── agentic-engineering-skills/
+│       ├── .codex-plugin/
+│       │   └── plugin.json
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── skills/
+│       │   ├── original/
+│       │   ├── adapted/
+│       │   └── vendor/
+│       └── licenses/
 ├── docs/
 │   ├── workflow.md
 │   ├── customization.md
@@ -72,9 +78,9 @@ agentic-engineering-skills/
 └── tests/
 ```
 
-`skills/` is the canonical skill source. Codex and Claude Code packaging must
-reference or package this same inventory without maintaining divergent skill
-copies.
+`plugins/agentic-engineering-skills/` is the single installable payload.
+Codex and Claude Code marketplaces point to that payload, whose `skills/`
+directory is the canonical skill source. No host-specific skill copies exist.
 
 ## Skill Acquisition Rule
 
@@ -170,6 +176,11 @@ Each skill entry records its name, package status, source repository, immutable
 revision, upstream path, upstream SHA-256, local SHA-256, license, direct
 dependencies, required companion files, and supported hosts.
 
+That upstream tuple applies only to `vendor` and `adapted` entries. An
+`original` entry records `sourceType: original`, its local SHA-256, applicable
+repository license, and the release commit that first distributes it. It must
+not claim a circular or fabricated upstream revision.
+
 Verification must prove that the revision and path exist, the upstream hash
 matches, vendor copies are byte-identical, adapted copies have a change notice,
 required licenses are present, dependencies resolve, and human-readable
@@ -196,8 +207,8 @@ The root license does not replace third-party licenses. The repository includes:
 
 The complete pack is the supported path.
 
-- Codex receives a native plugin bundle.
-- Claude Code receives a native plugin and marketplace entry.
+- Codex receives the shared payload through the repository's Codex marketplace.
+- Claude Code receives that same payload through its marketplace entry.
 - Both packages expose the same canonical inventory after every requested skill
   passes or fails the inclusion gate. The target inventory is all 19 approved
   skills; a failed legal or source-verification gate reduces both packages in
