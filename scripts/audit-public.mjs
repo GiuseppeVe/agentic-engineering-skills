@@ -1,40 +1,165 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { resolve, relative, extname, join } from "node:path";
+import { open, readFile } from "node:fs/promises";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
 
-const root = resolve(process.argv[2] ?? process.cwd());
-const excludedDirectories = new Set([".git", "node_modules", "dist", "coverage"]);
-const excludedExtensions = new Set([".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".lock"]);
-const forbidden = [
-  ["secret-prefix", /\b(?:sk|ghp|github_pat|AIza)_[A-Za-z0-9_-]{8,}\b/],
-  ["private-url", /https?:\/\/(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+)/i],
-  ["source-project-identifier", /\balfe(?:[_ -]?ai|[_ -]?app)?\b/i]
+const DEFAULT_MAX_FILE_BYTES = 1024 * 1024;
+
+const nameRules = [
+  ["name:environment-file", (name) => /^\.env(?:\..+)?$/i.test(name)],
+  ["name:log-file", (name) => /(?:^|\.)logs?$/i.test(name)],
+  ["name:generated-archive", (name) => /\.(?:zip|7z|rar|tgz|tar(?:\.(?:gz|bz2|xz))?|gz|bz2|xz)$/i.test(name)],
 ];
-const logExtensions = new Set([".log", ".jsonl", ".transcript"]);
 
-function filesIn(directory) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    if (excludedDirectories.has(entry.name)) return [];
-    if (entry.isDirectory()) return excludedDirectories.has(entry.name) ? [] : filesIn(path);
-    return entry.isFile() ? [path] : [];
+const contentRules = [
+  ["secret:openai-project-key", new RegExp(`\\b${["sk", "proj"].join("-")}-[A-Za-z0-9_-]+`)],
+  ["secret:anthropic-key", new RegExp(`\\b${["sk", "ant"].join("-")}-[A-Za-z0-9_-]+`)],
+  ["secret:google-api-key", new RegExp(`\\b${["AI", "za"].join("")}[A-Za-z0-9_-]{20,}`)],
+  ["secret:github-token", new RegExp(`\\b${["ghp", ""].join("_")}[A-Za-z0-9]{20,}`)],
+  ["secret:pem-private-key", new RegExp(`${["-----BEGIN", "(?:[A-Z0-9]+ )?PRIVATE", "KEY-----"].join(" ")}`)],
+  ["private-path:linux-home", /\/home\/[^/\s]+(?:\/[^\s]*)?/],
+  ["private-path:windows-home", /\b[A-Za-z]:\\Users\\[^\\\s]+(?:\\[^\s]*)?/i],
+  [
+    "url:non-public",
+    /https?:\/\/(?:localhost|127(?:\.\d{1,3}){3}|10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2}|[^\s/:]+\.(?:internal|local|localhost))(?:[:/][^\s]*)?/i,
+  ],
+  [
+    "legal-template:unresolved",
+    /(?:\[(?:year|yyyy|fullname|copyright holder|organization)\]|<(?:year|yyyy|fullname|copyright holder|organization)>)/i,
+  ],
+];
+
+function fail(message) {
+  process.stderr.write(`${message}\n`);
+  process.exitCode = 2;
+}
+
+function parseArgs(argv) {
+  let testFileList;
+  let maxFileBytes = DEFAULT_MAX_FILE_BYTES;
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+    if (argument === "--test-file-list") {
+      testFileList = argv[++index];
+      if (!testFileList) throw new Error("--test-file-list requires a path");
+    } else if (argument === "--max-file-bytes") {
+      maxFileBytes = Number(argv[++index]);
+      if (!Number.isSafeInteger(maxFileBytes) || maxFileBytes < 1) {
+        throw new Error("--max-file-bytes requires a positive integer");
+      }
+    } else {
+      throw new Error(`unknown argument: ${argument}`);
+    }
+  }
+  return { testFileList, maxFileBytes };
+}
+
+function gitTrackedFiles(root) {
+  const result = spawnSync("git", ["ls-files", "-z"], {
+    cwd: root,
+    encoding: "buffer",
+    windowsHide: true,
+  });
+  if (result.status !== 0) {
+    throw new Error("git ls-files failed; public audit requires a Git worktree");
+  }
+  return result.stdout
+    .toString("utf8")
+    .split("\0")
+    .filter(Boolean)
+    .map((displayPath) => ({ path: path.resolve(root, displayPath), displayPath }));
+}
+
+async function explicitTestFiles(listPath, root) {
+  if (process.env.NODE_ENV !== "test") {
+    throw new Error("--test-file-list is test-only");
+  }
+  const parsed = JSON.parse(await readFile(listPath, "utf8"));
+  if (!Array.isArray(parsed) || parsed.some((entry) => typeof entry !== "string")) {
+    throw new Error("test file list must be a JSON array of paths");
+  }
+  return parsed.map((file) => {
+    const absolute = path.resolve(file);
+    const relative = path.relative(root, absolute);
+    const displayPath = relative && !relative.startsWith("..") && !path.isAbsolute(relative)
+      ? relative
+      : path.basename(absolute);
+    return { path: absolute, displayPath };
   });
 }
 
-const findings = [];
-for (const file of filesIn(root)) {
-  const extension = extname(file).toLowerCase();
-  const path = relative(root, file);
-  if (logExtensions.has(extension)) findings.push(`${path}: transcript-or-log-extension`);
-  if (excludedExtensions.has(extension) || statSync(file).size > 1_000_000) continue;
-  const text = readFileSync(file, "utf8");
-  for (const [rule, pattern] of forbidden) {
-    if (pattern.test(text)) findings.push(`${path}: ${rule}`);
+async function legalTemplateAllowedPaths(root) {
+  const allowed = new Set(["LICENSE"]);
+  const lockPath = path.join(root, "manifests", "skills.lock.json");
+  let lock;
+  try {
+    lock = JSON.parse(await readFile(lockPath, "utf8"));
+  } catch (error) {
+    if (error?.code === "ENOENT") return allowed;
+    throw error;
+  }
+  for (const skill of lock.skills ?? []) {
+    for (const license of skill.licenseFiles ?? []) {
+      if (typeof license.path !== "string") continue;
+      const absolute = path.resolve(root, license.path);
+      const relative = path.relative(root, absolute);
+      if (relative && !relative.startsWith("..") && !path.isAbsolute(relative)) {
+        allowed.add(relative.split(path.sep).join("/"));
+      }
+    }
+  }
+  return allowed;
+}
+
+async function readCapped(filePath, maxFileBytes) {
+  const handle = await open(filePath, "r");
+  try {
+    const metadata = await handle.stat();
+    if (metadata.size > maxFileBytes) return { oversized: true };
+    const buffer = Buffer.allocUnsafe(maxFileBytes + 1);
+    const { bytesRead } = await handle.read(buffer, 0, buffer.length, 0);
+    if (bytesRead > maxFileBytes) return { oversized: true };
+    return { oversized: false, content: buffer.subarray(0, bytesRead).toString("utf8") };
+  } finally {
+    await handle.close();
   }
 }
 
-if (findings.length > 0) {
-  console.error(findings.join("\n"));
-  process.exitCode = 1;
-} else if (existsSync(root)) {
-  console.log("Public audit passed.");
+async function main() {
+  const root = process.cwd();
+  const { testFileList, maxFileBytes } = parseArgs(process.argv.slice(2));
+  const files = testFileList
+    ? await explicitTestFiles(testFileList, root)
+    : gitTrackedFiles(root);
+  const legalTemplateAllowed = await legalTemplateAllowedPaths(root);
+  const findings = [];
+
+  for (const file of files) {
+    const basename = path.basename(file.path);
+    const forbiddenName = nameRules.find(([, matches]) => matches(basename));
+    if (forbiddenName) {
+      findings.push(`${file.displayPath}:${forbiddenName[0]}`);
+      continue;
+    }
+
+    const result = await readCapped(file.path, maxFileBytes);
+    if (result.oversized) {
+      findings.push(`${file.displayPath}:size:release-limit`);
+      continue;
+    }
+
+    for (const [rule, pattern] of contentRules) {
+      const normalizedPath = file.displayPath.split(path.sep).join("/");
+      if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
+      if (pattern.test(result.content)) findings.push(`${file.displayPath}:${rule}`);
+    }
+  }
+
+  for (const finding of [...new Set(findings)].sort()) process.stdout.write(`${finding}\n`);
+  if (findings.length > 0) process.exitCode = 1;
+}
+
+try {
+  await main();
+} catch (error) {
+  fail(error instanceof Error ? error.message : String(error));
 }

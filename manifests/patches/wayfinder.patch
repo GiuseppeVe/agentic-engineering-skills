@@ -1,0 +1,29 @@
+diff --git a/wayfinder/SKILL.md b/wayfinder/SKILL.md
+index 2bce062..e0aa0df 100644
+--- a/wayfinder/SKILL.md
++++ b/wayfinder/SKILL.md
+@@ -4 +4 @@
+-disable-model-invocation: true
++disable-model-invocation: false
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on `mattpocock/skills`; adjusted for portable Codex and Claude Code skill-pack use.
++
+@@ -106,0 +109,16 @@
++### Completion gate: call `to-spec`
++
++After any wayfinder ticket resolution, and after updating the map, check whether the way is clear:
++
++- no open child tickets remain, blocked or unblocked;
++- no in-scope fog remains in **Not yet specified**;
++- any remaining uncertainty is explicitly recorded in **Out of scope** or as a non-blocking note.
++
++If the way is clear, the next action is mandatory: invoke **`/to-spec`** against the completed map so the decisions become a user-readable spec. Do not continue wayfinding, do not create an implementation plan first, and do not start implementation. If this runtime cannot invoke another skill directly, stop and tell the user the exact command to run:
++
++```text
++/to-spec <wayfinder map URL or path>
++```
++
++Only skip this handoff if the user explicitly says to skip `to-spec`.
++
+@@ -125,0 +144 @@
++6. Run the [Completion gate: call `to-spec`](#completion-gate-call-to-spec) check. If the map is complete, invoke `/to-spec` immediately (or give the exact command if direct invocation is unavailable).

@@ -1,0 +1,7 @@
+diff --git a/learn-codebase/SKILL.md b/learn-codebase/SKILL.md
+index 0697397..ca54074 100644
+--- a/learn-codebase/SKILL.md
++++ b/learn-codebase/SKILL.md
+@@ -5,0 +6,2 @@
++> **Adaptation:** Based on `thedotmack/claude-mem`; adjusted for portable Codex and Claude Code codebase discovery.
++

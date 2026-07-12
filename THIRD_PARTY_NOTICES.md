@@ -1,25 +1,27 @@
-# Third-party notices
+# Third-Party Notices
 
-This repository vendors or adapts only material listed in `skills/sources.lock.json` and governed by the notices below. Exact source paths and immutable revisions live in that lock file.
+Repository-original material is licensed under the root MIT license. Third-party skills retain the licenses copied under `plugins/agentic-engineering-skills/licenses/`.
 
-## Matt Pocock Skills
+| Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `brainstorming` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | adapted | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `cavecrew` | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0` | adapted | Julius Brussee | MIT | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `caveman` | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0` | vendor | Julius Brussee | MIT | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Unmodified pinned copy. |
+| `codebase-design` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
+| `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
+| `grill-me` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
+| `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
+| `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
+| `learn-codebase` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | `312d640b0188753acd92a1a82d95a84d5c7c43db` | adapted | Alex Newman | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`<br>`plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Modified files carry an Adaptation notice for cross-host Agent Skills distribution. Upstream NOTICE retained verbatim. |
+| `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
+| `swarm-orchestration` | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | `7ef4d4e655d81c0451f6f40f35729cce6c9928e7` | adapted | ruvnet | MIT | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `test-driven-development` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | vendor | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Unmodified pinned copy. |
+| `to-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `using-git-worktrees` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | vendor | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Unmodified pinned copy. |
+| `wayfinder` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `writing-plans` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | adapted | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Adapted for cross-host Agent Skills distribution. |
+| `writing-skills` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | vendor | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Unmodified pinned copy. |
 
-Selected workflow documents are vendored or adapted from `mattpocock/skills` under MIT. Copyright (c) 2026 Matt Pocock. Full license: `licenses/MIT-mattpocock-skills.txt`.
+## Apache NOTICE
 
-## Obra Superpowers
-
-Selected workflow documents are vendored or adapted from `obra/superpowers` under MIT. Copyright (c) 2025 Jesse Vincent. Full license: `licenses/MIT-obra-superpowers.txt`.
-
-## Caveman
-
-Selected workflow documents are vendored or adapted from `JuliusBrussee/caveman` under MIT. Copyright (c) 2026 Julius Brussee. Full license: `licenses/MIT-caveman.txt`.
-
-## Ruflo
-
-`swarm-orchestration` is an adapted document from `ruvnet/ruflo` under MIT. Copyright (c) 2024-2026 ruvnet. Full license: `licenses/MIT-ruflo.txt`. No `src/ruvocal` material is included.
-
-## Claude Mem
-
-`learn-codebase` is vendored from `thedotmack/claude-mem` under Apache-2.0. Full license: `licenses/Apache-2.0.txt`; upstream NOTICE: `licenses/claude-mem-NOTICE.txt`.
-
-Original repository workflows are covered by root MIT license and are not third-party material.
+The exact pinned `thedotmack/claude-mem` NOTICE is distributed at `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE`.

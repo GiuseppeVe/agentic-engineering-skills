@@ -1,26 +1,19 @@
 {
   "name": "agentic-engineering-skills",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "test": "vitest run",
-    "lint": "eslint .",
-    "evals": "tsx src/evals/run-evals.ts",
-    "demo": "tsx src/cli.ts",
-    "maintenance:scan": "knip",
-    "audit:public": "node scripts/audit-public.mjs",
-    "verify:skills": "node scripts/verify-skill-sources.mjs"
+    "test": "node scripts/run-tests.mjs",
+    "verify:pack": "node scripts/verify-pack.mjs",
+    "verify:installed-native": "node scripts/verify-installed-native.mjs",
+    "verify:upstream": "node scripts/verify-upstream.mjs",
+    "audit:public": "node scripts/audit-public.mjs"
   },
   "devDependencies": {
-    "@eslint/js": "^9.0.0",
-    "eslint": "^9.0.0",
-    "knip": "^5.0.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0",
-    "typescript-eslint": "^8.0.0",
-    "vitest": "^2.0.0"
+    "yaml": "2.9.0"
   }
 }
