@@ -60,9 +60,22 @@ process.stdout.write(`Verified ${entries.length} requested skills (${entries.fil
 function entryIsUnstamped(entry) { return !/^[0-9a-f]{40}$/i.test(entry.releaseCommit ?? "") || /^0{40}$/.test(entry.releaseCommit); }
 export async function verifyInstalledAgentProfiles({ canonicalPath, pluginRoot, writeSummary = (text) => process.stdout.write(text) }) {
   const installedPath = join(pluginRoot, "manifests/agent-profiles.json");
+  const relativeInstalledPath = relative(pluginRoot, installedPath);
+  if (relativeInstalledPath !== join("manifests", "agent-profiles.json") || isAbsolute(relativeInstalledPath)) {
+    throw new Error("installed profile manifest must use expected plugin-relative location manifests/agent-profiles.json");
+  }
+  const realPluginRoot = await realpath(pluginRoot);
+  const installedStat = await lstat(installedPath);
+  if (installedStat.isSymbolicLink()) throw new Error("installed profile manifest must not be a symbolic link");
+  if (!installedStat.isFile()) throw new Error("installed profile manifest must be a regular file");
+  const realInstalledPath = await realpath(installedPath);
+  const relativeRealInstalledPath = relative(realPluginRoot, realInstalledPath);
+  if (relativeRealInstalledPath.startsWith("..") || isAbsolute(relativeRealInstalledPath)) {
+    throw new Error("installed profile manifest real path escapes plugin root");
+  }
   const [canonical, installed] = await Promise.all([
     readFile(canonicalPath, "utf8").then(JSON.parse),
-    readFile(installedPath, "utf8").then(JSON.parse),
+    readFile(realInstalledPath, "utf8").then(JSON.parse),
   ]);
   if (!Array.isArray(canonical.profiles) || !Array.isArray(installed.profiles)) throw new Error("agent profile manifests must expose profiles[]");
   const canonicalNames = canonical.profiles.map(x => x.name).sort();
@@ -71,7 +84,6 @@ export async function verifyInstalledAgentProfiles({ canonicalPath, pluginRoot, 
   if (JSON.stringify(canonicalNames) !== JSON.stringify(expectedProfileNames)) throw new Error(`canonical profile inventory mismatch: expected ${expectedProfileNames}; got ${canonicalNames}`);
   if (JSON.stringify(installedNames) !== JSON.stringify(canonicalNames)) throw new Error(`installed profile inventory mismatch: expected ${canonicalNames}; got ${installedNames}`);
   const canonicalByName = new Map(canonical.profiles.map(x => [x.name, x]));
-  const realPluginRoot = await realpath(pluginRoot);
   for (const entry of installed.profiles) {
     const canonicalEntry = canonicalByName.get(entry.name);
     const payload = resolve(pluginRoot, entry.path);
