@@ -19,3 +19,8 @@ export async function sha256Path(path) {
   await walk(path);
   return hash.digest("hex");
 }
+
+export function normalizeLf(content) {
+  const buffer = Buffer.isBuffer(content) ? content : Buffer.from(content);
+  return Buffer.from(buffer.toString("utf8").replace(/\r\n?/g, "\n"), "utf8");
+}
