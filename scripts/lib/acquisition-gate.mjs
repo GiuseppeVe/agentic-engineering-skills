@@ -1,5 +1,5 @@
-import { cp, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm, writeFile } from "node:fs/promises";
-import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
+import { cp, lstat, mkdir, mkdtemp, readFile, readdir, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { dirname, isAbsolute, join, parse, relative, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { randomUUID } from "node:crypto";
 import { compareLockDirectories, listFlatSkillDirectories, resolveAcquisitionPath, resolveAcquisitionRoot, validateManifest, validateSourceManifest, verifyLocalEntries } from "./manifest.mjs";
@@ -42,13 +42,34 @@ function isContained(root, path) {
   return child === "" || (!isAbsolute(child) && child !== ".." && !child.startsWith(`..${sep}`));
 }
 
-async function verifyContainedRegularFile(path, configuredRoot, label) {
-  const info = await lstat(path);
+function stripTrailingSeparators(path) {
+  const rootLength = parse(path).root.length;
+  return path.length > rootLength ? path.replace(/[\\/]+$/, "") : path;
+}
+
+async function rejectSymlinksRecursively(path, label) {
+  for (const name of await readdir(path)) {
+    const child = join(path, name);
+    const info = await lstat(child);
+    if (info.isSymbolicLink()) throw new Error(`${label} must not contain symbolic links: ${child}`);
+    if (info.isDirectory()) await rejectSymlinksRecursively(child, label);
+  }
+}
+
+async function verifyContainedPath(path, configuredRoot, label, expectedKind) {
+  const lexicalPath = stripTrailingSeparators(path);
+  const info = await lstat(lexicalPath);
   if (info.isSymbolicLink()) throw new Error(`${label} must not be a symbolic link: ${path}`);
-  if (!info.isFile()) throw new Error(`${label} must be a regular file: ${path}`);
-  const [rootTarget, fileTarget] = await Promise.all([realpath(configuredRoot), realpath(path)]);
-  if (!isContained(rootTarget, fileTarget)) throw new Error(`${label} resolves outside configured root: ${path}`);
+  if (expectedKind === "file" && !info.isFile()) throw new Error(`${label} must be a regular file: ${path}`);
+  if (expectedKind === "directory" && !info.isDirectory()) throw new Error(`${label} must be a directory: ${path}`);
+  const [rootTarget, pathTarget] = await Promise.all([realpath(configuredRoot), realpath(lexicalPath)]);
+  if (!isContained(rootTarget, pathTarget)) throw new Error(`${label} resolves outside configured root: ${path}`);
+  if (expectedKind === "directory") await rejectSymlinksRecursively(lexicalPath, label);
   return info;
+}
+
+async function verifyContainedRegularFile(path, configuredRoot, label) {
+  return verifyContainedPath(path, configuredRoot, label, "file");
 }
 
 async function replaceOutputsAtomically(outputs, beforeReplacement, beforeBackupCleanup) {
@@ -135,9 +156,13 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
       if (!source.localRoot) throw new Error(`fixture acquisition requires local source for ${source.name}`);
       try {
         const from = resolveAcquisitionPath(source, environment);
-        const info = source.localPath.endsWith("/")
-          ? await lstat(from)
-          : await verifyContainedRegularFile(from, resolveAcquisitionRoot(source, environment), `source file for ${source.name}`);
+        const directorySource = /[\\/]$/.test(source.localPath);
+        const info = await verifyContainedPath(
+          from,
+          resolveAcquisitionRoot(source, environment),
+          `source ${directorySource ? "directory" : "file"} for ${source.name}`,
+          directorySource ? "directory" : "file",
+        );
         const to = join(stagedPayload, source.name);
         await mkdir(to, { recursive: true });
         if (info.isDirectory()) await cp(from, to, { recursive: true });
