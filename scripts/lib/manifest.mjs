@@ -6,12 +6,18 @@ const hex = (n) => new RegExp(`^[0-9a-f]{${n}}$`, "i");
 const common = new Set(["name", "sourceType", "localSha256", "dependencies", "excluded", "exclusionReason"]);
 const upstreamFields = ["repository", "revision", "upstreamPath", "sha256", "localSha256"];
 const originalFields = ["localSha256", "releaseCommit", "license"];
+const portableSkillName = /^[a-z0-9][a-z0-9-]*$/;
+
+function validateSkillName(name) {
+  if (typeof name !== "string" || !portableSkillName.test(name)) throw new Error(`invalid portable skill name: ${name}`);
+}
 
 export function validateManifest(manifest) {
   if (!manifest || !Array.isArray(manifest.skills)) throw new Error("manifest.skills must be an array");
   const seen = new Set();
   const values = manifest.skills.map(entry => {
-    if (!entry?.name || seen.has(entry.name)) throw new Error(`invalid or duplicate name: ${entry?.name}`);
+    validateSkillName(entry?.name);
+    if (seen.has(entry.name)) throw new Error(`invalid or duplicate name: ${entry.name}`);
     seen.add(entry.name);
     if (!["vendor", "adapted", "original"].includes(entry.sourceType)) throw new Error(`invalid sourceType for ${entry.name}`);
     if (entry.excluded && !entry.exclusionReason) throw new Error(`excluded entry ${entry.name} requires exclusionReason`);
@@ -94,6 +100,7 @@ export function resolveAcquisitionPath(source, environment = process.env) {
 
 export function validateSourceManifest(manifest) {
   if (!manifest || !Array.isArray(manifest.skills)) throw new Error("source manifest skills must be an array");
+  for (const source of manifest.skills) validateSkillName(source?.name);
   for (const source of manifest.skills.filter(x => x.sourceType === "adapted" || x.sourceType === "original")) {
     const hasLocalAcquisition = source.localRoot !== undefined || source.localPath !== undefined;
     if (source.sourceType === "original" && !hasLocalAcquisition) throw new Error(`original ${source.name} requires local acquisition fields`);

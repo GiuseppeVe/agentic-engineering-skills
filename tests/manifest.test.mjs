@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { validateManifest, dependencyOrder, verifyLocalEntries, validateSourceManifest, resolveAcquisitionPath } from "../scripts/lib/manifest.mjs";
 
 const upstream = { name: "a", sourceType: "vendor", repository: "https://example.test/a", revision: "a".repeat(40), upstreamPath: "SKILL.md", sha256: "b".repeat(64), localSha256: "b".repeat(64), dependencies: [], licenseFiles: [{ upstreamPath: "LICENSE", path: "plugins/agentic-engineering-skills/licenses/a-LICENSE", sha256: "c".repeat(64) }] };
@@ -11,6 +11,14 @@ const adapted = { ...upstream, name: "adapted", sourceType: "adapted", changeNot
 test("validates discriminated source entries and sorts names", () => {
   const original = { name: "z", sourceType: "original", localSha256: "c".repeat(64), releaseCommit: "d".repeat(40), license: "MIT", dependencies: [] };
   assert.deepEqual(validateManifest({ skills: [original, upstream] }).map(x => x.name), ["a", "z"]);
+});
+
+test("rejects non-portable skill names in lock and source manifests", () => {
+  const invalidNames = ["../escape", "nested/skill", "nested\\skill", ".", "two.dots", "Uppercase"];
+  for (const name of invalidNames) {
+    assert.throws(() => validateManifest({ skills: [{ ...upstream, name }] }), /portable skill name/i, `lock name ${name}`);
+    assert.throws(() => validateSourceManifest({ skills: [{ name, sourceType: "vendor" }] }), /portable skill name/i, `source name ${name}`);
+  }
 });
 
 test("adapted entries require objective change metadata", () => {
@@ -50,8 +58,12 @@ test("rejects a valid-format manifest hash that mismatches local content", async
 
 test("source acquisition paths are portable and resolved from explicit roots", () => {
   const source = { name: "local", sourceType: "adapted", localRoot: "projectSkills", localPath: "local/SKILL.md" };
+  const portableRoot = resolve(tmpdir(), "portable-root");
+  const expectedRelative = join("local", "SKILL.md");
   assert.doesNotThrow(() => validateSourceManifest({ skills: [source] }));
-  assert.equal(resolveAcquisitionPath(source, { AGENTIC_PROJECT_SKILLS_ROOT: "/portable/root" }), join("/portable/root", "local/SKILL.md"));
+  const acquisitionPath = resolveAcquisitionPath(source, { AGENTIC_PROJECT_SKILLS_ROOT: portableRoot });
+  assert.equal(acquisitionPath, resolve(portableRoot, expectedRelative));
+  assert.equal(relative(portableRoot, acquisitionPath), expectedRelative);
   assert.throws(() => validateSourceManifest({ skills: [{ ...source, localPath: "/absolute/private/SKILL.md" }] }), /portable and relative/);
   assert.throws(() => resolveAcquisitionPath(source, {}), /AGENTIC_PROJECT_SKILLS_ROOT is required/);
 });

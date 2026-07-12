@@ -1,19 +1,51 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile, mkdir, rm, readFile, stat, readdir } from "node:fs/promises";
+import { mkdtemp, writeFile, mkdir, rm, readFile, stat, readdir, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { sha256File, sha256Path, normalizeLf } from "../scripts/lib/hash.mjs";
 import { checkoutImmutable } from "../scripts/lib/upstream.mjs";
 import { verifyLocalEntries, compareLockDirectories } from "../scripts/lib/manifest.mjs";
 import { renderExclusionSection, verifyExclusionSection } from "../scripts/lib/release-report.mjs";
 import { runAcquisitionGate } from "../scripts/lib/acquisition-gate.mjs";
 
-test("checks out a real immutable superpowers revision", { timeout: 120000 }, async () => {
-  const checkout = await checkoutImmutable("https://github.com/obra/superpowers", "d884ae04edebef577e82ff7c4e143debd0bbec99");
-  try { assert.equal(await sha256File(join(checkout.path, "skills/brainstorming/SKILL.md")), "e14914605f640e0841758e45d0ab2a53243b59b921f929e47921c99668f2e61d"); }
-  finally { await checkout.cleanup(); }
+const exec = promisify(execFile);
+
+async function git(repository, args) {
+  return exec("git", ["-c", "core.autocrlf=false", "-C", repository, ...args]);
+}
+
+test("checks out an immutable local revision and detects checkout tampering", async () => {
+  const source = await mkdtemp(join(tmpdir(), "upstream-fixture-"));
+  let checkout;
+  try {
+    await git(source, ["init", "-q"]);
+    await git(source, ["config", "user.name", "Provenance Test"]);
+    await git(source, ["config", "user.email", "provenance@example.invalid"]);
+    await mkdir(join(source, "skills/fixture"), { recursive: true });
+    await writeFile(join(source, "skills/fixture/SKILL.md"), "pinned content\n");
+    await git(source, ["add", "."]);
+    await git(source, ["commit", "-q", "-m", "fixture"]);
+    const { stdout } = await git(source, ["rev-parse", "HEAD"]);
+    const revision = stdout.trim();
+
+    await writeFile(join(source, "skills/fixture/SKILL.md"), "uncommitted source tamper\n");
+    checkout = await checkoutImmutable(source, revision);
+    const pinnedFile = join(checkout.path, "skills/fixture/SKILL.md");
+    const pinnedHash = await sha256File(pinnedFile);
+    await verifyLocalEntries([{ name: "fixture", localSha256: pinnedHash }], checkout.path, "skills");
+    await writeFile(pinnedFile, "checkout tamper\n");
+    await assert.rejects(
+      verifyLocalEntries([{ name: "fixture", localSha256: pinnedHash }], checkout.path, "skills"),
+      /tamper/i,
+    );
+  } finally {
+    if (checkout) await checkout.cleanup();
+    await rm(source, { recursive: true, force: true });
+  }
 });
 
 test("immutable checkout disables Git line-ending conversion", async () => {
@@ -47,6 +79,26 @@ test("detects local tampering and excluded entries", async () => {
   await writeFile(join(root, "tree/sub/file"), "content");
   assert.match(await sha256Path(join(root, "tree")), /^[a-f0-9]{64}$/);
   await rm(root, { recursive: true, force: true });
+});
+
+test("sha256Path rejects symbolic links", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "hash-symlink-"));
+  try {
+    await mkdir(join(root, "tree"));
+    await writeFile(join(root, "target"), "content");
+    try {
+      await symlink(join(root, "target"), join(root, "tree", "link"), "file");
+    } catch (error) {
+      if (["EPERM", "EACCES", "ENOTSUP"].includes(error?.code)) {
+        t.skip(`OS disallows symlink creation: ${error.code}`);
+        return;
+      }
+      throw error;
+    }
+    await assert.rejects(sha256Path(join(root, "tree")), /unsupported filesystem entry.*link/i);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 
 test("excluded skill name and objective reason round-trip into release report", () => {
@@ -98,6 +150,54 @@ test("acquisition gate excludes a missing requested source from lock, payload, a
     assert.deepEqual(verifyExclusionSection(writtenLock.skills, report), [{ name: "missing", reason: excluded.exclusionReason }]);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+for (const failureAt of [2, 3]) {
+  test(`acquisition gate restores every coherent output when replacement ${failureAt} fails`, async () => {
+    const root = await mkdtemp(join(tmpdir(), "acquisition-rollback-fixture-"));
+    try {
+      const sourceRoot = join(root, "sources"), output = join(root, "output");
+      const payloadOutputPath = join(output, "skills");
+      const lockOutputPath = join(output, "skills.lock.json");
+      const releaseReportOutputPath = join(output, "release-report.md");
+      await mkdir(join(sourceRoot, "new-skill"), { recursive: true });
+      await writeFile(join(sourceRoot, "new-skill", "SKILL.md"), "---\nname: new-skill\n---\nnew\n");
+      await mkdir(payloadOutputPath, { recursive: true });
+      await writeFile(join(payloadOutputPath, "ORIGINAL"), "original payload\n");
+      await writeFile(lockOutputPath, "original lock\n");
+      await writeFile(releaseReportOutputPath, "original report\n");
+
+      const sources = { skills: [{
+        name: "new-skill", sourceType: "original", localRoot: "projectSkills",
+        localPath: "new-skill/SKILL.md", license: "MIT",
+      }] };
+      const lock = { skills: [{
+        name: "new-skill", sourceType: "original", localSha256: "0".repeat(64),
+        releaseCommit: "0".repeat(40), license: "MIT", dependencies: [],
+      }] };
+      await writeFile(join(root, "sources.json"), JSON.stringify(sources));
+      await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+      await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+
+      await assert.rejects(runAcquisitionGate({
+        sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"),
+        lockOutputPath, payloadOutputPath,
+        releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath,
+        environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot },
+        _testHooks: { beforeReplacement: replacement => {
+          if (replacement === failureAt) throw new Error(`injected replacement failure ${failureAt}`);
+        } },
+      }), new RegExp(`injected replacement failure ${failureAt}`));
+
+      assert.deepEqual(await readdir(payloadOutputPath), ["ORIGINAL"]);
+      assert.equal(await readFile(join(payloadOutputPath, "ORIGINAL"), "utf8"), "original payload\n");
+      assert.equal(await readFile(lockOutputPath, "utf8"), "original lock\n");
+      assert.equal(await readFile(releaseReportOutputPath, "utf8"), "original report\n");
+      assert.deepEqual((await readdir(output)).sort(), ["release-report.md", "skills", "skills.lock.json"]);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
+}
 
 test("acquisition gate excludes valid third-party sources with missing or tampered legal payload", async () => {
   const root = await mkdtemp(join(tmpdir(), "acquisition-legal-fixture-"));
