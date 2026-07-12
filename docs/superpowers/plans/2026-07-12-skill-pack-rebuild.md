@@ -589,7 +589,7 @@ Use temporary host homes/config directories. Add repository marketplace, install
 
 - [ ] **Step 4: Compare discoveries and document evidence**
 
-Run: `node scripts/verify-pack.mjs --native-report docs/release-report.md`
+Run: `node scripts/verify-pack.mjs` (required structured receipt: `manifests/native-discovery.json`). Optional supporting Markdown cross-check: `node scripts/verify-pack.mjs --native-report docs/release-report.md`.
 Expected: both installed/native payload sets equal the lock included set; any smaller model-session-visible subset is documented as host runtime behavior rather than reported as package exclusion.
 
 - [ ] **Step 5: Commit evidence**

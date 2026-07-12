@@ -6,7 +6,7 @@ Release remains manual. CI success does not authorize publication or repository 
 
 - [ ] `npm ci` exits 0 on Node.js 22.
 - [ ] `npm test` exits 0.
-- [ ] `npm run verify:pack` reports expected included inventory.
+- [ ] `npm run verify:pack` reports expected lock, directories, docs, both native receipt inventories, and payload hash.
 - [ ] `npm run verify:upstream` verifies every included third-party skill at pinned revision.
 - [ ] Every excluded skill has objective source or legal failure reason in release report.
 

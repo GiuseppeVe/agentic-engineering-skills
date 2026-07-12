@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "evidenceSource": "task-10-isolated-native-installs",
+  "capturedAt": "2026-07-12",
+  "environment": {
+    "isolation": "Fresh native-Windows profile; USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME, and CLAUDE_CONFIG_DIR set before every command.",
+    "normalHostConfigMutated": false
+  },
+  "installedPayload": {
+    "root": "plugins/agentic-engineering-skills/skills",
+    "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
+    "skills": [
+      "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
+      "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
+      "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
+      "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+    ]
+  },
+  "hosts": {
+    "codex": {
+      "version": "codex-cli 0.141.0",
+      "discoveryBasis": "isolated-installed-payload",
+      "discoveredSkills": [
+        "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
+        "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
+        "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
+        "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+      ],
+      "commands": [
+        { "command": "codex --version", "exitCode": 0 },
+        { "command": "codex plugin marketplace add $S --json", "exitCode": 0 },
+        { "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json", "exitCode": 0 },
+        { "command": "codex plugin list --json", "exitCode": 0 },
+        { "command": "codex exec --ephemeral --ignore-user-config --skip-git-repo-check -C $S '<discovery prompt>'", "exitCode": 0 }
+      ],
+      "modelSession": {
+        "exactInventoryClaimed": false,
+        "result": "Ambient skills and 2% skill-description context budget yielded incomplete subsets. Installed native payload inventory is authoritative receipt basis."
+      }
+    },
+    "claude": {
+      "version": "2.1.201 (Claude Code)",
+      "discoveryBasis": "isolated-installed-payload",
+      "discoveredSkills": [
+        "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
+        "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
+        "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
+        "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+      ],
+      "commands": [
+        { "command": "claude --version", "exitCode": 0 },
+        { "command": "claude plugin marketplace add ./source --scope user", "exitCode": 0 },
+        { "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user", "exitCode": 0 },
+        { "command": "claude plugin list --json", "exitCode": 0 },
+        { "command": "claude -p --no-session-persistence --setting-sources user '<discovery prompt>'", "exitCode": 0 }
+      ],
+      "modelSession": { "exactInventoryClaimed": true, "result": "Exact 19-name line returned." }
+    }
+  }
+}
