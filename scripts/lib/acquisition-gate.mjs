@@ -1,5 +1,5 @@
 import { cp, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { compareLockDirectories, listFlatSkillDirectories, resolveAcquisitionPath, validateManifest, validateSourceManifest, verifyLocalEntries } from "./manifest.mjs";
 import { replaceExclusionSection, verifyExclusionSection } from "./release-report.mjs";
@@ -8,6 +8,32 @@ import { sha256File, sha256Path } from "./hash.mjs";
 function missingReason(source, error) {
   if (error?.code === "ENOENT") return `Configured source path is absent: ${source.localPath}.`;
   return `Source verification failed: ${error?.message ?? String(error)}`;
+}
+
+function legalReason(error) {
+  return `Legal verification failed: ${error?.message ?? String(error)}`;
+}
+
+function resolveLegalPath(root, path, skillName) {
+  if (!path || isAbsolute(path) || path.split(/[\\/]/).includes("..")) {
+    throw new Error(`license path must be portable and relative for ${skillName}: ${path}`);
+  }
+  const resolvedRoot = resolve(root), resolvedPath = resolve(resolvedRoot, path);
+  if (relative(resolvedRoot, resolvedPath).startsWith("..")) throw new Error(`license path escapes legal payload root for ${skillName}: ${path}`);
+  return resolvedPath;
+}
+
+async function verifyLegalPayload(entry, legalPayloadRootPath) {
+  if (!legalPayloadRootPath) throw new Error(`explicit legal payload root is required for ${entry.name}`);
+  if (!Array.isArray(entry.licenseFiles) || entry.licenseFiles.length === 0) throw new Error(`required licenseFiles metadata is absent for ${entry.name}`);
+  for (const legal of entry.licenseFiles) {
+    const path = resolveLegalPath(legalPayloadRootPath, legal.path, entry.name);
+    await stat(path);
+    if (legal.sha256) {
+      const actual = await sha256File(path);
+      if (actual !== legal.sha256) throw new Error(`license hash mismatch for ${entry.name} at ${legal.path}: expected ${legal.sha256}, got ${actual}`);
+    }
+  }
 }
 
 async function atomicReplace(staged, destination) {
@@ -30,7 +56,7 @@ async function atomicReplace(staged, destination) {
 }
 
 /** Runs local source verification and import into isolated outputs. */
-export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lockOutputPath, payloadOutputPath, releaseReportInputPath, releaseReportOutputPath, environment = process.env }) {
+export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lockOutputPath, payloadOutputPath, legalPayloadRootPath, releaseReportInputPath, releaseReportOutputPath, environment = process.env }) {
   if (!lockOutputPath || !payloadOutputPath || !releaseReportOutputPath) throw new Error("explicit lock, payload, and release-report output paths are required");
   const sources = validateSourceManifest(JSON.parse(await readFile(sourceManifestPath, "utf8")));
   const lock = JSON.parse(await readFile(lockInputPath, "utf8"));
@@ -56,6 +82,15 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
       } catch (error) {
         entry.excluded = true;
         entry.exclusionReason = missingReason(source, error);
+      }
+      if (!entry.excluded && entry.sourceType !== "original") {
+        try {
+          await verifyLegalPayload(entry, legalPayloadRootPath);
+        } catch (error) {
+          await rm(join(stagedPayload, source.name), { recursive: true, force: true });
+          entry.excluded = true;
+          entry.exclusionReason = legalReason(error);
+        }
       }
     }
     const entries = validateManifest(lock);
