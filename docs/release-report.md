@@ -21,7 +21,7 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 | Command | Scope | Exit code | Result |
 | --- | --- | --- | --- |
-| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 77-test suite. |
+| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 79-test suite. |
 
 ## Public audit
 
@@ -31,12 +31,12 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 ## Integrated finish gate
 
-Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate and functional hardening SHA `2cee37ecf6430eb7663d63ab79a12eee1ad6eae7` before this report update. Candidate includes acquisition-filesystem boundary hardening and a release runner regression test that rejects zero-test false greens. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. Portable-root expectations derive from platform-native `path.resolve` and `path.relative`; a Windows Node 24 mapped-drive probe passes the manifest and deterministic local provenance tests.
+Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate and functional hardening SHA `4ba68b35eab68b0ff8cc6dbdffdee320bd9f5e66` before this report update. Candidate includes acquisition-filesystem boundary hardening for file, directory, nested, and legal-file symlinks plus a release runner regression test that rejects zero-test false greens. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. Portable-root expectations derive from platform-native `path.resolve` and `path.relative`; a Windows Node 24 mapped-drive probe passes the manifest and deterministic local provenance tests.
 
 | Command | Tool version | Exit code | Result |
 | --- | --- | --- | --- |
 | `npm ci` | Node `v24.16.0`; npm `11.13.0` | 0 | Installed lockfile exactly; 0 vulnerabilities. |
-| `npm test` | Node `v24.16.0` | 0 | 77 tests passed; runner accepted a complete nonzero summary; 0 failed, skipped, cancelled, or todo. |
+| `npm test` | Node `v24.16.0` | 0 | 79 tests passed; runner accepted a complete nonzero summary; 0 failed, skipped, cancelled, or todo. |
 | `npm run verify:pack` | Node `v24.16.0` | 0 | Verified schema-v2 native receipt and 19 requested skills: 19 included, 0 excluded. |
 | `npm run verify:installed-native -- --host codex --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Codex marketplace install located from CLI JSON and isolated host cache. |
 | `npm run verify:installed-native -- --host claude --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Claude marketplace install located from CLI JSON and isolated host cache. |
@@ -55,11 +55,11 @@ Protected checkout receipts, captured before and after Task 11 without mutation:
 | --- | --- | --- | --- |
 | Original | `main` | `7b3cb3d53c8ecd4655b7fdaa97cb8a88ef56c03a` | Preserved staged `docs/skill-provenance.md`, modified harness plan/spec, and untracked `.vscode/`. |
 | Quarantine | `impl/agentic-harness-workflow` | `f9eeb9278db42d9a863137a523d5e2bf3dbe62ed` | Clean; branch and worktree retained. |
-| Rebuild | `codex/rebuild-skill-pack` | `2cee37ecf6430eb7663d63ab79a12eee1ad6eae7` | Only this report changed after gates; npm output cleaned. |
+| Rebuild | `codex/rebuild-skill-pack` | `4ba68b35eab68b0ff8cc6dbdffdee320bd9f5e66` | Only this report changed after gates; npm output cleaned. |
 
 ## CI configuration and observation
 
-Tracked CI is configured for Ubuntu, Node 22, `npm ci`, all deterministic release gates, official Codex CLI `0.141.0`, Claude Code `2.1.201`, isolated native installation, and installed-payload verification for both hosts. Contract tests confirm command order and required gates. No GitHub Actions run for candidate `2cee37e` was observed in this local finish gate because branch was not pushed and no pull request or workflow dispatch was performed. Local Node 24 and host-validator results above are observed evidence; workflow success remains configured, not claimed.
+Tracked CI is configured for Ubuntu, Node 22, `npm ci`, all deterministic release gates, official Codex CLI `0.141.0`, Claude Code `2.1.201`, isolated native installation, and installed-payload verification for both hosts. Contract tests confirm command order and required gates. No GitHub Actions run for candidate `4ba68b3` was observed in this local finish gate because branch was not pushed and no pull request or workflow dispatch was performed. Local Node 24 and host-validator results above are observed evidence; workflow success remains configured, not claimed.
 
 ## Native validation and discovery
 
@@ -101,7 +101,7 @@ Codex marketplace installation itself is isolated and successful. However, Windo
 
 | Action | Status |
 | --- | --- |
-| Commit | performed locally: `2f72ecc`, `94f53d1`, `b321f34`, `25cff4a`, `d9ab968`, `4ca484c`, `782acad`, `c9e160e`, `41341ac`, `9bade44`, `46a201b`, `943f448`, `0b96c3e`, `d63e110`, `4e07fde`, `fa322bf`, `94159a0`, `af019c7`, `69b88a8`, `e1145b6`, `f2bb15b`, `df62260`, `90b92b1`, `ede7d40`, `4f9cac3`, `492dcd0`, `8a8f9c6`, `6570ae1`, `8e854dd`, `355c598`, `9601ef5`, `1cbd499`, `db6d43d`, `2d64f81`, `9d36cb2`, `ad965f8`, `d6ca6d4`, `0952e6d`, `3598c99`, `c230d90`, `ab52bfc`, `2cee37e` |
+| Commit | performed locally: `2f72ecc`, `94f53d1`, `b321f34`, `25cff4a`, `d9ab968`, `4ca484c`, `782acad`, `c9e160e`, `41341ac`, `9bade44`, `46a201b`, `943f448`, `0b96c3e`, `d63e110`, `4e07fde`, `fa322bf`, `94159a0`, `af019c7`, `69b88a8`, `e1145b6`, `f2bb15b`, `df62260`, `90b92b1`, `ede7d40`, `4f9cac3`, `492dcd0`, `8a8f9c6`, `6570ae1`, `8e854dd`, `355c598`, `9601ef5`, `1cbd499`, `db6d43d`, `2d64f81`, `9d36cb2`, `ad965f8`, `d6ca6d4`, `0952e6d`, `3598c99`, `c230d90`, `ab52bfc`, `2cee37e`, `533bd2b`, `4ba68b3` |
 | Push | not performed |
 | Pull request | not performed |
 | Merge | not performed |
