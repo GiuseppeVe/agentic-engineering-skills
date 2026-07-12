@@ -133,24 +133,24 @@ Exact upstream package paths:
 Local acquisition roots for adapted/original candidates:
 
 ```text
-<user-home>/source-project/source-project/.agents/skills
-/mnt/c<user-home>/.agents/skills
-/mnt/c<user-home>/.codex/skills
+${AGENTIC_PROJECT_SKILLS_ROOT}
+${AGENTIC_USER_SKILLS_ROOT}
+${CODEX_SKILLS_ROOT}
 ```
 
 Exact local candidates:
 
 | Skill | Local file |
 | --- | --- |
-| `wayfinder` | `<user-home>/source-project/source-project/.agents/skills/wayfinder/SKILL.md` |
-| `to-spec` | `<user-home>/source-project/source-project/.agents/skills/to-spec/SKILL.md` |
-| `brainstorming` | `<user-home>/source-project/source-project/.agents/skills/brainstorming/SKILL.md` |
-| `writing-plans` | `<user-home>/source-project/source-project/.agents/skills/writing-plans/SKILL.md` |
-| `cavecrew` | `<user-home>/source-project/source-project/.agents/skills/cavecrew/SKILL.md` |
-| `swarm-orchestration` | `<user-home>/source-project/source-project/.agents/skills/swarm-orchestration/SKILL.md` |
-| `learn-codebase` | `/mnt/c<user-home>/.agents/skills/learn-codebase/SKILL.md` |
-| `implementing-plans` | `<user-home>/source-project/source-project/.agents/skills/implementing-plans/SKILL.md` |
-| `cleaning-repo-with-knip` | `<user-home>/source-project/source-project/.agents/skills/cleaning-repo-with-knip/SKILL.md` |
+| `wayfinder` | `${AGENTIC_PROJECT_SKILLS_ROOT}/wayfinder/SKILL.md` |
+| `to-spec` | `${AGENTIC_PROJECT_SKILLS_ROOT}/to-spec/SKILL.md` |
+| `brainstorming` | `${AGENTIC_PROJECT_SKILLS_ROOT}/brainstorming/SKILL.md` |
+| `writing-plans` | `${AGENTIC_PROJECT_SKILLS_ROOT}/writing-plans/SKILL.md` |
+| `cavecrew` | `${AGENTIC_PROJECT_SKILLS_ROOT}/cavecrew/SKILL.md` |
+| `swarm-orchestration` | `${AGENTIC_PROJECT_SKILLS_ROOT}/swarm-orchestration/SKILL.md` |
+| `learn-codebase` | `${AGENTIC_USER_SKILLS_ROOT}/learn-codebase/SKILL.md` |
+| `implementing-plans` | `${AGENTIC_PROJECT_SKILLS_ROOT}/implementing-plans/SKILL.md` |
+| `cleaning-repo-with-knip` | `${AGENTIC_PROJECT_SKILLS_ROOT}/cleaning-repo-with-knip/SKILL.md` |
 
 ## Tasks
 
@@ -505,7 +505,7 @@ git commit -m "docs: explain workflow and installation"
 
 - [ ] **Step 1: Write failing table-driven fixtures**
 
-Cover `sk-proj-`, `sk-ant-`, `AIza`, `ghp_`, PEM private keys, `.env`, `/home/<user>`, `C:\\Users\\<user>`, non-public URLs, unresolved legal template brackets, logs, generated archives, and files above the configured release limit. Include one clean fixture.
+Cover `sk-proj-`, `sk-ant-`, `AIza`, `ghp_`, PEM private keys, `.env`, Linux and Windows user-home paths, non-public URLs, unresolved legal template brackets, logs, generated archives, and files above the configured release limit. Include one clean fixture.
 
 - [ ] **Step 2: Verify red**
 
