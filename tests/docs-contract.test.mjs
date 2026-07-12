@@ -22,6 +22,14 @@ function tableRows(markdown) {
   return markdown.split('\n').filter((line) => /^\| `[^`]+` \|/.test(line));
 }
 
+function cells(row) {
+  return row.slice(1, -1).split('|').map((cell) => cell.trim().replaceAll('`', ''));
+}
+
+function fencedCommands(markdown) {
+  return [...markdown.matchAll(/^```text\n([\s\S]*?)^```$/gm)].flatMap((match) => match[1].trim().split('\n'));
+}
+
 test('required documentation exists', () => {
   for (const path of docs) assert.ok(existsSync(resolve(root, path)), `missing ${path}`);
 });
@@ -35,9 +43,16 @@ test('README has required exact section sequence and manifest-derived install co
   const claudeMarket = json('.claude-plugin/marketplace.json');
   const codexPlugin = codexMarket.plugins[0].name;
   const claudePlugin = claudeMarket.plugins[0].name;
-  assert.match(source, new RegExp(`codex plugin install ${codexPlugin.replaceAll('-', '\\-')}`));
-  assert.match(source, new RegExp(`/plugin marketplace add ${claudeMarket.name.replaceAll('-', '\\-')}`));
-  assert.match(source, new RegExp(`/plugin install ${claudePlugin.replaceAll('-', '\\-')}@${claudeMarket.name.replaceAll('-', '\\-')}`));
+  assert.deepEqual(fencedCommands(source), [
+    'codex plugin marketplace add GiuseppeVe/agentic-engineering-skills',
+    `codex plugin add ${codexPlugin}@${codexMarket.name}`,
+    'claude plugin marketplace add GiuseppeVe/agentic-engineering-skills',
+    `claude plugin install ${claudePlugin}@${claudeMarket.name}`,
+  ]);
+  assert.match(source, /`codex plugin list --available --json`/);
+  assert.match(source, /`claude plugin list`/);
+  assert.match(source, /fresh host session/i);
+  assert.match(source, /invoke one included skill/i);
 });
 
 test('workflow presents seven phases in order and maps included skills', () => {
@@ -49,9 +64,16 @@ test('workflow presents seven phases in order and maps included skills', () => {
 });
 
 test('compatibility names exactly two verified hosts', () => {
-  const rows = tableRows(read('docs/compatibility.md'));
+  const source = read('docs/compatibility.md');
+  const rows = tableRows(source);
   assert.equal(rows.length, 2);
-  assert.deepEqual(rows.map((row) => row.split('|')[1].trim().replaceAll('`', '')), ['Codex', 'Claude Code']);
+  assert.deepEqual(rows.map(cells).map(([host, status]) => ({ host, status })), [
+    { host: 'Codex', status: 'Verified' },
+    { host: 'Claude Code', status: 'Verified' },
+  ]);
+  assert.match(source, /`codex plugin list --available --json`/);
+  assert.match(source, /`claude plugin list`/);
+  assert.match(source, /fresh corresponding host session/i);
 });
 
 test('provenance inventory equals lock inventory', () => {
@@ -71,10 +93,27 @@ test('selective installation has one lock-derived row per skill', () => {
   assert.deepEqual(rows.map((row) => row.split('|')[1].trim().replaceAll('`', '')).sort(), names);
   for (const skill of lock) {
     const row = rows.find((candidate) => candidate.startsWith(`| \`${skill.name}\` |`));
-    for (const dependency of skill.dependencies) assert.ok(row.includes(`\`${dependency}\``));
-    const licenses = skill.licenseFiles?.map(({ path }) => path) ?? ['LICENSE'];
-    for (const license of licenses) assert.ok(row.includes(license), `missing ${license} for ${skill.name}`);
-    assert.doesNotMatch(row, /\|\s*\|/);
+    const [, dependencyCell, licenseCell, lostStage] = cells(row);
+    const dependencies = dependencyCell === 'None' ? [] : dependencyCell.split(';').map((value) => value.trim());
+    const licenses = licenseCell.split(';').map((value) => value.trim());
+    assert.deepEqual(dependencies, skill.dependencies, `wrong dependencies for ${skill.name}`);
+    assert.deepEqual(licenses, skill.licenseFiles?.map(({ path }) => path) ?? ['LICENSE'], `wrong licenses for ${skill.name}`);
+    assert.match(lostStage, /^(Understand|Design|Plan|Implement|Verify|Review|Clean):\s*\S/);
+  }
+});
+
+test('selective legal sets exactly join third-party notices', () => {
+  const selective = new Map(tableRows(read('docs/selective-install.md')).map((row) => {
+    const [name, , legal] = cells(row);
+    return [name, legal.split(';').map((value) => value.trim())];
+  }));
+  const noticeRows = tableRows(read('THIRD_PARTY_NOTICES.md'));
+  const noticeLegal = new Map(noticeRows.map((row) => {
+    const rowCells = cells(row);
+    return [rowCells[0], rowCells[6].split('<br>').map((value) => value.trim())];
+  }));
+  for (const skill of lock.filter(({ sourceType }) => sourceType !== 'original')) {
+    assert.deepEqual(selective.get(skill.name), noticeLegal.get(skill.name), `notice mismatch for ${skill.name}`);
   }
 });
 
