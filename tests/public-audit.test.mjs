@@ -11,12 +11,18 @@ const auditScript = path.join(root, "scripts", "audit-public.mjs");
 const cleanFixture = path.join(root, "tests", "fixtures", "public-audit", "clean.txt");
 
 function runAudit(args, options = {}) {
+  const { cwd = root, ...spawnOptions } = options;
   return spawnSync(process.execPath, [auditScript, ...args], {
-    cwd: root,
+    cwd,
     encoding: "utf8",
     env: { ...process.env, NODE_ENV: "test" },
-    ...options,
+    ...spawnOptions,
   });
+}
+
+function runGit(cwd, args) {
+  const result = spawnSync("git", args, { cwd, encoding: "utf8" });
+  assert.equal(result.status, 0, `git ${args.join(" ")} failed:\n${result.stderr}`);
 }
 
 async function runFiles(files, extraArgs = []) {
@@ -99,4 +105,27 @@ test("test file override is unavailable outside test mode", async () => {
   });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /test-only/);
+});
+
+test("default mode scans only Git-tracked files", async () => {
+  const repository = await mkdtemp(path.join(tmpdir(), "public-audit-git-"));
+  runGit(repository, ["init"]);
+  runGit(repository, ["config", "user.name", "Public Audit Test"]);
+  runGit(repository, ["config", "user.email", "public-audit@example.invalid"]);
+  await writeFile(path.join(repository, "clean.txt"), "Public release content.\n");
+  runGit(repository, ["add", "clean.txt"]);
+  runGit(repository, ["commit", "-m", "test fixture"]);
+
+  const secret = ["sk", "proj", "mustRemainHidden"].join("-");
+  await writeFile(path.join(repository, ".env"), `TOKEN=${secret}\n`);
+
+  const untrackedResult = runAudit([], { cwd: repository });
+  assert.equal(untrackedResult.status, 0, `${untrackedResult.stdout}\n${untrackedResult.stderr}`);
+
+  runGit(repository, ["add", ".env"]);
+  const trackedResult = runAudit([], { cwd: repository });
+  assert.equal(trackedResult.status, 1, trackedResult.stderr);
+  assert.match(trackedResult.stdout, /^\.env:name:environment-file$/m);
+  assert.equal(trackedResult.stdout.includes(secret), false);
+  assert.equal(trackedResult.stderr.includes(secret), false);
 });
