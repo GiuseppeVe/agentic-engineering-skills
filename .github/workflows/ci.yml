@@ -12,6 +12,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      CODEX_HOME: ${{ runner.temp }}/codex-home
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -20,12 +22,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install Codex validator dependency
-        run: python -m pip install PyYAML==6.0.2
+      - name: Install Codex CLI
+        run: npm install --global @openai/codex@0.141.0
       - name: Install Claude Code validator
         run: npm install --global @anthropic-ai/claude-code@2.1.201
       - name: Install dependencies
@@ -38,7 +36,11 @@ jobs:
         run: npm run verify:upstream
       - name: Audit public release surface
         run: npm run audit:public
-      - name: Validate Codex plugin
-        run: python scripts/validate_plugin.py plugins/agentic-engineering-skills
+      - name: Add local Codex marketplace
+        run: codex plugin marketplace add .
+      - name: Install Codex plugin
+        run: codex plugin add agentic-engineering-skills@agentic-engineering-skills
+      - name: List available Codex plugins
+        run: codex plugin list --available --json
       - name: Validate Claude Code plugin
         run: claude plugin validate .
