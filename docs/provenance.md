@@ -25,3 +25,7 @@
 | `writing-skills` | vendor | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 
 Exact paths, hashes, patches, and legal-file mappings live in [lock manifest](../manifests/skills.lock.json). Licensing summary: [Third-Party Notices](../THIRD_PARTY_NOTICES.md).
+
+## Cavecrew agent-profile adaptation
+
+Seven role contracts (`cleanup`, `controller`, `implementer`, `planner`, `researcher`, `reviewer`, and `test-runner`) adapt the pinned Cavecrew role model from `JuliusBrussee/caveman@0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`. Repository-authored payloads normalize roles into host-neutral contracts and a common result envelope. Canonical repository manifest `manifests/agent-profiles.json` records provenance and exact payload hashes. Installed plugin manifest `plugins/agentic-engineering-skills/manifests/agent-profiles.json` mirrors same seven entries with paths relative to plugin root. These adaptations extend existing `cavecrew` notice; they are not additional vendor copies or native host registrations.
