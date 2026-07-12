@@ -1,36 +1,43 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import YAML from "yaml";
 
 const workflowPath = new URL("../.github/workflows/ci.yml", import.meta.url);
 
-test("CI uses constrained GitHub Actions triggers and permissions", async () => {
-  const workflow = await readFile(workflowPath, "utf8");
+async function loadWorkflow() {
+  return YAML.parse(await readFile(workflowPath, "utf8"));
+}
 
-  assert.match(workflow, /^on:\n  push:\n  pull_request:\n  workflow_dispatch:\s*$/m);
-  assert.doesNotMatch(workflow, /^\s*schedule:/m);
-  assert.match(workflow, /^permissions:\n  contents: read$/m);
-  assert.match(workflow, /^\s*runs-on: ubuntu-latest$/m);
-  assert.match(workflow, /^\s*timeout-minutes: 15$/m);
-  assert.match(workflow, /uses: actions\/setup-node@v4[\s\S]*node-version: 22/);
+test("CI has exact triggers, permissions, runner, and timeout", async () => {
+  const workflow = await loadWorkflow();
+  assert.deepEqual(Object.keys(workflow.on).sort(), ["pull_request", "push", "workflow_dispatch"]);
+  assert.deepEqual(workflow.permissions, { contents: "read" });
+  assert.deepEqual(Object.keys(workflow.jobs), ["verify"]);
+  assert.equal(workflow.jobs.verify["runs-on"], "ubuntu-latest");
+  assert.equal(workflow.jobs.verify["timeout-minutes"], 15);
 });
 
-test("CI runs release gates in required order", async () => {
-  const workflow = await readFile(workflowPath, "utf8");
-  const commands = [
+test("CI setup and executable gates are unique and ordered", async () => {
+  const workflow = await loadWorkflow();
+  const steps = workflow.jobs.verify.steps;
+  assert.ok(steps.some(step => step.uses === "actions/setup-node@v4" && step.with?.["node-version"] === 22));
+  assert.ok(steps.some(step => step.uses === "actions/setup-python@v5" && step.with?.["python-version"] === "3.12"));
+
+  const runs = steps.filter(step => "run" in step).map(step => step.run.trim());
+  assert.equal(new Set(runs).size, runs.length, "every executable run step must be unique");
+  assert.ok(runs.includes("python -m pip install PyYAML==6.0.2"));
+  assert.ok(runs.includes("npm install --global @anthropic-ai/claude-code@2.1.201"));
+
+  const gates = [
     "npm ci",
     "npm test",
     "npm run verify:pack",
     "npm run verify:upstream",
     "npm run audit:public",
-    'python "${CODEX_HOME:-$HOME/.codex}/skills/.system/plugin-creator/scripts/validate_plugin.py" plugins/agentic-engineering-skills',
+    "python scripts/validate_plugin.py plugins/agentic-engineering-skills",
     "claude plugin validate .",
   ];
-
-  let previous = -1;
-  for (const command of commands) {
-    const current = workflow.indexOf(command);
-    assert.ok(current > previous, `missing or out-of-order CI command: ${command}`);
-    previous = current;
-  }
+  assert.deepEqual(runs.filter(command => gates.includes(command)), gates);
+  for (const gate of gates) assert.equal(runs.filter(command => command === gate).length, 1, `${gate} must run exactly once`);
 });

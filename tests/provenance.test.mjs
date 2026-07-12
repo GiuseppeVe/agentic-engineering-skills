@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { sha256File, sha256Path, normalizeLf } from "../scripts/lib/hash.mjs";
 import { checkoutImmutable } from "../scripts/lib/upstream.mjs";
 import { verifyLocalEntries, compareLockDirectories } from "../scripts/lib/manifest.mjs";
+import { renderExclusionSection, verifyExclusionSection } from "../scripts/lib/release-report.mjs";
 
 test("checks out a real immutable superpowers revision", { timeout: 120000 }, async () => {
   const checkout = await checkoutImmutable("https://github.com/obra/superpowers", "d884ae04edebef577e82ff7c4e143debd0bbec99");
@@ -44,6 +45,23 @@ test("detects local tampering and excluded entries", async () => {
   await writeFile(join(root, "tree/sub/file"), "content");
   assert.match(await sha256Path(join(root, "tree")), /^[a-f0-9]{64}$/);
   await rm(root, { recursive: true, force: true });
+});
+
+test("excluded skill name and objective reason round-trip into release report", () => {
+  const entries = [
+    { name: "included", excluded: false },
+    { name: "blocked-skill", excluded: true, exclusionReason: "Pinned source path is absent at revision abc123." },
+  ];
+  const report = renderExclusionSection(entries);
+  assert.match(report, /blocked-skill/);
+  assert.match(report, /Pinned source path is absent at revision abc123\./);
+  assert.deepEqual(verifyExclusionSection(entries, report), [
+    { name: "blocked-skill", reason: "Pinned source path is absent at revision abc123." },
+  ]);
+  assert.throws(
+    () => verifyExclusionSection(entries, report.replace("abc123", "different")),
+    /exclusion report mismatch/,
+  );
 });
 
 test("adapted and original local imports retain provenance contracts", async () => {

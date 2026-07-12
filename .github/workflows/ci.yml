@@ -20,6 +20,14 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Codex validator dependency
+        run: python -m pip install PyYAML==6.0.2
+      - name: Install Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.201
       - name: Install dependencies
         run: npm ci
       - name: Test contracts
@@ -31,6 +39,6 @@ jobs:
       - name: Audit public release surface
         run: npm run audit:public
       - name: Validate Codex plugin
-        run: python "${CODEX_HOME:-$HOME/.codex}/skills/.system/plugin-creator/scripts/validate_plugin.py" plugins/agentic-engineering-skills
+        run: python scripts/validate_plugin.py plugins/agentic-engineering-skills
       - name: Validate Claude Code plugin
         run: claude plugin validate .

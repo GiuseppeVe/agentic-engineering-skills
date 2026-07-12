@@ -11,5 +11,8 @@
     "verify:pack": "node scripts/verify-pack.mjs",
     "verify:upstream": "node scripts/verify-upstream.mjs",
     "audit:public": "node scripts/audit-public.mjs"
+  },
+  "devDependencies": {
+    "yaml": "2.9.0"
   }
 }
