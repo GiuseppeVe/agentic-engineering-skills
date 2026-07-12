@@ -5,7 +5,7 @@ Release remains manual. CI success does not authorize publication or repository 
 ## Pack and source gates
 
 - [ ] `npm ci` exits 0 on Node.js 22.
-- [ ] `npm test` exits 0.
+- [ ] From WSL, a native Windows clone, or a `cmd pushd` mapped drive, `npm test` exits 0 and prints a nonzero final test count. Never release from bare `npm` on a `\\wsl.localhost\\...` UNC working directory; it can false-green with zero tests.
 - [ ] `npm run verify:pack` reports expected lock, directories, docs, both native receipt inventories, and payload hash.
 - [ ] `npm run verify:upstream` verifies every included third-party skill at pinned revision.
 - [ ] Every excluded skill has objective source or legal failure reason in release report.

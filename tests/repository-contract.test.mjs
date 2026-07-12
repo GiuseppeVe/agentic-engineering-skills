@@ -31,7 +31,7 @@ test("package exposes the minimal Node 22 command surface", async () => {
   assert.equal(packageJson.type, "module");
   assert.deepEqual(packageJson.engines, { node: ">=22" });
   assert.deepEqual(packageJson.scripts, {
-    test: "node --test",
+    test: "node scripts/run-tests.mjs",
     "verify:pack": "node scripts/verify-pack.mjs",
     "verify:installed-native": "node scripts/verify-installed-native.mjs",
     "verify:upstream": "node scripts/verify-upstream.mjs",
