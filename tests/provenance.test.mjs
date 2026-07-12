@@ -258,6 +258,42 @@ test("acquisition rejects a source file symlink resolving outside configured roo
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test("acquisition rejects a directory source symlink resolving outside configured root", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-directory-symlink-"));
+  try {
+    const sourceRoot = join(root, "sources"), outside = join(root, "outside"), output = join(root, "output");
+    await mkdir(sourceRoot); await mkdir(outside); await mkdir(output);
+    await writeFile(join(outside, "SKILL.md"), "---\nname: linked\n---\n");
+    try { await symlink(outside, join(sourceRoot, "linked"), "dir"); }
+    catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
+    const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/", license: "MIT" }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+    const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
+    assert.equal(result.skills[0].excluded, true);
+    assert.match(result.skills[0].exclusionReason, /symbolic link|outside configured root/i);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("acquisition rejects a nested symlink inside a directory source", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-nested-symlink-"));
+  try {
+    const sourceRoot = join(root, "sources"), source = join(sourceRoot, "linked"), outside = join(root, "outside.md"), output = join(root, "output");
+    await mkdir(join(source, "nested"), { recursive: true }); await mkdir(output);
+    await writeFile(join(source, "SKILL.md"), "---\nname: linked\n---\n"); await writeFile(outside, "outside\n");
+    try { await symlink(outside, join(source, "nested", "escape.md"), "file"); }
+    catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
+    const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/", license: "MIT" }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+    const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
+    assert.equal(result.skills[0].excluded, true);
+    assert.match(result.skills[0].exclusionReason, /must not contain symbolic links/i);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test("acquisition rejects a legal-file symlink", async (t) => {
   const root = await mkdtemp(join(tmpdir(), "acquisition-legal-symlink-"));
   try {
