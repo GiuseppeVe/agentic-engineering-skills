@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -49,8 +49,8 @@ const contentCases = [
   ["localhost URL", "notes.txt", `endpoint=${["http:/", "localhost:3000", "admin"].join("/")}`, "url:non-public", ["http:/", "localhost:3000", "admin"].join("/")],
   ["private IP URL", "notes.txt", `endpoint=${["http:/", "192.168.1.5", "admin"].join("/")}`, "url:non-public", ["http:/", "192.168.1.5", "admin"].join("/")],
   ["internal hostname URL", "notes.txt", `endpoint=${["https:/", "build.internal", "job"].join("/")}`, "url:non-public", ["https:/", "build.internal", "job"].join("/")],
-  ["legal year placeholder", "LICENSE.txt", `Copyright (c) ${["[year", "] [fullname", "]"].join("")}`, "legal:unresolved-template", ["[fullname", "]"].join("")],
-  ["legal angle placeholder", "NOTICE.txt", `Copyright ${["<YEAR", "> <COPYRIGHT HOLDER", ">"].join("")}`, "legal:unresolved-template", ["<COPYRIGHT HOLDER", ">"].join("")],
+  ["legal year placeholder", "LICENSE.txt", `Copyright (c) ${["[year", "] [fullname", "]"].join("")}`, "legal-template:unresolved", ["[fullname", "]"].join("")],
+  ["legal angle placeholder", "NOTICE.txt", `Copyright ${["<YEAR", "> <COPYRIGHT HOLDER", ">"].join("")}`, "legal-template:unresolved", ["<COPYRIGHT HOLDER", ">"].join("")],
 ];
 
 for (const [label, name, content, rule, secret] of contentCases) {
@@ -128,4 +128,29 @@ test("default mode scans only Git-tracked files", async () => {
   assert.match(trackedResult.stdout, /^\.env:name:environment-file$/m);
   assert.equal(trackedResult.stdout.includes(secret), false);
   assert.equal(trackedResult.stderr.includes(secret), false);
+});
+
+test("retained legal templates are allowed only for exact manifest license paths", async () => {
+  const repository = await mkdtemp(path.join(tmpdir(), "public-audit-license-"));
+  runGit(repository, ["init"]);
+  runGit(repository, ["config", "user.name", "Public Audit Test"]);
+  runGit(repository, ["config", "user.email", "public-audit@example.invalid"]);
+  await mkdir(path.join(repository, "manifests"), { recursive: true });
+  await mkdir(path.join(repository, "licenses"), { recursive: true });
+  const placeholder = ["[yyyy", "]"].join("");
+  await writeFile(path.join(repository, "licenses", "retained-LICENSE"), `Copyright ${placeholder}\n`);
+  await writeFile(path.join(repository, "ordinary.txt"), `Copyright ${placeholder}\n`);
+  await writeFile(path.join(repository, "manifests", "skills.lock.json"), JSON.stringify({
+    skills: [{ licenseFiles: [{ path: "licenses/retained-LICENSE" }] }],
+  }));
+  runGit(repository, ["add", "manifests/skills.lock.json", "licenses/retained-LICENSE"]);
+
+  const approvedResult = runAudit([], { cwd: repository });
+  assert.equal(approvedResult.status, 0, `${approvedResult.stdout}\n${approvedResult.stderr}`);
+
+  runGit(repository, ["add", "ordinary.txt"]);
+  const ordinaryResult = runAudit([], { cwd: repository });
+  assert.equal(ordinaryResult.status, 1, ordinaryResult.stderr);
+  assert.match(ordinaryResult.stdout, /^ordinary\.txt:legal-template:unresolved$/m);
+  assert.doesNotMatch(ordinaryResult.stdout, /retained-LICENSE/);
 });
