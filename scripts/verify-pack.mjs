@@ -6,6 +6,7 @@ import { expectedSkills } from "../tests/expected-inventory.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { verifyExclusionSection } from "./lib/release-report.mjs";
+import { verifyNativeReceipt } from "./lib/native-receipt.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const statusAt = process.argv.indexOf("--status"), status = statusAt >= 0 ? process.argv[statusAt + 1] : undefined;
 if (status && !["vendor", "adapted", "original"].includes(status)) throw new Error(`invalid --status: ${status}`);
@@ -23,6 +24,10 @@ if (JSON.stringify(requested) !== JSON.stringify(expectedSkills)) throw new Erro
 const skillsRoot = join(root, "plugins/agentic-engineering-skills/skills");
 const directories = await listFlatSkillDirectories(skillsRoot);
 compareLockDirectories(entries, directories);
+const included = entries.filter(x => !x.excluded).map(x => x.name).sort();
+const nativeReceipt = JSON.parse(await readFile(join(root, "manifests/native-discovery.json"), "utf8"));
+const nativeResult = await verifyNativeReceipt(nativeReceipt, { included, payloadRoot: skillsRoot });
+process.stdout.write(`Verified native receipt: Codex ${nativeResult.count}, Claude ${nativeResult.count}, ${nativeResult.hash}\n`);
 const selected = entries.filter(x => !x.excluded && (!status || x.sourceType === status));
 await verifyLocalEntries(selected, root);
 await verifyDocumentationInventory(entries.filter(x => !x.excluded).map(x => x.name).sort());
@@ -37,7 +42,6 @@ if (reportAt >= 0) {
   if (!path) throw new Error("--native-report requires a path");
   const report = await readFile(resolve(root, path), "utf8");
   const sets = parseNativeReport(report);
-  const included = entries.filter(x => !x.excluded).map(x => x.name).sort();
   for (const host of ["codex", "claude"]) if (JSON.stringify(sets[host]) !== JSON.stringify(included)) throw new Error(`${host} native inventory mismatch`);
   process.stdout.write(`Verified native discovery: Codex ${sets.codex.length}, Claude ${sets.claude.length}\n`);
 }

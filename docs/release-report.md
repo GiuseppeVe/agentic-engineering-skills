@@ -56,6 +56,8 @@ Protected checkout receipts, captured before and after Task 11 without mutation:
 
 ## Native validation and discovery
 
+Machine-verifiable Task 10 receipt: `manifests/native-discovery.json`. Default `npm run verify:pack` validates its structured host versions, exact commands/exits, both native 19-skill sets, and installed payload tree hash. Markdown below is supporting human-readable evidence, not release gate input.
+
 | Host | Host version | Validation command | Exit code | Discovered skill names |
 | --- | --- | --- | --- | --- |
 | Codex | `codex-cli 0.141.0` | `plugin-creator/scripts/validate_plugin.py plugins/agentic-engineering-skills` | 0 | Installed plugin payload contains exact 19 below; fresh model session did not enumerate all 19 (limitation below). |
