@@ -1,18 +1,37 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
 const lock = JSON.parse(await readFile(new URL("manifests/skills.lock.json", root), "utf8"));
 const sha256 = value => createHash("sha256").update(value).digest("hex");
+const canonicalMit = `MIT License
+
+Copyright (c) 2026 GiuseppeVe
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+`;
 
 test("repository license is canonical MIT for GiuseppeVe", async () => {
   const license = await readFile(new URL("LICENSE", root), "utf8");
-  assert.match(license, /^MIT License\r?\n\r?\nCopyright \(c\) 2026 GiuseppeVe\r?\n/);
-  assert.match(license, /Permission is hereby granted, free of charge/);
-  assert.match(license, /THE SOFTWARE IS PROVIDED "AS IS"/);
+  assert.equal(license, canonicalMit);
 });
 
 test("every third-party entry joins exact pinned legal files", async () => {
@@ -36,11 +55,30 @@ test("Apache-2.0 license and NOTICE match pinned claude-mem blobs", () => {
   ]);
 });
 
-test("third-party notice table covers every third-party skill", async () => {
+test("third-party notice rows exactly join lock entries to legal files", async () => {
   const notice = await readFile(new URL("THIRD_PARTY_NOTICES.md", root), "utf8");
+  const rows = new Map(notice.split("\n").filter(line => /^\| `[^`]+` \|/.test(line)).map(line => {
+    const cells = line.slice(2, -2).split(" | ");
+    return [cells[0].slice(1, -1), cells];
+  }));
+  const holders = new Map([
+    ["https://github.com/obra/superpowers", "Jesse Vincent"],
+    ["https://github.com/JuliusBrussee/caveman", "Julius Brussee"],
+    ["https://github.com/mattpocock/skills", "Matt Pocock"],
+    ["https://github.com/thedotmack/claude-mem", "Alex Newman"],
+    ["https://github.com/ruvnet/ruflo", "ruvnet"],
+  ]);
   for (const entry of lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded)) {
-    assert.ok(notice.includes(`| \`${entry.name}\` |`), `${entry.name}: notice row missing`);
-    assert.match(notice, new RegExp(entry.revision));
-    assert.match(notice, new RegExp(entry.sourceType));
+    const row = rows.get(entry.name);
+    assert.ok(row, `${entry.name}: notice row missing`);
+    assert.equal(row.length, 8, `${entry.name}: unexpected notice columns`);
+    assert.ok(row[1].includes(`(${entry.repository})`), `${entry.name}: source mismatch`);
+    assert.equal(row[2], `\`${entry.revision}\``);
+    assert.equal(row[3], entry.sourceType);
+    assert.equal(row[4], holders.get(entry.repository));
+    assert.equal(row[5], entry.name === "learn-codebase" ? "Apache-2.0" : "MIT");
+    assert.equal(row[6], entry.licenseFiles.map(({ path }) => `\`${path}\``).join("<br>"));
+    assert.ok(row[7].trim(), `${entry.name}: modification notice missing`);
   }
+  assert.equal(rows.size, lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded).length);
 });
