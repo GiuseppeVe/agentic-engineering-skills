@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile, mkdir, rm } from "node:fs/promises";
+import { mkdtemp, writeFile, mkdir, rm, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { sha256File, sha256Path } from "../scripts/lib/hash.mjs";
@@ -11,6 +11,13 @@ test("checks out a real immutable superpowers revision", { timeout: 120000 }, as
   const checkout = await checkoutImmutable("https://github.com/obra/superpowers", "d884ae04edebef577e82ff7c4e143debd0bbec99");
   try { assert.equal(await sha256File(join(checkout.path, "skills/brainstorming/SKILL.md")), "e14914605f640e0841758e45d0ab2a53243b59b921f929e47921c99668f2e61d"); }
   finally { await checkout.cleanup(); }
+});
+
+test("immutable checkout disables Git line-ending conversion", async () => {
+  const source = await readFile(new URL("../scripts/lib/upstream.mjs", import.meta.url), "utf8");
+  assert.match(source, /core\.autocrlf=false/);
+  assert.match(source, /core\.eol=lf/);
+  assert.match(source, /core\.safecrlf=false/);
 });
 
 test("detects local tampering and excluded entries", async () => {
