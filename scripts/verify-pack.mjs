@@ -5,6 +5,7 @@ import { validateManifest, listFlatSkillDirectories, compareLockDirectories, ver
 import { expectedSkills } from "../tests/expected-inventory.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { verifyExclusionSection } from "./lib/release-report.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const statusAt = process.argv.indexOf("--status"), status = statusAt >= 0 ? process.argv[statusAt + 1] : undefined;
 if (status && !["vendor", "adapted", "original"].includes(status)) throw new Error(`invalid --status: ${status}`);
@@ -12,6 +13,8 @@ const allowUnstamped = process.argv.includes("--allow-unstamped-originals");
 const raw = JSON.parse(await readFile(join(root, "manifests/skills.lock.json"), "utf8"));
 if (allowUnstamped) for (const entry of raw.skills.filter(x => x.sourceType === "original" && entryIsUnstamped(x))) entry.releaseCommit = "0".repeat(40);
 const entries = validateManifest(raw);
+const releaseReport = await readFile(join(root, "docs/release-report.md"), "utf8");
+verifyExclusionSection(entries, releaseReport);
 for (const entry of entries.filter(x => x.sourceType === "original" && !(allowUnstamped && /^0{40}$/.test(x.releaseCommit)))) {
   await promisify(execFile)("git", ["-C", root, "cat-file", "-e", `${entry.releaseCommit}^{commit}`]).catch(() => { throw new Error(`releaseCommit does not exist for ${entry.name}: ${entry.releaseCommit}`); });
 }
