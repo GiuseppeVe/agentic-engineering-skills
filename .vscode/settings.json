@@ -1,0 +1,5 @@
+{
+  "files.associations": { "*.mdx": "markdown" },
+  "markdown.preview.breaks": true,
+  "editor.wordWrap": "on"
+}
