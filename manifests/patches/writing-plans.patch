@@ -1,0 +1,204 @@
+diff --git a/writing-plans/SKILL.md b/writing-plans/SKILL.md
+index b1613eb..386fae9 100644
+--- a/writing-plans/SKILL.md
++++ b/writing-plans/SKILL.md
+@@ -3,6 +3,8 @@ name: writing-plans
+ description: Use when you have a spec or requirements for a multi-step task, before touching code
+ ---
+ 
++> **Adaptation:** Based on `obra/superpowers`; adjusted for portable Codex and Claude Code skill-pack use.
++
+ # Writing Plans
+ 
+ ## Overview
+@@ -22,6 +24,59 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
+ 
+ If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+ 
++## Requirements Inventory (MANDATORY)
++
++**Every plan MUST carry an explicit, enumerated Requirements Inventory immediately after the header, before the File Structure section.** This is the single source of truth for *what the plan obligates*. The downstream executor (`implementing-plans` Phase 1) copies this list verbatim to drive its fidelity-coverage gate — so a complete inventory turns that extraction into a 1:1 parse instead of a lossy re-inference. An incomplete inventory is a **plan failure**, exactly like a placeholder.
++
++**The Prose-Is-Not-A-Requirement rule:** every obligation the plan imposes MUST appear as a `REQ-NNN` line in this inventory. Prose, task bodies, and code comments may *explain* an obligation, but they may never *introduce* one that is absent from the inventory. If you find yourself writing "the worker must…" / "ensure that…" / "X has to…" anywhere outside the inventory, stop and add the matching `REQ` first.
++
++### Schema
++
++Each requirement is one line:
++
++```
++- **REQ-NNN** [type] — <atomic obligation>. _Acceptance:_ <objective oracle>. _Satisfied by:_ Task N
++```
++
++- **`REQ-NNN`** — stable, never reused, never renumbered once assigned.
++- **`type`** — one of:
++  - `behavior` — runtime behavior the system must exhibit.
++  - `test` — a test the plan promises to add or keep.
++  - `contract` — a cross-task wiring obligation (see Cross-Task Contracts below).
++  - `constraint` — a cross-cutting rule that applies in more than one place ("all timestamps UTC ISO-8601", "all urls must be https"). These are the ones prose hides and inference drops.
++- **One requirement = one atomic checkable claim.** Split compound obligations ("validate X and enqueue Y") into two `REQ`s.
++- **`Acceptance:` is mandatory and must be objective** — a test name, a command + expected output, or a grep-able artifact. "Works correctly" / "is handled" is not an acceptance oracle; it is a placeholder. If you cannot state an objective oracle, the requirement is too vague to implement — sharpen it or drop it.
++- **`Satisfied by:`** names the Task(s) that implement it. Every `REQ` maps to ≥1 task; every task maps back to ≥1 `REQ` (see Task Structure `Satisfies:` line).
++
++### Cross-Task Contracts (MANDATORY subsection)
++
++The most error-prone obligations have **no single owning task**: "A is wired/consumed/imported by B", a config key one task sets and another reads, a migration a later task depends on, a value stub one task leaves for another to replace. Per-task review never catches these because no single task owns them — they fall through the gap.
++
++List every such contract as a `REQ` of `type: contract`. Each one names *both* endpoints and the wiring that must hold:
++
++```
++- **REQ-007** [contract] — `SubscriptionStore.getSecret` is passed into `DeliveryWorker` as its `secretResolver` (same secret source on both ends). _Acceptance:_ integration test registers a sub, ingests a matching event, asserts the delivered `X-Signature` equals an HMAC independently computed with the stored secret. _Satisfied by:_ Task 10 (wiring) + Task 11 (test).
++```
++
++If there are no cross-task contracts, write `_None._` — explicit emptiness proves you checked.
++
++### Worked example
++
++```markdown
++## Requirements Inventory
++
++### Behavior & constraints
++- **REQ-001** [behavior] — `ingest(event)` rejects an event with empty `type` with `ValidationError`. _Acceptance:_ `eventIngestor.test.ts` "rejects empty type" passes. _Satisfied by:_ Task 6.
++- **REQ-002** [behavior] — delivery retries any non-2xx or network error up to 5 attempts, exponential backoff from 1s. _Acceptance:_ retry test asserts 5 calls, sleeps `[1000,2000,4000,8000]`. _Satisfied by:_ Task 8.
++- **REQ-003** [constraint] — every timestamp recorded anywhere (log lines AND dead-letter `failedAt`) is a UTC ISO-8601 string. _Acceptance:_ grep for timestamp assignments shows all flow through `clock.now()`; clock test asserts `/Z$/`. _Satisfied by:_ Task 2, applied in Task 7 & Task 8.
++
++### Tests
++- **REQ-004** [test] — unit test proves invalid events are rejected. _Acceptance:_ test file exists and passes. _Satisfied by:_ Task 6.
++
++### Cross-task contracts
++- **REQ-005** [contract] — `store.getSecret` wired as the worker's `secretResolver`. _Acceptance:_ integration test asserts delivered signature matches independent HMAC with stored secret. _Satisfied by:_ Task 10 + Task 11.
++```
++
+ ## File Structure
+ 
+ Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
+@@ -33,15 +88,6 @@ Before defining tasks, map out which files will be created or modified and what
+ 
+ This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
+ 
+-## Task Right-Sizing
+-
+-A task is the smallest unit that carries its own test cycle and is worth a
+-fresh reviewer's gate. When drawing task boundaries: fold setup,
+-configuration, scaffolding, and documentation steps into the task whose
+-deliverable needs them; split only where a reviewer could meaningfully
+-reject one task while approving its neighbor. Each task ends with an
+-independently testable deliverable.
+-
+ ## Bite-Sized Task Granularity
+ 
+ **Each step is one action (2-5 minutes):**
+@@ -58,7 +104,7 @@ independently testable deliverable.
+ ```markdown
+ # [Feature Name] Implementation Plan
+ 
+-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
++> **For agentic workers:** REQUIRED EXECUTION SKILL: Use implementing-plans with swarm-orchestration to implement this plan end-to-end. Steps use checkbox (`- [ ]`) syntax for tracking.
+ 
+ **Goal:** [One sentence describing what this builds]
+ 
+@@ -66,32 +112,23 @@ independently testable deliverable.
+ 
+ **Tech Stack:** [Key technologies/libraries]
+ 
+-## Global Constraints
+-
+-[The spec's project-wide requirements — version floors, dependency limits,
+-naming and copy rules, platform requirements — one line each, with exact
+-values copied verbatim from the spec. Every task's requirements implicitly
+-include this section.]
+-
+ ---
+ ```
+ 
++The Requirements Inventory section comes immediately after this header.
++
+ ## Task Structure
+ 
+ ````markdown
+ ### Task N: [Component Name]
+ 
++**Satisfies:** REQ-003, REQ-007
++
+ **Files:**
+ - Create: `exact/path/to/file.py`
+ - Modify: `exact/path/to/existing.py:123-145`
+ - Test: `tests/exact/path/to/test.py`
+ 
+-**Interfaces:**
+-- Consumes: [what this task uses from earlier tasks — exact signatures]
+-- Produces: [what later tasks rely on — exact function names, parameter
+-  and return types. A task's implementer sees only their own task; this
+-  block is how they learn the names and types neighboring tasks use.]
+-
+ - [ ] **Step 1: Write the failing test**
+ 
+ ```python
+@@ -125,6 +162,8 @@ git commit -m "feat: add specific feature"
+ ```
+ ````
+ 
++The `**Satisfies:**` line is mandatory on every task and lists the `REQ` ids that task implements. A task that satisfies no `REQ` is either dead work or a sign of a missing inventory entry.
++
+ ## No Placeholders
+ 
+ Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
+@@ -134,6 +173,8 @@ Every step must contain the actual content an engineer needs. These are **plan f
+ - "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
+ - Steps that describe what to do without showing how (code blocks required for code steps)
+ - References to types, functions, or methods not defined in any task
++- A `REQ` whose `Acceptance:` is non-objective ("works", "is handled") — an acceptance placeholder is still a placeholder
++- An obligation stated only in prose with no matching `REQ`
+ 
+ ## Remember
+ - Exact file paths always
+@@ -145,13 +186,21 @@ Every step must contain the actual content an engineer needs. These are **plan f
+ 
+ After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
+ 
+-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
++**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a `REQ` that captures it? List any gaps and add the missing `REQ`s.
++
++**2. Inventory completeness (no prose-only obligations):** Re-read every task body, the architecture, and any context section hunting for MUST / SHALL / REQUIRED / "has to" / "ensure that" / "always" / "never". Every one MUST already exist as a `REQ`. If it only lives in prose, add the `REQ` now. Pay special attention to `constraint`-type obligations ("all X must be Y") — these apply in multiple places and are the ones inference drops.
++
++**3. Cross-task contracts captured:** Re-read each task asking "does this task assume something it does not itself produce — an import, a config key, a wired dependency, a value another task fills in?" Every such assumption MUST be a `REQ` of type `contract` naming both endpoints. If the Cross-Task Contracts subsection says `_None._`, double-check that is truly the case.
++
++**4. Traceability (both directions):** Every `REQ` has a `Satisfied by:` naming ≥1 task, and that task's `**Satisfies:**` line lists that `REQ`. Every task's `**Satisfies:**` line is non-empty. No orphans either way.
++
++**5. Acceptance oracles:** Every `REQ` has an objective `Acceptance:` — a test name, command + expected output, or grep-able artifact. Replace any non-objective oracle.
+ 
+-**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
++**6. Placeholder scan:** Search your plan for the red flags in the "No Placeholders" section above. Fix them.
+ 
+-**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
++**7. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
+ 
+-If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
++If you find issues, fix them inline. No need to re-review — just fix and move on.
+ 
+ ## Execution Handoff
+ 
+@@ -159,16 +208,16 @@ After saving the plan, offer execution choice:
+ 
+ **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
+ 
+-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
++**1. Implementing Plans (recommended)** - I run the full implementing-plans workflow with swarm-orchestration, per-wave subagents, fidelity review, integrated review, tests, and finish gate
+ 
+-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
++**2. Manual Execution** - Execute tasks in this session with explicit checkpoints and user approvals
+ 
+ **Which approach?"**
+ 
+-**If Subagent-Driven chosen:**
+-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+-- Fresh subagent per task + two-stage review
++**If Implementing Plans chosen:**
++- **REQUIRED SKILLS:** Use `implementing-plans` + `swarm-orchestration`
++- Wave-parallel subagents + full-plan fidelity review + integrated review
+ 
+-**If Inline Execution chosen:**
+-- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
+-- Batch execution with checkpoints for review
++**If Manual Execution chosen:**
++- No required legacy superpowers skill
++- Batch execution with explicit checkpoints for review

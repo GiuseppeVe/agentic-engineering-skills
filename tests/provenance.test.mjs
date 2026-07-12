@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile, mkdir, rm, readFile } from "node:fs/promises";
+import { mkdtemp, writeFile, mkdir, rm, readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { sha256File, sha256Path } from "../scripts/lib/hash.mjs";
@@ -35,4 +35,35 @@ test("detects local tampering and excluded entries", async () => {
   await writeFile(join(root, "tree/sub/file"), "content");
   assert.match(await sha256Path(join(root, "tree")), /^[a-f0-9]{64}$/);
   await rm(root, { recursive: true, force: true });
+});
+
+test("adapted and original local imports retain provenance contracts", async () => {
+  const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
+  const byName = new Map(lock.skills.map(entry => [entry.name, entry]));
+  const adapted = {
+    brainstorming: "obra/superpowers",
+    cavecrew: "JuliusBrussee/caveman",
+    "learn-codebase": "thedotmack/claude-mem",
+    "swarm-orchestration": "ruvnet/ruflo",
+    "to-spec": "mattpocock/skills",
+    wayfinder: "mattpocock/skills",
+    "writing-plans": "obra/superpowers"
+  };
+  for (const [name, upstream] of Object.entries(adapted)) {
+    const entry = byName.get(name);
+    assert.equal(entry.sourceType, "adapted");
+    assert.match(entry.sha256, /^[a-f0-9]{64}$/);
+    assert.equal(await sha256File(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url)), entry.localSha256);
+    assert.match(await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url), "utf8"), new RegExp(`Adaptation:[^\\n]+${upstream.replace("/", "\\/")}`));
+    const patchUrl = new URL(`../${entry.patchPath}`, import.meta.url);
+    assert.ok((await stat(patchUrl)).size > 0);
+    assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
+  }
+  for (const name of ["implementing-plans", "cleaning-repo-with-knip"]) {
+    const entry = byName.get(name);
+    assert.equal(entry.sourceType, "original");
+    assert.equal("revision" in entry, false);
+    assert.equal("repository" in entry, false);
+    assert.equal(await sha256File(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url)), entry.localSha256);
+  }
 });

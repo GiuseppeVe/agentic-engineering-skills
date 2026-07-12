@@ -7,7 +7,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/brainstorming/SKILL.md",
       "sha256": "e14914605f640e0841758e45d0ab2a53243b59b921f929e47921c99668f2e61d",
-      "localSha256": "bba47904a7f6bbee3bf8a107ebbe84e65d392be683bbb898ded736b29e415f90",
+      "localSha256": "c69c54fc930889cc43a9548855ad2ca3dbf6d0aab71b410b480271eed0c0364a",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/brainstorming.patch"
@@ -19,7 +19,7 @@
       "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
       "upstreamPath": "skills/cavecrew/SKILL.md",
       "sha256": "b74f374f6aae6e9a31e78e7d876860406fe5833378e9298536edf176c12f379b",
-      "localSha256": "b74f374f6aae6e9a31e78e7d876860406fe5833378e9298536edf176c12f379b",
+      "localSha256": "4451e65f38fc9ffabf513e22d27397a8768c4e61a2168ca230a1aebbab240676",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/cavecrew.patch"
@@ -38,7 +38,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
-      "releaseCommit": "4ca484c19a05999e507cd995cbadfffc0c34ebf5",
+      "releaseCommit": "",
       "license": "MIT",
       "dependencies": []
     },
@@ -86,7 +86,7 @@
       "name": "implementing-plans",
       "sourceType": "original",
       "localSha256": "ed8df9ba03e1f4789071f4d81eeea0918a8e99499ca12e0dd091a0c46551d0f7",
-      "releaseCommit": "4ca484c19a05999e507cd995cbadfffc0c34ebf5",
+      "releaseCommit": "",
       "license": "MIT",
       "dependencies": []
     },
@@ -107,7 +107,7 @@
       "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
       "upstreamPath": "plugin/skills/learn-codebase/SKILL.md",
       "sha256": "7dece1f0742473515d009d9aa5255305fcec326cabdebb4792d38c5dfb5a71c6",
-      "localSha256": "7dece1f0742473515d009d9aa5255305fcec326cabdebb4792d38c5dfb5a71c6",
+      "localSha256": "35567bb2e215d33276067a821df3aa0e3ccd9991577c7810305e82f8fee3a685",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/learn-codebase.patch"
@@ -129,7 +129,7 @@
       "revision": "7ef4d4e655d81c0451f6f40f35729cce6c9928e7",
       "upstreamPath": ".agents/skills/swarm-orchestration/SKILL.md",
       "sha256": "6a9ee0ac32c27210b9cb0f4648c0336a817c3a736d86da43b08420aafcd04406",
-      "localSha256": "5f573c72f8902db4df421f47a0cb79171ede572e10a4b75fcf4ae16abc31b774",
+      "localSha256": "e0e380cbf65de416b8755542cc5de5d6734760be0349c55e96de4ba1c77f6fa7",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/swarm-orchestration.patch"
@@ -151,7 +151,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/SKILL.md",
       "sha256": "267638edd513b5918de626ad5605d261952abb7428cb308869c663ca924e93e7",
-      "localSha256": "83fdb32a446fb4830202ca7bad2e3bdebacde0d71d22f77dbe41d4070a7cf3af",
+      "localSha256": "cdcac1e43f00e3faddc8cd1249982e4d78e395cd8a1b86629b5e2fb21c135a89",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/to-spec.patch"
@@ -173,7 +173,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/wayfinder/SKILL.md",
       "sha256": "bef437de697fb6984a8a90b7fd82f128609148d6e02f635ce419d03555b351e1",
-      "localSha256": "88e8ce1868dc2c48e1e3d718964e872bfec23e82ef04f72b43e3a558bf910a82",
+      "localSha256": "2505b861e0d98af9d12523ea629848eb7d22e3183100d6af8bdfa3c9f46192ac",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/wayfinder.patch"
@@ -185,7 +185,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "19191bee522e09a9c962c9cb3aba3fa6ae7b950c1650956e2fc7b77f6613a585",
+      "localSha256": "e6f6453090d0aac0b7fe4399206d6af23e784e38a2b5982453b255b24ed55051",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch"

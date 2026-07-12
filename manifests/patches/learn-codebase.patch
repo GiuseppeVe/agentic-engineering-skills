@@ -1,0 +1,15 @@
+diff --git a/learn-codebase/SKILL.md b/learn-codebase/SKILL.md
+old mode 100644
+new mode 100755
+index 0697397..ca54074
+--- a/learn-codebase/SKILL.md
++++ b/learn-codebase/SKILL.md
+@@ -3,6 +3,8 @@ name: learn-codebase
+ description: Prime a codebase by reading every source file in full. Use when starting work on a new or unfamiliar project, or when the user asks to "learn the codebase", "read the codebase", "prime", or "get up to speed".
+ ---
+ 
++> **Adaptation:** Based on `thedotmack/claude-mem`; adjusted for portable Codex and Claude Code codebase discovery.
++
+ # Learn Codebase
+ 
+ Please learn about the codebase by systematically and thoroughly reading
