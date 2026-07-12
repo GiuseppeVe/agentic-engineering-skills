@@ -19,3 +19,7 @@ Require a known route and a validation event per dispatch attempt.
 ## Failure path
 
 Escalate after one retry of invalid structured output.
+
+## Provenance
+
+Adapted public role boundary from Caveman Cavecrew (MIT); see `licenses/MIT-caveman.txt`.

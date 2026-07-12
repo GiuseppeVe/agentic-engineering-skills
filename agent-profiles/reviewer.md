@@ -19,3 +19,7 @@ Verdict is `pass` or `fail`; evidence contains only strings.
 ## Failure path
 
 Return concrete findings; controller escalates malformed output after one retry.
+
+## Provenance
+
+Adapted public role boundary from Caveman Cavecrew (MIT); see `licenses/MIT-caveman.txt`.

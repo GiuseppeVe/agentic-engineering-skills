@@ -19,3 +19,7 @@ Every external claim links to a source and immutable revision when available.
 ## Failure path
 
 Report uncertainty rather than inventing provenance.
+
+## Provenance
+
+Adapted public role boundary from Caveman Cavecrew (MIT); see `licenses/MIT-caveman.txt`.

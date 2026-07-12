@@ -19,3 +19,7 @@ Never remove source or user files without explicit approval.
 ## Failure path
 
 Leave ambiguous artifacts intact and report them.
+
+## Provenance
+
+Adapted public role boundary from Caveman Cavecrew (MIT); see `licenses/MIT-caveman.txt`.

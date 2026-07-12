@@ -1,10 +1,18 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const lock = JSON.parse(readFileSync(new URL("../skills/sources.lock.json", import.meta.url), "utf8"));
-const required = ["name", "source", "revision", "license", "status", "dependencies"];
+const required = ["name", "source", "revision", "upstreamPath", "license", "status", "dependencies", "packagePath"];
+const allowedStatuses = new Set(["vendored", "adapted", "original"]);
 const failures = lock.entries.flatMap((entry) => {
   const missing = required.filter((key) => entry[key] === undefined || entry[key] === "");
-  if (["vendored", "adapted"].includes(entry.status) && entry.license === "unknown") missing.push("known license");
+  if (!/^[0-9a-f]{40}$/.test(entry.revision ?? "")) missing.push("40-character revision");
+  if (!allowedStatuses.has(entry.status)) missing.push("allowed status");
+  if (!existsSync(resolve(entry.packagePath ?? "", "SKILL.md"))) missing.push("package skill");
+  if (["vendored", "adapted"].includes(entry.status)) {
+    if (entry.license === "unknown") missing.push("known license");
+    if (!entry.noticePath || !existsSync(resolve(entry.noticePath))) missing.push("notice path");
+  }
   return missing.length === 0 ? [] : [`${entry.name}: ${missing.join(", ")}`];
 });
 
