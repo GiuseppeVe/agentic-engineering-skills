@@ -1,7 +1,7 @@
 ---
 name: to-spec
 description: Turn the current conversation, wayfinder map, or planning context into a standalone user-readable MDX spec and publish/link it through the project issue tracker — no interview, just synthesis of what you've already discussed.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 > **Adaptation:** Based on `mattpocock/skills`; adjusted for portable Codex and Claude Code skill-pack use.

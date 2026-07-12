@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, writeFile, mkdir, rm, readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { sha256File, sha256Path, normalizeLf } from "../scripts/lib/hash.mjs";
 import { checkoutImmutable } from "../scripts/lib/upstream.mjs";
 import { verifyLocalEntries, compareLockDirectories } from "../scripts/lib/manifest.mjs";
@@ -70,7 +71,10 @@ test("adapted and original local imports retain provenance contracts", async () 
   const adapted = {
     brainstorming: "obra/superpowers",
     cavecrew: "JuliusBrussee/caveman",
+    "grill-me": "mattpocock/skills",
+    "improve-codebase-architecture": "mattpocock/skills",
     "learn-codebase": "thedotmack/claude-mem",
+    "setup-matt-pocock-skills": "mattpocock/skills",
     "swarm-orchestration": "ruvnet/ruflo",
     "to-spec": "mattpocock/skills",
     wayfinder: "mattpocock/skills",
@@ -80,7 +84,9 @@ test("adapted and original local imports retain provenance contracts", async () 
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "adapted");
     assert.match(entry.sha256, /^[a-f0-9]{64}$/);
-    assert.equal(await sha256File(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url)), entry.localSha256);
+    const localSkill = new URL(`../plugins/agentic-engineering-skills/skills/${name}/`, import.meta.url);
+    const localHash = entry.upstreamPath.endsWith("/") ? await sha256Path(fileURLToPath(localSkill)) : await sha256File(new URL("SKILL.md", localSkill));
+    assert.equal(localHash, entry.localSha256);
     assert.match(await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url), "utf8"), new RegExp(`Adaptation:[^\\n]+${upstream.replace("/", "\\/")}`));
     const patchUrl = new URL(`../${entry.patchPath}`, import.meta.url);
     assert.ok((await stat(patchUrl)).size > 0);

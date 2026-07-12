@@ -1,7 +1,10 @@
 diff --git a/wayfinder/SKILL.md b/wayfinder/SKILL.md
-index 2bce062..a46d29e 100644
+index 2bce062..e0aa0df 100644
 --- a/wayfinder/SKILL.md
 +++ b/wayfinder/SKILL.md
+@@ -4 +4 @@
+-disable-model-invocation: true
++disable-model-invocation: false
 @@ -6,0 +7,2 @@
 +> **Adaptation:** Based on `mattpocock/skills`; adjusted for portable Codex and Claude Code skill-pack use.
 +

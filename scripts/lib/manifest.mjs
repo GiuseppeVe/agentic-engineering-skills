@@ -95,8 +95,12 @@ export function resolveAcquisitionPath(source, environment = process.env) {
 export function validateSourceManifest(manifest) {
   if (!manifest || !Array.isArray(manifest.skills)) throw new Error("source manifest skills must be an array");
   for (const source of manifest.skills.filter(x => x.sourceType === "adapted" || x.sourceType === "original")) {
-    if (!localRootEnvironment[source.localRoot]) throw new Error(`invalid localRoot for ${source.name}`);
-    if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
+    const hasLocalAcquisition = source.localRoot !== undefined || source.localPath !== undefined;
+    if (source.sourceType === "original" && !hasLocalAcquisition) throw new Error(`original ${source.name} requires local acquisition fields`);
+    if (hasLocalAcquisition) {
+      if (!localRootEnvironment[source.localRoot]) throw new Error(`invalid localRoot for ${source.name}`);
+      if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
+    }
   }
   return [...manifest.skills].sort((a, b) => a.name.localeCompare(b.name));
 }

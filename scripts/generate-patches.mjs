@@ -13,7 +13,7 @@ for (const source of sources.skills.filter(x => x.sourceType === "adapted")) {
   const normalized = await mkdtemp(join(tmpdir(), "skill-patch-input-"));
   try {
     const local = join(root, "plugins/agentic-engineering-skills/skills", source.name, "SKILL.md");
-    const upstream = join(checkout.path, source.upstreamPath);
+    const upstream = join(checkout.path, source.upstreamPath, source.upstreamPath.endsWith("/") ? "SKILL.md" : "");
     const normalizedUpstream = join(normalized, "upstream.md"), normalizedLocal = join(normalized, "local.md");
     await Promise.all([
       writeFile(normalizedUpstream, normalizeLf(await readFile(upstream))),

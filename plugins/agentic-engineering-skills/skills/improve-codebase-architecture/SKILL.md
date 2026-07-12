@@ -1,8 +1,10 @@
 ---
 name: improve-codebase-architecture
 description: Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
+
+> Adaptation: Derived from mattpocock/skills; enables Codex model invocation for plugin validation and discovery.
 
 # Improve Codebase Architecture
 
