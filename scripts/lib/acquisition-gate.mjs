@@ -1,6 +1,7 @@
 import { cp, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { randomUUID } from "node:crypto";
 import { compareLockDirectories, listFlatSkillDirectories, resolveAcquisitionPath, validateManifest, validateSourceManifest, verifyLocalEntries } from "./manifest.mjs";
 import { replaceExclusionSection, verifyExclusionSection } from "./release-report.mjs";
 import { sha256File, sha256Path } from "./hash.mjs";
@@ -36,27 +37,62 @@ async function verifyLegalPayload(entry, legalPayloadRootPath) {
   }
 }
 
-async function atomicReplace(staged, destination) {
-  await mkdir(dirname(destination), { recursive: true });
-  const backup = `${destination}.acquisition-backup-${process.pid}`;
-  let hadDestination = false;
+async function replaceOutputsAtomically(outputs, beforeReplacement) {
+  const transactionId = `${process.pid}-${randomUUID()}`;
+  const states = outputs.map(({ staged, destination }) => ({
+    staged,
+    destination: resolve(destination),
+    prepared: `${resolve(destination)}.acquisition-stage-${transactionId}`,
+    backup: `${resolve(destination)}.acquisition-backup-${transactionId}`,
+    hadDestination: false,
+    replaced: false,
+  }));
+
   try {
-    await rename(destination, backup);
-    hadDestination = true;
+    // Copy beside each destination first. Final renames therefore never depend on
+    // temporary and output directories sharing a filesystem.
+    for (const state of states) {
+      await mkdir(dirname(state.destination), { recursive: true });
+      await cp(state.staged, state.prepared, { recursive: true, errorOnExist: true, force: false });
+    }
+
+    for (const state of states) {
+      try {
+        await rename(state.destination, state.backup);
+        state.hadDestination = true;
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+      }
+    }
+
+    for (const [index, state] of states.entries()) {
+      await beforeReplacement?.(index + 1, state.destination);
+      await rename(state.prepared, state.destination);
+      state.replaced = true;
+    }
+
+    await Promise.all(states.filter(state => state.hadDestination).map(state => rm(state.backup, { recursive: true, force: true })));
   } catch (error) {
-    if (error.code !== "ENOENT") throw error;
-  }
-  try {
-    await rename(staged, destination);
-    if (hadDestination) await rm(backup, { recursive: true, force: true });
-  } catch (error) {
-    if (hadDestination) await rename(backup, destination);
+    const rollbackErrors = [];
+    for (const state of [...states].reverse()) {
+      try {
+        if (state.replaced) await rm(state.destination, { recursive: true, force: true });
+        if (state.hadDestination) await rename(state.backup, state.destination);
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError);
+      }
+    }
+    if (rollbackErrors.length > 0) throw new AggregateError([error, ...rollbackErrors], "acquisition output replacement and rollback failed");
     throw error;
+  } finally {
+    // Never delete an unrestored backup after a rollback error; it remains the
+    // last recoverable copy. Normal success and successful rollback leave none.
+    await Promise.all(states.map(state => rm(state.prepared, { recursive: true, force: true })));
   }
 }
 
 /** Runs local source verification and import into isolated outputs. */
-export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lockOutputPath, payloadOutputPath, legalPayloadRootPath, releaseReportInputPath, releaseReportOutputPath, environment = process.env }) {
+export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lockOutputPath, payloadOutputPath, legalPayloadRootPath, releaseReportInputPath, releaseReportOutputPath, environment = process.env, _testHooks = {} }) {
   if (!lockOutputPath || !payloadOutputPath || !releaseReportOutputPath) throw new Error("explicit lock, payload, and release-report output paths are required");
   const sources = validateSourceManifest(JSON.parse(await readFile(sourceManifestPath, "utf8")));
   const lock = JSON.parse(await readFile(lockInputPath, "utf8"));
@@ -100,9 +136,11 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
     verifyExclusionSection(entries, renderedReport);
     await writeFile(stagedLock, `${JSON.stringify(lock, null, 2)}\n`);
     await writeFile(stagedReport, renderedReport);
-    await atomicReplace(stagedPayload, payloadOutputPath);
-    await atomicReplace(stagedLock, lockOutputPath);
-    await atomicReplace(stagedReport, releaseReportOutputPath);
+    await replaceOutputsAtomically([
+      { staged: stagedPayload, destination: payloadOutputPath },
+      { staged: stagedLock, destination: lockOutputPath },
+      { staged: stagedReport, destination: releaseReportOutputPath },
+    ], _testHooks.beforeReplacement);
     return lock;
   } finally {
     await rm(stage, { recursive: true, force: true });
