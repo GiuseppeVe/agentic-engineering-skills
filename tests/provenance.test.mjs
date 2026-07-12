@@ -89,7 +89,7 @@ test("sha256Path rejects symbolic links", async (t) => {
     try {
       await symlink(join(root, "target"), join(root, "tree", "link"), "file");
     } catch (error) {
-      if (["EPERM", "EACCES", "ENOTSUP"].includes(error?.code)) {
+      if (error?.code === "EPERM") {
         t.skip(`OS disallows symlink creation: ${error.code}`);
         return;
       }
@@ -198,6 +198,81 @@ for (const failureAt of [2, 3]) {
     }
   });
 }
+
+test("acquisition backup-cleanup failure keeps committed outputs and recoverable backup", async () => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-cleanup-fixture-"));
+  try {
+    const sourceRoot = join(root, "sources"), output = join(root, "output");
+    const payloadOutputPath = join(output, "skills"), lockOutputPath = join(output, "skills.lock.json");
+    const releaseReportOutputPath = join(output, "release-report.md");
+    await mkdir(join(sourceRoot, "new-skill"), { recursive: true });
+    await writeFile(join(sourceRoot, "new-skill", "SKILL.md"), "---\nname: new-skill\n---\nnew\n");
+    await mkdir(payloadOutputPath, { recursive: true });
+    await writeFile(join(payloadOutputPath, "ORIGINAL"), "original payload\n");
+    await writeFile(lockOutputPath, "original lock\n");
+    await writeFile(releaseReportOutputPath, "original report\n");
+    const sources = { skills: [{ name: "new-skill", sourceType: "original", localRoot: "projectSkills", localPath: "new-skill/SKILL.md", license: "MIT" }] };
+    const lock = { skills: [{ name: "new-skill", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources));
+    await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+
+    let retainedBackup;
+    await assert.rejects(runAcquisitionGate({
+      sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"),
+      lockOutputPath, payloadOutputPath, releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath,
+      environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot },
+      _testHooks: { beforeBackupCleanup: (index, backup) => {
+        if (index === 1) { retainedBackup = backup; throw new Error("injected backup cleanup failure"); }
+      } },
+    }), error => {
+      assert.match(error.message, /committed but backup cleanup failed/);
+      assert.match(String(error.errors?.[0]), /injected backup cleanup failure/);
+      return true;
+    });
+
+    assert.deepEqual(await readdir(payloadOutputPath), ["new-skill"]);
+    assert.match(await readFile(join(payloadOutputPath, "new-skill", "SKILL.md"), "utf8"), /new/);
+    const writtenLock = JSON.parse(await readFile(lockOutputPath, "utf8"));
+    assert.equal(writtenLock.skills[0].name, "new-skill");
+    assert.deepEqual(verifyExclusionSection(writtenLock.skills, await readFile(releaseReportOutputPath, "utf8")), []);
+    assert.equal(await readFile(join(retainedBackup, "ORIGINAL"), "utf8"), "original payload\n");
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("acquisition rejects a source file symlink resolving outside configured root", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-source-symlink-"));
+  try {
+    const sourceRoot = join(root, "sources"), outside = join(root, "outside.md"), output = join(root, "output");
+    await mkdir(join(sourceRoot, "linked"), { recursive: true });
+    await writeFile(outside, "---\nname: linked\n---\n");
+    try { await symlink(outside, join(sourceRoot, "linked", "SKILL.md"), "file"); }
+    catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
+    const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/SKILL.md", license: "MIT" }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    await mkdir(output); await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+    const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
+    assert.equal(result.skills[0].excluded, true);
+    assert.match(result.skills[0].exclusionReason, /symbolic link|outside configured root/i);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("acquisition rejects a legal-file symlink", async (t) => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-legal-symlink-"));
+  try {
+    const sourceRoot = join(root, "sources"), legalRoot = join(root, "legal"), output = join(root, "output"), outside = join(root, "outside-LICENSE");
+    await mkdir(join(sourceRoot, "linked"), { recursive: true }); await mkdir(join(legalRoot, "licenses"), { recursive: true }); await mkdir(output);
+    await writeFile(join(sourceRoot, "linked", "SKILL.md"), "---\nname: linked\n---\n"); await writeFile(outside, "license\n");
+    try { await symlink(outside, join(legalRoot, "licenses", "linked-LICENSE"), "file"); }
+    catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
+    const sources = { skills: [{ name: "linked", sourceType: "adapted", repository: "https://example.test/upstream", revision: "a".repeat(40), upstreamPath: "SKILL.md", localRoot: "projectSkills", localPath: "linked/SKILL.md", changeNotice: "fixture", patchPath: "manifests/patches/linked.patch" }] };
+    const lock = { skills: [{ name: "linked", sourceType: "adapted", repository: "https://example.test/upstream", revision: "a".repeat(40), upstreamPath: "SKILL.md", sha256: "b".repeat(64), localSha256: "0".repeat(64), dependencies: [], changeNotice: "fixture", patchPath: "manifests/patches/linked.patch", licenseFiles: [{ upstreamPath: "LICENSE", path: "licenses/linked-LICENSE", sha256: await sha256File(outside) }] }] };
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock)); await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+    const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), legalPayloadRootPath: legalRoot, releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
+    assert.equal(result.skills[0].excluded, true); assert.match(result.skills[0].exclusionReason, /symbolic link/i);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
 
 test("acquisition gate excludes valid third-party sources with missing or tampered legal payload", async () => {
   const root = await mkdtemp(join(tmpdir(), "acquisition-legal-fixture-"));
