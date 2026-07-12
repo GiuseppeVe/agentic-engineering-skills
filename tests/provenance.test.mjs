@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, writeFile, mkdir, rm, readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { sha256File, sha256Path } from "../scripts/lib/hash.mjs";
+import { sha256File, sha256Path, normalizeLf } from "../scripts/lib/hash.mjs";
 import { checkoutImmutable } from "../scripts/lib/upstream.mjs";
 import { verifyLocalEntries, compareLockDirectories } from "../scripts/lib/manifest.mjs";
 
@@ -18,6 +18,15 @@ test("immutable checkout disables Git line-ending conversion", async () => {
   assert.match(source, /core\.autocrlf=false/);
   assert.match(source, /core\.eol=lf/);
   assert.match(source, /core\.safecrlf=false/);
+});
+
+test("patch input LF normalization is idempotent across source line endings", () => {
+  const lf = Buffer.from("first\nsecond\n");
+  const crlf = Buffer.from("first\r\nsecond\r\n");
+  const cr = Buffer.from("first\rsecond\r");
+  assert.deepEqual(normalizeLf(lf), normalizeLf(crlf));
+  assert.deepEqual(normalizeLf(lf), normalizeLf(cr));
+  assert.deepEqual(normalizeLf(normalizeLf(crlf)), normalizeLf(crlf));
 });
 
 test("detects local tampering and excluded entries", async () => {
@@ -65,5 +74,22 @@ test("adapted and original local imports retain provenance contracts", async () 
     assert.equal("revision" in entry, false);
     assert.equal("repository" in entry, false);
     assert.equal(await sha256File(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url)), entry.localSha256);
+  }
+});
+
+test("all skill frontmatter is closed and adaptation notices stay in Markdown body", async () => {
+  const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
+  for (const entry of lock.skills) {
+    const source = await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${entry.name}/SKILL.md`, import.meta.url), "utf8");
+    const normalized = source.replace(/\r\n/g, "\n");
+    assert.ok(normalized.startsWith("---\n"), `${entry.name} must open YAML frontmatter`);
+    const closing = normalized.indexOf("\n---\n", 4);
+    assert.ok(closing > 4, `${entry.name} must close YAML frontmatter`);
+    const frontmatter = normalized.slice(4, closing);
+    const body = normalized.slice(closing + 5);
+    assert.match(frontmatter, /^name:\s*[^\n]+$/m, `${entry.name} frontmatter requires name`);
+    assert.match(frontmatter, /^description:\s*(?:>|[^\n]+)$/m, `${entry.name} frontmatter requires description`);
+    assert.doesNotMatch(frontmatter, /Adaptation:/, `${entry.name} adaptation notice must not be YAML`);
+    if (entry.sourceType === "adapted") assert.match(body, /Adaptation:/, `${entry.name} adaptation notice must be Markdown body`);
   }
 });

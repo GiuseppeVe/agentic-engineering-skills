@@ -1,7 +1,4 @@
 ---
-
-> **Adaptation:** Based on `JuliusBrussee/caveman`; adjusted for portable Codex and Claude Code subagent delegation.
-
 name: cavecrew
 description: >
   Decision guide for delegating to caveman-style subagents. Tells the main
@@ -13,6 +10,8 @@ description: >
   Trigger: "delegate to subagent", "use cavecrew", "spawn investigator/builder/reviewer",
   "save context", "compressed agent output".
 ---
+
+> **Adaptation:** Based on `JuliusBrussee/caveman`; adjusted for portable Codex and Claude Code subagent delegation.
 
 Cavecrew = three subagent presets that emit caveman output. Same job as Anthropic defaults (`Explore`, edit-style agents, reviewer); difference is the tool-result they return is compressed, so main context shrinks per delegation.
 
