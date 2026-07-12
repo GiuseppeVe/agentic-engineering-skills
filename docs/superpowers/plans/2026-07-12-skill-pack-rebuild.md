@@ -45,7 +45,7 @@
 - **REQ-025** [test] — Documentation tests resolve every local link and inventory table entry. _Acceptance:_ `node --test tests/docs-contract.test.mjs` passes. _Satisfied by:_ Task 7.
 - **REQ-026** [test] — Public-audit tests exercise every forbidden marker and one clean control fixture. _Acceptance:_ test output lists at least 10 passing audit cases. _Satisfied by:_ Task 8.
 - **REQ-027** [test] — CI executes pack, provenance, license, plugin, documentation, public-audit, and native validation gates. _Acceptance:_ workflow contract test parses `.github/workflows/ci.yml` and finds every named command. _Satisfied by:_ Task 9.
-- **REQ-028** [test] — Real local smoke tests install and discover the bundle in Codex and Claude Code. _Acceptance:_ `docs/release-report.md` records command, host version, exit code 0, and 19 discovered names for each host unless a documented inclusion gate excluded a skill. _Satisfied by:_ Task 10.
+- **REQ-028** [test] — Real local smoke tests install and discover the bundle in Codex and Claude Code. _Acceptance:_ `docs/release-report.md` records command, host version, exit code 0, and the exact 19-name installed/native payload set for each host. Fresh model-session discovery is recorded separately; hosts may expose a context-budgeted subset at runtime when documented explicitly. _Satisfied by:_ Task 10.
 
 ### Cross-task contracts
 
@@ -585,12 +585,12 @@ Expected: exit 0.
 
 - [ ] **Step 3: Run isolated local installs**
 
-Use temporary host homes/config directories. Add repository marketplace, install `agentic-engineering-skills`, start a fresh non-interactive host session, and record discovered skill names. Do not modify the user's normal Codex or Claude configuration.
+Use temporary host homes/config directories. Add repository marketplace, install `agentic-engineering-skills`, record the installed/native payload skill names, and start a fresh non-interactive host session. Record session-visible names separately when a host applies runtime skill-context budgeting. Do not modify the user's normal Codex or Claude configuration.
 
 - [ ] **Step 4: Compare discoveries and document evidence**
 
 Run: `node scripts/verify-pack.mjs --native-report docs/release-report.md`
-Expected: both native sets equal the lock included set.
+Expected: both installed/native payload sets equal the lock included set; any smaller model-session-visible subset is documented as host runtime behavior rather than reported as package exclusion.
 
 - [ ] **Step 5: Commit evidence**
 
