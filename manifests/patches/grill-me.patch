@@ -1,0 +1,10 @@
+diff --git a/grill-me/SKILL.md b/grill-me/SKILL.md
+index 9470cfc..5d823b2 100644
+--- a/grill-me/SKILL.md
++++ b/grill-me/SKILL.md
+@@ -4 +4 @@
+-disable-model-invocation: true
++disable-model-invocation: false
+@@ -6,0 +7,2 @@
++> Adaptation: Derived from mattpocock/skills; enables Codex model invocation for plugin validation and discovery.
++

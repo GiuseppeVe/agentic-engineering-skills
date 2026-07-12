@@ -1,0 +1,10 @@
+diff --git a/improve-codebase-architecture/SKILL.md b/improve-codebase-architecture/SKILL.md
+index a79b493..dc9a391 100644
+--- a/improve-codebase-architecture/SKILL.md
++++ b/improve-codebase-architecture/SKILL.md
+@@ -4 +4 @@
+-disable-model-invocation: true
++disable-model-invocation: false
+@@ -6,0 +7,2 @@
++> Adaptation: Derived from mattpocock/skills; enables Codex model invocation for plugin validation and discovery.
++

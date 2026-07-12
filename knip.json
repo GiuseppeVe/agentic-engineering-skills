@@ -1,4 +1,0 @@
-{
-  "entry": ["src/cli.ts", "src/evals/run-evals.ts"],
-  "ignore": ["tests/**", "docs/**", "agent-profiles/**"]
-}

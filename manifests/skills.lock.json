@@ -1,0 +1,334 @@
+{
+  "skills": [
+    {
+      "name": "brainstorming",
+      "sourceType": "adapted",
+      "repository": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "upstreamPath": "skills/brainstorming/SKILL.md",
+      "sha256": "e14914605f640e0841758e45d0ab2a53243b59b921f929e47921c99668f2e61d",
+      "localSha256": "c69c54fc930889cc43a9548855ad2ca3dbf6d0aab71b410b480271eed0c0364a",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/brainstorming.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
+    },
+    {
+      "name": "cavecrew",
+      "sourceType": "adapted",
+      "repository": "https://github.com/JuliusBrussee/caveman",
+      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+      "upstreamPath": "skills/cavecrew/SKILL.md",
+      "sha256": "b74f374f6aae6e9a31e78e7d876860406fe5833378e9298536edf176c12f379b",
+      "localSha256": "4daa3154082b2f729c2f5277cdcd4c35e96bebbd4416ffbb2632df51f5da7771",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/cavecrew.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
+          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+        }
+      ]
+    },
+    {
+      "name": "caveman",
+      "sourceType": "vendor",
+      "repository": "https://github.com/JuliusBrussee/caveman",
+      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+      "upstreamPath": "skills/caveman/SKILL.md",
+      "sha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
+      "localSha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
+          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+        }
+      ]
+    },
+    {
+      "name": "cleaning-repo-with-knip",
+      "sourceType": "original",
+      "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
+      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
+      "license": "MIT",
+      "dependencies": []
+    },
+    {
+      "name": "codebase-design",
+      "sourceType": "vendor",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/codebase-design/SKILL.md",
+      "sha256": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad",
+      "localSha256": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "domain-modeling",
+      "sourceType": "vendor",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/domain-modeling/SKILL.md",
+      "sha256": "152e2c97239affb12a60c5f4a7e74ab546a49ae169688c81f4e2ccc42dafa579",
+      "localSha256": "152e2c97239affb12a60c5f4a7e74ab546a49ae169688c81f4e2ccc42dafa579",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "grill-me",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/productivity/grill-me/SKILL.md",
+      "sha256": "6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54",
+      "localSha256": "32ff7360e7d0933ae8e5fab5a9ee633fd027f18041a6b45440826a4bc4aa747e",
+      "dependencies": [],
+      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
+      "patchPath": "manifests/patches/grill-me.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "grilling",
+      "sourceType": "vendor",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/productivity/grilling/SKILL.md",
+      "sha256": "5a35925d03a391bcfa46940868b649b72dba89ec9c19525e785bbb6bd3a7f478",
+      "localSha256": "5a35925d03a391bcfa46940868b649b72dba89ec9c19525e785bbb6bd3a7f478",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "implementing-plans",
+      "sourceType": "original",
+      "localSha256": "ed8df9ba03e1f4789071f4d81eeea0918a8e99499ca12e0dd091a0c46551d0f7",
+      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
+      "license": "MIT",
+      "dependencies": []
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "sha256": "0026900866ed2a542af0559cef11dd7ae707633b75cc6f668c2e7c0a33e35032",
+      "localSha256": "f38fc21dcad9d721d90ad18bf278df8f81a8ea0aab8f1b58236cb1811cfed0a6",
+      "dependencies": [],
+      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
+      "patchPath": "manifests/patches/improve-codebase-architecture.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "learn-codebase",
+      "sourceType": "adapted",
+      "repository": "https://github.com/thedotmack/claude-mem",
+      "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
+      "upstreamPath": "plugin/skills/learn-codebase/SKILL.md",
+      "sha256": "7dece1f0742473515d009d9aa5255305fcec326cabdebb4792d38c5dfb5a71c6",
+      "localSha256": "35567bb2e215d33276067a821df3aa0e3ccd9991577c7810305e82f8fee3a685",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/learn-codebase.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "upstreamPath": "NOTICE",
+          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE",
+          "sha256": "35003c303ee484c77872fd45eb5d590ce679d1ae7ac5bb672d33069cca66685b"
+        }
+      ]
+    },
+    {
+      "name": "setup-matt-pocock-skills",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/setup-matt-pocock-skills/",
+      "sha256": "8ccdc4a8cb9f95da9d997fe43863bd212ea64ae737ad7d7f66bd98a920980819",
+      "localSha256": "63cffe59cfbaa00673d2fb5bccaa3c1cbbc80fc3af34bb459c6347177061980a",
+      "dependencies": [],
+      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
+      "patchPath": "manifests/patches/setup-matt-pocock-skills.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "swarm-orchestration",
+      "sourceType": "adapted",
+      "repository": "https://github.com/ruvnet/ruflo",
+      "revision": "7ef4d4e655d81c0451f6f40f35729cce6c9928e7",
+      "upstreamPath": ".agents/skills/swarm-orchestration/SKILL.md",
+      "sha256": "6a9ee0ac32c27210b9cb0f4648c0336a817c3a736d86da43b08420aafcd04406",
+      "localSha256": "e0e380cbf65de416b8755542cc5de5d6734760be0349c55e96de4ba1c77f6fa7",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/swarm-orchestration.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE",
+          "sha256": "a45ba66fa502c49ad108440536d8aa91dfe9c04575a32a01287839bee336199c"
+        }
+      ]
+    },
+    {
+      "name": "test-driven-development",
+      "sourceType": "vendor",
+      "repository": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "upstreamPath": "skills/test-driven-development/",
+      "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
+      "localSha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
+    },
+    {
+      "name": "to-spec",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/to-spec/SKILL.md",
+      "sha256": "267638edd513b5918de626ad5605d261952abb7428cb308869c663ca924e93e7",
+      "localSha256": "73eafbaf483244d387922cdba85b568f01d735b1b470f815ff67649864b6109f",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/to-spec.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "using-git-worktrees",
+      "sourceType": "vendor",
+      "repository": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "upstreamPath": "skills/using-git-worktrees/",
+      "sha256": "e6306e69246610dc203c8639584542e16bfbb0b09d0adddac533ca009fa93180",
+      "localSha256": "e6306e69246610dc203c8639584542e16bfbb0b09d0adddac533ca009fa93180",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
+    },
+    {
+      "name": "wayfinder",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
+      "upstreamPath": "skills/engineering/wayfinder/SKILL.md",
+      "sha256": "bef437de697fb6984a8a90b7fd82f128609148d6e02f635ce419d03555b351e1",
+      "localSha256": "1136929e75f15a2b7ea140619cd690254afabacf057d1cbd65b9103948054eed",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/wayfinder.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "writing-plans",
+      "sourceType": "adapted",
+      "repository": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "upstreamPath": "skills/writing-plans/SKILL.md",
+      "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
+      "localSha256": "e6f6453090d0aac0b7fe4399206d6af23e784e38a2b5982453b255b24ed55051",
+      "dependencies": [],
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/writing-plans.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
+    },
+    {
+      "name": "writing-skills",
+      "sourceType": "vendor",
+      "repository": "https://github.com/obra/superpowers",
+      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
+      "upstreamPath": "skills/writing-skills/",
+      "sha256": "8dac0608dbab9905a3ac7dcbb52cf796fec408a844feb53b9f2dc790394fe73d",
+      "localSha256": "8dac0608dbab9905a3ac7dcbb52cf796fec408a844feb53b9f2dc790394fe73d",
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
+    }
+  ]
+}

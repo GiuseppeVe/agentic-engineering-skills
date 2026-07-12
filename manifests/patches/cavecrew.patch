@@ -1,0 +1,7 @@
+diff --git a/cavecrew/SKILL.md b/cavecrew/SKILL.md
+index efa413f..fde329a 100644
+--- a/cavecrew/SKILL.md
++++ b/cavecrew/SKILL.md
+@@ -13,0 +14,2 @@
++> **Adaptation:** Based on `JuliusBrussee/caveman`; adjusted for portable Codex and Claude Code subagent delegation.
++

@@ -1,0 +1,7 @@
+diff --git a/swarm-orchestration/SKILL.md b/swarm-orchestration/SKILL.md
+index 1e2a9df..4b2a0c3 100644
+--- a/swarm-orchestration/SKILL.md
++++ b/swarm-orchestration/SKILL.md
+@@ -8,0 +9,2 @@
++> **Adaptation:** Based on `ruvnet/ruflo`; adjusted for portable Codex and Claude Code multi-agent orchestration.
++

@@ -1,0 +1,10 @@
+diff --git a/setup-matt-pocock-skills/SKILL.md b/setup-matt-pocock-skills/SKILL.md
+index aecf855..5cbe453 100644
+--- a/setup-matt-pocock-skills/SKILL.md
++++ b/setup-matt-pocock-skills/SKILL.md
+@@ -4 +4 @@
+-disable-model-invocation: true
++disable-model-invocation: false
+@@ -6,0 +7,2 @@
++> Adaptation: Derived from mattpocock/skills; enables Codex model invocation for plugin validation and discovery.
++

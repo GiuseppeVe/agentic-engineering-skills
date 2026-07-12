@@ -3,19 +3,55 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CODEX_HOME: ${{ runner.temp }}/codex-home
+      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude-home
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-      - run: npm run evals
-      - run: npm run audit:public
+      - name: Install Codex CLI
+        run: npm install --global @openai/codex@0.141.0
+      - name: Install Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.201
+      - name: Install dependencies
+        run: npm ci
+      - name: Test contracts
+        run: npm test
+      - name: Verify pack
+        run: npm run verify:pack
+      - name: Verify pinned upstream sources
+        run: npm run verify:upstream
+      - name: Audit public release surface
+        run: npm run audit:public
+      - name: Add local Codex marketplace
+        run: codex plugin marketplace add . --json > "${{ runner.temp }}/codex-marketplace.json"
+      - name: Install Codex plugin
+        run: codex plugin add agentic-engineering-skills@agentic-engineering-skills --json > "${{ runner.temp }}/codex-install.json"
+      - name: List available Codex plugins
+        run: codex plugin list --available --json > "${{ runner.temp }}/codex-list.json"
+      - name: Verify installed Codex payload
+        run: npm run verify:installed-native -- --host codex --cli-json "${{ runner.temp }}/codex-install.json,${{ runner.temp }}/codex-list.json" --search-roots "$CODEX_HOME" --output "${{ runner.temp }}/codex-native-receipt.json"
+      - name: Validate Claude Code plugin
+        run: claude plugin validate .
+      - name: Add local Claude marketplace
+        run: claude plugin marketplace add . --scope user
+      - name: Install Claude plugin
+        run: claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user
+      - name: Capture Claude plugin list
+        run: claude plugin list --json > "${{ runner.temp }}/claude-list.json"
+      - name: Verify installed Claude payload
+        run: npm run verify:installed-native -- --host claude --cli-json "${{ runner.temp }}/claude-list.json" --search-roots "$CLAUDE_CONFIG_DIR" --output "${{ runner.temp }}/claude-native-receipt.json"
