@@ -7,6 +7,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const stamp = process.argv.includes("--stamp");
+const licenses = process.argv.includes("--licenses");
 const statusAt = process.argv.indexOf("--status");
 const status = statusAt >= 0 ? process.argv[statusAt + 1] : undefined;
 if (status && !["vendor", "adapted"].includes(status)) throw new Error(`invalid --status: ${status}`);
@@ -18,6 +19,30 @@ if (stamp && lock.skills.length === 0) {
     ? { name: source.name, sourceType: source.sourceType, localSha256: await sha256File(source.localPath), releaseCommit: stdout.trim(), license: source.license, dependencies: [] }
     : { name: source.name, sourceType: source.sourceType, repository: source.repository, revision: source.revision, upstreamPath: source.upstreamPath, sha256: "0".repeat(64), localSha256: source.sourceType === "adapted" ? await sha256File(source.localPath) : "0".repeat(64), ...(source.sourceType === "adapted" ? { changeNotice: source.changeNotice, patchPath: source.patchPath } : {}), dependencies: [] }));
   lock.skills.sort((a, b) => a.name.localeCompare(b.name));
+}
+if (licenses) {
+  const groups = new Map();
+  for (const entry of lock.skills.filter(x => x.sourceType !== "original" && !x.excluded)) {
+    const key = `${entry.repository}@${entry.revision}`;
+    if (!groups.has(key)) groups.set(key, { repository: entry.repository, revision: entry.revision, entries: [] });
+    groups.get(key).entries.push(entry);
+  }
+  for (const group of groups.values()) {
+    const checkout = await checkoutImmutable(group.repository, group.revision);
+    try {
+      for (const entry of group.entries) {
+        if (!Array.isArray(entry.licenseFiles) || entry.licenseFiles.length === 0) throw new Error(`missing licenseFiles for ${entry.name}`);
+        for (const legal of entry.licenseFiles) {
+          const upstreamHash = await sha256File(join(checkout.path, legal.upstreamPath));
+          const localHash = await sha256File(join(root, legal.path));
+          if (upstreamHash !== legal.sha256) throw new Error(`upstream legal file mismatch for ${entry.name}: ${legal.upstreamPath}`);
+          if (localHash !== legal.sha256) throw new Error(`local legal file mismatch for ${entry.name}: ${legal.path}`);
+        }
+        process.stdout.write(`VERIFIED licenses ${entry.name}\n`);
+      }
+    } finally { await checkout.cleanup(); }
+  }
+  process.exit(0);
 }
 for (const entry of lock.skills.filter(x => x.sourceType !== "original" && !x.excluded && (!status || x.sourceType === status))) {
   const checkout = await checkoutImmutable(entry.repository, entry.revision);
