@@ -139,7 +139,7 @@ git commit -m "test: define agent profile contracts"
 Source directory:
 
 ```text
-<user-home>/source-project/agentic-harness-workflow-impl-agentic-harness-workflow/agent-profiles
+<quarantine-worktree>/agent-profiles
 ```
 
 Copy exactly the seven approved files into the shared plugin payload. Stop if candidate inventory differs from the authoritative list.
