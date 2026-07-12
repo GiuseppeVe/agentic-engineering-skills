@@ -1,0 +1,3 @@
+Public workflow documentation.
+Contact: maintainers@example.com
+Repository: https://github.com/GiuseppeVe/agentic-engineering-skills
