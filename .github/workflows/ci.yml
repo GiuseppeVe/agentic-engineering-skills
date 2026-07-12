@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 15
     env:
       CODEX_HOME: ${{ runner.temp }}/codex-home
+      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude-home
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -37,10 +38,20 @@ jobs:
       - name: Audit public release surface
         run: npm run audit:public
       - name: Add local Codex marketplace
-        run: codex plugin marketplace add .
+        run: codex plugin marketplace add . --json > "${{ runner.temp }}/codex-marketplace.json"
       - name: Install Codex plugin
-        run: codex plugin add agentic-engineering-skills@agentic-engineering-skills
+        run: codex plugin add agentic-engineering-skills@agentic-engineering-skills --json > "${{ runner.temp }}/codex-install.json"
       - name: List available Codex plugins
-        run: codex plugin list --available --json
+        run: codex plugin list --available --json > "${{ runner.temp }}/codex-list.json"
+      - name: Verify installed Codex payload
+        run: npm run verify:installed-native -- --host codex --cli-json "${{ runner.temp }}/codex-install.json,${{ runner.temp }}/codex-list.json" --search-roots "$CODEX_HOME" --output "${{ runner.temp }}/codex-native-receipt.json"
       - name: Validate Claude Code plugin
         run: claude plugin validate .
+      - name: Add local Claude marketplace
+        run: claude plugin marketplace add . --scope user
+      - name: Install Claude plugin
+        run: claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user
+      - name: Capture Claude plugin list
+        run: claude plugin list --json > "${{ runner.temp }}/claude-list.json"
+      - name: Verify installed Claude payload
+        run: npm run verify:installed-native -- --host claude --cli-json "${{ runner.temp }}/claude-list.json" --search-roots "$CLAUDE_CONFIG_DIR" --output "${{ runner.temp }}/claude-native-receipt.json"
