@@ -1,5 +1,5 @@
 import { readdir, readFile } from "node:fs/promises";
-import { join, posix } from "node:path";
+import { isAbsolute, join, posix, relative, resolve } from "node:path";
 import { sha256File, sha256Path } from "./hash.mjs";
 
 const hex = (n) => new RegExp(`^[0-9a-f]{${n}}$`, "i");
@@ -77,4 +77,26 @@ export async function loadManifest(path) { return validateManifest(JSON.parse(aw
 export async function listFlatSkillDirectories(root) {
   try { return (await readdir(root, { withFileTypes: true })).filter(x => x.isDirectory()).map(x => x.name).sort(); }
   catch (e) { if (e.code === "ENOENT") return []; throw e; }
+}
+
+const localRootEnvironment = { projectSkills: "AGENTIC_PROJECT_SKILLS_ROOT", userSkills: "AGENTIC_USER_SKILLS_ROOT" };
+
+export function resolveAcquisitionPath(source, environment = process.env) {
+  const variable = localRootEnvironment[source.localRoot];
+  if (!variable) throw new Error(`unknown localRoot for ${source.name}: ${source.localRoot}`);
+  if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
+  const configuredRoot = environment[variable];
+  if (!configuredRoot) throw new Error(`${variable} is required to acquire ${source.name}`);
+  const root = resolve(configuredRoot), path = resolve(root, source.localPath);
+  if (relative(root, path).startsWith("..")) throw new Error(`localPath escapes ${source.localRoot} for ${source.name}`);
+  return path;
+}
+
+export function validateSourceManifest(manifest) {
+  if (!manifest || !Array.isArray(manifest.skills)) throw new Error("source manifest skills must be an array");
+  for (const source of manifest.skills.filter(x => x.sourceType === "adapted" || x.sourceType === "original")) {
+    if (!localRootEnvironment[source.localRoot]) throw new Error(`invalid localRoot for ${source.name}`);
+    if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
+  }
+  return [...manifest.skills].sort((a, b) => a.name.localeCompare(b.name));
 }

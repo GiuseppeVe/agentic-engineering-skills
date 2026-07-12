@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { validateManifest, dependencyOrder, verifyLocalEntries } from "../scripts/lib/manifest.mjs";
+import { validateManifest, dependencyOrder, verifyLocalEntries, validateSourceManifest, resolveAcquisitionPath } from "../scripts/lib/manifest.mjs";
 
 const upstream = { name: "a", sourceType: "vendor", repository: "https://example.test/a", revision: "a".repeat(40), upstreamPath: "SKILL.md", sha256: "b".repeat(64), localSha256: "b".repeat(64), dependencies: [], licenseFiles: [{ upstreamPath: "LICENSE", path: "plugins/agentic-engineering-skills/licenses/a-LICENSE", sha256: "c".repeat(64) }] };
 const adapted = { ...upstream, name: "adapted", sourceType: "adapted", changeNotice: "Host compatibility changes", patchPath: "manifests/patches/adapted.patch" };
@@ -46,4 +46,12 @@ test("rejects a valid-format manifest hash that mismatches local content", async
     /tamper detected.*expected f{64}/i,
   );
   await rm(root, { recursive: true, force: true });
+});
+
+test("source acquisition paths are portable and resolved from explicit roots", () => {
+  const source = { name: "local", sourceType: "adapted", localRoot: "projectSkills", localPath: "local/SKILL.md" };
+  assert.doesNotThrow(() => validateSourceManifest({ skills: [source] }));
+  assert.equal(resolveAcquisitionPath(source, { AGENTIC_PROJECT_SKILLS_ROOT: "/portable/root" }), join("/portable/root", "local/SKILL.md"));
+  assert.throws(() => validateSourceManifest({ skills: [{ ...source, localPath: "/absolute/private/SKILL.md" }] }), /portable and relative/);
+  assert.throws(() => resolveAcquisitionPath(source, {}), /AGENTIC_PROJECT_SKILLS_ROOT is required/);
 });

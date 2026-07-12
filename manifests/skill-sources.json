@@ -6,9 +6,10 @@
                        "repository":  "https://github.com/obra/superpowers",
                        "revision":  "d884ae04edebef577e82ff7c4e143debd0bbec99",
                        "upstreamPath":  "skills/brainstorming/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/brainstorming/SKILL.md",
+                       "localPath":  "brainstorming/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/brainstorming.patch"
+                       "patchPath":  "manifests/patches/brainstorming.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "caveman",
@@ -23,15 +24,17 @@
                        "repository":  "https://github.com/JuliusBrussee/caveman",
                        "revision":  "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
                        "upstreamPath":  "skills/cavecrew/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/cavecrew/SKILL.md",
+                       "localPath":  "cavecrew/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/cavecrew.patch"
+                       "patchPath":  "manifests/patches/cavecrew.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "cleaning-repo-with-knip",
                        "sourceType":  "original",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/cleaning-repo-with-knip/SKILL.md",
-                       "license":  "MIT"
+                       "localPath":  "cleaning-repo-with-knip/SKILL.md",
+                       "license":  "MIT",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "codebase-design",
@@ -64,8 +67,9 @@
                    {
                        "name":  "implementing-plans",
                        "sourceType":  "original",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/implementing-plans/SKILL.md",
-                       "license":  "MIT"
+                       "localPath":  "implementing-plans/SKILL.md",
+                       "license":  "MIT",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "improve-codebase-architecture",
@@ -80,16 +84,17 @@
                        "repository":  "https://github.com/thedotmack/claude-mem",
                        "revision":  "312d640b0188753acd92a1a82d95a84d5c7c43db",
                        "upstreamPath":  "plugin/skills/learn-codebase/SKILL.md",
-                       "localPath":  "/mnt/c/Users/aleda/.agents/skills/learn-codebase/SKILL.md",
+                       "localPath":  "learn-codebase/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/learn-codebase.patch"
+                       "patchPath":  "manifests/patches/learn-codebase.patch",
+                       "localRoot":  "userSkills"
                    },
                    {
                        "name":  "setup-matt-pocock-skills",
                        "sourceType":  "vendor",
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
-            "upstreamPath":  "skills/engineering/setup-matt-pocock-skills/"
+                       "upstreamPath":  "skills/engineering/setup-matt-pocock-skills/"
                    },
                    {
                        "name":  "swarm-orchestration",
@@ -97,9 +102,10 @@
                        "repository":  "https://github.com/ruvnet/ruflo",
                        "revision":  "7ef4d4e655d81c0451f6f40f35729cce6c9928e7",
                        "upstreamPath":  ".agents/skills/swarm-orchestration/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/swarm-orchestration/SKILL.md",
+                       "localPath":  "swarm-orchestration/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/swarm-orchestration.patch"
+                       "patchPath":  "manifests/patches/swarm-orchestration.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "test-driven-development",
@@ -114,9 +120,10 @@
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
                        "upstreamPath":  "skills/engineering/to-spec/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/to-spec/SKILL.md",
+                       "localPath":  "to-spec/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/to-spec.patch"
+                       "patchPath":  "manifests/patches/to-spec.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "using-git-worktrees",
@@ -131,9 +138,10 @@
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
                        "upstreamPath":  "skills/engineering/wayfinder/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/wayfinder/SKILL.md",
+                       "localPath":  "wayfinder/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/wayfinder.patch"
+                       "patchPath":  "manifests/patches/wayfinder.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "writing-plans",
@@ -141,9 +149,10 @@
                        "repository":  "https://github.com/obra/superpowers",
                        "revision":  "d884ae04edebef577e82ff7c4e143debd0bbec99",
                        "upstreamPath":  "skills/writing-plans/SKILL.md",
-                       "localPath":  "/home/aledalin/alfe_App/alfe_AI_app/.agents/skills/writing-plans/SKILL.md",
+                       "localPath":  "writing-plans/SKILL.md",
                        "changeNotice":  "Adapted for the cross-host Agent Skills distribution.",
-                       "patchPath":  "manifests/patches/writing-plans.patch"
+                       "patchPath":  "manifests/patches/writing-plans.patch",
+                       "localRoot":  "projectSkills"
                    },
                    {
                        "name":  "writing-skills",
