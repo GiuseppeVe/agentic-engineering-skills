@@ -31,18 +31,21 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 ## Integrated finish gate
 
-Run on 2026-07-12 from `codex/rebuild-skill-pack` at `6570ae1f50f27c13a4ed842f4f1666bb87f01531` before this report update.
+Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate SHA `2d64f81f958f2e4619cd511074a8e3e09fa2bde0` before this report update. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. A separate Windows Node 24 mapped-drive probe enumerated all 67 tests but exposed the known platform-shape mismatch in the portable-root assertion (`Z:\\portable` versus `\\portable`); it was not treated as the release result.
 
 | Command | Tool version | Exit code | Result |
 | --- | --- | --- | --- |
-| `npm ci` | Node `v18.19.1`; npm `9.2.0` | 0 | Installed lockfile exactly; 0 vulnerabilities. npm emitted expected `EBADENGINE` warning because package requires Node >=22 and this local WSL runner provides Node 18. CI uses Node 22. |
-| `npm test` | Node `v18.19.1` | 0 | 60 tests passed; 0 failed, skipped, or cancelled. |
-| `npm run verify:pack` | Node `v18.19.1` | 0 | Verified 19 requested skills: 19 included, 0 excluded. |
-| `npm run verify:upstream` | Node `v18.19.1` | 0 | Verified all 7 vendor and 10 adapted pinned third-party entries. |
-| `npm run audit:public` | Node `v18.19.1` | 0 | Zero findings. |
-| `python3 $CODEX_HOME/skills/.system/plugin-creator/scripts/validate_plugin.py plugins/agentic-engineering-skills` | Python `3.12.3`; PyYAML `6.0.1` | 0 | `Plugin validation passed`. Native Windows Python was also attempted but lacked PyYAML; same installed validator then passed under WSL Python. |
+| `npm ci` | Node `v24.16.0`; npm `11.13.0` | 0 | Installed lockfile exactly; 0 vulnerabilities. |
+| `npm test` | Node `v24.16.0` | 0 | 67 tests passed; 0 failed, skipped, cancelled, or todo. |
+| `npm run verify:pack` | Node `v24.16.0` | 0 | Verified schema-v2 native receipt and 19 requested skills: 19 included, 0 excluded. |
+| `npm run verify:installed-native -- --host codex --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Codex marketplace install located from CLI JSON and isolated host cache. |
+| `npm run verify:installed-native -- --host claude --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Claude marketplace install located from CLI JSON and isolated host cache. |
+| `npm run verify:upstream` | Node `v24.16.0` | 0 | Verified all 7 vendor and 10 adapted pinned third-party entries. |
+| `npm run audit:public` | Node `v24.16.0` | 0 | Zero findings. |
+| `python3 /mnt/c/Users/aleda/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py plugins/agentic-engineering-skills` | Python `3.12.3`; PyYAML `6.0.1` | 0 | Official installed Codex plugin validator passed under WSL Python. |
 | `claude plugin validate .` | Claude Code `2.1.201` | 0 | Validation passed with one non-blocking marketplace-description warning. |
 | `git diff --check` | Git | 0 | No whitespace errors. |
+| `git diff --check 7b3cb3d..HEAD` | Git | 2 | Expected historical import findings only: byte-exact upstream skill payloads retain CRLF/trailing-space bytes required by pinned hashes. Current working-tree diff remains clean. |
 | `git status --short` | Git | 0 | Before report update, only untracked `node_modules/` produced by `npm ci`; removed after verification. No tracked change. |
 | `git ls-files \| sort` | Git | 0 | Tracked inventory sorted successfully; legacy harness paths and forbidden artifacts absent. |
 
@@ -52,7 +55,7 @@ Protected checkout receipts, captured before and after Task 11 without mutation:
 | --- | --- | --- | --- |
 | Original | `main` | `7b3cb3d53c8ecd4655b7fdaa97cb8a88ef56c03a` | Preserved staged `docs/skill-provenance.md`, modified harness plan/spec, and untracked `.vscode/`. |
 | Quarantine | `impl/agentic-harness-workflow` | `f9eeb9278db42d9a863137a523d5e2bf3dbe62ed` | Clean; branch and worktree retained. |
-| Rebuild | `codex/rebuild-skill-pack` | `6570ae1f50f27c13a4ed842f4f1666bb87f01531` | Only this report changed after gates; npm output cleaned. |
+| Rebuild | `codex/rebuild-skill-pack` | `2d64f81f958f2e4619cd511074a8e3e09fa2bde0` | Only this report changed after gates; npm output cleaned. |
 
 ## Native validation and discovery
 
@@ -94,7 +97,7 @@ Codex marketplace installation itself is isolated and successful. However, Windo
 
 | Action | Status |
 | --- | --- |
-| Commit | performed locally: `2f72ecc`, `94f53d1`, `b321f34`, `25cff4a`, `d9ab968`, `4ca484c`, `782acad`, `c9e160e`, `41341ac`, `9bade44`, `46a201b`, `943f448`, `0b96c3e`, `d63e110`, `4e07fde`, `fa322bf`, `94159a0`, `af019c7`, `69b88a8`, `e1145b6`, `f2bb15b`, `df62260`, `90b92b1`, `ede7d40`, `4f9cac3`, `492dcd0`, `8a8f9c6`, `6570ae1` |
+| Commit | performed locally: `2f72ecc`, `94f53d1`, `b321f34`, `25cff4a`, `d9ab968`, `4ca484c`, `782acad`, `c9e160e`, `41341ac`, `9bade44`, `46a201b`, `943f448`, `0b96c3e`, `d63e110`, `4e07fde`, `fa322bf`, `94159a0`, `af019c7`, `69b88a8`, `e1145b6`, `f2bb15b`, `df62260`, `90b92b1`, `ede7d40`, `4f9cac3`, `492dcd0`, `8a8f9c6`, `6570ae1`, `8e854dd`, `355c598`, `9601ef5`, `1cbd499`, `db6d43d`, `2d64f81` |
 | Push | not performed |
 | Pull request | not performed |
 | Merge | not performed |
