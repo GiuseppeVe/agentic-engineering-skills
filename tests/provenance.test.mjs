@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, writeFile, mkdir, rm, readFile, stat } from "node:fs/promises";
+import { mkdtemp, writeFile, mkdir, rm, readFile, stat, readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +8,7 @@ import { sha256File, sha256Path, normalizeLf } from "../scripts/lib/hash.mjs";
 import { checkoutImmutable } from "../scripts/lib/upstream.mjs";
 import { verifyLocalEntries, compareLockDirectories } from "../scripts/lib/manifest.mjs";
 import { renderExclusionSection, verifyExclusionSection } from "../scripts/lib/release-report.mjs";
+import { runAcquisitionGate } from "../scripts/lib/acquisition-gate.mjs";
 
 test("checks out a real immutable superpowers revision", { timeout: 120000 }, async () => {
   const checkout = await checkoutImmutable("https://github.com/obra/superpowers", "d884ae04edebef577e82ff7c4e143debd0bbec99");
@@ -63,6 +64,39 @@ test("excluded skill name and objective reason round-trip into release report", 
     () => verifyExclusionSection(entries, report.replace("abc123", "different")),
     /exclusion report mismatch/,
   );
+});
+
+test("acquisition gate excludes a missing requested source from lock, payload, and release report", async () => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-fixture-"));
+  try {
+    const sourceRoot = join(root, "sources"), output = join(root, "output");
+    await mkdir(join(sourceRoot, "included"), { recursive: true });
+    await writeFile(join(sourceRoot, "included", "SKILL.md"), "---\nname: included\n---\n");
+    const sources = { skills: [
+      { name: "included", sourceType: "original", localRoot: "projectSkills", localPath: "included/SKILL.md", license: "MIT" },
+      { name: "missing", sourceType: "original", localRoot: "projectSkills", localPath: "missing/SKILL.md", license: "MIT" },
+    ] };
+    const lock = { skills: sources.skills.map(source => ({ name: source.name, sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] })) };
+    await mkdir(output, { recursive: true });
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources));
+    await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+    const result = await runAcquisitionGate({
+      sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"),
+      lockOutputPath: join(output, "skills.lock.json"), payloadOutputPath: join(output, "skills"),
+      releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "release-report.md"),
+      environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot },
+    });
+    const excluded = result.skills.find(entry => entry.name === "missing");
+    assert.equal(excluded.excluded, true);
+    assert.ok(excluded.exclusionReason.length > 0);
+    assert.deepEqual(await readdir(join(output, "skills")), ["included"]);
+    const writtenLock = JSON.parse(await readFile(join(output, "skills.lock.json"), "utf8"));
+    const writtenExcluded = writtenLock.skills.find(entry => entry.name === "missing");
+    assert.equal(writtenExcluded.exclusionReason, excluded.exclusionReason);
+    const report = await readFile(join(output, "release-report.md"), "utf8");
+    assert.deepEqual(verifyExclusionSection(writtenLock.skills, report), [{ name: "missing", reason: excluded.exclusionReason }]);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });
 
 test("adapted and original local imports retain provenance contracts", async () => {
