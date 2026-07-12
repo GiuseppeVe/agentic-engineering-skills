@@ -21,7 +21,7 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 | Command | Scope | Exit code | Result |
 | --- | --- | --- | --- |
-| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 77-test suite. |
+| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 79-test suite. |
 
 ## Public audit
 
@@ -31,12 +31,12 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 ## Integrated finish gate
 
-Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate and functional hardening SHA `historical-commit-redacted` before this report update. Candidate includes acquisition-filesystem boundary hardening and a release runner regression test that rejects zero-test false greens. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. Portable-root expectations derive from platform-native `path.resolve` and `path.relative`; a Windows Node 24 mapped-drive probe passes the manifest and deterministic local provenance tests.
+Run on 2026-07-12 from `codex/rebuild-skill-pack` at release-candidate and functional hardening SHA `historical-commit-redacted` before this report update. Candidate includes acquisition-filesystem boundary hardening for file, directory, nested, and legal-file symlinks plus a release runner regression test that rejects zero-test false greens. Commands below used Linux Node `v24.16.0` from the local NVM runtime so the declared Node >=22 engine and POSIX CI environment were both exercised. Portable-root expectations derive from platform-native `path.resolve` and `path.relative`; a Windows Node 24 mapped-drive probe passes the manifest and deterministic local provenance tests.
 
 | Command | Tool version | Exit code | Result |
 | --- | --- | --- | --- |
 | `npm ci` | Node `v24.16.0`; npm `11.13.0` | 0 | Installed lockfile exactly; 0 vulnerabilities. |
-| `npm test` | Node `v24.16.0` | 0 | 77 tests passed; runner accepted a complete nonzero summary; 0 failed, skipped, cancelled, or todo. |
+| `npm test` | Node `v24.16.0` | 0 | 79 tests passed; runner accepted a complete nonzero summary; 0 failed, skipped, cancelled, or todo. |
 | `npm run verify:pack` | Node `v24.16.0` | 0 | Verified schema-v2 native receipt and 19 requested skills: 19 included, 0 excluded. |
 | `npm run verify:installed-native -- --host codex --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Codex marketplace install located from CLI JSON and isolated host cache. |
 | `npm run verify:installed-native -- --host claude --installed-root plugins/agentic-engineering-skills/skills` | Node `v24.16.0` | 0 | Manual verifier smoke passed for exact 19-skill inventory and tracked tree hash using explicit root. CI performs the stronger dynamic check against a fresh official Claude marketplace install located from CLI JSON and isolated host cache. |
@@ -101,7 +101,7 @@ Codex marketplace installation itself is isolated and successful. However, Windo
 
 | Action | Status |
 | --- | --- |
-| Commit | performed locally: `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted` |
+| Commit | performed locally: `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted`, `historical-commit-redacted` |
 | Push | not performed |
 | Pull request | not performed |
 | Merge | not performed |
