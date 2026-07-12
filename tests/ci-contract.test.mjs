@@ -22,22 +22,27 @@ test("CI setup and executable gates are unique and ordered", async () => {
   const workflow = await loadWorkflow();
   const steps = workflow.jobs.verify.steps;
   assert.ok(steps.some(step => step.uses === "actions/setup-node@v4" && step.with?.["node-version"] === 22));
-  assert.ok(steps.some(step => step.uses === "actions/setup-python@v5" && step.with?.["python-version"] === "3.12"));
+  assert.equal(workflow.jobs.verify.env?.CODEX_HOME, "${{ runner.temp }}/codex-home");
 
   const runs = steps.filter(step => "run" in step).map(step => step.run.trim());
   assert.equal(new Set(runs).size, runs.length, "every executable run step must be unique");
-  assert.ok(runs.includes("python -m pip install PyYAML==6.0.2"));
+  assert.ok(runs.includes("npm install --global @openai/codex@0.141.0"));
   assert.ok(runs.includes("npm install --global @anthropic-ai/claude-code@2.1.201"));
 
   const gates = [
+    "npm install --global @openai/codex@0.141.0",
+    "npm install --global @anthropic-ai/claude-code@2.1.201",
     "npm ci",
     "npm test",
     "npm run verify:pack",
     "npm run verify:upstream",
     "npm run audit:public",
-    "python scripts/validate_plugin.py plugins/agentic-engineering-skills",
+    "codex plugin marketplace add .",
+    "codex plugin add agentic-engineering-skills@agentic-engineering-skills",
+    "codex plugin list --available --json",
     "claude plugin validate .",
   ];
   assert.deepEqual(runs.filter(command => gates.includes(command)), gates);
   for (const gate of gates) assert.equal(runs.filter(command => command === gate).length, 1, `${gate} must run exactly once`);
+  assert.ok(runs.every(command => !command.includes("scripts/validate_plugin.py")), "custom Codex validator must not be a CI gate");
 });
