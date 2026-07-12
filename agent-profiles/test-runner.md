@@ -19,3 +19,7 @@ Each command has an explicit result.
 ## Failure path
 
 Stop on failure; never claim a failed command passed.
+
+## Provenance
+
+Adapted public role boundary from Caveman Cavecrew (MIT); see `licenses/MIT-caveman.txt`.

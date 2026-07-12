@@ -2,6 +2,8 @@
 
 A strict-TypeScript reference harness for building observable agent workflows without a provider SDK, API key, network call, or user data.
 
+It also ships a public [skill pack](skills/README.md) and seven [host-neutral agent profiles](agent-profiles). Clone or download repository, then copy only directories needed by your agent host. Read [skill provenance](docs/skill-provenance.md) and [third-party notices](THIRD_PARTY_NOTICES.md) before redistributing adapted material.
+
 ```mermaid
 flowchart LR
   Task --> Router --> Context[Bounded context] --> Agent --> Validator --> Trace
@@ -38,6 +40,10 @@ Default commands make no network calls and read no `.env` file. `npm run audit:p
 ## Advanced tooling
 
 Core works with Node.js 20+ alone. Optional swarm, Git worktree, GitHub CLI, browser, Graphviz, and Knip integrations are documented in [advanced tooling](docs/advanced-tooling.md). Knip findings always require human review.
+
+## Skill and agent pack
+
+Skills are grouped as `vendor`, `adapted`, and `original` so users can see exactly what is copied, modified, or authored here. Agent profiles state input, allowed actions, structured output, validation, and failure behavior. They are guidance files, not a hidden runtime dependency.
 
 ## Roadmap
 
