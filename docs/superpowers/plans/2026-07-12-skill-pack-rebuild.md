@@ -315,7 +315,7 @@ export async function sha256File(path) {
 
 - [ ] **Step 4: Encode approved sources and paths**
 
-Use the five revisions and 17 exact paths in Source Map. Mark the initial expected classifications: 10 `vendor`, 7 `adapted`, 2 `original`; verification may exclude a failed entry but may not silently reclassify it.
+Use the five revisions and 17 exact paths in Source Map. Mark the current classifications: 7 `vendor`, 10 `adapted`, 2 `original`; verification may exclude a failed entry but may not silently reclassify it. `grill-me`, `improve-codebase-architecture`, and `setup-matt-pocock-skills` are adapted solely to enable Codex model invocation.
 
 - [ ] **Step 5: Verify green and commit**
 
@@ -338,7 +338,7 @@ git commit -m "feat: verify skill provenance"
 
 - [ ] **Step 1: Make vendor inventory test fail**
 
-Expected vendor candidates are `grill-me`, `grilling`, `setup-matt-pocock-skills`, `improve-codebase-architecture`, `codebase-design`, `domain-modeling`, `writing-skills`, `test-driven-development`, `using-git-worktrees`, and `caveman`.
+Expected vendor candidates are `grilling`, `codebase-design`, `domain-modeling`, `writing-skills`, `test-driven-development`, `using-git-worktrees`, and `caveman`.
 
 Run: `node --test tests/plugin-contract.test.mjs --test-name-pattern="vendor inventory"`
 Expected: FAIL with 10 missing directories.
@@ -351,7 +351,7 @@ Expected: each source path verified before copy; command stops on first source/l
 - [ ] **Step 3: Verify exact copies**
 
 Run: `node scripts/verify-upstream.mjs --status vendor`
-Expected: one `VERIFIED vendor` line for each of the 10 vendor skills, or an explicit exclusion report requiring user review.
+Expected: one `VERIFIED vendor` line for each of the 7 vendor skills, or an explicit exclusion report requiring user review.
 
 - [ ] **Step 4: Commit vendor snapshot**
 
@@ -372,7 +372,7 @@ git commit -m "feat: vendor pinned workflow skills"
 
 - [ ] **Step 1: Write failing adapted/original contracts**
 
-Test seven adapted candidates for upstream/local hashes, change notices, and non-empty patches. Test two originals for `sourceType: original`, local hashes, and absence of upstream revision.
+Test ten adapted candidates for upstream/local hashes, change notices, and non-empty patches. Test two originals for `sourceType: original`, local hashes, and absence of upstream revision.
 
 - [ ] **Step 2: Copy from approved local roots**
 
@@ -386,7 +386,7 @@ For each adapted skill, compare against its pinned upstream base using:
 node scripts/generate-patches.mjs
 ```
 
-Expected: seven non-empty patches named `wayfinder.patch`, `to-spec.patch`,
+Expected: ten non-empty patches named `wayfinder.patch`, `to-spec.patch`, `grill-me.patch`, `improve-codebase-architecture.patch`, `setup-matt-pocock-skills.patch`,
 `brainstorming.patch`, `writing-plans.patch`, `cavecrew.patch`,
 `swarm-orchestration.patch`, and `learn-codebase.patch`.
 

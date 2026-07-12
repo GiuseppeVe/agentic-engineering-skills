@@ -13,10 +13,7 @@ const expectedVendorSkills = [
   "caveman",
   "codebase-design",
   "domain-modeling",
-  "grill-me",
   "grilling",
-  "improve-codebase-architecture",
-  "setup-matt-pocock-skills",
   "test-driven-development",
   "using-git-worktrees",
   "writing-skills",
@@ -39,6 +36,7 @@ test("Codex manifest declares exact native plugin contract", async () => {
   assert.match(manifest.version, strictSemver);
   assert.equal(manifest.skills, "./skills/");
   assert.equal(manifest.interface.category, "Productivity");
+  assert.match(manifest.interface.defaultPrompt, /engineering skills/i);
 });
 
 test("Claude manifest declares same plugin identity", async () => {

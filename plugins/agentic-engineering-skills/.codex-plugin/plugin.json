@@ -17,6 +17,7 @@
   ],
   "skills": "./skills/",
   "interface": {
+    "defaultPrompt": "Use the installed engineering skills to understand, plan, implement, verify, review, and clean up the requested work.",
     "displayName": "Agentic Engineering Skills",
     "shortDescription": "A verified AI-engineering workflow",
     "longDescription": "Install a reproducible discovery-to-cleanup workflow for Codex and Claude Code.",

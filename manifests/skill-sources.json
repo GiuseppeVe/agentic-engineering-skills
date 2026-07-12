@@ -52,10 +52,12 @@
                    },
                    {
                        "name":  "grill-me",
-                       "sourceType":  "vendor",
+                       "sourceType":  "adapted",
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
-                       "upstreamPath":  "skills/productivity/grill-me/SKILL.md"
+                       "upstreamPath":  "skills/productivity/grill-me/SKILL.md",
+                       "changeNotice":  "Enables Codex model invocation for plugin validation and discovery.",
+                       "patchPath":  "manifests/patches/grill-me.patch"
                    },
                    {
                        "name":  "grilling",
@@ -73,10 +75,12 @@
                    },
                    {
                        "name":  "improve-codebase-architecture",
-                       "sourceType":  "vendor",
+                       "sourceType":  "adapted",
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
-                       "upstreamPath":  "skills/engineering/improve-codebase-architecture/SKILL.md"
+                       "upstreamPath":  "skills/engineering/improve-codebase-architecture/SKILL.md",
+                       "changeNotice":  "Enables Codex model invocation for plugin validation and discovery.",
+                       "patchPath":  "manifests/patches/improve-codebase-architecture.patch"
                    },
                    {
                        "name":  "learn-codebase",
@@ -91,10 +95,12 @@
                    },
                    {
                        "name":  "setup-matt-pocock-skills",
-                       "sourceType":  "vendor",
+                       "sourceType":  "adapted",
                        "repository":  "https://github.com/mattpocock/skills",
                        "revision":  "391a2701dd948f94f56a39f7533f8eea9a859c87",
-                       "upstreamPath":  "skills/engineering/setup-matt-pocock-skills/"
+                       "upstreamPath":  "skills/engineering/setup-matt-pocock-skills/",
+                       "changeNotice":  "Enables Codex model invocation for plugin validation and discovery.",
+                       "patchPath":  "manifests/patches/setup-matt-pocock-skills.patch"
                    },
                    {
                        "name":  "swarm-orchestration",
