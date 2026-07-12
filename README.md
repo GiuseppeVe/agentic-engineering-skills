@@ -1,6 +1,6 @@
 # Agentic Engineering Skills
 
-Audited 19-skill engineering workflow pack for Codex and Claude Code.
+Audited 19-skill engineering workflow pack designed for Codex and Claude Code. Host-validation evidence is recorded in `docs/release-report.md` during release validation.
 
 ## Problem
 
@@ -21,15 +21,18 @@ Install complete bundle. This is supported path.
 Codex:
 
 ```text
-codex plugin install agentic-engineering-skills
+codex plugin marketplace add GiuseppeVe/agentic-engineering-skills
+codex plugin add agentic-engineering-skills@agentic-engineering-skills
 ```
 
 Claude Code:
 
 ```text
-/plugin marketplace add agentic-engineering-skills
-/plugin install agentic-engineering-skills@agentic-engineering-skills
+claude plugin marketplace add GiuseppeVe/agentic-engineering-skills
+claude plugin install agentic-engineering-skills@agentic-engineering-skills
 ```
+
+Confirm discovery with `codex plugin list --available --json` or `claude plugin list`. Then start a fresh host session and invoke one included skill, such as `brainstorming`; plugin listing alone does not prove fresh-session invocation.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 
@@ -39,7 +42,7 @@ Fork repository and edit source files, never generated plugin cache. Full workfl
 
 ## Compatibility
 
-Bundle is verified for exactly two hosts: Codex and Claude Code. See [compatibility](docs/compatibility.md).
+Bundle targets exactly two verified hosts: Codex and Claude Code. Release-specific validation evidence belongs in `docs/release-report.md`. See [compatibility](docs/compatibility.md).
 
 ## Provenance
 
