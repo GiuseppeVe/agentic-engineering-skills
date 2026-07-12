@@ -44,7 +44,7 @@
 - **REQ-024** [test] — Provenance integration tests verify a real pinned upstream file and detect tampering. _Acceptance:_ `node --test tests/provenance.test.mjs` passes online in CI. _Satisfied by:_ Task 3.
 - **REQ-025** [test] — Documentation tests resolve every local link and inventory table entry. _Acceptance:_ `node --test tests/docs-contract.test.mjs` passes. _Satisfied by:_ Task 7.
 - **REQ-026** [test] — Public-audit tests exercise every forbidden marker and one clean control fixture. _Acceptance:_ test output lists at least 10 passing audit cases. _Satisfied by:_ Task 8.
-- **REQ-027** [test] — CI executes pack, provenance, license, plugin, documentation, public-audit, and native validation gates. _Acceptance:_ workflow contract test parses `.github/workflows/ci.yml` and finds every named command. _Satisfied by:_ Task 9.
+- **REQ-027** [test] — CI executes pack, provenance, license, plugin, documentation, public-audit, and native validation gates. Codex CI validation is the official isolated native install flow (`marketplace add` + `plugin add` + installed-payload verification); the installed `plugin-creator` validator remains the separate manual Task 10 schema gate. _Acceptance:_ workflow contract test parses `.github/workflows/ci.yml` and finds every named CI command. _Satisfied by:_ Task 9.
 - **REQ-028** [test] — Real local smoke tests install and discover the bundle in Codex and Claude Code. _Acceptance:_ `docs/release-report.md` records command, host version, exit code 0, and the exact 19-name installed/native payload set for each host. Fresh model-session discovery is recorded separately; hosts may expose a context-budgeted subset at runtime when documented explicitly. _Satisfied by:_ Task 10.
 
 ### Cross-task contracts
@@ -540,7 +540,7 @@ git commit -m "test: audit public release surface"
 
 - [ ] **Step 1: Write failing CI contract**
 
-Require `npm ci`, `npm test`, `npm run verify:pack`, `npm run verify:upstream`, `npm run audit:public`, Codex validation, and Claude validation in the workflow.
+Require `npm ci`, `npm test`, `npm run verify:pack`, `npm run verify:upstream`, `npm run audit:public`, official isolated Codex marketplace/install/payload validation, and Claude validation in the workflow.
 
 - [ ] **Step 2: Verify red**
 
