@@ -4,7 +4,7 @@
 
 **Goal:** Publish a self-contained, license-audited skill and agent pack that users can clone and use without relying on private local files.
 
-**Architecture:** Vendor only exact public upstream skill documents at pinned revisions under `skills/<name>/`, preserve their notices, and record a per-skill provenance entry. Write original host-neutral skills where no verified upstream source is selected; retain the seven agent profiles as original repository material.
+**Architecture:** Follow `docs/skill-provenance.md`: vendor exact public upstream documents under `skills/vendor/`, place repository-author modifications under `skills/adapted/`, and place sanitized original workflows under `skills/original/`. Preserve notices and record a per-skill provenance entry.
 
 **Tech Stack:** Markdown, JSON, Node.js scripts, Vitest, GitHub Actions.
 
@@ -15,11 +15,11 @@
 ### Behavior & constraints
 
 - **REQ-001** [constraint] — No local skill file without explicit upstream provenance and verified license is copied into the public pack. _Acceptance:_ `tests/pack-provenance.test.ts` rejects a vendored/adapted entry without a source, immutable revision, license, upstream path, and notice path. _Satisfied by:_ Task 1.
-- **REQ-002** [behavior] — Pack vendors selected MIT workflow documents from `mattpocock/skills`, `obra/superpowers`, and `JuliusBrussee/caveman` at their recorded SHA revisions. _Acceptance:_ manifest test finds each document and its upstream pin. _Satisfied by:_ Task 2.
-- **REQ-003** [behavior] — Pack vendors only Ruflo's `swarm-orchestration` skill subtree and excludes its separately licensed `src/ruvocal` subtree. _Acceptance:_ manifest test confirms the exact source path; repository search finds no `ruvocal` path. _Satisfied by:_ Task 2.
+- **REQ-002** [behavior] — Pack vendors only skills listed as vendored in `docs/skill-provenance.md` from their recorded MIT or Apache-2.0 source revisions. _Acceptance:_ manifest test finds each document, upstream path, status, and pin. _Satisfied by:_ Task 2, Task 3.
+- **REQ-003** [behavior] — Pack publishes every listed adapted skill under `skills/adapted/` with an upstream notice and a header naming repository-author changes; adapted Ruflo orchestration excludes its separately licensed `src/ruvocal` subtree. _Acceptance:_ contract test checks status/header and repository search finds no `ruvocal` path. _Satisfied by:_ Task 4.
 - **REQ-004** [constraint] — Apache-2.0 `learn-codebase` material includes complete Apache-2.0 text and exact upstream NOTICE before vendoring. _Acceptance:_ provenance test compares required license/notice paths and verifies they are non-empty. _Satisfied by:_ Task 3.
-- **REQ-005** [behavior] — Original skills cover wayfinding, specification conversion, planning, plan execution, Knip cleanup, and architecture review without copied proprietary or unlicensed text. _Acceptance:_ each named `skills/<name>/SKILL.md` has required headings and `status: original` in manifest. _Satisfied by:_ Task 4.
-- **REQ-006** [behavior] — Seven agent profiles are complete, host-neutral, and usable from the published pack. _Acceptance:_ profile contract test finds Input, Allowed actions, Structured output, Validation, and Failure path in all seven files. _Satisfied by:_ Task 5.
+- **REQ-005** [behavior] — Original skills `implementing-plans` and `cleaning-repo-with-knip` contain only sanitized public repository-author material. _Acceptance:_ each `skills/original/<name>/SKILL.md` has required headings and `status: original` in manifest. _Satisfied by:_ Task 5.
+- **REQ-006** [behavior] — Seven agent profiles are complete, host-neutral adaptations of the public Cavecrew responsibility model and retain an upstream notice. _Acceptance:_ profile contract test finds Input, Allowed actions, Structured output, Validation, and Failure path in all seven files. _Satisfied by:_ Task 5.
 - **REQ-007** [behavior] — README explains download/installation, pack structure, individual skill selection, agent profile use, compatibility assumptions, provenance, and optional integrations. _Acceptance:_ README contract test finds every required section and links resolve to tracked files. _Satisfied by:_ Task 5.
 - **REQ-008** [constraint] — Public audit rejects secrets, private identifiers, private URLs, personal data markers, and transcript/log artifacts in tracked public files. _Acceptance:_ `npm run audit:public` passes repository and fails a tracked fixture containing each rule marker. _Satisfied by:_ Task 6.
 
@@ -37,7 +37,7 @@
 
 | Path | Responsibility |
 | --- | --- |
-| `skills/<name>/SKILL.md` | Installable, public skill document. |
+| `skills/{vendor,adapted,original}/<name>/SKILL.md` | Installable, public skill document. |
 | `skills/sources.lock.json` | Per-skill source, SHA, path, license, status, notice mapping. |
 | `skills/README.md` | Pack index and installation/use instructions. |
 | `agent-profiles/*.md` | Seven host-neutral agent contracts. |
@@ -81,7 +81,7 @@ Run: `git add skills/sources.lock.json scripts/verify-skill-sources.mjs tests/pa
 
 ### Task 2: Vendor verified MIT skill documents only
 
-**Satisfies:** REQ-002, REQ-003, REQ-011, REQ-012
+**Satisfies:** REQ-002, REQ-011, REQ-012
 
 **Files:**
 - Create: `skills/grilling/`, `skills/domain-modeling/`, `skills/codebase-design/`
@@ -120,7 +120,7 @@ Run: `git add skills licenses THIRD_PARTY_NOTICES.md && git commit -m "feat(pack
 
 ### Task 3: Vendor Apache-2.0 codebase-learning skill with exact notice
 
-**Satisfies:** REQ-004, REQ-012
+**Satisfies:** REQ-002, REQ-004, REQ-012
 
 **Files:**
 - Create: `skills/learn-codebase/SKILL.md`
@@ -147,37 +147,65 @@ Expected: PASS.
 
 Run: `git add skills/learn-codebase licenses THIRD_PARTY_NOTICES.md && git commit -m "feat(pack): add Apache codebase skill"`
 
-### Task 4: Write original public workflow skills
+### Task 4: Package audited adapted workflow skills
 
-**Satisfies:** REQ-005, REQ-011
+**Satisfies:** REQ-003, REQ-011
 
 **Files:**
-- Create: `skills/wayfinder/SKILL.md`, `skills/to-spec/SKILL.md`, `skills/writing-plans/SKILL.md`
-- Create: `skills/implementing-plans/SKILL.md`, `skills/cleaning-repo-with-knip/SKILL.md`, `skills/improve-codebase-architecture/SKILL.md`
+- Create: `skills/adapted/{wayfinder,to-spec,brainstorming,writing-plans,cavecrew,swarm-orchestration}/SKILL.md`
 - Modify: `skills/sources.lock.json`, `skills/README.md`
 
 - [ ] **Step 1: Write contract test**
 
-Require frontmatter and sections `When to use`, `Inputs`, `Workflow`, `Validation`, and `Failure behavior` in every original skill.
+Require frontmatter, upstream notice, author-change header, and sections `When to use`, `Inputs`, `Workflow`, `Validation`, and `Failure behavior` in every adapted skill.
+
+- [ ] **Step 2: Run focused test**
+
+Run: `npm test -- --run tests/pack-contract.test.ts`
+Expected: FAIL before adapted skill documents exist.
+
+- [ ] **Step 3: Write adapted host-neutral documents**
+
+Start from each pinned permissive upstream skill, retain its notice, document repository-author changes, sanitize host-specific instructions, and state serial/manual fallback.
+
+- [ ] **Step 4: Register adapted status**
+
+Use upstream source and full SHA, `status: "adapted"`, plus upstream notice path and author-change summary.
+
+- [ ] **Step 5: Verify and commit**
+
+Run: `npm test -- --run tests/pack-contract.test.ts && git add skills && git commit -m "feat(pack): add adapted workflow skills"`
+
+### Task 5: Write original public workflow skills
+
+**Satisfies:** REQ-005, REQ-011
+
+**Files:**
+- Create: `skills/original/implementing-plans/SKILL.md`, `skills/original/cleaning-repo-with-knip/SKILL.md`
+- Modify: `skills/sources.lock.json`, `skills/README.md`
+
+- [ ] **Step 1: Write failing original-skill contract test**
+
+Require frontmatter and sections `When to use`, `Inputs`, `Workflow`, `Validation`, and `Failure behavior` in each original skill.
 
 - [ ] **Step 2: Run focused test**
 
 Run: `npm test -- --run tests/pack-contract.test.ts`
 Expected: FAIL before original skill documents exist.
 
-- [ ] **Step 3: Write independently authored host-neutral documents**
+- [ ] **Step 3: Write sanitized original documents**
 
-Use concise original text. Do not copy local private skill content or quote unlicensed workflow material. Declare required tools as optional prerequisites and state serial/manual fallback.
+Use repository-author wording only. Exclude private tool names, internal prompts, local paths, source-project material, and copied protected expression.
 
 - [ ] **Step 4: Register original status**
 
-Use repository source, the immutable base commit `d248470`, `status: "original"`, and no third-party notice path.
+Use repository source, immutable base commit `d248470`, `status: "original"`, and no third-party notice path.
 
 - [ ] **Step 5: Verify and commit**
 
 Run: `npm test -- --run tests/pack-contract.test.ts && git add skills && git commit -m "feat(pack): add original workflow skills"`
 
-### Task 5: Finish agent pack and public README
+### Task 6: Finish agent pack and public README
 
 **Satisfies:** REQ-006, REQ-007, REQ-009, REQ-011
 
@@ -202,7 +230,7 @@ Each profile names inputs, allowed actions, structured output, validation, and f
 
 Run: `npm test -- --run tests/agent-profiles.test.ts tests/pack-readme.test.ts && git add agent-profiles README.md skills/README.md tests && git commit -m "docs(pack): publish agent and skill guides"`
 
-### Task 6: Harden public audit and release verification
+### Task 7: Harden public audit and release verification
 
 **Satisfies:** REQ-008, REQ-009, REQ-010
 

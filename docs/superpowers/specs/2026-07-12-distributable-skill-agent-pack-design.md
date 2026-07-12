@@ -8,7 +8,9 @@ Make this repository a public, self-contained pack that users can clone or downl
 
 ```text
 skills/
-  <skill-name>/SKILL.md
+  vendor/<skill-name>/SKILL.md
+  adapted/<skill-name>/SKILL.md
+  original/<skill-name>/SKILL.md
   README.md
   sources.lock.json
 agent-profiles/
@@ -24,7 +26,7 @@ licenses/
 README.md
 ```
 
-`skills/` contains the distributable content, not only a catalogue. `agent-profiles/` remains host-neutral: a user can adapt the profile to any agent host without hidden tools or repository assumptions.
+`skills/` contains the distributable content, not only a catalogue. `docs/skill-provenance.md` is authoritative for every package status and upstream selection. `agent-profiles/` remains host-neutral: a user can adapt the profile to any agent host without hidden tools or repository assumptions.
 
 ## Provenance policy
 
