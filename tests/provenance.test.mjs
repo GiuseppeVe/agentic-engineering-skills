@@ -99,6 +99,64 @@ test("acquisition gate excludes a missing requested source from lock, payload, a
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test("acquisition gate excludes valid third-party sources with missing or tampered legal payload", async () => {
+  const root = await mkdtemp(join(tmpdir(), "acquisition-legal-fixture-"));
+  try {
+    const sourceRoot = join(root, "sources"), legalRoot = join(root, "legal"), output = join(root, "output");
+    for (const name of ["missing-legal", "tampered-legal"]) {
+      await mkdir(join(sourceRoot, name), { recursive: true });
+      await writeFile(join(sourceRoot, name, "SKILL.md"), `---\nname: ${name}\n---\n`);
+    }
+    await mkdir(join(legalRoot, "licenses"), { recursive: true });
+    const expectedLicense = join(root, "expected-LICENSE");
+    await writeFile(expectedLicense, "approved license\n");
+    const expectedLegalHash = await sha256File(expectedLicense);
+    await writeFile(join(legalRoot, "licenses", "tampered-LICENSE"), "tampered license\n");
+
+    const sourceBase = {
+      sourceType: "adapted", repository: "https://example.test/upstream", revision: "a".repeat(40),
+      upstreamPath: "SKILL.md", localRoot: "projectSkills", changeNotice: "fixture adaptation",
+    };
+    const sources = { skills: [
+      { ...sourceBase, name: "missing-legal", localPath: "missing-legal/SKILL.md", patchPath: "manifests/patches/missing-legal.patch" },
+      { ...sourceBase, name: "tampered-legal", localPath: "tampered-legal/SKILL.md", patchPath: "manifests/patches/tampered-legal.patch" },
+    ] };
+    const lock = { skills: sources.skills.map(source => ({
+      name: source.name, sourceType: "adapted", repository: source.repository, revision: source.revision,
+      upstreamPath: source.upstreamPath, sha256: "b".repeat(64), localSha256: "0".repeat(64), dependencies: [],
+      changeNotice: source.changeNotice, patchPath: source.patchPath,
+      licenseFiles: [{
+        upstreamPath: "LICENSE", path: `licenses/${source.name === "missing-legal" ? "missing" : "tampered"}-LICENSE`, sha256: expectedLegalHash,
+      }],
+    })) };
+    await mkdir(output, { recursive: true });
+    await writeFile(join(root, "sources.json"), JSON.stringify(sources));
+    await writeFile(join(root, "lock.json"), JSON.stringify(lock));
+    await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
+
+    const result = await runAcquisitionGate({
+      sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"),
+      lockOutputPath: join(output, "skills.lock.json"), payloadOutputPath: join(output, "skills"), legalPayloadRootPath: legalRoot,
+      releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "release-report.md"),
+      environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot },
+    });
+
+    assert.deepEqual(await readdir(join(output, "skills")), []);
+    const writtenLock = JSON.parse(await readFile(join(output, "skills.lock.json"), "utf8"));
+    for (const name of ["missing-legal", "tampered-legal"]) {
+      const returned = result.skills.find(entry => entry.name === name);
+      const written = writtenLock.skills.find(entry => entry.name === name);
+      assert.equal(returned.excluded, true);
+      assert.match(returned.exclusionReason, /^Legal verification failed:/);
+      assert.equal(written.exclusionReason, returned.exclusionReason);
+    }
+    assert.match(result.skills.find(entry => entry.name === "missing-legal").exclusionReason, /ENOENT|no such file/i);
+    assert.match(result.skills.find(entry => entry.name === "tampered-legal").exclusionReason, /license hash mismatch/);
+    const report = await readFile(join(output, "release-report.md"), "utf8");
+    assert.deepEqual(verifyExclusionSection(writtenLock.skills, report), writtenLock.skills.map(({ name, exclusionReason: reason }) => ({ name, reason })));
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test("adapted and original local imports retain provenance contracts", async () => {
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
   const byName = new Map(lock.skills.map(entry => [entry.name, entry]));
