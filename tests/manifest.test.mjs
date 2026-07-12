@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { validateManifest, dependencyOrder, verifyLocalEntries } from "../scripts/lib/manifest.mjs";
 
-const upstream = { name: "a", sourceType: "vendor", repository: "https://example.test/a", revision: "a".repeat(40), upstreamPath: "SKILL.md", sha256: "b".repeat(64), localSha256: "b".repeat(64), dependencies: [] };
+const upstream = { name: "a", sourceType: "vendor", repository: "https://example.test/a", revision: "a".repeat(40), upstreamPath: "SKILL.md", sha256: "b".repeat(64), localSha256: "b".repeat(64), dependencies: [], licenseFiles: [{ upstreamPath: "LICENSE", path: "plugins/agentic-engineering-skills/licenses/a-LICENSE", sha256: "c".repeat(64) }] };
 const adapted = { ...upstream, name: "adapted", sourceType: "adapted", changeNotice: "Host compatibility changes", patchPath: "manifests/patches/adapted.patch" };
 
 test("validates discriminated source entries and sorts names", () => {
@@ -23,6 +23,13 @@ test("rejects missing and forbidden fields", () => {
   assert.throws(() => validateManifest({ skills: [{ ...upstream, revision: undefined }] }), /revision/);
   assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "b".repeat(40), license: "MIT", revision: "c".repeat(40), dependencies: [] }] }), /forbidden.*revision/i);
   assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "not-a-commit", license: "MIT", dependencies: [] }] }), /releaseCommit/);
+});
+
+test("requires strict normalized licenseFiles on third-party entries", () => {
+  assert.throws(() => validateManifest({ skills: [{ ...upstream, licenseFiles: [] }] }), /licenseFiles/);
+  assert.throws(() => validateManifest({ skills: [{ ...upstream, licenseFiles: [{ ...upstream.licenseFiles[0], path: "../LICENSE" }] }] }), /licenseFiles/);
+  assert.throws(() => validateManifest({ skills: [{ ...upstream, licenseFiles: [{ ...upstream.licenseFiles[0], upstreamPath: "/LICENSE" }] }] }), /licenseFiles/);
+  assert.throws(() => validateManifest({ skills: [{ ...upstream, licenseFiles: [{ ...upstream.licenseFiles[0], sha256: "bad" }] }] }), /licenseFiles/);
 });
 
 test("rejects dependency cycles and unknown dependencies", () => {

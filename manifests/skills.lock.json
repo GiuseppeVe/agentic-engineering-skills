@@ -10,7 +10,14 @@
       "localSha256": "c69c54fc930889cc43a9548855ad2ca3dbf6d0aab71b410b480271eed0c0364a",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/brainstorming.patch"
+      "patchPath": "manifests/patches/brainstorming.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
     },
     {
       "name": "cavecrew",
@@ -22,7 +29,14 @@
       "localSha256": "4daa3154082b2f729c2f5277cdcd4c35e96bebbd4416ffbb2632df51f5da7771",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/cavecrew.patch"
+      "patchPath": "manifests/patches/cavecrew.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
+          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+        }
+      ]
     },
     {
       "name": "caveman",
@@ -32,7 +46,14 @@
       "upstreamPath": "skills/caveman/SKILL.md",
       "sha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
       "localSha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
+          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+        }
+      ]
     },
     {
       "name": "cleaning-repo-with-knip",
@@ -50,7 +71,14 @@
       "upstreamPath": "skills/engineering/codebase-design/SKILL.md",
       "sha256": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad",
       "localSha256": "a8d50abac5a4018f60e1d911d4b6f4e36454ca14d6c390c0695a578c7de65dad",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "domain-modeling",
@@ -60,7 +88,14 @@
       "upstreamPath": "skills/engineering/domain-modeling/SKILL.md",
       "sha256": "152e2c97239affb12a60c5f4a7e74ab546a49ae169688c81f4e2ccc42dafa579",
       "localSha256": "152e2c97239affb12a60c5f4a7e74ab546a49ae169688c81f4e2ccc42dafa579",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "grill-me",
@@ -70,7 +105,14 @@
       "upstreamPath": "skills/productivity/grill-me/SKILL.md",
       "sha256": "6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54",
       "localSha256": "6189dfceb7304a6e5558f75d87e68fa3bc7fcf7ba120e44f21f8a61fe01eba54",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "grilling",
@@ -80,7 +122,14 @@
       "upstreamPath": "skills/productivity/grilling/SKILL.md",
       "sha256": "5a35925d03a391bcfa46940868b649b72dba89ec9c19525e785bbb6bd3a7f478",
       "localSha256": "5a35925d03a391bcfa46940868b649b72dba89ec9c19525e785bbb6bd3a7f478",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "implementing-plans",
@@ -98,7 +147,14 @@
       "upstreamPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
       "sha256": "0026900866ed2a542af0559cef11dd7ae707633b75cc6f668c2e7c0a33e35032",
       "localSha256": "0026900866ed2a542af0559cef11dd7ae707633b75cc6f668c2e7c0a33e35032",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "learn-codebase",
@@ -110,7 +166,19 @@
       "localSha256": "35567bb2e215d33276067a821df3aa0e3ccd9991577c7810305e82f8fee3a685",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/learn-codebase.patch"
+      "patchPath": "manifests/patches/learn-codebase.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "upstreamPath": "NOTICE",
+          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE",
+          "sha256": "35003c303ee484c77872fd45eb5d590ce679d1ae7ac5bb672d33069cca66685b"
+        }
+      ]
     },
     {
       "name": "setup-matt-pocock-skills",
@@ -120,7 +188,14 @@
       "upstreamPath": "skills/engineering/setup-matt-pocock-skills/",
       "sha256": "8ccdc4a8cb9f95da9d997fe43863bd212ea64ae737ad7d7f66bd98a920980819",
       "localSha256": "8ccdc4a8cb9f95da9d997fe43863bd212ea64ae737ad7d7f66bd98a920980819",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "swarm-orchestration",
@@ -132,7 +207,14 @@
       "localSha256": "e0e380cbf65de416b8755542cc5de5d6734760be0349c55e96de4ba1c77f6fa7",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/swarm-orchestration.patch"
+      "patchPath": "manifests/patches/swarm-orchestration.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE",
+          "sha256": "a45ba66fa502c49ad108440536d8aa91dfe9c04575a32a01287839bee336199c"
+        }
+      ]
     },
     {
       "name": "test-driven-development",
@@ -142,7 +224,14 @@
       "upstreamPath": "skills/test-driven-development/",
       "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
       "localSha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
     },
     {
       "name": "to-spec",
@@ -154,7 +243,14 @@
       "localSha256": "cdcac1e43f00e3faddc8cd1249982e4d78e395cd8a1b86629b5e2fb21c135a89",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/to-spec.patch"
+      "patchPath": "manifests/patches/to-spec.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "using-git-worktrees",
@@ -164,7 +260,14 @@
       "upstreamPath": "skills/using-git-worktrees/",
       "sha256": "e6306e69246610dc203c8639584542e16bfbb0b09d0adddac533ca009fa93180",
       "localSha256": "e6306e69246610dc203c8639584542e16bfbb0b09d0adddac533ca009fa93180",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
     },
     {
       "name": "wayfinder",
@@ -176,7 +279,14 @@
       "localSha256": "2505b861e0d98af9d12523ea629848eb7d22e3183100d6af8bdfa3c9f46192ac",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/wayfinder.patch"
+      "patchPath": "manifests/patches/wayfinder.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
     },
     {
       "name": "writing-plans",
@@ -188,7 +298,14 @@
       "localSha256": "e6f6453090d0aac0b7fe4399206d6af23e784e38a2b5982453b255b24ed55051",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/writing-plans.patch"
+      "patchPath": "manifests/patches/writing-plans.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
     },
     {
       "name": "writing-skills",
@@ -198,7 +315,14 @@
       "upstreamPath": "skills/writing-skills/",
       "sha256": "8dac0608dbab9905a3ac7dcbb52cf796fec408a844feb53b9f2dc790394fe73d",
       "localSha256": "8dac0608dbab9905a3ac7dcbb52cf796fec408a844feb53b9f2dc790394fe73d",
-      "dependencies": []
+      "dependencies": [],
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE",
+          "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+        }
+      ]
     }
   ]
 }

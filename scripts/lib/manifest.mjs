@@ -1,5 +1,5 @@
 import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, posix } from "node:path";
 import { sha256File, sha256Path } from "./hash.mjs";
 
 const hex = (n) => new RegExp(`^[0-9a-f]{${n}}$`, "i");
@@ -23,10 +23,15 @@ export function validateManifest(manifest) {
       if (!hex(40).test(entry.releaseCommit)) throw new Error(`invalid releaseCommit for ${entry.name}`);
     } else {
       for (const key of upstreamFields) allowed.add(key);
+      allowed.add("licenseFiles");
       if (entry.sourceType === "adapted") { allowed.add("changeNotice"); allowed.add("patchPath"); }
       for (const key of upstreamFields) if (!entry[key]) throw new Error(`${entry.name} requires ${key}`);
       if (!hex(40).test(entry.revision)) throw new Error(`invalid revision for ${entry.name}`);
       if (!hex(64).test(entry.sha256) || !hex(64).test(entry.localSha256)) throw new Error(`invalid sha256 for ${entry.name}`);
+      if (!Array.isArray(entry.licenseFiles) || entry.licenseFiles.length === 0 || entry.licenseFiles.some(file => {
+        if (!file || Object.keys(file).sort().join(",") !== "path,sha256,upstreamPath") return true;
+        return !normalizedRelative(file.path) || !normalizedRelative(file.upstreamPath) || !hex(64).test(file.sha256);
+      })) throw new Error(`${entry.name} requires non-empty normalized licenseFiles`);
       if (entry.sourceType === "adapted" && (!entry.changeNotice?.trim() || !/^manifests\/patches\/[^/]+\.patch$/.test(entry.patchPath ?? ""))) throw new Error(`adapted ${entry.name} requires changeNotice and patchPath under manifests/patches`);
     }
     for (const key of Object.keys(entry)) if (!allowed.has(key)) throw new Error(`field ${key} not allowed for ${entry.sourceType}`);
@@ -34,6 +39,10 @@ export function validateManifest(manifest) {
   }).sort((a, b) => a.name.localeCompare(b.name));
   dependencyOrder(values);
   return values;
+}
+
+function normalizedRelative(path) {
+  return typeof path === "string" && path.length > 0 && !path.includes("\\") && !path.startsWith("/") && posix.normalize(path) === path && !path.split("/").includes("..");
 }
 
 export function dependencyOrder(entries) {
