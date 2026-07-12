@@ -1,0 +1,21 @@
+import { readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { locateInstalledPayload, hashPayloadTree } from "./lib/native-receipt.mjs";
+
+const args = new Map();
+for (let i = 2; i < process.argv.length; i += 2) args.set(process.argv[i], process.argv[i + 1]);
+const host = args.get("--host");
+const sourceRoot = resolve(args.get("--source-root") ?? "plugins/agentic-engineering-skills/skills");
+const lock = JSON.parse(await readFile(resolve(args.get("--lock") ?? "manifests/skills.lock.json"), "utf8"));
+const receipt = JSON.parse(await readFile(resolve(args.get("--receipt") ?? "manifests/native-discovery.json"), "utf8"));
+const jsonDocuments = (args.get("--cli-json") ?? "").split(",").filter(Boolean).map(path => readFile(resolve(path), "utf8"));
+const searchRoots = (args.get("--search-roots") ?? "").split(",").filter(Boolean);
+const installed = await locateInstalledPayload({ host, explicitRoot: args.get("--installed-root"), jsonDocuments: await Promise.all(jsonDocuments), searchRoots });
+const expected = lock.skills.filter(skill => !skill.excluded).map(skill => skill.name).sort();
+const sourceHash = await hashPayloadTree(sourceRoot);
+if (JSON.stringify(installed.skills) !== JSON.stringify(expected)) throw new Error(`${host} installed SKILL.md inventory mismatch: expected ${expected.join(", ")}; got ${installed.skills.join(", ")}`);
+if (installed.treeHash !== sourceHash) throw new Error(`${host} installed tree hash mismatch: source ${sourceHash}; installed ${installed.treeHash}`);
+if (installed.treeHash !== receipt.installedPayload.treeHash) throw new Error(`${host} installed receipt hash mismatch: receipt ${receipt.installedPayload.treeHash}; installed ${installed.treeHash}`);
+const result = { schemaVersion: 1, host, locatorBasis: installed.basis, installedRoot: installed.root, skills: installed.skills, treeHash: installed.treeHash, sourceTreeHash: sourceHash };
+if (args.get("--output")) await writeFile(resolve(args.get("--output")), `${JSON.stringify(result, null, 2)}\n`);
+process.stdout.write(`${host} installed payload verified: ${installed.skills.length} skills, ${installed.treeHash}, via ${installed.basis}\n`);

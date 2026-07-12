@@ -23,6 +23,7 @@ test("CI setup and executable gates are unique and ordered", async () => {
   const steps = workflow.jobs.verify.steps;
   assert.ok(steps.some(step => step.uses === "actions/setup-node@v4" && step.with?.["node-version"] === 22));
   assert.equal(workflow.jobs.verify.env?.CODEX_HOME, "${{ runner.temp }}/codex-home");
+  assert.equal(workflow.jobs.verify.env?.CLAUDE_CONFIG_DIR, "${{ runner.temp }}/claude-home");
 
   const runs = steps.filter(step => "run" in step).map(step => step.run.trim());
   assert.equal(new Set(runs).size, runs.length, "every executable run step must be unique");
@@ -37,12 +38,14 @@ test("CI setup and executable gates are unique and ordered", async () => {
     "npm run verify:pack",
     "npm run verify:upstream",
     "npm run audit:public",
-    "codex plugin marketplace add .",
-    "codex plugin add agentic-engineering-skills@agentic-engineering-skills",
-    "codex plugin list --available --json",
     "claude plugin validate .",
   ];
   assert.deepEqual(runs.filter(command => gates.includes(command)), gates);
   for (const gate of gates) assert.equal(runs.filter(command => command === gate).length, 1, `${gate} must run exactly once`);
   assert.ok(runs.every(command => !command.includes("scripts/validate_plugin.py")), "custom Codex validator must not be a CI gate");
+  assert.equal(runs.filter(command => command.includes("verify:installed-native -- --host codex")).length, 1);
+  assert.equal(runs.filter(command => command.includes("verify:installed-native -- --host claude")).length, 1);
+  assert.ok(runs.some(command => command.startsWith("codex plugin add ") && command.includes("--json")));
+  assert.ok(runs.some(command => command.startsWith("claude plugin install ")));
+  assert.ok(runs.some(command => command.startsWith("claude plugin list --json")));
 });

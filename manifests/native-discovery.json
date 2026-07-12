@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "evidenceSource": "task-10-isolated-native-installs",
   "capturedAt": "2026-07-12",
   "environment": {
@@ -20,6 +20,10 @@
     "codex": {
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
+      "installedPayload": {
+        "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
+        "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
+      },
       "discoveredSkills": [
         "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
         "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
@@ -41,6 +45,10 @@
     "claude": {
       "version": "2.1.201 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
+      "installedPayload": {
+        "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
+        "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
+      },
       "discoveredSkills": [
         "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
         "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",

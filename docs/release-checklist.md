@@ -21,6 +21,7 @@ Release remains manual. CI success does not authorize publication or repository 
 - [ ] Record Codex version, validator command, exit code, and discovered skill names.
 - [ ] Record Claude Code version, validator command, exit code, and discovered skill names.
 - [ ] Both native inventories match included lock inventory.
+- [ ] CI fresh-installs both hosts and `verify:installed-native` matches each installed tree hash to source and schema-v2 receipt.
 - [ ] Smoke tests use isolated temporary host homes/configuration.
 
 ## Owner approvals
