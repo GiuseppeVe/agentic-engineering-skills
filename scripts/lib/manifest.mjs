@@ -87,13 +87,17 @@ export async function listFlatSkillDirectories(root) {
 
 const localRootEnvironment = { projectSkills: "AGENTIC_PROJECT_SKILLS_ROOT", userSkills: "AGENTIC_USER_SKILLS_ROOT" };
 
-export function resolveAcquisitionPath(source, environment = process.env) {
+export function resolveAcquisitionRoot(source, environment = process.env) {
   const variable = localRootEnvironment[source.localRoot];
   if (!variable) throw new Error(`unknown localRoot for ${source.name}: ${source.localRoot}`);
-  if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
   const configuredRoot = environment[variable];
   if (!configuredRoot) throw new Error(`${variable} is required to acquire ${source.name}`);
-  const root = resolve(configuredRoot), path = resolve(root, source.localPath);
+  return resolve(configuredRoot);
+}
+
+export function resolveAcquisitionPath(source, environment = process.env) {
+  if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
+  const root = resolveAcquisitionRoot(source, environment), path = resolve(root, source.localPath);
   if (relative(root, path).startsWith("..")) throw new Error(`localPath escapes ${source.localRoot} for ${source.name}`);
   return path;
 }

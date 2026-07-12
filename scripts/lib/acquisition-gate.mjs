@@ -1,8 +1,8 @@
-import { cp, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
-import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import { cp, lstat, mkdir, mkdtemp, readFile, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { randomUUID } from "node:crypto";
-import { compareLockDirectories, listFlatSkillDirectories, resolveAcquisitionPath, validateManifest, validateSourceManifest, verifyLocalEntries } from "./manifest.mjs";
+import { compareLockDirectories, listFlatSkillDirectories, resolveAcquisitionPath, resolveAcquisitionRoot, validateManifest, validateSourceManifest, verifyLocalEntries } from "./manifest.mjs";
 import { replaceExclusionSection, verifyExclusionSection } from "./release-report.mjs";
 import { sha256File, sha256Path } from "./hash.mjs";
 
@@ -29,7 +29,7 @@ async function verifyLegalPayload(entry, legalPayloadRootPath) {
   if (!Array.isArray(entry.licenseFiles) || entry.licenseFiles.length === 0) throw new Error(`required licenseFiles metadata is absent for ${entry.name}`);
   for (const legal of entry.licenseFiles) {
     const path = resolveLegalPath(legalPayloadRootPath, legal.path, entry.name);
-    await stat(path);
+    await verifyContainedRegularFile(path, legalPayloadRootPath, `license file for ${entry.name}`);
     if (legal.sha256) {
       const actual = await sha256File(path);
       if (actual !== legal.sha256) throw new Error(`license hash mismatch for ${entry.name} at ${legal.path}: expected ${legal.sha256}, got ${actual}`);
@@ -37,7 +37,21 @@ async function verifyLegalPayload(entry, legalPayloadRootPath) {
   }
 }
 
-async function replaceOutputsAtomically(outputs, beforeReplacement) {
+function isContained(root, path) {
+  const child = relative(root, path);
+  return child === "" || (!isAbsolute(child) && child !== ".." && !child.startsWith(`..${sep}`));
+}
+
+async function verifyContainedRegularFile(path, configuredRoot, label) {
+  const info = await lstat(path);
+  if (info.isSymbolicLink()) throw new Error(`${label} must not be a symbolic link: ${path}`);
+  if (!info.isFile()) throw new Error(`${label} must be a regular file: ${path}`);
+  const [rootTarget, fileTarget] = await Promise.all([realpath(configuredRoot), realpath(path)]);
+  if (!isContained(rootTarget, fileTarget)) throw new Error(`${label} resolves outside configured root: ${path}`);
+  return info;
+}
+
+async function replaceOutputsAtomically(outputs, beforeReplacement, beforeBackupCleanup) {
   const transactionId = `${process.pid}-${randomUUID()}`;
   const states = outputs.map(({ staged, destination }) => ({
     staged,
@@ -48,6 +62,7 @@ async function replaceOutputsAtomically(outputs, beforeReplacement) {
     replaced: false,
   }));
 
+  let committed = false;
   try {
     // Copy beside each destination first. Final renames therefore never depend on
     // temporary and output directories sharing a filesystem.
@@ -70,8 +85,8 @@ async function replaceOutputsAtomically(outputs, beforeReplacement) {
       await rename(state.prepared, state.destination);
       state.replaced = true;
     }
-
-    await Promise.all(states.filter(state => state.hadDestination).map(state => rm(state.backup, { recursive: true, force: true })));
+    // Commit point: every destination now contains matching new output.
+    committed = true;
   } catch (error) {
     const rollbackErrors = [];
     for (const state of [...states].reverse()) {
@@ -88,6 +103,19 @@ async function replaceOutputsAtomically(outputs, beforeReplacement) {
     // Never delete an unrestored backup after a rollback error; it remains the
     // last recoverable copy. Normal success and successful rollback leave none.
     await Promise.all(states.map(state => rm(state.prepared, { recursive: true, force: true })));
+  }
+
+  if (committed) {
+    const cleanupErrors = [];
+    for (const [index, state] of states.filter(state => state.hadDestination).entries()) {
+      try {
+        await beforeBackupCleanup?.(index + 1, state.backup);
+        await rm(state.backup, { recursive: true, force: true });
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
+    if (cleanupErrors.length > 0) throw new AggregateError(cleanupErrors, "acquisition committed but backup cleanup failed");
   }
 }
 
@@ -107,7 +135,9 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
       if (!source.localRoot) throw new Error(`fixture acquisition requires local source for ${source.name}`);
       try {
         const from = resolveAcquisitionPath(source, environment);
-        const info = await stat(from);
+        const info = source.localPath.endsWith("/")
+          ? await lstat(from)
+          : await verifyContainedRegularFile(from, resolveAcquisitionRoot(source, environment), `source file for ${source.name}`);
         const to = join(stagedPayload, source.name);
         await mkdir(to, { recursive: true });
         if (info.isDirectory()) await cp(from, to, { recursive: true });
@@ -140,7 +170,7 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
       { staged: stagedPayload, destination: payloadOutputPath },
       { staged: stagedLock, destination: lockOutputPath },
       { staged: stagedReport, destination: releaseReportOutputPath },
-    ], _testHooks.beforeReplacement);
+    ], _testHooks.beforeReplacement, _testHooks.beforeBackupCleanup);
     return lock;
   } finally {
     await rm(stage, { recursive: true, force: true });
