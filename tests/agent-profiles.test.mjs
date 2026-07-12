@@ -1,9 +1,11 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { tmpdir } from "node:os";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { verifyInstalledAgentProfiles } from "../scripts/verify-pack.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = path.join(root, "manifests", "agent-profiles.json");
@@ -102,6 +104,9 @@ test("profile manifest declares exact profile inventory", async () => {
 });
 
 test("installed plugin manifest mirrors canonical inventory, provenance, paths, and hashes", async () => {
+  const installedManifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
+  assert.equal(Object.hasOwn(installedManifest, "canonicalManifest"), false,
+    "installed manifest must be self-contained and must not point outside plugin root");
   const [canonical, installed] = await Promise.all([loadProfiles(), loadInstalledProfiles()]);
   assert.deepEqual(installed.map(({ name }) => name).sort(), expectedProfiles);
   assert.deepEqual(canonical.map(({ name }) => name).sort(), expectedProfiles);
@@ -116,6 +121,49 @@ test("installed plugin manifest mirrors canonical inventory, provenance, paths, 
     }
     assert.equal(createHash("sha256").update(profile.payloadBytes).digest("hex"), profile.sha256,
       `${profile.name}: installed payload hash mismatch`);
+  }
+});
+
+test("installed profile verification rejects symbolic-link payloads", async (t) => {
+  const fixture = await mkdtemp(path.join(tmpdir(), "installed-profile-symlink-"));
+  try {
+    const fixturePluginRoot = path.join(fixture, "plugin");
+    await mkdir(path.join(fixturePluginRoot, "manifests"), { recursive: true });
+    await mkdir(path.join(fixturePluginRoot, "agent-profiles"), { recursive: true });
+    const installedManifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
+    await writeFile(path.join(fixturePluginRoot, "manifests", "agent-profiles.json"), JSON.stringify(installedManifest));
+    const outsidePayload = path.join(fixture, "outside.md");
+    await writeFile(outsidePayload, "outside");
+    try {
+      await symlink(outsidePayload, path.join(fixturePluginRoot, "agent-profiles", "cleanup.md"), "file");
+    } catch (error) {
+      if (["EPERM", "EACCES"].includes(error?.code)) { t.skip(`OS disallows symlink creation: ${error.code}`); return; }
+      throw error;
+    }
+    await assert.rejects(
+      verifyInstalledAgentProfiles({ canonicalPath: manifestPath, pluginRoot: fixturePluginRoot, writeSummary: () => {} }),
+      /must not be a symbolic link/,
+    );
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});
+
+test("installed profile verification rejects lexical traversal", async () => {
+  const fixture = await mkdtemp(path.join(tmpdir(), "installed-profile-traversal-"));
+  try {
+    const fixturePluginRoot = path.join(fixture, "plugin");
+    await mkdir(path.join(fixturePluginRoot, "manifests"), { recursive: true });
+    const installedManifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
+    installedManifest.profiles[0].path = "../escape.md";
+    installedManifest.profiles[0].payloadPath = "../escape.md";
+    await writeFile(path.join(fixturePluginRoot, "manifests", "agent-profiles.json"), JSON.stringify(installedManifest));
+    await assert.rejects(
+      verifyInstalledAgentProfiles({ canonicalPath: manifestPath, pluginRoot: fixturePluginRoot, writeSummary: () => {} }),
+      /path escapes plugin root/,
+    );
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
   }
 });
 

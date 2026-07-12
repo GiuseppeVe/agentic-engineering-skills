@@ -1,6 +1,6 @@
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFile, stat } from "node:fs/promises";
+import { lstat, readFile, realpath, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { validateManifest, listFlatSkillDirectories, compareLockDirectories, verifyLocalEntries } from "./lib/manifest.mjs";
 import { expectedSkills } from "../tests/expected-inventory.mjs";
@@ -9,6 +9,9 @@ import { promisify } from "node:util";
 import { verifyExclusionSection } from "./lib/release-report.mjs";
 import { verifyNativeReceipt } from "./lib/native-receipt.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
+
+async function main() {
 const statusAt = process.argv.indexOf("--status"), status = statusAt >= 0 ? process.argv[statusAt + 1] : undefined;
 if (status && !["vendor", "adapted", "original"].includes(status)) throw new Error(`invalid --status: ${status}`);
 const allowUnstamped = process.argv.includes("--allow-unstamped-originals");
@@ -29,7 +32,10 @@ const included = entries.filter(x => !x.excluded).map(x => x.name).sort();
 const nativeReceipt = JSON.parse(await readFile(join(root, "manifests/native-discovery.json"), "utf8"));
 const nativeResult = await verifyNativeReceipt(nativeReceipt, { included, payloadRoot: skillsRoot });
 process.stdout.write(`Verified native receipt: Codex ${nativeResult.count}, Claude ${nativeResult.count}, ${nativeResult.hash}\n`);
-await verifyInstalledAgentProfiles();
+await verifyInstalledAgentProfiles({
+  canonicalPath: join(root, "manifests/agent-profiles.json"),
+  pluginRoot: join(root, "plugins/agentic-engineering-skills"),
+});
 const selected = entries.filter(x => !x.excluded && (!status || x.sourceType === status));
 await verifyLocalEntries(selected, root);
 await verifyDocumentationInventory(entries.filter(x => !x.excluded).map(x => x.name).sort());
@@ -49,11 +55,10 @@ if (reportAt >= 0) {
 }
 for (const entry of selected) process.stdout.write(`VERIFIED ${entry.sourceType} ${entry.name}\n`);
 process.stdout.write(`Verified ${entries.length} requested skills (${entries.filter(x => !x.excluded).length} included, ${entries.filter(x => x.excluded).length} excluded)\n`);
+}
 
 function entryIsUnstamped(entry) { return !/^[0-9a-f]{40}$/i.test(entry.releaseCommit ?? "") || /^0{40}$/.test(entry.releaseCommit); }
-async function verifyInstalledAgentProfiles() {
-  const canonicalPath = join(root, "manifests/agent-profiles.json");
-  const pluginRoot = join(root, "plugins/agentic-engineering-skills");
+export async function verifyInstalledAgentProfiles({ canonicalPath, pluginRoot, writeSummary = (text) => process.stdout.write(text) }) {
   const installedPath = join(pluginRoot, "manifests/agent-profiles.json");
   const [canonical, installed] = await Promise.all([
     readFile(canonicalPath, "utf8").then(JSON.parse),
@@ -66,6 +71,7 @@ async function verifyInstalledAgentProfiles() {
   if (JSON.stringify(canonicalNames) !== JSON.stringify(expectedProfileNames)) throw new Error(`canonical profile inventory mismatch: expected ${expectedProfileNames}; got ${canonicalNames}`);
   if (JSON.stringify(installedNames) !== JSON.stringify(canonicalNames)) throw new Error(`installed profile inventory mismatch: expected ${canonicalNames}; got ${installedNames}`);
   const canonicalByName = new Map(canonical.profiles.map(x => [x.name, x]));
+  const realPluginRoot = await realpath(pluginRoot);
   for (const entry of installed.profiles) {
     const canonicalEntry = canonicalByName.get(entry.name);
     const payload = resolve(pluginRoot, entry.path);
@@ -76,10 +82,16 @@ async function verifyInstalledAgentProfiles() {
     for (const field of ["candidatePath", "status", "source", "revision", "upstreamPath", "sha256", "license", "licensePath", "noticePath", "sourceSpecPath", "sourceSpecRoleLine"]) {
       if (entry[field] !== canonicalEntry[field]) throw new Error(`${entry.name}: installed ${field} differs from canonical manifest`);
     }
-    const actualHash = createHash("sha256").update(await readFile(payload)).digest("hex");
+    const payloadStat = await lstat(payload);
+    if (payloadStat.isSymbolicLink()) throw new Error(`${entry.name}: installed profile payload must not be a symbolic link`);
+    if (!payloadStat.isFile()) throw new Error(`${entry.name}: installed profile payload must be a regular file`);
+    const realPayload = await realpath(payload);
+    const relativeRealPayload = relative(realPluginRoot, realPayload);
+    if (relativeRealPayload.startsWith("..") || isAbsolute(relativeRealPayload)) throw new Error(`${entry.name}: installed profile real path escapes plugin root`);
+    const actualHash = createHash("sha256").update(await readFile(realPayload)).digest("hex");
     if (actualHash !== entry.sha256) throw new Error(`${entry.name}: installed profile payload hash mismatch`);
   }
-  process.stdout.write(`Verified agent profiles: ${installedNames.length} installed (${installedNames.join(", ")})\n`);
+  writeSummary(`Verified agent profiles: ${installedNames.length} installed (${installedNames.join(", ")})\n`);
 }
 async function verifyDocumentationInventory(included) {
   const explicitAt = process.argv.indexOf("--docs-inventory");
