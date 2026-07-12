@@ -23,7 +23,7 @@ const contentRules = [
     /https?:\/\/(?:localhost|127(?:\.\d{1,3}){3}|10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2}|[^\s/:]+\.(?:internal|local|localhost))(?:[:/][^\s]*)?/i,
   ],
   [
-    "legal:unresolved-template",
+    "legal-template:unresolved",
     /(?:\[(?:year|yyyy|fullname|copyright holder|organization)\]|<(?:year|yyyy|fullname|copyright holder|organization)>)/i,
   ],
 ];
@@ -87,6 +87,29 @@ async function explicitTestFiles(listPath, root) {
   });
 }
 
+async function legalTemplateAllowedPaths(root) {
+  const allowed = new Set(["LICENSE"]);
+  const lockPath = path.join(root, "manifests", "skills.lock.json");
+  let lock;
+  try {
+    lock = JSON.parse(await readFile(lockPath, "utf8"));
+  } catch (error) {
+    if (error?.code === "ENOENT") return allowed;
+    throw error;
+  }
+  for (const skill of lock.skills ?? []) {
+    for (const license of skill.licenseFiles ?? []) {
+      if (typeof license.path !== "string") continue;
+      const absolute = path.resolve(root, license.path);
+      const relative = path.relative(root, absolute);
+      if (relative && !relative.startsWith("..") && !path.isAbsolute(relative)) {
+        allowed.add(relative.split(path.sep).join("/"));
+      }
+    }
+  }
+  return allowed;
+}
+
 async function readCapped(filePath, maxFileBytes) {
   const handle = await open(filePath, "r");
   try {
@@ -107,6 +130,7 @@ async function main() {
   const files = testFileList
     ? await explicitTestFiles(testFileList, root)
     : gitTrackedFiles(root);
+  const legalTemplateAllowed = await legalTemplateAllowedPaths(root);
   const findings = [];
 
   for (const file of files) {
@@ -124,6 +148,8 @@ async function main() {
     }
 
     for (const [rule, pattern] of contentRules) {
+      const normalizedPath = file.displayPath.split(path.sep).join("/");
+      if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
       if (pattern.test(result.content)) findings.push(`${file.displayPath}:${rule}`);
     }
   }
