@@ -8,7 +8,7 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:f4c6c11d02faf04f22b3c9994c993b409f42fd5147d104611ecf72d03bd55939",
+    "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
     "skills": [
       "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
       "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
@@ -21,7 +21,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:f4c6c11d02faf04f22b3c9994c993b409f42fd5147d104611ecf72d03bd55939",
+        "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
         "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
       },
       "discoveredSkills": [
@@ -46,7 +46,7 @@
       "version": "2.1.201 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:f4c6c11d02faf04f22b3c9994c993b409f42fd5147d104611ecf72d03bd55939",
+        "treeHash": "sha256:02e736c7b85eb1f9f20324f5307dff3ff40a76b737ba369b66dbbc3ca3b666c1",
         "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
       },
       "discoveredSkills": [

@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = path.join(root, "manifests", "agent-profiles.json");
+const pluginRoot = path.join(root, "plugins", "agentic-engineering-skills");
+const installedManifestPath = path.join(pluginRoot, "manifests", "agent-profiles.json");
 const expectedProfiles = [
   "cleanup",
   "controller",
@@ -79,10 +81,42 @@ async function loadProfiles() {
   }));
 }
 
+async function loadInstalledProfiles() {
+  const manifest = JSON.parse(await readFile(installedManifestPath, "utf8"));
+  assert.ok(Array.isArray(manifest.profiles), "installed profile manifest must expose profiles[]");
+  return Promise.all(manifest.profiles.map(async (entry) => {
+    assert.equal(typeof entry.path, "string", `${entry.name}: installed profile entry requires path`);
+    assert.ok(!path.isAbsolute(entry.path), `${entry.name}: installed path must be plugin-relative`);
+    const absolutePath = path.resolve(pluginRoot, entry.path);
+    assert.equal(path.relative(pluginRoot, absolutePath).startsWith(".."), false,
+      `${entry.name}: installed path escapes plugin root`);
+    const payloadBytes = await readFile(absolutePath);
+    return { ...entry, absolutePath, payloadBytes };
+  }));
+}
+
 test("profile manifest declares exact profile inventory", async () => {
   const profiles = await loadProfiles();
   assert.deepEqual(profiles.map(({ name }) => name).sort(), expectedProfiles);
   assert.equal(new Set(profiles.map(({ path: profilePath }) => profilePath)).size, expectedProfiles.length);
+});
+
+test("installed plugin manifest mirrors canonical inventory, provenance, paths, and hashes", async () => {
+  const [canonical, installed] = await Promise.all([loadProfiles(), loadInstalledProfiles()]);
+  assert.deepEqual(installed.map(({ name }) => name).sort(), expectedProfiles);
+  assert.deepEqual(canonical.map(({ name }) => name).sort(), expectedProfiles);
+  const canonicalByName = new Map(canonical.map((entry) => [entry.name, entry]));
+  for (const profile of installed) {
+    const source = canonicalByName.get(profile.name);
+    assert.equal(profile.path, `agent-profiles/${profile.name}.md`);
+    assert.equal(profile.payloadPath, profile.path);
+    for (const field of ["candidatePath", "status", "source", "revision", "upstreamPath", "sha256", "license",
+      "licensePath", "noticePath", "sourceSpecPath", "sourceSpecRoleLine"]) {
+      assert.equal(profile[field], source[field], `${profile.name}: installed ${field} differs from canonical manifest`);
+    }
+    assert.equal(createHash("sha256").update(profile.payloadBytes).digest("hex"), profile.sha256,
+      `${profile.name}: installed payload hash mismatch`);
+  }
 });
 
 test("profile provenance is adapted, pinned, quarantined, licensed, and byte-verifiable", async () => {
@@ -146,12 +180,14 @@ function tableProfileNames(markdown, marker) {
 }
 
 test("documentation guide maps exact profile inventory and host boundaries", async () => {
-  const [profiles, guide, readme] = await Promise.all([
+  const [profiles, installedProfiles, guide, readme] = await Promise.all([
     loadProfiles(),
+    loadInstalledProfiles(),
     readFile(path.resolve(root, "docs/agent-profiles.md"), "utf8"),
     readFile(path.resolve(root, "README.md"), "utf8"),
   ]);
   assert.deepEqual(profiles.map(({ name }) => name).sort(), expectedProfiles);
+  assert.deepEqual(installedProfiles.map(({ name }) => name).sort(), expectedProfiles);
   assert.deepEqual(tableProfileNames(guide, "## Role contracts"), expectedProfiles);
   const roleTable = guide.split("## Role contracts")[1]?.split(/^## /m)[0] ?? "";
   for (const [role, fields] of Object.entries(guideRoleFields)) {
