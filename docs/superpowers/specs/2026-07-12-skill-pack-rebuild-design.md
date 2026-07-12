@@ -64,9 +64,10 @@ agentic-engineering-skills/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── skills/
-│       │   ├── original/
-│       │   ├── adapted/
-│       │   └── vendor/
+│       │   ├── brainstorming/
+│       │   │   └── SKILL.md
+│       │   └── <skill-name>/
+│       │       └── SKILL.md
 │       └── licenses/
 ├── docs/
 │   ├── workflow.md
@@ -81,6 +82,9 @@ agentic-engineering-skills/
 `plugins/agentic-engineering-skills/` is the single installable payload.
 Codex and Claude Code marketplaces point to that payload, whose `skills/`
 directory is the canonical skill source. No host-specific skill copies exist.
+Skill directories are flat for native discovery. Their `original`, `adapted`,
+or `vendor` classification lives in `manifests/skills.lock.json`, not in the
+filesystem path.
 
 ## Skill Acquisition Rule
 
