@@ -9,6 +9,18 @@ const pluginRoot = path.join(root, "plugins", "agentic-engineering-skills");
 const expectedName = "agentic-engineering-skills";
 const expectedVersion = "0.1.0";
 const strictSemver = /^\d+\.\d+\.\d+$/;
+const expectedVendorSkills = [
+  "caveman",
+  "codebase-design",
+  "domain-modeling",
+  "grill-me",
+  "grilling",
+  "improve-codebase-architecture",
+  "setup-matt-pocock-skills",
+  "test-driven-development",
+  "using-git-worktrees",
+  "writing-skills",
+];
 
 async function json(relativePath) {
   return JSON.parse(await readFile(path.join(root, relativePath), "utf8"));
@@ -74,4 +86,23 @@ test("skill discovery is flat and shared by both manifests", async () => {
     assert.ok(children.some((entry) => entry.isFile() && entry.name === "SKILL.md"));
     assert.equal(children.some((entry) => entry.isDirectory() && entry.name === "skills"), false);
   }
+});
+
+test("vendor inventory contains every approved byte-exact skill", async () => {
+  const lock = await json("manifests/skills.lock.json");
+  const lockedVendorSkills = lock.skills
+    .filter(({ sourceType }) => sourceType === "vendor")
+    .map(({ name }) => name)
+    .sort();
+  const entries = await readdir(path.join(pluginRoot, "skills"), { withFileTypes: true }).catch(
+    (error) => {
+      if (error.code === "ENOENT") return [];
+      throw error;
+    },
+  );
+  const actual = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+  const missing = expectedVendorSkills.filter((name) => !actual.includes(name));
+
+  assert.deepEqual(lockedVendorSkills, expectedVendorSkills);
+  assert.deepEqual(missing, [], `missing ${missing.length} vendor skill directories`);
 });
