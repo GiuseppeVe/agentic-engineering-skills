@@ -1,0 +1,15 @@
+{
+  "name": "agentic-engineering-skills",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "verify:pack": "node scripts/verify-pack.mjs",
+    "verify:upstream": "node scripts/verify-upstream.mjs",
+    "audit:public": "node scripts/audit-public.mjs"
+  }
+}
