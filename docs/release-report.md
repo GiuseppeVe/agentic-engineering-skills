@@ -21,7 +21,7 @@ None recorded. If source or legal verification excludes a requested skill, recor
 
 | Command | Scope | Exit code | Result |
 | --- | --- | --- | --- |
-| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 67-test suite. |
+| `node --test tests/license.test.mjs` | Root and retained third-party licenses/notices | 0 | Passed as part of 71-test suite. |
 
 ## Public audit
 
