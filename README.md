@@ -1,8 +1,6 @@
 # Agentic Engineering Skills
 
-Audited 19-skill engineering workflow pack designed for Codex and Claude Code. Host-validation evidence is recorded in `docs/release-report.md` during release validation.
-
-> **Windows UNC paths:** running bare `npm` from `\\\\wsl.localhost\\...` is unsupported. `cmd.exe` can silently change working directory and produce a false-green zero-test run. Use a WSL shell, clone to a native Windows path, or run `cmd /d /c "pushd \\\\wsl.localhost\\... && npm test"` so `pushd` maps the share to a drive. Repository test runner also rejects zero-test and missing-summary runs.
+A collection of composable engineering skills and agent profiles for Codex and Claude Code, covering discovery, design, planning, implementation, review, and cleanup.
 
 ## Problem
 
