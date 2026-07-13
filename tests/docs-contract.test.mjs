@@ -36,6 +36,10 @@ function fencedCommands(markdown) {
   return [...markdown.matchAll(/^```text\n([\s\S]*?)^```$/gm)].flatMap((match) => match[1].trim().split('\n'));
 }
 
+function mermaidBlocks(markdown) {
+  return [...markdown.matchAll(/^```mermaid\n([\s\S]*?)^```$/gm)].map((match) => match[1]);
+}
+
 test('required documentation exists', () => {
   for (const path of docs) assert.ok(existsSync(resolve(root, path)), `missing ${path}`);
 });
@@ -59,6 +63,27 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /`claude plugin list`/);
   assert.match(source, /fresh host session/i);
   assert.match(source, /invoke one included skill/i);
+});
+
+test('README owns the canonical workflow overview without duplicating it in the guide', () => {
+  const readme = read('README.md');
+  const workflow = read('docs/workflow.md');
+  const readmeDiagrams = mermaidBlocks(readme);
+  const workflowDiagrams = mermaidBlocks(workflow);
+
+  assert.equal(readmeDiagrams.length, 1, 'README must contain exactly one Mermaid overview');
+  assert.equal(workflowDiagrams.length, 1, 'workflow guide must contain only its detailed routing diagram');
+
+  const overview = readmeDiagrams[0];
+  const canonicalStages = ['Understand', 'Design', 'Plan', 'Implement', 'Verify', 'Review', 'Clean'];
+  const positions = canonicalStages.map((stage) => overview.indexOf(`[${stage}]`));
+  assert.ok(positions.every((position) => position >= 0), 'overview must contain every canonical stage');
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, 'overview stages must appear in canonical order');
+  assert.match(overview, /Owner approves publication\?/);
+
+  assert.match(readme, /\[workflow guide\]\(docs\/workflow\.md\)/i);
+  assert.match(workflowDiagrams[0], /Incoming work/);
+  assert.match(workflowDiagrams[0], /Explicit owner approval\?/);
 });
 
 test('primary documentation links a complete, auditable workflow philosophy', () => {

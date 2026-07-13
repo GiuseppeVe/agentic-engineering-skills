@@ -14,7 +14,20 @@ Vendor files stay byte-exact, adaptations remain auditable, and original files u
 
 ## Workflow
 
-Default lifecycle: **Understand -> Design -> Plan -> Implement -> Verify -> Review -> Clean**. Discovery scales with uncertainty; implementation stays isolated; tests and review remain independent evidence. See [workflow guide](docs/workflow.md) for phase-to-skill mapping and diagrams, [workflow philosophy](docs/philosophy.md) for decision and publication gates, and [agent profile guide](docs/agent-profiles.md) for bounded delegation contracts.
+Work moves through seven composable phases, then stops at an explicit owner publication gate. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
+
+```mermaid
+flowchart LR
+  U[Understand] --> D[Design]
+  D --> P[Plan]
+  P --> I[Implement]
+  I --> V[Verify]
+  V --> R[Review]
+  R --> C[Clean]
+  C --> A{Owner approves publication?}
+  A -->|Yes| X[Approved external action]
+  A -->|No| L[Keep local]
+```
 
 ## Install
 
