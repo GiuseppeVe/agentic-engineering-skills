@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { dirname, relative, resolve, sep } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
@@ -9,13 +10,17 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8');
 const json = (path) => JSON.parse(read(path));
 const lock = json('manifests/skills.lock.json').skills;
 const names = lock.map(({ name }) => name).sort();
+const profiles = json('manifests/agent-profiles.json').profiles.map(({ name }) => name).sort();
 const docs = [
   'README.md',
+  'docs/agent-profiles.md',
   'docs/philosophy.md',
   'docs/workflow.md',
   'docs/customization.md',
   'docs/compatibility.md',
   'docs/provenance.md',
+  'docs/release-checklist.md',
+  'docs/release-report.md',
   'docs/selective-install.md',
 ];
 
@@ -98,6 +103,19 @@ test('workflow presents seven phases in order and maps included skills', () => {
   assert.match(source, /not every skill/i);
 });
 
+test('aggregate routing guides cover every public skill and agent profile', () => {
+  const workflow = read('docs/workflow.md');
+  const agentProfiles = read('docs/agent-profiles.md');
+
+  assert.match(workflow, /\[workflow philosophy\]\(philosophy\.md\)/i);
+  assert.match(workflow, /every included public skill/i);
+  for (const name of names) assert.match(workflow, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
+
+  assert.match(agentProfiles, /\[workflow philosophy\]\(philosophy\.md\)/i);
+  assert.match(agentProfiles, /every included public agent profile/i);
+  for (const name of profiles) assert.match(agentProfiles, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
+});
+
 test('compatibility names exactly two verified hosts', () => {
   const source = read('docs/compatibility.md');
   const rows = tableRows(source);
@@ -161,13 +179,21 @@ test('customization documents lawful source edits and cache warning', () => {
   assert.match(source, /do not edit[^\n]*cache/i);
 });
 
-test('all relative Markdown links resolve', () => {
+test('all relative Markdown links resolve to Git-tracked files', () => {
+  const tracked = new Set(execFileSync('git', ['ls-files', '-z'], { cwd: root })
+    .toString('utf8')
+    .split('\0')
+    .filter(Boolean)
+    .map((path) => path.replaceAll('\\', '/')));
   for (const path of docs) {
     const source = read(path);
     for (const match of source.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
       const target = match[1].split('#')[0];
       if (!target || /^[a-z]+:/i.test(target)) continue;
-      assert.ok(existsSync(resolve(root, dirname(path), decodeURIComponent(target))), `${path}: broken link ${target}`);
+      const absoluteTarget = resolve(root, dirname(path), decodeURIComponent(target));
+      const repoTarget = relative(root, absoluteTarget).split(sep).join('/');
+      assert.ok(existsSync(absoluteTarget), `${path}: broken link ${target}`);
+      assert.ok(tracked.has(repoTarget), `${path}: link target is not Git-tracked: ${target}`);
     }
   }
 });
