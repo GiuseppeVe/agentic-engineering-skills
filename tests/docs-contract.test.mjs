@@ -11,6 +11,7 @@ const lock = json('manifests/skills.lock.json').skills;
 const names = lock.map(({ name }) => name).sort();
 const docs = [
   'README.md',
+  'docs/philosophy.md',
   'docs/workflow.md',
   'docs/customization.md',
   'docs/compatibility.md',
@@ -53,6 +54,40 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /`claude plugin list`/);
   assert.match(source, /fresh host session/i);
   assert.match(source, /invoke one included skill/i);
+});
+
+test('primary documentation links a complete, auditable workflow philosophy', () => {
+  const readme = read('README.md');
+  const workflow = read('docs/workflow.md');
+  const philosophy = read('docs/philosophy.md');
+
+  assert.match(readme, /\[workflow philosophy\]\(docs\/philosophy\.md\)/i);
+  assert.match(workflow, /\[workflow philosophy\]\(philosophy\.md\)/i);
+
+  for (const heading of [
+    'Discover before deciding',
+    'Preserve intent in durable artifacts',
+    'Isolate implementation and separate evidence',
+    'Validate behavior, fidelity, and public surface',
+    'Treat maintenance as research-led change',
+    'Keep advanced tools optional and honest',
+    'Keep publication human-approved',
+  ]) {
+    assert.match(philosophy, new RegExp(`^## ${heading}$`, 'm'), `missing philosophy section: ${heading}`);
+  }
+
+  assert.match(philosophy, /provenance/i);
+  assert.match(philosophy, /manual fallback/i);
+  assert.match(philosophy, /explicit owner approval/i);
+  assert.ok((philosophy.match(/^```mermaid$/gm) ?? []).length >= 2, 'expected at least two Mermaid workflow diagrams');
+
+  for (const link of [
+    '[Workflow guide](workflow.md)',
+    '[Provenance guide](provenance.md)',
+    '[Agent profiles](agent-profiles.md)',
+    '[Release checklist](release-checklist.md)',
+    '[Customization guide](customization.md)',
+  ]) assert.ok(philosophy.includes(link), `missing related-work link: ${link}`);
 });
 
 test('workflow presents seven phases in order and maps included skills', () => {

@@ -10,11 +10,13 @@ Agent work often jumps from a vague request to code, skipping design, test-first
 
 ## Philosophy
 
-Use the smallest skill set needed for current work. Skills guide judgment; they do not replace project instructions or make every workflow stage mandatory for every task. Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license.
+Move from evidence to explicit decisions, durable specifications and plans, isolated implementation, independent verification, and owner-approved publication. Use the smallest skill set needed for current work: skills guide judgment, but do not replace project instructions or turn a plan or passing test suite into permission to publish. See the [workflow philosophy](docs/philosophy.md) for lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
+
+Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license.
 
 ## Workflow
 
-Default lifecycle: **Understand -> Design -> Plan -> Implement -> Verify -> Review -> Clean**. See [workflow guide](docs/workflow.md) for phase-to-skill mapping and [agent profile guide](docs/agent-profiles.md) for bounded delegation contracts.
+Default lifecycle: **Understand -> Design -> Plan -> Implement -> Verify -> Review -> Clean**. Discovery scales with uncertainty; implementation stays isolated; tests and review remain independent evidence. See [workflow guide](docs/workflow.md) for phase-to-skill mapping and diagrams, [workflow philosophy](docs/philosophy.md) for decision and publication gates, and [agent profile guide](docs/agent-profiles.md) for bounded delegation contracts.
 
 ## Install
 
