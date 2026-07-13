@@ -2,6 +2,8 @@
 
 Seven host-neutral role contracts give workflow skills a shared vocabulary for bounded delegation. Use exact profile names; aliases such as “builder,” “tester,” or “orchestrator” are descriptions, not profile identifiers.
 
+This guide is the conditional routing surface for every included public agent profile and links each contract to its relevant workflow phase below. Apply a profile only when bounded delegation improves evidence or separation of concerns; otherwise keep the work in the calling workflow. The [workflow philosophy](philosophy.md) supplies the shared decision gates, fallback rules, and owner authority that govern every route.
+
 ## Role contracts
 
 | Profile | Responsibility | Use when | Role-specific evidence |

@@ -1,6 +1,21 @@
 # Workflow
 
-Seven phases form composable path. Not every skill runs on every task; choose only skills matching risk and scope.
+Seven phases form a composable path. Not every skill runs on every task; choose only skills matching risk and scope. The [workflow philosophy](philosophy.md) defines decision gates, required evidence, optional-tool fallbacks, and owner authority over publication.
+
+This guide is the relevant-stage backlink and conditional routing surface for every included public skill. Each skill appears under the phase where it can contribute; its presence is an option, not a mandate. Select it only when task scope, risk, and the philosophy's evidence gates justify that route.
+
+```mermaid
+flowchart LR
+  U[Understand] --> D[Design]
+  D --> P[Plan]
+  P --> I[Implement]
+  I --> V[Verify]
+  V --> R[Review]
+  R --> C[Clean]
+  C --> A{Owner approves publication?}
+  A -->|Yes| X[Approved external action]
+  A -->|No| L[Keep local]
+```
 
 ## Understand
 
@@ -29,6 +44,29 @@ Seven phases form composable path. Not every skill runs on every task; choose on
 ## Clean
 
 `cleaning-repo-with-knip` removes verified dead code and records false positives. `implementing-plans` also checks temporary artifacts and debug residue before delivery.
+
+## Routing and evidence gates
+
+```mermaid
+flowchart TD
+  Q[Incoming work] --> S{Scope and intent clear?}
+  S -->|No, broad| W[wayfinder]
+  S -->|No, consequential| G[grill-me or grilling]
+  S -->|No, bounded| B[brainstorming]
+  W --> D[Durable specification]
+  G --> D
+  B --> D
+  S -->|Yes| D
+  D --> P[Traceable plan]
+  P --> I[Isolated test-first implementation]
+  I --> E[Independent verification and review]
+  E --> C[Public-surface, provenance, and cleanup checks]
+  C --> A{Explicit owner approval?}
+  A -->|Yes| X[Push, PR, merge, visibility change, or release]
+  A -->|No| L[Retain local evidence]
+```
+
+Optional integrations strengthen these stages but never become hidden dependencies. If orchestration, worktrees, GitHub CLI, browser tooling, Graphviz, or Knip is unavailable, use the documented manual fallback in the [workflow philosophy](philosophy.md) and report what actually ran.
 
 ## Phase-to-profile mapping
 
