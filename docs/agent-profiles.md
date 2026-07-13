@@ -16,6 +16,18 @@ Seven host-neutral role contracts give workflow skills a shared vocabulary for b
 
 Canonical payloads live under `plugins/agentic-engineering-skills/agent-profiles/`. Repository manifest `manifests/agent-profiles.json` is canonical inventory and integrity source of truth. Installed plugin manifest `plugins/agentic-engineering-skills/manifests/agent-profiles.json` mirrors same seven profiles, provenance, and hashes while using paths relative to installed plugin root (`agent-profiles/<role>.md`).
 
+## Provenance role lines
+
+These stable lines are the machine-verifiable source references recorded by both manifests.
+
+| `cleanup` | Remove explicitly scoped temporary artifacts only. | `resolvedScope`, `deletedPaths`, `retainedPaths` |
+| `controller` | Route work; own state, budget, retry, escalation, and trace assembly. | `route`, `budget`, `attempt`, `trace` |
+| `implementer` | Apply one owned task with test-first discipline. | `taskId`, `changedFiles`, `redEvidence`, `greenEvidence` |
+| `planner` | Produce a bounded structured plan. | `tasks`, `dependencies`, `acceptanceCriteria`, `unresolvedDecisions` |
+| `researcher` | Gather codebase evidence and verify maintenance findings. | `observations`, `inferences`, `verifiedFindings` |
+| `reviewer` | Review with one or more of `spec`, `quality`, `security`, `fidelity`. | `lenses`, `verdict`, `findings` |
+| `test-runner` | Execute and interpret named verification commands. | `commands`, `results`, `failedCommands` |
+
 ## Common result envelope
 
 Every role returns these fields:

@@ -34,7 +34,7 @@ Latest clean-clone gate validated implementation SHA `5320e2a`.
 
 Profiles are declarative role contracts consumed by workflow skills, not an executable harness. They do not guarantee automatic native registration in Codex or Claude Code; host orchestration remains responsible for delegation, permissions, lifecycle, and result handling.
 
-Publication remains deferred pending the main-plan approval gate: push, pull request creation, merge, branch cleanup, and public visibility have not occurred.
+Publication completed through GitHub pull request #4; merge and implementation-branch cleanup are complete.
 
 ## Excluded skills
 
