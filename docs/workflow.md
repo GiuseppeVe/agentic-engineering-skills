@@ -4,19 +4,6 @@ Seven phases form a composable path. Not every skill runs on every task; choose 
 
 This guide is the relevant-stage backlink and conditional routing surface for every included public skill. Each skill appears under the phase where it can contribute; its presence is an option, not a mandate. Select it only when task scope, risk, and the philosophy's evidence gates justify that route.
 
-```mermaid
-flowchart LR
-  U[Understand] --> D[Design]
-  D --> P[Plan]
-  P --> I[Implement]
-  I --> V[Verify]
-  V --> R[Review]
-  R --> C[Clean]
-  C --> A{Owner approves publication?}
-  A -->|Yes| X[Approved external action]
-  A -->|No| L[Keep local]
-```
-
 ## Understand
 
 `learn-codebase` builds broad project context. `brainstorming` clarifies intent before creative changes. `grill-me` and `grilling` pressure-test uncertain proposals. `caveman` keeps collaboration compact; `cavecrew` helps route focused investigation.
