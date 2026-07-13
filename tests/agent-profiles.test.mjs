@@ -35,7 +35,7 @@ const upstreamRevision = "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0";
 const upstreamProfilePath = "skills/cavecrew/SKILL.md";
 const licensePath = "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE";
 const noticePath = "THIRD_PARTY_NOTICES.md";
-const sourceSpecPath = "docs/superpowers/plans/2026-07-12-agent-profiles-pack.md";
+const sourceSpecPath = "docs/agent-profiles.md";
 const roleLineMarkers = {
   cleanup: "deletedPaths",
   controller: "Route",
