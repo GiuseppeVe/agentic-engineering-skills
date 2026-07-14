@@ -166,7 +166,7 @@
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "9149e675fca96b30e95eb43390741237e99cd050212413e9ba4169f3b092575a",
-      "releaseCommit": "93f330ef570e9ad800c26bb69d067c43a094c8dc",
+      "releaseCommit": "e8041ff1570b5b6828e483298020b4f3a5c3e0d4",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
