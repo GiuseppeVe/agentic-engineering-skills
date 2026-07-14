@@ -74,6 +74,13 @@
                        "localRoot":  "projectSkills"
                    },
                    {
+                       "name":  "importing-handoff",
+                       "sourceType":  "original",
+                       "localPath":  "importing-handoff/",
+                       "license":  "MIT",
+                       "localRoot":  "userSkills"
+                   },
+                   {
                        "name":  "improve-codebase-architecture",
                        "sourceType":  "adapted",
                        "repository":  "https://github.com/mattpocock/skills",

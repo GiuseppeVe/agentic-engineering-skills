@@ -157,6 +157,9 @@ export async function runAcquisitionGate({ sourceManifestPath, lockInputPath, lo
       try {
         const from = resolveAcquisitionPath(source, environment);
         const directorySource = /[\\/]$/.test(source.localPath);
+        if (entry.sourceType === "original" && entry.payloadType !== (directorySource ? "directory" : "file")) {
+          throw new Error(`payloadType mismatch for ${source.name}: lock=${entry.payloadType}, source=${directorySource ? "directory" : "file"}`);
+        }
         const info = await verifyContainedPath(
           from,
           resolveAcquisitionRoot(source, environment),

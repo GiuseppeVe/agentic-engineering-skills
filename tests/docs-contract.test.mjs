@@ -167,7 +167,7 @@ test('selective installation has one lock-derived row per skill', () => {
   const source = read('docs/selective-install.md');
   assert.match(source, /\| Skill \| Dependencies \| License files \| Lost workflow stage \|/);
   const rows = tableRows(source);
-  assert.equal(rows.length, 19);
+  assert.equal(rows.length, 20);
   assert.deepEqual(rows.map((row) => row.split('|')[1].trim().replaceAll('`', '')).sort(), names);
   for (const skill of lock) {
     const row = rows.find((candidate) => candidate.startsWith(`| \`${skill.name}\` |`));

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Importing Handoffs"
+  short_description: "Import frontend handoffs with exact fidelity"
+  default_prompt: "Use $importing-handoff to import this frontend handoff into the existing application with exact observable fidelity."

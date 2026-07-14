@@ -68,6 +68,23 @@ test("both marketplaces resolve to shared plugin directory", async () => {
   const claudeTarget = await realpath(path.resolve(root, claudeEntry.source));
   assert.equal(codexTarget, await realpath(pluginRoot));
   assert.equal(claudeTarget, codexTarget);
+  assert.match(codexMarketplace.description, /handoff/i);
+  assert.match(claudeMarketplace.description, /handoff/i);
+  assert.match(codexEntry.description, /handoff/i);
+  assert.match(claudeEntry.description, /handoff/i);
+});
+
+test("plugin metadata advertises fidelity-first handoff imports", async () => {
+  const [codex, claude] = await Promise.all([
+    json("plugins/agentic-engineering-skills/.codex-plugin/plugin.json"),
+    json("plugins/agentic-engineering-skills/.claude-plugin/plugin.json"),
+  ]);
+
+  assert.match(codex.description, /handoff/i);
+  assert.match(claude.description, /handoff/i);
+  assert.ok(codex.keywords.includes("frontend-handoff"));
+  assert.ok(claude.keywords.includes("frontend-handoff"));
+  assert.match(codex.interface.defaultPrompt, /import frontend handoffs/i);
 });
 
 test("skill discovery is flat and shared by both manifests", async () => {

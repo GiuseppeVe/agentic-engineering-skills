@@ -9,6 +9,7 @@ export const expectedSkills = [
   "grilling",
   "implementing-plans",
   "improve-codebase-architecture",
+  "importing-handoff",
   "learn-codebase",
   "setup-matt-pocock-skills",
   "swarm-orchestration",

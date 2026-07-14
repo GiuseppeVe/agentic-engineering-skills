@@ -28,7 +28,7 @@ Implement on a dedicated branch or worktree and keep file ownership explicit. Se
 
 ## Validate behavior, fidelity, and public surface
 
-Tests validate observable behavior. Reviews compare the result with requirements, repository rules, and public-safety constraints. Before release, scan public artifacts for secrets, private data, internal names, logs, and temporary residue. Verify provenance before copied or adapted third-party material enters the repository.
+Tests validate observable behavior. Reviews compare the result with requirements, repository rules, and public-safety constraints. A frontend handoff import additionally needs a runnable immutable reference, complete observable contract, identical reference/candidate matrix, and explicit treatment of boundary deviations. Before release, scan public artifacts for secrets, private data, internal names, logs, and temporary residue. Verify provenance before copied or adapted third-party material enters the repository.
 
 ## Treat maintenance as research-led change
 

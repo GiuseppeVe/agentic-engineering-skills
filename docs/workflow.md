@@ -18,7 +18,7 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Implement
 
-`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `implementing-plans` executes written plans, while `swarm-orchestration` coordinates independent multi-agent work when scope warrants it.
+`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `implementing-plans` executes written plans, while `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
 
 ## Verify
 

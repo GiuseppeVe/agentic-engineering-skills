@@ -1,9 +1,10 @@
 {
   "name": "agentic-engineering-skills",
+  "description": "Composable engineering skills and agent profiles, including fidelity-first frontend handoff imports.",
   "plugins": [
     {
       "name": "agentic-engineering-skills",
-      "description": "A reproducible AI-engineering workflow skill pack.",
+      "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
       "version": "0.1.0",
       "source": {
         "source": "local",

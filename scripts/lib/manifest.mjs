@@ -5,7 +5,7 @@ import { sha256File, sha256Path } from "./hash.mjs";
 const hex = (n) => new RegExp(`^[0-9a-f]{${n}}$`, "i");
 const common = new Set(["name", "sourceType", "localSha256", "dependencies", "excluded", "exclusionReason"]);
 const upstreamFields = ["repository", "revision", "upstreamPath", "sha256", "localSha256"];
-const originalFields = ["localSha256", "releaseCommit", "license"];
+const originalFields = ["localSha256", "releaseCommit", "license", "payloadType"];
 const portableSkillName = /^[a-z0-9][a-z0-9-]*$/;
 
 function validateSkillName(name) {
@@ -27,6 +27,7 @@ export function validateManifest(manifest) {
       for (const key of upstreamFields.filter(k => k !== "localSha256")) if (key in entry) throw new Error(`forbidden upstream field ${key} on original ${entry.name}`);
       for (const key of originalFields) if (!entry[key]) throw new Error(`${entry.name} requires ${key}`);
       if (!hex(40).test(entry.releaseCommit)) throw new Error(`invalid releaseCommit for ${entry.name}`);
+      if (!["file", "directory"].includes(entry.payloadType)) throw new Error(`invalid payloadType for ${entry.name}`);
     } else {
       for (const key of upstreamFields) allowed.add(key);
       allowed.add("licenseFiles");
@@ -74,7 +75,9 @@ export function compareLockDirectories(entries, directories) {
 export async function verifyLocalEntries(entries, root, skillsRoot = "plugins/agentic-engineering-skills/skills") {
   for (const entry of entries.filter(x => !x.excluded)) {
     const skillDir = join(root, skillsRoot, entry.name);
-    const actual = entry.upstreamPath?.endsWith("/") ? await sha256Path(skillDir) : await sha256File(join(skillDir, "SKILL.md"));
+    const actual = entry.payloadType === "directory" || entry.upstreamPath?.endsWith("/")
+      ? await sha256Path(skillDir)
+      : await sha256File(join(skillDir, "SKILL.md"));
     if (actual !== entry.localSha256) throw new Error(`tamper detected for ${entry.name}: expected ${entry.localSha256}, got ${actual}`);
   }
 }

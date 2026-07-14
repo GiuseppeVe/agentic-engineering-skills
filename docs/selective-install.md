@@ -14,6 +14,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
 | `implementing-plans` | None | `LICENSE` | Implement: plan execution gates |
 | `improve-codebase-architecture` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
+| `importing-handoff` | None | `LICENSE` | Implement: exact frontend handoff import |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
 | `setup-matt-pocock-skills` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: project setup |
 | `swarm-orchestration` | None | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Implement: multi-agent coordination |

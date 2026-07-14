@@ -1,7 +1,7 @@
 {
   "name": "agentic-engineering-skills",
   "version": "0.1.0",
-  "description": "A reproducible AI-engineering workflow skill pack.",
+  "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
   "author": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -13,14 +13,16 @@
     "agent-skills",
     "codex",
     "claude-code",
-    "workflow"
+    "workflow",
+    "frontend-handoff",
+    "fidelity"
   ],
   "skills": "./skills/",
   "interface": {
-    "defaultPrompt": "Use the installed engineering skills to understand, plan, implement, verify, review, and clean up the requested work.",
+    "defaultPrompt": "Use the installed engineering skills to understand, plan, import frontend handoffs, implement, verify, review, and clean up the requested work.",
     "displayName": "Agentic Engineering Skills",
-    "shortDescription": "A verified AI-engineering workflow",
-    "longDescription": "Install a reproducible discovery-to-cleanup workflow for Codex and Claude Code.",
+    "shortDescription": "A verified engineering and handoff workflow",
+    "longDescription": "Install a reproducible discovery-to-cleanup workflow for Codex and Claude Code, including fidelity-first frontend handoff imports.",
     "developerName": "GiuseppeVe",
     "category": "Productivity",
     "capabilities": [
