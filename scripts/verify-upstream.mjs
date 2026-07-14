@@ -17,7 +17,11 @@ if (stamp && lock.skills.length === 0) {
   const sources = { skills: validateSourceManifest(JSON.parse(await readFile(join(root, "manifests/skill-sources.json"), "utf8"))) };
   const { stdout } = await promisify(execFile)("git", ["-C", root, "rev-parse", "HEAD"]);
   lock.skills = await Promise.all(sources.skills.map(async source => source.sourceType === "original"
-    ? { name: source.name, sourceType: source.sourceType, localSha256: await sha256File(resolveAcquisitionPath(source)), releaseCommit: stdout.trim(), license: source.license, dependencies: [] }
+    ? (async () => {
+      const payloadType = /[\\/]$/.test(source.localPath) ? "directory" : "file";
+      const sourcePath = resolveAcquisitionPath(source);
+      return { name: source.name, sourceType: source.sourceType, payloadType, localSha256: payloadType === "directory" ? await sha256Path(sourcePath) : await sha256File(sourcePath), releaseCommit: stdout.trim(), license: source.license, dependencies: [] };
+    })()
     : { name: source.name, sourceType: source.sourceType, repository: source.repository, revision: source.revision, upstreamPath: source.upstreamPath, sha256: "0".repeat(64), localSha256: source.sourceType === "adapted" ? await sha256File(resolveAcquisitionPath(source)) : "0".repeat(64), ...(source.sourceType === "adapted" ? { changeNotice: source.changeNotice, patchPath: source.patchPath } : {}), dependencies: [] }));
   lock.skills.sort((a, b) => a.name.localeCompare(b.name));
 }

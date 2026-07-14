@@ -1,7 +1,7 @@
 {
   "name": "agentic-engineering-skills",
   "version": "0.1.0",
-  "description": "A reproducible AI-engineering workflow skill pack.",
+  "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
   "author": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -13,6 +13,8 @@
     "agent-skills",
     "codex",
     "claude-code",
-    "workflow"
+    "workflow",
+    "frontend-handoff",
+    "fidelity"
   ]
 }

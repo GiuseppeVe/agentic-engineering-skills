@@ -1,10 +1,10 @@
 # Agentic Engineering Skills
 
-A collection of composable engineering skills and agent profiles for Codex and Claude Code, covering discovery, design, planning, implementation, review, and cleanup.
+A collection of composable engineering skills and agent profiles for Codex and Claude Code, covering discovery, design, planning, fidelity-first frontend handoff import, implementation, review, and cleanup.
 
 ## Problem
 
-Agent work often jumps from a vague request to code, skipping design, test-first execution, integrated review, or cleanup. This pack supplies focused skills spanning that whole path while keeping every distributed file traceable to a pinned source.
+Agent work often jumps from a vague request to code, skipping design, test-first execution, faithful handoff import, integrated review, or cleanup. This pack supplies focused skills spanning that whole path while keeping every distributed file traceable to a pinned source.
 
 ## Philosophy
 

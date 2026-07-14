@@ -28,6 +28,19 @@ const contentRules = [
   ],
 ];
 
+const controlledLoopbackArtifacts = new Map([
+  ["plugins/agentic-engineering-skills/skills/importing-handoff/references/contract-schema.md", 1],
+  ["plugins/agentic-engineering-skills/skills/importing-handoff/scripts/run-reference.mjs", 2],
+]);
+
+function hasOnlyControlledLoopbackUrls(path, content, pattern) {
+  const expected = controlledLoopbackArtifacts.get(path);
+  if (!expected) return false;
+  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
+  const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
+  return matches.length === expected && matches.every((match) => match[0].startsWith(["http:", "", "127.0.0.1"].join("/")));
+}
+
 function fail(message) {
   process.stderr.write(`${message}\n`);
   process.exitCode = 2;
@@ -150,6 +163,7 @@ async function main() {
     for (const [rule, pattern] of contentRules) {
       const normalizedPath = file.displayPath.split(path.sep).join("/");
       if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
+      if (rule === "url:non-public" && hasOnlyControlledLoopbackUrls(normalizedPath, result.content, pattern)) continue;
       if (pattern.test(result.content)) findings.push(`${file.displayPath}:${rule}`);
     }
   }

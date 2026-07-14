@@ -128,7 +128,7 @@ test("acquisition gate excludes a missing requested source from lock, payload, a
       { name: "included", sourceType: "original", localRoot: "projectSkills", localPath: "included/SKILL.md", license: "MIT" },
       { name: "missing", sourceType: "original", localRoot: "projectSkills", localPath: "missing/SKILL.md", license: "MIT" },
     ] };
-    const lock = { skills: sources.skills.map(source => ({ name: source.name, sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] })) };
+    const lock = { skills: sources.skills.map(source => ({ name: source.name, sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", payloadType: "file", dependencies: [] })) };
     await mkdir(output, { recursive: true });
     await writeFile(join(root, "sources.json"), JSON.stringify(sources));
     await writeFile(join(root, "lock.json"), JSON.stringify(lock));
@@ -172,7 +172,7 @@ for (const failureAt of [2, 3]) {
       }] };
       const lock = { skills: [{
         name: "new-skill", sourceType: "original", localSha256: "0".repeat(64),
-        releaseCommit: "0".repeat(40), license: "MIT", dependencies: [],
+        releaseCommit: "0".repeat(40), license: "MIT", payloadType: "file", dependencies: [],
       }] };
       await writeFile(join(root, "sources.json"), JSON.stringify(sources));
       await writeFile(join(root, "lock.json"), JSON.stringify(lock));
@@ -212,7 +212,7 @@ test("acquisition backup-cleanup failure keeps committed outputs and recoverable
     await writeFile(lockOutputPath, "original lock\n");
     await writeFile(releaseReportOutputPath, "original report\n");
     const sources = { skills: [{ name: "new-skill", sourceType: "original", localRoot: "projectSkills", localPath: "new-skill/SKILL.md", license: "MIT" }] };
-    const lock = { skills: [{ name: "new-skill", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    const lock = { skills: [{ name: "new-skill", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", payloadType: "file", dependencies: [] }] };
     await writeFile(join(root, "sources.json"), JSON.stringify(sources));
     await writeFile(join(root, "lock.json"), JSON.stringify(lock));
     await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
@@ -249,7 +249,7 @@ test("acquisition rejects a source file symlink resolving outside configured roo
     try { await symlink(outside, join(sourceRoot, "linked", "SKILL.md"), "file"); }
     catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
     const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/SKILL.md", license: "MIT" }] };
-    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", payloadType: "file", dependencies: [] }] };
     await mkdir(output); await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
     await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
     const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
@@ -267,7 +267,7 @@ test("acquisition rejects a directory source symlink resolving outside configure
     try { await symlink(outside, join(sourceRoot, "linked"), "dir"); }
     catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
     const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/", license: "MIT" }] };
-    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", payloadType: "directory", dependencies: [] }] };
     await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
     await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
     const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
@@ -285,7 +285,7 @@ test("acquisition rejects a nested symlink inside a directory source", async (t)
     try { await symlink(outside, join(source, "nested", "escape.md"), "file"); }
     catch (error) { if (error?.code === "EPERM") { t.skip(`OS disallows symlink creation: ${error.code}`); return; } throw error; }
     const sources = { skills: [{ name: "linked", sourceType: "original", localRoot: "projectSkills", localPath: "linked/", license: "MIT" }] };
-    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", dependencies: [] }] };
+    const lock = { skills: [{ name: "linked", sourceType: "original", localSha256: "0".repeat(64), releaseCommit: "0".repeat(40), license: "MIT", payloadType: "directory", dependencies: [] }] };
     await writeFile(join(root, "sources.json"), JSON.stringify(sources)); await writeFile(join(root, "lock.json"), JSON.stringify(lock));
     await writeFile(join(root, "report.md"), `# Release\n\n${renderExclusionSection([])}`);
     const result = await runAcquisitionGate({ sourceManifestPath: join(root, "sources.json"), lockInputPath: join(root, "lock.json"), lockOutputPath: join(output, "lock.json"), payloadOutputPath: join(output, "skills"), releaseReportInputPath: join(root, "report.md"), releaseReportOutputPath: join(output, "report.md"), environment: { AGENTIC_PROJECT_SKILLS_ROOT: sourceRoot } });
@@ -395,13 +395,40 @@ test("adapted and original local imports retain provenance contracts", async () 
     assert.ok((await stat(patchUrl)).size > 0);
     assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
   }
-  for (const name of ["implementing-plans", "cleaning-repo-with-knip"]) {
+  for (const name of ["implementing-plans", "cleaning-repo-with-knip", "importing-handoff"]) {
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "original");
     assert.equal("revision" in entry, false);
     assert.equal("repository" in entry, false);
-    assert.equal(await sha256File(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url)), entry.localSha256);
+    const localSkill = new URL(`../plugins/agentic-engineering-skills/skills/${name}/`, import.meta.url);
+    const localHash = entry.payloadType === "directory"
+      ? await sha256Path(fileURLToPath(localSkill))
+      : await sha256File(new URL("SKILL.md", localSkill));
+    assert.equal(localHash, entry.localSha256);
   }
+});
+
+test("importing-handoff records and hashes its complete original payload", async () => {
+  const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
+  const entry = lock.skills.find(({ name }) => name === "importing-handoff");
+  const payload = new URL("../plugins/agentic-engineering-skills/skills/importing-handoff/", import.meta.url);
+
+  assert.equal(entry?.sourceType, "original");
+  assert.equal(entry?.payloadType, "directory");
+  assert.equal(await sha256Path(fileURLToPath(payload)), entry.localSha256);
+  for (const path of [
+    "agents/openai.yaml",
+    "references/workflow-phases.md",
+    "references/failure-policy.md",
+    "references/contract-schema.md",
+    "references/reviewer-prompts.md",
+    "scripts/inspect-handoff.mjs",
+    "scripts/run-reference.mjs",
+    "scripts/build-contract.mjs",
+    "scripts/capture-matrix.mjs",
+    "scripts/compare-receipts.mjs",
+    "scripts/verify-import-scope.mjs",
+  ]) assert.ok(await stat(new URL(path, payload)));
 });
 
 test("all skill frontmatter is closed and adaptation notices stay in Markdown body", async () => {

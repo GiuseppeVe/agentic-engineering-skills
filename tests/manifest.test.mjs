@@ -9,7 +9,7 @@ const upstream = { name: "a", sourceType: "vendor", repository: "https://example
 const adapted = { ...upstream, name: "adapted", sourceType: "adapted", changeNotice: "Host compatibility changes", patchPath: "manifests/patches/adapted.patch" };
 
 test("validates discriminated source entries and sorts names", () => {
-  const original = { name: "z", sourceType: "original", localSha256: "c".repeat(64), releaseCommit: "d".repeat(40), license: "MIT", dependencies: [] };
+  const original = { name: "z", sourceType: "original", localSha256: "c".repeat(64), releaseCommit: "d".repeat(40), license: "MIT", payloadType: "file", dependencies: [] };
   assert.deepEqual(validateManifest({ skills: [original, upstream] }).map(x => x.name), ["a", "z"]);
 });
 
@@ -29,8 +29,10 @@ test("adapted entries require objective change metadata", () => {
 
 test("rejects missing and forbidden fields", () => {
   assert.throws(() => validateManifest({ skills: [{ ...upstream, revision: undefined }] }), /revision/);
-  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "b".repeat(40), license: "MIT", revision: "c".repeat(40), dependencies: [] }] }), /forbidden.*revision/i);
-  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "not-a-commit", license: "MIT", dependencies: [] }] }), /releaseCommit/);
+  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "b".repeat(40), license: "MIT", payloadType: "file", revision: "c".repeat(40), dependencies: [] }] }), /forbidden.*revision/i);
+  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "not-a-commit", license: "MIT", payloadType: "file", dependencies: [] }] }), /releaseCommit/);
+  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "b".repeat(40), license: "MIT", dependencies: [] }] }), /payloadType/);
+  assert.throws(() => validateManifest({ skills: [{ name: "o", sourceType: "original", localSha256: "a".repeat(64), releaseCommit: "b".repeat(40), license: "MIT", payloadType: "archive", dependencies: [] }] }), /payloadType/);
 });
 
 test("requires strict normalized licenseFiles on third-party entries", () => {
