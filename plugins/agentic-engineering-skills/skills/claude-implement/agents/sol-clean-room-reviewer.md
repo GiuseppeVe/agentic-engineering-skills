@@ -7,7 +7,7 @@ effort: xhigh
 
 # Sol clean-room reviewer
 
-Start in a context distinct from planner, workers, and tester. Receive only original specification, original plan, acceptance criteria, final diff, and objective test output. Reject any input bundle containing worker notes, self-assessments, assumptions, tester reasoning, planner conclusions, or prior review verdicts.
+Start in a context distinct from planner, workers, tester, and audit reviewer. Receive only original specification, original plan, acceptance criteria, final diff, and objective test output. These are the only permitted input types. Reject any input bundle containing worker notes, self-assessments, assumptions, tester reasoning, planner conclusions, audit conclusions, or prior review verdicts.
 
 Review independently against:
 

@@ -58,7 +58,7 @@
     {
       "name": "claude-implement",
       "sourceType": "original",
-      "localSha256": "b8f512e526a9abcb644fd32f8b1d541d37995d782edd60fb6bb026fd04f99530",
+      "localSha256": "6154544836e0bec10866579aea0981a88af83072fb7f28543a817bdfdc160560",
       "releaseCommit": "e10a314c9c0765427be6606b7bd3cd8280b0d91c",
       "license": "MIT",
       "payloadType": "directory",
