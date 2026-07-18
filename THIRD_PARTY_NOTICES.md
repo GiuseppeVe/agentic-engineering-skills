@@ -2,6 +2,10 @@
 
 Repository-original material is licensed under the root MIT license. Third-party skills retain the licenses copied under `plugins/agentic-engineering-skills/licenses/`.
 
+## Repository-original skills
+
+`codex-implement` and `claude-implement` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
+
 | Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `brainstorming` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | adapted | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Adapted for cross-host Agent Skills distribution. |

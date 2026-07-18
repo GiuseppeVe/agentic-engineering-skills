@@ -26,7 +26,7 @@ If the spec covers multiple independent subsystems, it should have been broken i
 
 ## Requirements Inventory (MANDATORY)
 
-**Every plan MUST carry an explicit, enumerated Requirements Inventory immediately after the header, before the File Structure section.** This is the single source of truth for *what the plan obligates*. The downstream executor (`implementing-plans` Phase 1) copies this list verbatim to drive its fidelity-coverage gate — so a complete inventory turns that extraction into a 1:1 parse instead of a lossy re-inference. An incomplete inventory is a **plan failure**, exactly like a placeholder.
+**Every plan MUST carry an explicit, enumerated Requirements Inventory immediately after the header, before the File Structure section.** This is the single source of truth for *what the plan obligates*. The downstream executor (`codex-implement in Codex or claude-implement in Claude Code` Phase 1) copies this list verbatim to drive its fidelity-coverage gate — so a complete inventory turns that extraction into a 1:1 parse instead of a lossy re-inference. An incomplete inventory is a **plan failure**, exactly like a placeholder.
 
 **The Prose-Is-Not-A-Requirement rule:** every obligation the plan imposes MUST appear as a `REQ-NNN` line in this inventory. Prose, task bodies, and code comments may *explain* an obligation, but they may never *introduce* one that is absent from the inventory. If you find yourself writing "the worker must…" / "ensure that…" / "X has to…" anywhere outside the inventory, stop and add the matching `REQ` first.
 
@@ -104,7 +104,7 @@ This structure informs the task decomposition. Each task should produce self-con
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED EXECUTION SKILL: Use implementing-plans with swarm-orchestration to implement this plan end-to-end. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED EXECUTION SKILL: Use codex-implement in Codex or claude-implement in Claude Code with swarm-orchestration to implement this plan end-to-end. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -208,15 +208,15 @@ After saving the plan, offer execution choice:
 
 **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
 
-**1. Implementing Plans (recommended)** - I run the full implementing-plans workflow with swarm-orchestration, per-wave subagents, fidelity review, integrated review, tests, and finish gate
+**1. Host-specific implementation (recommended)** - I run `codex-implement` in Codex or `claude-implement` in Claude Code with bounded packets, semantic tests, and clean-room review; add swarm orchestration only for disjoint work.
 
 **2. Manual Execution** - Execute tasks in this session with explicit checkpoints and user approvals
 
 **Which approach?"**
 
-**If Implementing Plans chosen:**
-- **REQUIRED SKILLS:** Use `implementing-plans` + `swarm-orchestration`
-- Wave-parallel subagents + full-plan fidelity review + integrated review
+**If Host-specific implementation chosen:**
+- **REQUIRED SKILL:** Use `codex-implement` in Codex or `claude-implement` in Claude Code.
+- Use bounded packets, semantic validation, and clean-room review; add swarm orchestration only for disjoint work.
 
 **If Manual Execution chosen:**
 - No required legacy superpowers skill
