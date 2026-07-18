@@ -155,7 +155,7 @@
     {
       "name": "importing-handoff",
       "sourceType": "original",
-      "localSha256": "9149e675fca96b30e95eb43390741237e99cd050212413e9ba4169f3b092575a",
+      "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
       "releaseCommit": "e8041ff1570b5b6828e483298020b4f3a5c3e0d4",
       "license": "MIT",
       "payloadType": "directory",
@@ -321,7 +321,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "e6f6453090d0aac0b7fe4399206d6af23e784e38a2b5982453b255b24ed55051",
+      "localSha256": "a9e5c78c68f9dc8fa0e48622ca5ef6a5d40367e0677851a862201737c875cfbe",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",
