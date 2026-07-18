@@ -12,7 +12,8 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
-| `implementing-plans` | None | `LICENSE` | Implement: plan execution gates |
+| `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
+| `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
 | `improve-codebase-architecture` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
 | `importing-handoff` | None | `LICENSE` | Implement: exact frontend handoff import |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |

@@ -8,12 +8,29 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:436cfdb48917d7f6147e4daf716719be189389ceb39f1df1a79e5a58ec0696f3",
+    "treeHash": "sha256:80a9561247a459bca764d0b9ec4d48731e3121c41252f69ac3a358995aa80b30",
     "skills": [
-      "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
-      "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
-      "importing-handoff", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
-      "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+      "brainstorming",
+      "cavecrew",
+      "caveman",
+      "claude-implement",
+      "cleaning-repo-with-knip",
+      "codebase-design",
+      "codex-implement",
+      "domain-modeling",
+      "grill-me",
+      "grilling",
+      "importing-handoff",
+      "improve-codebase-architecture",
+      "learn-codebase",
+      "setup-matt-pocock-skills",
+      "swarm-orchestration",
+      "test-driven-development",
+      "to-spec",
+      "using-git-worktrees",
+      "wayfinder",
+      "writing-plans",
+      "writing-skills"
     ]
   },
   "hosts": {
@@ -21,20 +38,71 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:436cfdb48917d7f6147e4daf716719be189389ceb39f1df1a79e5a58ec0696f3",
-        "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "importing-handoff", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
+        "treeHash": "sha256:80a9561247a459bca764d0b9ec4d48731e3121c41252f69ac3a358995aa80b30",
+        "skills": [
+          "brainstorming",
+          "cavecrew",
+          "caveman",
+          "claude-implement",
+          "cleaning-repo-with-knip",
+          "codebase-design",
+          "codex-implement",
+          "domain-modeling",
+          "grill-me",
+          "grilling",
+          "importing-handoff",
+          "improve-codebase-architecture",
+          "learn-codebase",
+          "setup-matt-pocock-skills",
+          "swarm-orchestration",
+          "test-driven-development",
+          "to-spec",
+          "using-git-worktrees",
+          "wayfinder",
+          "writing-plans",
+          "writing-skills"
+        ]
       },
       "discoveredSkills": [
-        "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
-        "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
-        "importing-handoff", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
-        "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+        "brainstorming",
+        "cavecrew",
+        "caveman",
+        "claude-implement",
+        "cleaning-repo-with-knip",
+        "codebase-design",
+        "codex-implement",
+        "domain-modeling",
+        "grill-me",
+        "grilling",
+        "importing-handoff",
+        "improve-codebase-architecture",
+        "learn-codebase",
+        "setup-matt-pocock-skills",
+        "swarm-orchestration",
+        "test-driven-development",
+        "to-spec",
+        "using-git-worktrees",
+        "wayfinder",
+        "writing-plans",
+        "writing-skills"
       ],
       "commands": [
-        { "command": "codex --version", "exitCode": 0 },
-        { "command": "codex plugin marketplace add $S --json", "exitCode": 0 },
-        { "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json", "exitCode": 0 },
-        { "command": "codex plugin list --available --json", "exitCode": 0 }
+        {
+          "command": "codex --version",
+          "exitCode": 0
+        },
+        {
+          "command": "codex plugin marketplace add $S --json",
+          "exitCode": 0
+        },
+        {
+          "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json",
+          "exitCode": 0
+        },
+        {
+          "command": "codex plugin list --available --json",
+          "exitCode": 0
+        }
       ],
       "modelSession": {
         "exactInventoryClaimed": false,
@@ -45,23 +113,80 @@
       "version": "2.1.209 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:436cfdb48917d7f6147e4daf716719be189389ceb39f1df1a79e5a58ec0696f3",
-        "skills": ["brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design", "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture", "importing-handoff", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development", "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"]
+        "treeHash": "sha256:80a9561247a459bca764d0b9ec4d48731e3121c41252f69ac3a358995aa80b30",
+        "skills": [
+          "brainstorming",
+          "cavecrew",
+          "caveman",
+          "claude-implement",
+          "cleaning-repo-with-knip",
+          "codebase-design",
+          "codex-implement",
+          "domain-modeling",
+          "grill-me",
+          "grilling",
+          "importing-handoff",
+          "improve-codebase-architecture",
+          "learn-codebase",
+          "setup-matt-pocock-skills",
+          "swarm-orchestration",
+          "test-driven-development",
+          "to-spec",
+          "using-git-worktrees",
+          "wayfinder",
+          "writing-plans",
+          "writing-skills"
+        ]
       },
       "discoveredSkills": [
-        "brainstorming", "cavecrew", "caveman", "cleaning-repo-with-knip", "codebase-design",
-        "domain-modeling", "grill-me", "grilling", "implementing-plans", "improve-codebase-architecture",
-        "importing-handoff", "learn-codebase", "setup-matt-pocock-skills", "swarm-orchestration", "test-driven-development",
-        "to-spec", "using-git-worktrees", "wayfinder", "writing-plans", "writing-skills"
+        "brainstorming",
+        "cavecrew",
+        "caveman",
+        "claude-implement",
+        "cleaning-repo-with-knip",
+        "codebase-design",
+        "codex-implement",
+        "domain-modeling",
+        "grill-me",
+        "grilling",
+        "importing-handoff",
+        "improve-codebase-architecture",
+        "learn-codebase",
+        "setup-matt-pocock-skills",
+        "swarm-orchestration",
+        "test-driven-development",
+        "to-spec",
+        "using-git-worktrees",
+        "wayfinder",
+        "writing-plans",
+        "writing-skills"
       ],
       "commands": [
-        { "command": "claude --version", "exitCode": 0 },
-        { "command": "claude plugin validate .", "exitCode": 0 },
-        { "command": "claude plugin marketplace add ./ --scope user", "exitCode": 0 },
-        { "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user", "exitCode": 0 },
-        { "command": "claude plugin list --json", "exitCode": 0 }
+        {
+          "command": "claude --version",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin validate .",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin marketplace add ./ --scope user",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin list --json",
+          "exitCode": 0
+        }
       ],
-      "modelSession": { "exactInventoryClaimed": false, "result": "Fresh isolated payload verification is authoritative; no model-session inventory claim." }
+      "modelSession": {
+        "exactInventoryClaimed": false,
+        "result": "Fresh isolated payload verification is authoritative; no model-session inventory claim."
+      }
     }
   }
 }

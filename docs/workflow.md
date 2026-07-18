@@ -18,7 +18,7 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Implement
 
-`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `implementing-plans` executes written plans, while `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
+`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `claude-implement` supplies same bounded-packet and clean-review workflow in Claude Code. `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
 
 ## Verify
 
@@ -26,11 +26,11 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Review
 
-`implementing-plans` includes fidelity and integrated review gates. `grill-me` or `grilling` can challenge consequential design decisions before publication.
+`codex-implement` and `claude-implement` require semantic test validation plus a fresh clean-room approval gate; choose the host-native skill. `grill-me` or `grilling` can challenge consequential design decisions before publication.
 
 ## Clean
 
-`cleaning-repo-with-knip` removes verified dead code and records false positives. `implementing-plans` also checks temporary artifacts and debug residue before delivery.
+`cleaning-repo-with-knip` removes verified dead code and records false positives. `codex-implement` and `claude-implement` keep delivery approval separate from worker output; clean temporary artifacts and debug residue before that gate.
 
 ## Routing and evidence gates
 
