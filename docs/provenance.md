@@ -12,7 +12,8 @@
 | `domain-modeling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grill-me` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grilling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
-| `implementing-plans` | original | Repository release `46a201b669a90debebdc3eaa976bc5dfa9a83c1a` |
+| `claude-implement` | original | GiuseppeVe-authored Claude Code workflow; release recorded in lock |
+| `codex-implement` | original | GiuseppeVe-authored Codex workflow; release recorded in lock |
 | `improve-codebase-architecture` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `importing-handoff` | original | Repository release recorded in lock |
 | `learn-codebase` | adapted | `thedotmack/claude-mem@312d640b0188753acd92a1a82d95a84d5c7c43db` |

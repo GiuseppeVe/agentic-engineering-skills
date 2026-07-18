@@ -25,7 +25,7 @@ Latest clean-clone gate validated implementation SHA `5320e2a`.
 | Focused profiles | `node --test tests/agent-profiles.test.mjs` | 0 | Windows: 21 total, 18 passed, 0 failed, 3 skipped because symlink creation returned `EPERM`; Linux WSL separately exercised all symlink cases with 21 of 21 passed. |
 | Documentation | `node --test tests/docs-contract.test.mjs` | 0 | 9 passed; 0 failed or skipped. |
 | Licensing | `node --test tests/license.test.mjs` | 0 | 4 passed; 0 failed or skipped. |
-| Pack | `npm run verify:pack` | 0 | 7 installed profiles and 19 skills verified; 19 requested and included, 0 excluded; native receipt and documentation inventory verified for Codex and Claude. |
+| Pack | `npm run verify:pack` | 0 | 7 installed profiles and 21 skills verified; 21 requested and included, 0 excluded; native receipt and documentation inventory verified for Codex and Claude. |
 | Public surface | `npm run audit:public` | 0 | Public-release audit completed with no findings. |
 | Full local suite | `npm test` | 0 | 100 total, 92 passed, 0 failed, 8 skipped because Windows disallowed fixture symlink creation. |
 | Upstream | `npm run verify:upstream` | 0 | All 17 vendor and adapted upstream payloads verified against pinned sources; payload was restored byte-exact to base after clean-clone fidelity verification. |

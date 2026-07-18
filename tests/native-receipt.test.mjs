@@ -12,7 +12,7 @@ const payloadRoot = new URL("../plugins/agentic-engineering-skills/skills/", imp
 test("tracked native receipt proves both isolated native payload inventories", async () => {
   const receipt = JSON.parse(await readFile(new URL("../manifests/native-discovery.json", import.meta.url), "utf8"));
   const result = await verifyNativeReceipt(receipt, { included: expectedSkills, payloadRoot });
-  assert.equal(result.count, 20);
+  assert.equal(result.count, expectedSkills.length);
   assert.equal(result.hash, await hashPayloadTree(payloadRoot));
 });
 

@@ -56,6 +56,15 @@
       ]
     },
     {
+      "name": "claude-implement",
+      "sourceType": "original",
+      "localSha256": "b8f512e526a9abcb644fd32f8b1d541d37995d782edd60fb6bb026fd04f99530",
+      "releaseCommit": "e10a314c9c0765427be6606b7bd3cd8280b0d91c",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": []
+    },
+    {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
@@ -80,6 +89,15 @@
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
         }
       ]
+    },
+    {
+      "name": "codex-implement",
+      "sourceType": "original",
+      "localSha256": "f5b0ae0bcae2e656c9897f58dcc36f1fe26bbd11dd7a3185b992ebdd06905648",
+      "releaseCommit": "e10a314c9c0765427be6606b7bd3cd8280b0d91c",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": []
     },
     {
       "name": "domain-modeling",
@@ -135,12 +153,12 @@
       ]
     },
     {
-      "name": "implementing-plans",
+      "name": "importing-handoff",
       "sourceType": "original",
-      "localSha256": "ed8df9ba03e1f4789071f4d81eeea0918a8e99499ca12e0dd091a0c46551d0f7",
-      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
+      "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
+      "releaseCommit": "e8041ff1570b5b6828e483298020b4f3a5c3e0d4",
       "license": "MIT",
-      "payloadType": "file",
+      "payloadType": "directory",
       "dependencies": []
     },
     {
@@ -161,15 +179,6 @@
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
         }
       ]
-    },
-    {
-      "name": "importing-handoff",
-      "sourceType": "original",
-      "localSha256": "9149e675fca96b30e95eb43390741237e99cd050212413e9ba4169f3b092575a",
-      "releaseCommit": "e8041ff1570b5b6828e483298020b4f3a5c3e0d4",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": []
     },
     {
       "name": "learn-codebase",
@@ -312,7 +321,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "e6f6453090d0aac0b7fe4399206d6af23e784e38a2b5982453b255b24ed55051",
+      "localSha256": "a9e5c78c68f9dc8fa0e48622ca5ef6a5d40367e0677851a862201737c875cfbe",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",
