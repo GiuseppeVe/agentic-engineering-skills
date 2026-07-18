@@ -14,7 +14,7 @@ Vendor files stay byte-exact, adaptations remain auditable, and original files u
 
 ## Workflow
 
-Work moves through seven composable phases, then stops at an explicit owner publication gate. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
+Work moves through seven composable phases, then stops at an explicit owner publication gate. `codex-implement` is the Codex route; `claude-implement` is the Claude Code route. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
 
 ```mermaid
 flowchart LR

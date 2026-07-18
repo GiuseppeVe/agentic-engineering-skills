@@ -16,7 +16,7 @@ Treat source as visual/behavioral authority, not automatically production-ready 
 - Before work, read [workflow-phases.md](references/workflow-phases.md) and [failure-policy.md](references/failure-policy.md) completely.
 - Before creating artifacts or matrix, read [contract-schema.md](references/contract-schema.md) completely.
 - Before delegating or reviewing, read [reviewer-prompts.md](references/reviewer-prompts.md) completely.
-- Reuse `implementing-plans` controller, persistent state, owned-file isolation, controller-only Git, dual review, same-SHA validation, and user gate. This skill controls import ordering and fidelity evidence.
+- Reuse `codex-implement in Codex or claude-implement in Claude Code` controller, persistent state, owned-file isolation, controller-only Git, dual review, same-SHA validation, and user gate. This skill controls import ordering and fidelity evidence.
 
 ## Execute
 
