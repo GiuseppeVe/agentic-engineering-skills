@@ -40,18 +40,20 @@
     },
     {
       "name": "caveman",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/JuliusBrussee/caveman",
-      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+      "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
       "upstreamPath": "skills/caveman/SKILL.md",
-      "sha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
-      "localSha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
+      "sha256": "c4d7354b4b063d54601fcdd5097a5b1713d1a1a2e386ac39efa438aa1ffef8ce",
+      "localSha256": "1a0b5c01101e16d689554fdf2d83bf60c514a03f21290ce8f8fe441f0ee61e30",
       "dependencies": [],
+      "changeNotice": "Merged current local Caveman rules with the latest pinned upstream clarity register for cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/caveman.patch",
       "licenseFiles": [
         {
           "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
-          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
         }
       ]
     },

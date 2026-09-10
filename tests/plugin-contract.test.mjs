@@ -10,7 +10,6 @@ const expectedName = "agentic-engineering-skills";
 const expectedVersion = "0.1.0";
 const strictSemver = /^\d+\.\d+\.\d+$/;
 const expectedVendorSkills = [
-  "caveman",
   "codebase-design",
   "domain-modeling",
   "grilling",

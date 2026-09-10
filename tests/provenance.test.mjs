@@ -374,6 +374,7 @@ test("adapted and original local imports retain provenance contracts", async () 
   const adapted = {
     brainstorming: "obra/superpowers",
     cavecrew: "JuliusBrussee/caveman",
+    caveman: "JuliusBrussee/caveman",
     "grill-me": "mattpocock/skills",
     "improve-codebase-architecture": "mattpocock/skills",
     impeccable: "pbakaus/impeccable",
