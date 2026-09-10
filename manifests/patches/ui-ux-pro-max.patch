@@ -1,0 +1,7 @@
+diff --git a/.claude/skills/ui-ux-pro-max/ b/plugins/agentic-engineering-skills/skills/ui-ux-pro-max/
+--- a/.claude/skills/ui-ux-pro-max/
++++ b/plugins/agentic-engineering-skills/skills/ui-ux-pro-max/
+@@
++Adaptation record: the upstream UI UX Pro Max skill is packaged in the flat plugin layout.
++The package keeps the current skill instructions, searchable design data, and helper scripts;
++host-specific source locations are normalized for Codex and Claude Code discovery.

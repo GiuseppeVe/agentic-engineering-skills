@@ -12,6 +12,7 @@
 | `domain-modeling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grill-me` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grilling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
+| `impeccable` | adapted | `pbakaus/impeccable@6496f49a1ea0503ca130d7dd55508dd0d22aa86b` |
 | `claude-implement` | original | GiuseppeVe-authored Claude Code workflow; release recorded in lock |
 | `codex-implement` | original | GiuseppeVe-authored Codex workflow; release recorded in lock |
 | `improve-codebase-architecture` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
@@ -21,6 +22,7 @@
 | `swarm-orchestration` | adapted | `ruvnet/ruflo@7ef4d4e655d81c0451f6f40f35729cce6c9928e7` |
 | `test-driven-development` | vendor | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 | `to-spec` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
+| `ui-ux-pro-max` | adapted | `nextlevelbuilder/ui-ux-pro-max-skill@314307f156aeab0c6b567bbaa1ce4e7aabd5a636` |
 | `using-git-worktrees` | vendor | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 | `wayfinder` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `writing-plans` | adapted | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |

@@ -181,6 +181,25 @@
       ]
     },
     {
+      "name": "impeccable",
+      "sourceType": "adapted",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
+      "upstreamPath": "skill/",
+      "sha256": "8023233e074b16c314ec18354955beb425a49ae79450ef641045b19ca0dfa04b",
+      "localSha256": "ce518a4d7c3c3c671245be125c98dd9099825d330c0234119de9317ce22de8cf",
+      "dependencies": [],
+      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/impeccable.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE",
+          "sha256": "02bb8c3b4e70190e3986c0404ad2fd8d639b4f534252d82379cc1b502b6d1812"
+        }
+      ]
+    },
+    {
       "name": "learn-codebase",
       "sourceType": "adapted",
       "repository": "https://github.com/thedotmack/claude-mem",
@@ -275,6 +294,25 @@
           "upstreamPath": "LICENSE",
           "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "sourceType": "adapted",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
+      "upstreamPath": ".claude/skills/ui-ux-pro-max/",
+      "sha256": "84bce1fd0d6ab9b13a392ada087c9485ee8fb599fc4e942f3d1bcf79c62fd546",
+      "localSha256": "63526dde44994d268bac8111f12c2ecb993e1cb9610c21bd3e7221cb4e3ec742",
+      "dependencies": [],
+      "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/ui-ux-pro-max.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE",
+          "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
         }
       ]
     },

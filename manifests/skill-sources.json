@@ -97,6 +97,15 @@
       "patchPath": "manifests/patches/improve-codebase-architecture.patch"
     },
     {
+      "name": "impeccable",
+      "sourceType": "adapted",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
+      "upstreamPath": "skill/",
+      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/impeccable.patch"
+    },
+    {
       "name": "learn-codebase",
       "sourceType": "adapted",
       "repository": "https://github.com/thedotmack/claude-mem",
@@ -144,6 +153,15 @@
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/to-spec.patch",
       "localRoot": "projectSkills"
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "sourceType": "adapted",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
+      "upstreamPath": ".claude/skills/ui-ux-pro-max/",
+      "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/ui-ux-pro-max.patch"
     },
     {
       "name": "using-git-worktrees",

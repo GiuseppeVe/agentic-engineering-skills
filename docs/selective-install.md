@@ -14,6 +14,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
 | `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
+| `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Design: frontend craft and critique |
 | `improve-codebase-architecture` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
 | `importing-handoff` | None | `LICENSE` | Implement: exact frontend handoff import |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
@@ -21,6 +22,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `swarm-orchestration` | None | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Implement: multi-agent coordination |
 | `test-driven-development` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Verify: red-green-refactor |
 | `to-spec` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: standalone specification |
+| `ui-ux-pro-max` | None | `plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE` | Design: searchable UI/UX intelligence |
 | `using-git-worktrees` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Implement: isolated workspace |
 | `wayfinder` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: large-work map |
 | `writing-plans` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Plan: executable tasks |

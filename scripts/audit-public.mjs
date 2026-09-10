@@ -33,12 +33,41 @@ const controlledLoopbackArtifacts = new Map([
   ["plugins/agentic-engineering-skills/skills/importing-handoff/scripts/run-reference.mjs", 2],
 ]);
 
+// These are public, pinned upstream examples retained inside the imported
+// Impeccable package. Keep the exceptions file-specific and count-specific so
+// new paths or extra matches still fail the release audit.
+const controlledThirdPartyArtifacts = new Map([
+  ["plugins/agentic-engineering-skills/skills/impeccable/reference/critique.md", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/reference/init.md", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/reference/live.md", { "url:non-public": 5 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/detector/cli/main.mjs", { "url:non-public": 2 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/detector/node/file-system.mjs", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-browser.js", { "url:non-public": 19 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-complete.mjs", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-copy-edit-agent.mjs", { "secret:anthropic-key": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-inject.mjs", { "url:non-public": 4 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-poll.mjs", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-server.mjs", { "url:non-public": 3 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-status.mjs", { "url:non-public": 1 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live/sveltekit-adapter.mjs", { "url:non-public": 1 }],
+]);
+
 function hasOnlyControlledLoopbackUrls(path, content, pattern) {
   const expected = controlledLoopbackArtifacts.get(path);
   if (!expected) return false;
   const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
   const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
   return matches.length === expected && matches.every((match) => match[0].startsWith(["http:", "", "127.0.0.1"].join("/")));
+}
+
+function hasOnlyControlledThirdPartyMatches(path, content, rule, pattern) {
+  const expected = controlledThirdPartyArtifacts.get(path)?.[rule];
+  if (!expected) return false;
+  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
+  const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
+  if (matches.length !== expected) return false;
+  if (rule === "url:non-public") return matches.every((match) => /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3})/i.test(match[0]));
+  return rule === "secret:anthropic-key";
 }
 
 function fail(message) {
@@ -164,6 +193,7 @@ async function main() {
       const normalizedPath = file.displayPath.split(path.sep).join("/");
       if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
       if (rule === "url:non-public" && hasOnlyControlledLoopbackUrls(normalizedPath, result.content, pattern)) continue;
+      if (hasOnlyControlledThirdPartyMatches(normalizedPath, result.content, rule, pattern)) continue;
       if (pattern.test(result.content)) findings.push(`${file.displayPath}:${rule}`);
     }
   }
