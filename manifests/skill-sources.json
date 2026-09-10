@@ -24,10 +24,14 @@
     },
     {
       "name": "caveman",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/JuliusBrussee/caveman",
-      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
-      "upstreamPath": "skills/caveman/SKILL.md"
+      "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
+      "upstreamPath": "skills/caveman/SKILL.md",
+      "localPath": "caveman/SKILL.md",
+      "changeNotice": "Merged current local Caveman rules with the latest pinned upstream clarity register for cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/caveman.patch",
+      "localRoot": "projectSkills"
     },
     {
       "name": "claude-implement",

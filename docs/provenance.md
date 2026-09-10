@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | `brainstorming` | adapted | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 | `cavecrew` | adapted | `JuliusBrussee/caveman@0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0` |
-| `caveman` | vendor | `JuliusBrussee/caveman@0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0` |
+| `caveman` | adapted | `JuliusBrussee/caveman@0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb` |
 | `cleaning-repo-with-knip` | original | Repository release `46a201b669a90debebdc3eaa976bc5dfa9a83c1a` |
 | `codebase-design` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `domain-modeling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
