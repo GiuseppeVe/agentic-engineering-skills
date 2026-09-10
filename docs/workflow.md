@@ -10,7 +10,7 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Design
 
-`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `setup-matt-pocock-skills` prepares supporting project conventions when those engineering skills need them.
+`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `impeccable` and `ui-ux-pro-max` guide frontend visual, interaction, accessibility, and design-system decisions. `setup-matt-pocock-skills` prepares supporting project conventions when those engineering skills need them.
 
 ## Plan
 
