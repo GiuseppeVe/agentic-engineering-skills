@@ -6,12 +6,13 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | --- | --- | --- | --- |
 | `brainstorming` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
 | `cavecrew` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: investigation routing |
-| `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: compact collaboration |
+| `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
 | `codebase-design` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: module boundaries |
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
+| `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
 | `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Design: frontend craft and critique |

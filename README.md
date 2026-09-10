@@ -10,7 +10,7 @@ Agent work often jumps from a vague request to code, skipping design, test-first
 
 Move from evidence to explicit decisions, durable specifications and plans, isolated implementation, independent verification, and owner-approved publication. Use the smallest skill set needed for current work: skills guide judgment, but do not replace project instructions or turn a plan or passing test suite into permission to publish. See the [workflow philosophy](docs/philosophy.md) for lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
 
-Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license. Frontend work can add `impeccable` for craft and critique plus `ui-ux-pro-max` for searchable design intelligence and stack-specific guidance.
+Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license. `how-to-use-codex` keeps prompt and model guidance aligned with current official OpenAI documentation. Frontend work can add `impeccable` for craft and critique plus `ui-ux-pro-max` for searchable design intelligence and stack-specific guidance.
 
 ## Workflow
 

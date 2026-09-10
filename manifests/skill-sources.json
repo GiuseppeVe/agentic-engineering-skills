@@ -85,6 +85,13 @@
       "upstreamPath": "skills/productivity/grilling/SKILL.md"
     },
     {
+      "name": "how-to-use-codex",
+      "sourceType": "original",
+      "localPath": "how-to-use-codex/SKILL.md",
+      "license": "MIT",
+      "localRoot": "projectSkills"
+    },
+    {
       "name": "importing-handoff",
       "sourceType": "original",
       "localPath": "importing-handoff/",
