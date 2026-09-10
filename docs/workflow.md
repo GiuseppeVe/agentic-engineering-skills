@@ -14,7 +14,7 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Plan
 
-`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `writing-plans` turns requirements into testable implementation tasks.
+`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks.
 
 ## Implement
 

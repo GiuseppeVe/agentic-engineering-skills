@@ -155,6 +155,15 @@
       ]
     },
     {
+      "name": "how-to-use-codex",
+      "sourceType": "original",
+      "localSha256": "1a1cc61905560c460bf7ed8060b70f6701c65ae6e7696206af2e7386bcf16161",
+      "releaseCommit": "b402029299c911138b2cd55f8372948ab1bc781a",
+      "license": "MIT",
+      "payloadType": "file",
+      "dependencies": []
+    },
+    {
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",

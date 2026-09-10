@@ -4,7 +4,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 
 ## Repository-original skills
 
-`codex-implement` and `claude-implement` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
+`codex-implement`, `claude-implement`, and `how-to-use-codex` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
 
 | Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -15,6 +15,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
 | `grill-me` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
+| `how-to-use-codex` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; official OpenAI documentation links are maintained as current references. |
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `6496f49a1ea0503ca130d7dd55508dd0d22aa86b` | adapted | Paulo Bakaus | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Packaged current skill and supporting references/scripts for cross-host Agent Skills distribution. |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
 | `learn-codebase` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | `312d640b0188753acd92a1a82d95a84d5c7c43db` | adapted | Alex Newman | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`<br>`plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Modified files carry an Adaptation notice for cross-host Agent Skills distribution. Upstream NOTICE retained verbatim. |

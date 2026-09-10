@@ -8,7 +8,7 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:b3db7ed9fbad9305a3cbac6487606c83ff9dd3c77e472ae489be81a15b03bfe3",
+    "treeHash": "sha256:71cc5f5f6150d77b2ddfa3ea465f79b274d3e546a69a7739e9e29e83f05cfbd2",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -20,6 +20,7 @@
       "domain-modeling",
       "grill-me",
       "grilling",
+      "how-to-use-codex",
       "impeccable",
       "importing-handoff",
       "improve-codebase-architecture",
@@ -40,7 +41,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b3db7ed9fbad9305a3cbac6487606c83ff9dd3c77e472ae489be81a15b03bfe3",
+        "treeHash": "sha256:71cc5f5f6150d77b2ddfa3ea465f79b274d3e546a69a7739e9e29e83f05cfbd2",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -52,6 +53,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
+          "how-to-use-codex",
           "impeccable",
           "importing-handoff",
           "improve-codebase-architecture",
@@ -78,6 +80,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
+        "how-to-use-codex",
         "impeccable",
         "importing-handoff",
         "improve-codebase-architecture",
@@ -119,7 +122,7 @@
       "version": "2.1.209 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b3db7ed9fbad9305a3cbac6487606c83ff9dd3c77e472ae489be81a15b03bfe3",
+        "treeHash": "sha256:71cc5f5f6150d77b2ddfa3ea465f79b274d3e546a69a7739e9e29e83f05cfbd2",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -131,6 +134,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
+          "how-to-use-codex",
           "impeccable",
           "importing-handoff",
           "improve-codebase-architecture",
@@ -157,6 +161,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
+        "how-to-use-codex",
         "impeccable",
         "importing-handoff",
         "improve-codebase-architecture",
