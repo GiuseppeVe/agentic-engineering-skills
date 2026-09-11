@@ -148,6 +148,20 @@
       "localRoot": "projectSkills"
     },
     {
+      "name": "sequential-task-orchestrator",
+      "sourceType": "original",
+      "localPath": "sequential-task-orchestrator/",
+      "license": "MIT",
+      "localRoot": "projectSkills"
+    },
+    {
+      "name": "test-gaps",
+      "sourceType": "original",
+      "localPath": "test-gaps/SKILL.md",
+      "license": "MIT",
+      "localRoot": "projectSkills"
+    },
+    {
       "name": "test-driven-development",
       "sourceType": "vendor",
       "repository": "https://github.com/obra/superpowers",

@@ -60,7 +60,7 @@ test("third-party notice rows exactly join lock entries to legal files", async (
   const rows = new Map(notice.split("\n").filter(line => /^\| `[^`]+` \|/.test(line)).map(line => {
     const cells = line.slice(2, -2).split(" | ");
     return [cells[0].slice(1, -1), cells];
-  }));
+  }).filter(([, cells]) => cells[3] !== "original"));
   const holders = new Map([
     ["https://github.com/obra/superpowers", "Jesse Vincent"],
     ["https://github.com/JuliusBrussee/caveman", "Julius Brussee"],

@@ -20,8 +20,10 @@
 | `importing-handoff` | original | Repository release recorded in lock |
 | `learn-codebase` | adapted | `thedotmack/claude-mem@312d640b0188753acd92a1a82d95a84d5c7c43db` |
 | `setup-matt-pocock-skills` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
+| `sequential-task-orchestrator` | original | GiuseppeVe-authored ordered implementation and review orchestration skill; release recorded in lock |
 | `swarm-orchestration` | adapted | `ruvnet/ruflo@7ef4d4e655d81c0451f6f40f35729cce6c9928e7` |
 | `test-driven-development` | vendor | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
+| `test-gaps` | original | GiuseppeVe-authored implementation coverage-gap skill; release recorded in lock |
 | `to-spec` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `ui-ux-pro-max` | adapted | `nextlevelbuilder/ui-ux-pro-max-skill@314307f156aeab0c6b567bbaa1ce4e7aabd5a636` |
 | `using-git-worktrees` | vendor | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |

@@ -273,6 +273,24 @@
       ]
     },
     {
+      "name": "sequential-task-orchestrator",
+      "sourceType": "original",
+      "localSha256": "26aa7d3d1c7f7b9aaaed7be38443326f1055fcd241938370ef06cb5ce01c8ac8",
+      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": ["codex-implement", "test-driven-development", "test-gaps"]
+    },
+    {
+      "name": "test-gaps",
+      "sourceType": "original",
+      "localSha256": "355a18afe8c99566ce855e671a7b29d0c51e003c446ab5cfb548bcdb72e2a3e5",
+      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "license": "MIT",
+      "payloadType": "file",
+      "dependencies": []
+    },
+    {
       "name": "test-driven-development",
       "sourceType": "vendor",
       "repository": "https://github.com/obra/superpowers",
@@ -370,7 +388,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "a9e5c78c68f9dc8fa0e48622ca5ef6a5d40367e0677851a862201737c875cfbe",
+      "localSha256": "7e62e452e271d2ee564ca0450596a6f8fc823e75f841d937d13fde79f60dd075",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",
