@@ -6,21 +6,26 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | --- | --- | --- | --- |
 | `brainstorming` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
 | `cavecrew` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: investigation routing |
-| `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: compact collaboration |
+| `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
 | `codebase-design` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: module boundaries |
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
+| `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
 | `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
+| `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Design: frontend craft and critique |
 | `improve-codebase-architecture` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
 | `importing-handoff` | None | `LICENSE` | Implement: exact frontend handoff import |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
 | `setup-matt-pocock-skills` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: project setup |
+| `sequential-task-orchestrator` | `codex-implement`; `test-driven-development`; `test-gaps` | `LICENSE` | Implement: strictly ordered execution and per-task review |
 | `swarm-orchestration` | None | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Implement: multi-agent coordination |
 | `test-driven-development` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Verify: red-green-refactor |
+| `test-gaps` | None | `LICENSE` | Verify: missing coverage suggestions |
 | `to-spec` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: standalone specification |
+| `ui-ux-pro-max` | None | `plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE` | Design: searchable UI/UX intelligence |
 | `using-git-worktrees` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Implement: isolated workspace |
 | `wayfinder` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: large-work map |
 | `writing-plans` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Plan: executable tasks |

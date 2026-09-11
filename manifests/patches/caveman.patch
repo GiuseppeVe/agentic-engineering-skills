@@ -1,0 +1,5 @@
+diff --git a/skills/caveman/SKILL.md b/plugins/agentic-engineering-skills/skills/caveman/SKILL.md
+--- a/skills/caveman/SKILL.md
++++ b/plugins/agentic-engineering-skills/skills/caveman/SKILL.md
+@@
++Adaptation record: the upstream Caveman skill is merged with current local communication rules and packaged for Codex and Claude Code discovery.

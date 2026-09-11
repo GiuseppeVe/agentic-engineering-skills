@@ -71,7 +71,7 @@ index b1613eb..4e47705 100644
 -
 @@ -61 +107 @@
 -> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-+> **For agentic workers:** REQUIRED EXECUTION SKILL: Use codex-implement in Codex or claude-implement in Claude Code with swarm-orchestration to implement this plan end-to-end. Steps use checkbox (`- [ ]`) syntax for tracking.
++> **For agentic workers:** REQUIRED EXECUTION SKILL: Choose `codex-implement` for Codex, `sequential-task-orchestrator` for strictly ordered multi-task execution, or `claude-implement` for Claude Code. Steps use checkbox (`- [ ]`) syntax for tracking.
 @@ -69,7 +114,0 @@
 -## Global Constraints
 -
@@ -121,7 +121,7 @@ index b1613eb..4e47705 100644
 +If you find issues, fix them inline. No need to re-review — just fix and move on.
 @@ -162 +211 @@
 -**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
-+**1. Host-specific implementation (recommended)** - I run the full codex-implement in Codex or claude-implement in Claude Code workflow with swarm-orchestration, per-wave subagents, fidelity review, integrated review, tests, and finish gate
++**1. Host-specific implementation (recommended)** - Run `codex-implement` in Codex or `claude-implement` in Claude Code for a bounded plan. Run `sequential-task-orchestrator` when tasks require strict order, one active side-chat, per-task review, and resumable state.
 @@ -164 +213 @@
 -**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
 +**2. Manual Execution** - Execute tasks in this session with explicit checkpoints and user approvals
@@ -130,8 +130,8 @@ index b1613eb..4e47705 100644
 -- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
 -- Fresh subagent per task + two-stage review
 +**If Host-specific implementation chosen:**
-+- **REQUIRED SKILLS:** Use `codex-implement in Codex or claude-implement in Claude Code` + `swarm-orchestration`
-+- Wave-parallel subagents + full-plan fidelity review + integrated review
++- **REQUIRED SKILL:** Use `codex-implement` in Codex, `sequential-task-orchestrator` for strict ordered execution, or `claude-implement` in Claude Code.
++- Use bounded packets, semantic validation, and clean-room review. The sequential orchestrator invokes `test-gaps` and `test-driven-development` as its review pair.
 @@ -172,3 +221,3 @@
 -**If Inline Execution chosen:**
 -- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
