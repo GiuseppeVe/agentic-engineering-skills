@@ -60,13 +60,15 @@ test("third-party notice rows exactly join lock entries to legal files", async (
   const rows = new Map(notice.split("\n").filter(line => /^\| `[^`]+` \|/.test(line)).map(line => {
     const cells = line.slice(2, -2).split(" | ");
     return [cells[0].slice(1, -1), cells];
-  }));
+  }).filter(([, cells]) => cells[3] !== "original"));
   const holders = new Map([
     ["https://github.com/obra/superpowers", "Jesse Vincent"],
     ["https://github.com/JuliusBrussee/caveman", "Julius Brussee"],
     ["https://github.com/mattpocock/skills", "Matt Pocock"],
     ["https://github.com/thedotmack/claude-mem", "Alex Newman"],
     ["https://github.com/ruvnet/ruflo", "ruvnet"],
+    ["https://github.com/pbakaus/impeccable", "Paulo Bakaus"],
+    ["https://github.com/nextlevelbuilder/ui-ux-pro-max-skill", "Next Level Builder"],
   ]);
   for (const entry of lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded)) {
     const row = rows.get(entry.name);
@@ -76,7 +78,7 @@ test("third-party notice rows exactly join lock entries to legal files", async (
     assert.equal(row[2], `\`${entry.revision}\``);
     assert.equal(row[3], entry.sourceType);
     assert.equal(row[4], holders.get(entry.repository));
-    assert.equal(row[5], entry.name === "learn-codebase" ? "Apache-2.0" : "MIT");
+    assert.equal(row[5], ["learn-codebase", "impeccable"].includes(entry.name) ? "Apache-2.0" : "MIT");
     assert.equal(row[6], entry.licenseFiles.map(({ path }) => `\`${path}\``).join("<br>"));
     assert.ok(row[7].trim(), `${entry.name}: modification notice missing`);
   }

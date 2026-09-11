@@ -1,0 +1,7 @@
+diff --git a/skill/ b/plugins/agentic-engineering-skills/skills/impeccable/
+--- a/skill/
++++ b/plugins/agentic-engineering-skills/skills/impeccable/
+@@
++Adaptation record: the upstream Impeccable skill is packaged in the flat plugin layout.
++The package keeps the current skill instructions, command references, scripts, and data;
++host-specific source locations are normalized for Codex and Claude Code discovery.

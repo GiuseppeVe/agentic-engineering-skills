@@ -40,18 +40,20 @@
     },
     {
       "name": "caveman",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/JuliusBrussee/caveman",
-      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
+      "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
       "upstreamPath": "skills/caveman/SKILL.md",
-      "sha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
-      "localSha256": "5e30bb56afbd0b01bd736f2da84180e76f18db4a64de8e124525d5c8dc2e8605",
+      "sha256": "c4d7354b4b063d54601fcdd5097a5b1713d1a1a2e386ac39efa438aa1ffef8ce",
+      "localSha256": "1a0b5c01101e16d689554fdf2d83bf60c514a03f21290ce8f8fe441f0ee61e30",
       "dependencies": [],
+      "changeNotice": "Merged current local Caveman rules with the latest pinned upstream clarity register for cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/caveman.patch",
       "licenseFiles": [
         {
           "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE",
-          "sha256": "5eb826cd03151bcc7cce3f80d40e87733237fedfc6c36d6908aca5fd650a0bdb"
+          "path": "plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE",
+          "sha256": "94fe75d355887f84ee7eefca68e06d8d082a23dad47a8e1f58a94d98900edf5b"
         }
       ]
     },
@@ -153,6 +155,15 @@
       ]
     },
     {
+      "name": "how-to-use-codex",
+      "sourceType": "original",
+      "localSha256": "1a1cc61905560c460bf7ed8060b70f6701c65ae6e7696206af2e7386bcf16161",
+      "releaseCommit": "b402029299c911138b2cd55f8372948ab1bc781a",
+      "license": "MIT",
+      "payloadType": "file",
+      "dependencies": []
+    },
+    {
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
@@ -177,6 +188,25 @@
           "upstreamPath": "LICENSE",
           "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "impeccable",
+      "sourceType": "adapted",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
+      "upstreamPath": "skill/",
+      "sha256": "8023233e074b16c314ec18354955beb425a49ae79450ef641045b19ca0dfa04b",
+      "localSha256": "ce518a4d7c3c3c671245be125c98dd9099825d330c0234119de9317ce22de8cf",
+      "dependencies": [],
+      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/impeccable.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE",
+          "sha256": "02bb8c3b4e70190e3986c0404ad2fd8d639b4f534252d82379cc1b502b6d1812"
         }
       ]
     },
@@ -243,6 +273,24 @@
       ]
     },
     {
+      "name": "sequential-task-orchestrator",
+      "sourceType": "original",
+      "localSha256": "26aa7d3d1c7f7b9aaaed7be38443326f1055fcd241938370ef06cb5ce01c8ac8",
+      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": ["codex-implement", "test-driven-development", "test-gaps"]
+    },
+    {
+      "name": "test-gaps",
+      "sourceType": "original",
+      "localSha256": "355a18afe8c99566ce855e671a7b29d0c51e003c446ab5cfb548bcdb72e2a3e5",
+      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "license": "MIT",
+      "payloadType": "file",
+      "dependencies": []
+    },
+    {
       "name": "test-driven-development",
       "sourceType": "vendor",
       "repository": "https://github.com/obra/superpowers",
@@ -275,6 +323,25 @@
           "upstreamPath": "LICENSE",
           "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
+        }
+      ]
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "sourceType": "adapted",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
+      "upstreamPath": ".claude/skills/ui-ux-pro-max/",
+      "sha256": "84bce1fd0d6ab9b13a392ada087c9485ee8fb599fc4e942f3d1bcf79c62fd546",
+      "localSha256": "63526dde44994d268bac8111f12c2ecb993e1cb9610c21bd3e7221cb4e3ec742",
+      "dependencies": [],
+      "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/ui-ux-pro-max.patch",
+      "licenseFiles": [
+        {
+          "upstreamPath": "LICENSE",
+          "path": "plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE",
+          "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
         }
       ]
     },
@@ -321,7 +388,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "a9e5c78c68f9dc8fa0e48622ca5ef6a5d40367e0677851a862201737c875cfbe",
+      "localSha256": "7e62e452e271d2ee564ca0450596a6f8fc823e75f841d937d13fde79f60dd075",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",

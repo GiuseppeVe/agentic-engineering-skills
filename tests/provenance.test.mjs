@@ -374,14 +374,17 @@ test("adapted and original local imports retain provenance contracts", async () 
   const adapted = {
     brainstorming: "obra/superpowers",
     cavecrew: "JuliusBrussee/caveman",
+    caveman: "JuliusBrussee/caveman",
     "grill-me": "mattpocock/skills",
     "improve-codebase-architecture": "mattpocock/skills",
+    impeccable: "pbakaus/impeccable",
     "learn-codebase": "thedotmack/claude-mem",
     "setup-matt-pocock-skills": "mattpocock/skills",
     "swarm-orchestration": "ruvnet/ruflo",
     "to-spec": "mattpocock/skills",
     wayfinder: "mattpocock/skills",
-    "writing-plans": "obra/superpowers"
+    "writing-plans": "obra/superpowers",
+    "ui-ux-pro-max": "nextlevelbuilder/ui-ux-pro-max-skill"
   };
   for (const [name, upstream] of Object.entries(adapted)) {
     const entry = byName.get(name);
@@ -395,7 +398,7 @@ test("adapted and original local imports retain provenance contracts", async () 
     assert.ok((await stat(patchUrl)).size > 0);
     assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
   }
-  for (const name of ["claude-implement", "codex-implement", "cleaning-repo-with-knip", "importing-handoff"]) {
+  for (const name of ["claude-implement", "codex-implement", "cleaning-repo-with-knip", "how-to-use-codex", "importing-handoff", "sequential-task-orchestrator", "test-gaps"]) {
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "original");
     assert.equal("revision" in entry, false);
