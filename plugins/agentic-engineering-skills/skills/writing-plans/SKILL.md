@@ -104,7 +104,7 @@ This structure informs the task decomposition. Each task should produce self-con
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED EXECUTION SKILL: Use codex-implement in Codex or claude-implement in Claude Code with swarm-orchestration to implement this plan end-to-end. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED EXECUTION SKILL: Choose `codex-implement` for Codex, `sequential-task-orchestrator` for strictly ordered multi-task execution, or `claude-implement` for Claude Code. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -208,15 +208,15 @@ After saving the plan, offer execution choice:
 
 **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
 
-**1. Host-specific implementation (recommended)** - I run `codex-implement` in Codex or `claude-implement` in Claude Code with bounded packets, semantic tests, and clean-room review; add swarm orchestration only for disjoint work.
+**1. Host-specific implementation (recommended)** - Run `codex-implement` in Codex or `claude-implement` in Claude Code for a bounded plan. Run `sequential-task-orchestrator` when tasks require strict order, one active side-chat, per-task review, and resumable state.
 
 **2. Manual Execution** - Execute tasks in this session with explicit checkpoints and user approvals
 
 **Which approach?"**
 
 **If Host-specific implementation chosen:**
-- **REQUIRED SKILL:** Use `codex-implement` in Codex or `claude-implement` in Claude Code.
-- Use bounded packets, semantic validation, and clean-room review; add swarm orchestration only for disjoint work.
+- **REQUIRED SKILL:** Use `codex-implement` in Codex, `sequential-task-orchestrator` for strict ordered execution, or `claude-implement` in Claude Code.
+- Use bounded packets, semantic validation, and clean-room review. The sequential orchestrator invokes `test-gaps` and `test-driven-development` as its review pair.
 
 **If Manual Execution chosen:**
 - No required legacy superpowers skill

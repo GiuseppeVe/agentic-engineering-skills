@@ -30,6 +30,8 @@ Implement on a dedicated branch or worktree and keep file ownership explicit. Se
 
 Tests validate observable behavior. Reviews compare the result with requirements, repository rules, and public-safety constraints. A frontend handoff import additionally needs a runnable immutable reference, complete observable contract, identical reference/candidate matrix, and explicit treatment of boundary deviations. Before release, scan public artifacts for secrets, private data, internal names, logs, and temporary residue. Verify provenance before copied or adapted third-party material enters the repository.
 
+For ordered plans, `sequential-task-orchestrator` supplies two review signals: `test-gaps` checks implementation fidelity against the plan, while `test-driven-development` checks implementation correctness. Findings are fixed through the TDD cycle before acceptance.
+
 ## Treat maintenance as research-led change
 
 Static-analysis results, including Knip findings, are evidence rather than deletion authority. First investigate whether a reported item is a dynamic entry point, public API, generated surface, or genuine dead code. Removal requires a scoped decision, an explicit owner, and verification after the change.

@@ -10,11 +10,11 @@ Agent work often jumps from a vague request to code, skipping design, test-first
 
 Move from evidence to explicit decisions, durable specifications and plans, isolated implementation, independent verification, and owner-approved publication. Use the smallest skill set needed for current work: skills guide judgment, but do not replace project instructions or turn a plan or passing test suite into permission to publish. See the [workflow philosophy](docs/philosophy.md) for lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
 
-Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license. `how-to-use-codex` keeps prompt and model guidance aligned with current official OpenAI documentation. Frontend work can add `impeccable` for craft and critique plus `ui-ux-pro-max` for searchable design intelligence and stack-specific guidance.
+Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license. `how-to-use-codex` keeps prompt and model guidance aligned with current official OpenAI documentation. For ordered implementation, `sequential-task-orchestrator` checks plan fidelity with `test-gaps` and implementation correctness with `test-driven-development`, then routes findings through TDD fixes. Frontend work can add `impeccable` for craft and critique plus `ui-ux-pro-max` for searchable design intelligence and stack-specific guidance.
 
 ## Workflow
 
-Work moves through seven composable phases, then stops at an explicit owner publication gate. `codex-implement` is the Codex route; `claude-implement` is the Claude Code route. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
+Work moves through seven composable phases, then stops at an explicit owner publication gate. `codex-implement` is the Codex route, `sequential-task-orchestrator` is the strict ordered route, and `claude-implement` is the Claude Code route. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
 
 ```mermaid
 flowchart LR

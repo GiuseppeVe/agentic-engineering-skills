@@ -14,11 +14,11 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Plan
 
-`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks.
+`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks and offers `sequential-task-orchestrator` when execution must remain strictly ordered.
 
 ## Implement
 
-`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `claude-implement` supplies same bounded-packet and clean-review workflow in Claude Code. `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
+`using-git-worktrees` isolates changes. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `sequential-task-orchestrator` executes strictly ordered plans through one implementer and one review cycle per task; `claude-implement` supplies the same bounded-packet and clean-review workflow in Claude Code. The orchestrator uses `test-gaps` for plan fidelity and `test-driven-development` for implementation correctness. `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
 
 ## Verify
 

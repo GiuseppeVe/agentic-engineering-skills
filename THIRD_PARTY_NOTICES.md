@@ -4,7 +4,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 
 ## Repository-original skills
 
-`codex-implement`, `claude-implement`, and `how-to-use-codex` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
+`codex-implement`, `claude-implement`, `how-to-use-codex`, `sequential-task-orchestrator`, and `test-gaps` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
 
 | Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -20,8 +20,10 @@ Repository-original material is licensed under the root MIT license. Third-party
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
 | `learn-codebase` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | `312d640b0188753acd92a1a82d95a84d5c7c43db` | adapted | Alex Newman | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`<br>`plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Modified files carry an Adaptation notice for cross-host Agent Skills distribution. Upstream NOTICE retained verbatim. |
 | `setup-matt-pocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
+| `sequential-task-orchestrator` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; orchestrates ordered implementation with Test Gaps and TDD review. |
 | `swarm-orchestration` | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | `7ef4d4e655d81c0451f6f40f35729cce6c9928e7` | adapted | ruvnet | MIT | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Adapted for cross-host Agent Skills distribution. |
 | `test-driven-development` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | vendor | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Unmodified pinned copy. |
+| `test-gaps` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; detects missing coverage and generates test suggestions. |
 | `to-spec` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Adapted for cross-host Agent Skills distribution. |
 | `ui-ux-pro-max` | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | `314307f156aeab0c6b567bbaa1ce4e7aabd5a636` | adapted | Next Level Builder | MIT | `plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE` | Packaged current skill and searchable design data for cross-host Agent Skills distribution. |
 | `using-git-worktrees` | [obra/superpowers](https://github.com/obra/superpowers) | `d884ae04edebef577e82ff7c4e143debd0bbec99` | vendor | Jesse Vincent | MIT | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Unmodified pinned copy. |
