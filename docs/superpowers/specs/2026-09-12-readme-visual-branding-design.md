@@ -1,7 +1,8 @@
 # README Visual Branding Design
 
-**Date:** 2026-09-12  
-**Status:** Approved design; implementation pending  
+**Date:** 2026-09-12
+
+**Status:** Approved design; implementation pending
 **Scope:** Repository presentation only. Skill payloads and workflow behavior remain unchanged.
 
 ## Intent
