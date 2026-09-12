@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Agentic Engineering Skills — a workflow worth sharing</title>
+  <desc id="desc">A shared engineering workflow moving from evidence and decisions through specification, planning, implementation, testing, review, and owner approval.</desc>
+  <defs>
+    <pattern id="paper" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="3" r=".7" fill="#241f1c" opacity=".08"/>
+      <circle cx="16" cy="18" r=".45" fill="#9b4b42" opacity=".08"/>
+    </pattern>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0L8 4L0 8" fill="none" stroke="#9b4b42" stroke-width="1.2"/>
+    </marker>
+    <style>
+      .sans { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .serif { font-family: Georgia, "Times New Roman", serif; }
+      .ink { fill: #241f1c; }
+      .muted { fill: #776c63; }
+      .terra { fill: #9b4b42; }
+      .line { stroke: #cdbfaf; }
+      .signal { stroke: #9b4b42; }
+      .node { fill: #f8f4ee; stroke: #cdbfaf; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="420" fill="#f4efe8"/>
+  <rect width="1200" height="420" fill="url(#paper)"/>
+  <path d="M0 16H1200M0 404H1200" stroke="#cdbfaf" stroke-width="1"/>
+
+  <g class="sans">
+    <text x="64" y="52" class="terra" font-size="11" font-weight="800" letter-spacing="2.4">AGENTIC ENGINEERING SKILLS · PUBLIC EDITION</text>
+    <text x="64" y="104" class="ink serif" font-size="46" letter-spacing="-2.2">Agentic Engineering Skills</text>
+    <text x="66" y="141" class="ink serif" font-size="27" letter-spacing="-.7">A workflow worth sharing.</text>
+    <text x="66" y="174" class="muted" font-size="14">Practices shaped through hands-on engineering work,</text>
+    <text x="66" y="195" class="muted" font-size="14">made inspectable and adaptable for Codex and Claude Code.</text>
+
+    <text x="930" y="54" class="muted" font-size="9" font-weight="800" letter-spacing="1.7">EXPERIENCE → EVIDENCE</text>
+    <path d="M930 69H1136" class="signal" stroke-width="2"/>
+    <circle cx="1136" cy="69" r="4" fill="#9b4b42"/>
+    <text x="930" y="91" class="muted" font-size="10">26 composable skills</text>
+    <text x="930" y="108" class="muted" font-size="10">Codex + Claude Code</text>
+  </g>
+
+  <g class="sans" font-size="10">
+    <text x="66" y="231" class="terra" font-weight="800" letter-spacing="1.4">THE SHARED WORKFLOW</text>
+    <path d="M66 247H1136" class="line" stroke-width="1"/>
+
+    <g>
+      <rect x="66" y="263" width="170" height="47" rx="2" class="node"/>
+      <circle cx="84" cy="281" r="6" fill="#9b4b42"/>
+      <text x="99" y="285" class="ink" font-weight="700">Evidence</text>
+      <text x="84" y="300" class="muted" font-size="8">observe the real problem</text>
+    </g>
+    <path d="M236 286H270" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="274" y="263" width="170" height="47" rx="2" class="node"/>
+      <circle cx="292" cy="281" r="6" fill="#f4efe8" stroke="#9b4b42"/>
+      <text x="307" y="285" class="ink" font-weight="700">Decisions</text>
+      <text x="292" y="300" class="muted" font-size="8">make intent explicit</text>
+    </g>
+    <path d="M444 286H478" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="482" y="263" width="170" height="47" rx="2" class="node"/>
+      <circle cx="500" cy="281" r="6" fill="#f4efe8" stroke="#9b4b42"/>
+      <text x="515" y="285" class="ink" font-weight="700">Spec</text>
+      <text x="500" y="300" class="muted" font-size="8">give reasoning a durable shape</text>
+    </g>
+    <path d="M652 286H686" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="690" y="263" width="170" height="47" rx="2" class="node"/>
+      <circle cx="708" cy="281" r="6" fill="#f4efe8" stroke="#9b4b42"/>
+      <text x="723" y="285" class="ink" font-weight="700">Plan</text>
+      <text x="708" y="300" class="muted" font-size="8">turn decisions into sequence</text>
+    </g>
+
+    <path d="M775 310V337" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="789" y="331" class="terra" font-size="8" font-weight="800" letter-spacing="1">DELIVERY + PROOF</text>
+
+    <g>
+      <rect x="66" y="345" width="170" height="42" rx="2" class="node"/>
+      <text x="84" y="370" class="ink" font-weight="700">Implement</text>
+      <text x="84" y="382" class="muted" font-size="8">build in bounded steps</text>
+    </g>
+    <path d="M236 366H270" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="274" y="345" width="220" height="42" rx="2" class="node"/>
+      <text x="292" y="370" class="ink" font-weight="700">Test Gaps + TDD</text>
+      <text x="292" y="382" class="muted" font-size="8">test plan fidelity and code correctness</text>
+    </g>
+    <path d="M494 366H528" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="532" y="345" width="170" height="42" rx="2" class="node"/>
+      <text x="550" y="370" class="ink" font-weight="700">Review</text>
+      <text x="550" y="382" class="muted" font-size="8">independent evidence check</text>
+    </g>
+    <path d="M702 366H736" class="signal" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <g>
+      <rect x="740" y="345" width="190" height="42" rx="2" fill="#9b4b42"/>
+      <text x="759" y="370" fill="#f8f4ee" font-weight="700">Owner Gate</text>
+      <text x="759" y="382" fill="#f1d9d0" font-size="8">publication stays human-approved</text>
+    </g>
+    <path d="M930 366H1136" class="line" stroke-width="1" stroke-dasharray="3 5"/>
+    <circle cx="1136" cy="366" r="4" fill="#bd8f50"/>
+  </g>
+</svg>

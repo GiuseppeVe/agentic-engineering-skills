@@ -1,6 +1,10 @@
 # Agentic Engineering Skills
 
-A collection of composable engineering skills and agent profiles for Codex and Claude Code, covering discovery, design, frontend craft, planning, fidelity-first handoff import, implementation, review, and cleanup.
+![Agentic Engineering Skills — shared workflow from evidence to reviewed delivery](assets/agentic-engineering-skills-hero.svg)
+
+This repository shares a workflow I shaped through hands-on engineering work: composable skills and agent profiles for Codex and Claude Code, covering discovery, design, frontend craft, planning, implementation, review, and cleanup. It is meant to be inspected, adapted, and extended—not followed as a course or universal prescription.
+
+Graph Engineering V5.2 remains planned and excluded until its implementation is complete and validated.
 
 ## Problem
 
