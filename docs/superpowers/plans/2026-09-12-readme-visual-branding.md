@@ -52,7 +52,7 @@ Expected: both accessibility metadata lines match.
 
 Run: `rg -n "<script|foreignObject|data:|@import|font-face|href=|xlink:href" assets/agentic-engineering-skills-hero.svg`
 Expected: no output.
-Run: `(Get-Item assets/agentic-engineering-skills-hero.svg).Length -lt 1048576`  
+Run: `(Get-Item assets/agentic-engineering-skills-hero.svg).Length -lt 1048576`
 Expected: `True`.
 
 ### Task 2: Integrate hero and positioning into README
