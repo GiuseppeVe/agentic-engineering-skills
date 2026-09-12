@@ -16,7 +16,7 @@
 
 - **REQ-001** [behavior] — The repository contains an original hero graphic at `assets/agentic-engineering-skills-hero.svg`. _Acceptance:_ `Test-Path assets/agentic-engineering-skills-hero.svg` returns `True`, and `git ls-files` lists the path. _Satisfied by:_ Task 1.
 - **REQ-002** [behavior] — The hero communicates the approved B2 message with exact labels `Agentic Engineering Skills`, `A workflow worth sharing.`, and the workflow path `Evidence`, `Decisions`, `Spec`, `Plan`, `Implement`, `Test Gaps + TDD`, `Review`, `Owner Gate`. _Acceptance:_ a text search of the SVG finds all nine labels. _Satisfied by:_ Task 1.
-- **REQ-003** [constraint] — The hero is a self-contained accessible SVG with no JavaScript, `foreignObject`, base64 data, remote references, or external fonts, and remains below 1 MB. _Acceptance:_ `rg -n "<title>|<desc>|<script|foreignObject|data:|https?://|@import|font-face" assets/agentic-engineering-skills-hero.svg` returns only the required `<title>` and `<desc>` lines; file size is `< 1048576` bytes. _Satisfied by:_ Task 1.
+- **REQ-003** [constraint] — The hero is a self-contained accessible SVG with no JavaScript, `foreignObject`, base64 data, remote references, or external fonts, and remains below 1 MB. _Acceptance:_ `rg -n "<title>|<desc>" assets/agentic-engineering-skills-hero.svg` finds the required metadata, while `rg -n "<script|foreignObject|data:|@import|font-face|href=|xlink:href" assets/agentic-engineering-skills-hero.svg` returns no output; file size is `< 1048576` bytes. _Satisfied by:_ Task 1.
 - **REQ-004** [behavior] — README places the hero immediately after the repository title and keeps a fallback textual introduction. _Acceptance:_ the first README section contains the relative image reference followed by a concise paragraph describing the shared workflow. _Satisfied by:_ Task 2.
 - **REQ-005** [behavior] — README retains the existing Mermaid lifecycle diagram and links to the current workflow/philosophy documentation. _Acceptance:_ `rg -n "mermaid|docs/workflow.md|docs/philosophy.md" README.md` finds all three references. _Satisfied by:_ Task 2.
 - **REQ-006** [behavior] — README explicitly labels Graph Engineering V5.2 as planned/out of scope until validated. _Acceptance:_ `rg -ni "Graph Engineering V5\.2|planned|out of scope" README.md` finds the status statement. _Satisfied by:_ Task 2.
@@ -47,8 +47,11 @@
 - [ ] **Step 1: Create a 1200×420 SVG with exact text, embedded colors, `<title>`, `<desc>`, and a two-row evidence path.** Use only SVG primitives (`rect`, `line`, `path`, `circle`, `text`, `g`) and system font stacks; keep all workflow labels manually authored.
 - [ ] **Step 2: Inspect the SVG as text and verify the forbidden-reference scan and byte-size limit.**
 
-Run: `rg -n "<title>|<desc>|<script|foreignObject|data:|https?://|@import|font-face" assets/agentic-engineering-skills-hero.svg`  
-Expected: only `<title>` and `<desc>` matches.  
+Run: `rg -n "<title>|<desc>" assets/agentic-engineering-skills-hero.svg`
+Expected: both accessibility metadata lines match.
+
+Run: `rg -n "<script|foreignObject|data:|@import|font-face|href=|xlink:href" assets/agentic-engineering-skills-hero.svg`
+Expected: no output.
 Run: `(Get-Item assets/agentic-engineering-skills-hero.svg).Length -lt 1048576`  
 Expected: `True`.
 
