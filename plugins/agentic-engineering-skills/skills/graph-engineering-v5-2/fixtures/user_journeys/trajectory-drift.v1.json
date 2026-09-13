@@ -1,0 +1,37 @@
+{
+  "schema_version": "graph-v5.trajectory-jit-fixture.v1",
+  "fixture_family": "trajectory-drift",
+  "scenarios": [
+    {
+      "scenario_id": "trajectory-drift",
+      "fixture": {
+        "fixture_id": "onboarding-drift",
+        "snapshot_digest": "31825982548958e4cd8c5e8508933c9b7b3fc6e440357f05747e5b1068e845b6"
+      },
+      "observations": {
+        "START": {
+          "observed_state": "Onboarding form is visible.",
+          "evidence_refs": ["fixture:onboarding-form"]
+        },
+        "L1": {
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": ["fixture:discipline-selected"]
+        },
+        "L2": {
+          "observed_state": "Profile summary is visible.",
+          "evidence_refs": ["fixture:profile-summary"]
+        }
+      },
+      "action_catalog": [
+        {
+          "required_observed_state": "Onboarding form is visible.",
+          "action_kind": "act",
+          "action_or_probe": "Skip directly to profile summary",
+          "outcome": "accepted",
+          "observed_state": "Profile summary is visible.",
+          "evidence_refs": ["fixture:forbidden-landmark-skip"]
+        }
+      ]
+    }
+  ]
+}

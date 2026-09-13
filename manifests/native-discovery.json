@@ -8,7 +8,7 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:dd958a0064af52d76f177fd9859bff97f6b66a202b6db750cf5a303156ffc571",
+    "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -20,6 +20,7 @@
       "domain-modeling",
       "grill-me",
       "grilling",
+      "graph-engineering-v5-2",
       "how-to-use-codex",
       "impeccable",
       "importing-handoff",
@@ -43,7 +44,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:dd958a0064af52d76f177fd9859bff97f6b66a202b6db750cf5a303156ffc571",
+        "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -55,6 +56,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
+          "graph-engineering-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
@@ -84,6 +86,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
+        "graph-engineering-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",
@@ -128,7 +131,7 @@
       "version": "2.1.209 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:dd958a0064af52d76f177fd9859bff97f6b66a202b6db750cf5a303156ffc571",
+        "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -140,6 +143,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
+          "graph-engineering-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
@@ -169,6 +173,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
+        "graph-engineering-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",

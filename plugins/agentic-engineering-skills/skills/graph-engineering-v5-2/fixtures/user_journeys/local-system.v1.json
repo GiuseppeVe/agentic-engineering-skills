@@ -1,0 +1,9 @@
+{
+  "schema_version": "graph-v5.local-system-journey.v1",
+  "fixture_id": "local-system-loopback-v1",
+  "manifest_id": "local-system-loopback-manifest-v1",
+  "mode": "local_isolated",
+  "namespace_prefix": "graph-local-system-namespace",
+  "fake_provider_host": "fake-provider.local",
+  "egress_enforcement_receipt": "local-loopback-fake-provider-gate-v1"
+}

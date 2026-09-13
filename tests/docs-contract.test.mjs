@@ -126,7 +126,7 @@ test('README documents conditional workflow routing and example', () => {
   assert.match(example, /small, well-understood change[\s\S]*Codex Implement[\s\S]*owner-approval gates/i);
 });
 
-test('README explains philosophy, quality signals, supporting skills, and planned exclusion', () => {
+test('README explains philosophy, quality signals, and supporting skills', () => {
   const source = read('README.md');
   const philosophy = section(source, 'My working philosophy');
   const quality = section(source, 'The quality loop');
@@ -146,11 +146,11 @@ test('README explains philosophy, quality signals, supporting skills, and planne
   assert.match(quality, /`Test-Driven Development` checks implementation correctness/i);
   assert.match(quality, /TDD fix cycle before acceptance/i);
 
-  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex']) {
+  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture', 'Graph Engineering V5.2']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
-  assert.match(supporting, /Graph Engineering V5\.2 is planned and excluded/i);
-  assert.match(supporting, /until implementation is complete and validated/i);
+  assert.match(supporting, /bounded end-to-end testing and debugging route/i);
+  assert.match(supporting, /deterministic pauses instead of broad audits/i);
 });
 
 test('README owns the canonical workflow overview without duplicating it in the guide', () => {

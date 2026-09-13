@@ -22,7 +22,7 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 ## Verify
 
-`test-driven-development` requires observed failing tests before implementation and passing tests afterward. `writing-skills` includes methods for exercising skill behavior, not only validating Markdown shape.
+`test-driven-development` requires observed failing tests before implementation and passing tests afterward. `graph-engineering-v5-2` provides bounded end-to-end testing and debugging for one confirmed observable product trajectory. `writing-skills` includes methods for exercising skill behavior, not only validating Markdown shape.
 
 ## Review
 

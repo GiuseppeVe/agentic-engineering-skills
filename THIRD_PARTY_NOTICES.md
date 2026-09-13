@@ -4,7 +4,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 
 ## Repository-original skills
 
-`codex-implement`, `claude-implement`, `how-to-use-codex`, `sequential-task-orchestrator`, and `test-gaps` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
+`codex-implement`, `claude-implement`, `graph-engineering-v5-2`, `how-to-use-codex`, `sequential-task-orchestrator`, and `test-gaps` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
 
 | Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -15,6 +15,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 | `domain-modeling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
 | `grill-me` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
+| `graph-engineering-v5-2` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; bounded end-to-end trajectory testing and debugging. |
 | `how-to-use-codex` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; official OpenAI documentation links are maintained as current references. |
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `6496f49a1ea0503ca130d7dd55508dd0d22aa86b` | adapted | Paulo Bakaus | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Packaged current skill and supporting references/scripts for cross-host Agent Skills distribution. |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
