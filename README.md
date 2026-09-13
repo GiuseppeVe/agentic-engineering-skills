@@ -39,24 +39,22 @@ For ordered work, `Test Gaps` checks plan fidelity: it compares delivery with pl
 
 I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Cleaning Repo with Knip` keeps the repository lean through verified cleanup, reviewable branches, and a durable false-positive record instead of blind deletion. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
 
-## Example: from request to reviewed change
+## Example: choosing a route
 
-```text
-large/uncertain request
-→ Wayfinder
-→ Brainstorming or Grill-me
-→ To Spec
-→ Writing Plans
-→ Codex Implement or Sequential Task Orchestrator
-→ Test Gaps + TDD
-→ Optional: E2E testing
-→ Owner-approved PR
-→ Indipendent PR review
-```
+The diagram below shows the shared lifecycle. In practice, I choose the entry
+point and implementation path according to scope and uncertainty.
 
-A small, clear change can start directly with Codex Implement while retaining relevant verification and owner gates.
+For a large change spanning multiple modules, I map the uncertainty with
+`Wayfinder`, formalize the agreed design, and use `Sequential Task Orchestrator`
+to execute the plan through bounded tasks and review cycles.
 
-## Workflow
+For a small, well-understood change, I skip the broad discovery path and use
+`Codex Implement` directly, retaining the relevant TDD, verification, review,
+and owner-approval gates.
+
+## Workflow at a glance
+
+This diagram is the canonical overview of the workflow lifecycle.
 
 ```mermaid
 flowchart LR

@@ -62,8 +62,8 @@ test('README has required exact section sequence and manifest-derived install co
     'How I use the workflow',
     'The quality loop',
     'Supporting skills',
-    'Example: from request to reviewed change',
-    'Workflow',
+    'Example: choosing a route',
+    'Workflow at a glance',
     'Install',
     'Customize',
     'Compatibility',
@@ -105,7 +105,7 @@ test('README keeps the hero-led opening and experience-shaped framing', () => {
 test('README documents conditional workflow routing and example', () => {
   const source = read('README.md');
   const routing = section(source, 'How I use the workflow');
-  const example = section(source, 'Example: from request to reviewed change');
+  const example = section(source, 'Example: choosing a route');
 
   for (const [situation, path] of [
     ['Large, uncertain initiative', 'Wayfinder'],
@@ -121,8 +121,9 @@ test('README documents conditional workflow routing and example', () => {
   }
 
   assert.match(routing, /composable choices, not mandatory stages/i);
-  assert.match(example, /large\/uncertain request[\s\S]*Wayfinder[\s\S]*Test Gaps \+ TDD[\s\S]*owner-approved PR/i);
-  assert.match(example, /small, clear change can start directly with Codex Implement/i);
+  assert.match(example, /diagram below shows the shared lifecycle/i);
+  assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Sequential Task Orchestrator/i);
+  assert.match(example, /small, well-understood change[\s\S]*Codex Implement[\s\S]*owner-approval gates/i);
 });
 
 test('README explains philosophy, quality signals, supporting skills, and planned exclusion', () => {
