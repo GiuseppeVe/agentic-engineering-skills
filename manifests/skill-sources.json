@@ -85,6 +85,13 @@
       "upstreamPath": "skills/productivity/grilling/SKILL.md"
     },
     {
+      "name": "graph-engineering-v5-2",
+      "sourceType": "original",
+      "localPath": "graph-engineering-v5-2/",
+      "license": "MIT",
+      "localRoot": "projectSkills"
+    },
+    {
       "name": "how-to-use-codex",
       "sourceType": "original",
       "localPath": "how-to-use-codex/SKILL.md",

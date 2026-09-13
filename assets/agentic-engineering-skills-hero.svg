@@ -35,7 +35,7 @@
     <text x="930" y="54" class="muted" font-size="9" font-weight="800" letter-spacing="1.7">EXPERIENCE → EVIDENCE</text>
     <path d="M930 69H1136" class="signal" stroke-width="2"/>
     <circle cx="1136" cy="69" r="4" fill="#9b4b42"/>
-    <text x="930" y="91" class="muted" font-size="10">26 composable skills</text>
+    <text x="930" y="91" class="muted" font-size="10">27 composable skills</text>
     <text x="930" y="108" class="muted" font-size="10">Codex + Claude Code</text>
   </g>
 

@@ -1,0 +1,17 @@
+{
+  "expected_candidate_status": "candidate_recorded",
+  "required_result_metrics": [
+    "product_work_time_seconds",
+    "reproduction_latency_seconds",
+    "resolved_on_run_head_rate",
+    "interaction_count",
+    "false_ready_count",
+    "controller_fallback_count",
+    "read_only_write_count",
+    "restart_recovery_rate",
+    "control_overhead_rate",
+    "v4_relative_throughput"
+  ],
+  "schema_version": "v1",
+  "test_only": true
+}

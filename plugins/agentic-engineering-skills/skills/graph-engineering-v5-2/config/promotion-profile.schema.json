@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Graph Engineering V5 Promotion Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "immutable",
+    "test_only",
+    "workload_corpus_digest",
+    "trial_method",
+    "thresholds",
+    "v4_baseline"
+  ],
+  "properties": {
+    "schema_version": {"const": "v1"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "immutable": {"const": true},
+    "test_only": {"type": "boolean"},
+    "workload_corpus_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "trial_method": {"type": "string", "minLength": 1},
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_product_work_time_seconds",
+        "max_reproduction_latency_seconds",
+        "min_resolved_on_run_head_rate",
+        "max_interaction_count",
+        "max_false_ready_count",
+        "max_controller_fallback_count",
+        "max_read_only_write_count",
+        "min_restart_recovery_rate",
+        "max_control_overhead_rate",
+        "min_v4_relative_throughput"
+      ],
+      "properties": {
+        "max_product_work_time_seconds": {"type": "number"},
+        "max_reproduction_latency_seconds": {"type": "number"},
+        "min_resolved_on_run_head_rate": {"type": "number"},
+        "max_interaction_count": {"type": "number"},
+        "max_false_ready_count": {"type": "number"},
+        "max_controller_fallback_count": {"type": "number"},
+        "max_read_only_write_count": {"type": "number"},
+        "min_restart_recovery_rate": {"type": "number"},
+        "max_control_overhead_rate": {"type": "number"},
+        "min_v4_relative_throughput": {"type": "number"}
+      }
+    },
+    "v4_baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "digest"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

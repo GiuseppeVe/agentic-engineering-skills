@@ -1,0 +1,6 @@
+interface:
+  display_name: "Graph Engineering v5.2"
+  short_description: "Confirmed fixture and guarded real-system E2E trajectories"
+  default_prompt: "Use $graph-engineering-v5-2 to confirm a new run through a manifest-bound fixture or guarded real-system trajectory, or verify persisted authority and resume one bounded observable trajectory through traversal, diagnosis, repair, and proof."
+policy:
+  allow_implicit_invocation: false
