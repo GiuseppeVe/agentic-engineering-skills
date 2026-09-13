@@ -25,8 +25,8 @@ These are composable choices, not mandatory stages for every task.
 | Consequential or disputed design | `Grill-me` | Pressure-test assumptions. |
 | Agreed design | `To Spec` | Create standalone specification. |
 | Multi-step implementation | `Writing Plans` | Create traceable implementation plan. |
-| large implementation | `Sequential Task Orchestrator` | Run one bounded task at a time with review. |
-| small implementation | `Codex Implement` | Execute focused change with relevant verification. |
+| Large implementation | `Sequential Task Orchestrator` | Run one bounded task at a time with review. |
+| Small implementation | `Codex Implement` | Execute focused change with relevant verification. |
 | Claude Code implementation | `Claude Implement` | Use host-equivalent bounded workflow. |
 
 See [workflow guide](docs/workflow.md) for routing detail and [agent profile guide](docs/agent-profiles.md) for delegation contracts.
