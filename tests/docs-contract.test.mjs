@@ -36,6 +36,15 @@ function fencedCommands(markdown) {
   return [...markdown.matchAll(/^```text\n([\s\S]*?)^```$/gm)].flatMap((match) => match[1].trim().split('\n'));
 }
 
+function section(markdown, heading) {
+  const marker = `## ${heading}\n`;
+  const start = markdown.indexOf(marker);
+  assert.notEqual(start, -1, `missing section: ${heading}`);
+  const contentStart = start + marker.length;
+  const nextHeading = markdown.indexOf('\n## ', contentStart);
+  return markdown.slice(contentStart, nextHeading === -1 ? undefined : nextHeading);
+}
+
 function mermaidBlocks(markdown) {
   return [...markdown.matchAll(/^```mermaid\n([\s\S]*?)^```$/gm)].map((match) => match[1]);
 }
@@ -47,13 +56,26 @@ test('required documentation exists', () => {
 test('README has required exact section sequence and manifest-derived install commands', () => {
   const source = read('README.md');
   const sections = [...source.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
-  assert.deepEqual(sections, ['Problem', 'Philosophy', 'Workflow', 'Install', 'Customize', 'Compatibility', 'Provenance', 'License']);
+  assert.deepEqual(sections, [
+    'What this repository shares',
+    'My working philosophy',
+    'How I use the workflow',
+    'The quality loop',
+    'Supporting skills',
+    'Example: from request to reviewed change',
+    'Workflow',
+    'Install',
+    'Customize',
+    'Compatibility',
+    'Provenance',
+    'License',
+  ]);
 
   const codexMarket = json('.agents/plugins/marketplace.json');
   const claudeMarket = json('.claude-plugin/marketplace.json');
   const codexPlugin = codexMarket.plugins[0].name;
   const claudePlugin = claudeMarket.plugins[0].name;
-  assert.deepEqual(fencedCommands(source), [
+  assert.deepEqual(fencedCommands(section(source, 'Install')), [
     'codex plugin marketplace add GiuseppeVe/agentic-engineering-skills',
     `codex plugin add ${codexPlugin}@${codexMarket.name}`,
     'claude plugin marketplace add GiuseppeVe/agentic-engineering-skills',
@@ -63,6 +85,71 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /`claude plugin list`/);
   assert.match(source, /fresh host session/i);
   assert.match(source, /invoke one included skill/i);
+});
+
+test('README keeps the hero-led opening and experience-shaped framing', () => {
+  const source = read('README.md');
+  const lines = source.split('\n');
+
+  assert.equal(lines[0], '# Agentic Engineering Skills');
+  assert.equal(
+    lines[2],
+    '![Agentic Engineering Skills — shared workflow from evidence to reviewed delivery](assets/agentic-engineering-skills-hero.svg)',
+  );
+  assert.match(lines[4], /^I share this experience-shaped workflow/);
+  assert.equal(lines[5], '');
+  assert.equal(lines[6], '## What this repository shares');
+  assert.doesNotMatch(lines.slice(0, 6).join('\n'), /Wayfinder|Brainstorming|Grill-me|To Spec|Writing Plans/);
+});
+
+test('README documents conditional workflow routing and example', () => {
+  const source = read('README.md');
+  const routing = section(source, 'How I use the workflow');
+  const example = section(source, 'Example: from request to reviewed change');
+
+  for (const [situation, path] of [
+    ['Large, uncertain initiative', 'Wayfinder'],
+    ['Bounded or creative design', 'Brainstorming'],
+    ['Consequential or disputed design', 'Grill-me'],
+    ['Agreed design', 'To Spec'],
+    ['Multi-step implementation', 'Writing Plans'],
+    ['large implementation', 'Sequential Task Orchestrator'],
+    ['small implementation', 'Codex Implement'],
+    ['Claude Code implementation', 'Claude Implement'],
+  ]) {
+    assert.ok(routing.includes(`| ${situation} | \`${path}\` |`), `missing routing row: ${situation}`);
+  }
+
+  assert.match(routing, /composable choices, not mandatory stages/i);
+  assert.match(example, /large\/uncertain request[\s\S]*Wayfinder[\s\S]*Test Gaps \+ TDD[\s\S]*owner-approved publication/);
+  assert.match(example, /small, clear change can start directly with Codex Implement/i);
+});
+
+test('README explains philosophy, quality signals, supporting skills, and planned exclusion', () => {
+  const source = read('README.md');
+  const philosophy = section(source, 'My working philosophy');
+  const quality = section(source, 'The quality loop');
+  const supporting = section(source, 'Supporting skills');
+
+  for (const concept of [
+    /start from evidence/i,
+    /durable specifications and traceable plans/i,
+    /isolate implementation work/i,
+    /worker output separate from independent evidence/i,
+    /faithful to its plan/i,
+    /implemented behavior is correct/i,
+    /explicit owner control/i,
+  ]) assert.match(philosophy, concept);
+
+  assert.match(quality, /`Test Gaps` checks plan fidelity/i);
+  assert.match(quality, /`Test-Driven Development` checks implementation correctness/i);
+  assert.match(quality, /TDD fix cycle before acceptance/i);
+
+  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex']) {
+    assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
+  }
+  assert.match(supporting, /Graph Engineering V5\.2 is planned and excluded/i);
+  assert.match(supporting, /until implementation is complete and validated/i);
 });
 
 test('README owns the canonical workflow overview without duplicating it in the guide', () => {
