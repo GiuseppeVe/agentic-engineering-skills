@@ -1,0 +1,45 @@
+{
+  "schema_version": "graph-v5.trajectory-jit-fixture.v1",
+  "fixture_family": "replay-regression",
+  "scenarios": [
+    {
+      "scenario_id": "final-replay-regression",
+      "fixture": {
+        "fixture_id": "onboarding-replay-regression",
+        "snapshot_digest": "bda3eae8471f8cac2a36e10d02c9158f023719a997553893b13af12b71bbca69"
+      },
+      "observations": {
+        "START": {
+          "observed_state": "Onboarding form is visible.",
+          "evidence_refs": [
+            "fixture:onboarding-form"
+          ]
+        },
+        "L1": {
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": [
+            "fixture:discipline-selected"
+          ]
+        },
+        "L2": {
+          "observed_state": "Profile summary is visible.",
+          "evidence_refs": [
+            "fixture:profile-summary"
+          ]
+        }
+      },
+      "action_catalog": [
+        {
+          "required_observed_state": "Onboarding form is visible.",
+          "action_kind": "act",
+          "action_or_probe": "Replay valid discipline selection",
+          "outcome": "rejected",
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": [
+            "fixture:replay-regression"
+          ]
+        }
+      ]
+    }
+  ]
+}

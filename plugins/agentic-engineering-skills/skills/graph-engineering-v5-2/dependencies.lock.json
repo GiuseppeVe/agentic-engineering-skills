@@ -1,0 +1,12 @@
+{
+  "ponytail": {
+    "repository": "DietrichGebert/ponytail",
+    "source_path": "skills/ponytail/SKILL.md",
+    "commit_sha": "2ed6c52c9d7e5e56942508591085fd45dea277d3",
+    "sha256": "1316a2f3f95741d2300b116fe0c2d81ce4a9568656ed0a62643f54aaf09957f2",
+    "install_mode": "skill-only",
+    "installed_path": "C:/Users/aleda/.codex/skills/ponytail/SKILL.md",
+    "plugin_hooks": false,
+    "verified_on": "2026-08-09"
+  }
+}

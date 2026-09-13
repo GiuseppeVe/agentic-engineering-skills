@@ -1,0 +1,55 @@
+{
+  "schema_version": "graph-v5.trajectory-jit-fixture.v1",
+  "fixture_family": "healthy-sequential",
+  "scenarios": [
+    {
+      "scenario_id": "healthy-sequential",
+      "fixture": {
+        "fixture_id": "onboarding-empty",
+        "snapshot_digest": "a8cf3ecd3ce32b452c782411466ceba03cd15436bf47fc99b1692c542fca51b4"
+      },
+      "observations": {
+        "START": {
+          "observed_state": "Onboarding form is visible.",
+          "evidence_refs": [
+            "fixture:onboarding-form"
+          ]
+        },
+        "L1": {
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": [
+            "fixture:discipline-selected"
+          ]
+        },
+        "L2": {
+          "observed_state": "Profile summary is visible.",
+          "evidence_refs": [
+            "fixture:profile-summary"
+          ]
+        }
+      },
+      "action_catalog": [
+        {
+          "required_observed_state": "Onboarding form is visible.",
+          "action_kind": "act",
+          "action_or_probe": "Choose a valid discipline",
+          "outcome": "accepted",
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": [
+            "fixture:discipline-selected"
+          ]
+        },
+        {
+          "required_observed_state": "Discipline selection is visible.",
+          "action_kind": "act",
+          "action_or_probe": "Save valid onboarding",
+          "outcome": "accepted",
+          "observed_state": "Profile summary is visible.",
+          "evidence_refs": [
+            "fixture:profile-summary"
+          ]
+        }
+      ]
+    }
+  ]
+}

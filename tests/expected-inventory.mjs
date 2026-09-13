@@ -7,6 +7,7 @@ export const expectedSkills = [
   "domain-modeling",
   "grill-me",
   "grilling",
+  "graph-engineering-v5-2",
   "how-to-use-codex",
   "claude-implement",
   "codex-implement",

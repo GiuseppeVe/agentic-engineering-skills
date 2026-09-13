@@ -1,0 +1,24 @@
+{
+  "schema_version": "graph-v5.trajectory-jit-fixture.v1",
+  "fixture_family": "trajectory-evidence-gap",
+  "scenarios": [
+    {
+      "scenario_id": "trajectory-evidence-gap",
+      "fixture": {
+        "fixture_id": "onboarding-evidence-gap",
+        "snapshot_digest": "856821bc6d35654ab3a1ef5ab01a64673971eafe6bdf8b90e7a522cdc427d85f"
+      },
+      "observations": {
+        "START": {
+          "observed_state": "Onboarding entry renders without selected discipline evidence.",
+          "evidence_refs": ["fixture:onboarding-entry"]
+        },
+        "L1": {
+          "observed_state": "Discipline selection is visible.",
+          "evidence_refs": ["fixture:discipline-selected"]
+        }
+      },
+      "action_catalog": []
+    }
+  ]
+}
