@@ -68,7 +68,7 @@
 An experience-shaped workflow of composable skills for Codex and Claude Code: evidence, design, planning, implementation, verification, and review.
 ```
 
-Run: `gh repo edit GiuseppeVe/agentic-engineering-skills --description "An experience-shaped workflow of composable skills for Codex and Claude Code: evidence, design, planning, implementation, verification, and review."`  
+Run: `gh repo edit GiuseppeVe/agentic-engineering-skills --description "An experience-shaped workflow of composable skills for Codex and Claude Code: evidence, design, planning, implementation, verification, and review."`
 Expected: command exits with code `0`.
 
 - [ ] **Step 2: Read the remote description back and compare it byte-for-byte with the approved value.**
