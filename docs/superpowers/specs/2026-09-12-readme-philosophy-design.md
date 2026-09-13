@@ -46,8 +46,8 @@ Use a compact table with columns `Situation`, `Path`, and `Purpose`:
 - consequential or disputed design → `Grill-me` → pressure-test assumptions;
 - agreed design → `To Spec` → create standalone specification;
 - multi-step implementation → `Writing Plans` → create traceable implementation plan;
-- direct Codex implementation → `Codex Implement` → execute a substantial plan;
-- strict ordered implementation → `Sequential Task Orchestrator` → run one bounded task at a time with review;
+- large implementation → `Sequential Task Orchestrator` → run one bounded task at a time with review;
+- small implementation → `Codex Implement` → execute the focused change with relevant verification;
 - Claude Code implementation → `Claude Implement` → use the host-equivalent bounded workflow.
 
 State that these are composable choices, not mandatory stages for every task.
