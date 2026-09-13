@@ -50,8 +50,8 @@ large/uncertain request
 → Codex Implement or Sequential Task Orchestrator
 → Test Gaps + TDD
 → Optional: E2E testing
-→ owner-approved PR
-→ indipendent PR review
+→ Owner-approved PR
+→ Indipendent PR review
 ```
 
 A small, clear change can start directly with Codex Implement while retaining relevant verification and owner gates.
