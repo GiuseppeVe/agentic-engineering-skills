@@ -37,7 +37,7 @@ For ordered work, `Test Gaps` checks plan fidelity: it compares delivery with pl
 
 ## Supporting skills
 
-I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
+I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Cleaning Repo with Knip` keeps the repository lean through verified cleanup, reviewable branches, and a durable false-positive record instead of blind deletion. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
 
 ## Example: from request to reviewed change
 
