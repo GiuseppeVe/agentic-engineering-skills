@@ -4,7 +4,7 @@
 
 **Goal:** Replace repetitive README introduction text with a concrete, first-person explanation of the shared workflow and update the public GitHub description to match it.
 
-**Architecture:** Keep the hero as the visual summary and make README prose the detailed reference for philosophy, conditional routing, quality checks, and a practical example. Update GitHub's repository description as one exact metadata value; do not alter repository files outside README and planning/spec documentation.
+**Architecture:** Keep the hero as the visual summary and make README prose the detailed reference for philosophy, conditional routing, quality checks, and a practical example. Update GitHub's repository description as one exact metadata value. Outside README and planning/spec documentation, alter only the focused README assertions in `tests/docs-contract.test.mjs` needed to replace its stale section contract and preserve regression coverage.
 
 **Tech Stack:** Markdown, GitHub CLI, Node.js repository verification scripts, Git.
 
@@ -28,7 +28,7 @@
 ### Tests and delivery constraints
 
 - **REQ-008** [test] — Documentation and public-safety verification pass after README changes. _Acceptance:_ `npm run verify:pack`, `npm run audit:public`, and `git diff --check` exit with code 0. _Satisfied by:_ Task 3.
-- **REQ-009** [constraint] — Work is committed on `codex/readme-philosophy` and merged only through an explicit owner-approved action; `main` remains clean until then. _Acceptance:_ `git branch --show-current` returns `codex/readme-philosophy` during implementation and `git diff main...HEAD --name-only` lists only intended documentation files. _Satisfied by:_ Task 3.
+- **REQ-009** [constraint] — Work is committed on `codex/readme-philosophy` and merged only through an explicit owner-approved action; `main` remains clean until then. _Acceptance:_ `git branch --show-current` returns `codex/readme-philosophy` during implementation and `git diff main...HEAD --name-only` lists only intended documentation files plus `tests/docs-contract.test.mjs`. _Satisfied by:_ Task 3.
 
 ### Cross-task contracts
 
@@ -37,6 +37,7 @@
 ## File Structure
 
 - Modify: `README.md` — concrete philosophy, conditional skill routing, quality loop, supporting skills, and example.
+- Modify: `tests/docs-contract.test.mjs` — replace stale README section assertions and cover the approved narrative contract.
 - Create: `docs/superpowers/plans/2026-09-13-readme-philosophy-usage.md` — this execution plan.
 - Remote metadata: GitHub repository description only.
 - Do not modify: `plugins/`, manifests, receipts, hero asset, or other documentation sections unless a link needs consistency repair.
@@ -83,7 +84,7 @@ Expected: command exits with code `0`.
 - [ ] **Step 1: Run `npm run verify:pack`.** Expected: exit code `0`.
 - [ ] **Step 2: Run `npm run audit:public`.** Expected: exit code `0`.
 - [ ] **Step 3: Run `git diff --check`.** Expected: no output.
-- [ ] **Step 4: Confirm `git diff --name-only main...HEAD` contains README and plan/spec documentation only, with no `plugins/` path.**
+- [ ] **Step 4: Confirm `git diff --name-only main...HEAD` contains README, plan/spec documentation, and the focused docs contract test only, with no `plugins/` path.**
 - [ ] **Step 5: Confirm the working tree is clean except for intentionally untracked local files outside the commit, then commit the README change on `codex/readme-philosophy`.**
 
 ```bash
