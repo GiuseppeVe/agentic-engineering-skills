@@ -37,7 +37,7 @@ For ordered work, `Test Gaps` checks plan fidelity: it compares delivery with pl
 
 ## Supporting skills
 
-I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
+I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
 
 ## Example: from request to reviewed change
 
@@ -49,8 +49,9 @@ large/uncertain request
 → Writing Plans
 → Codex Implement or Sequential Task Orchestrator
 → Test Gaps + TDD
-→ independent review
-→ owner-approved publication
+→ Optional: E2E testing
+→ owner-approved PR
+→ indipendent PR review
 ```
 
 A small, clear change can start directly with Codex Implement while retaining relevant verification and owner gates.
