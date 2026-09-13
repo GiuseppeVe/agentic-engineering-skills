@@ -1,0 +1,10 @@
+{
+  "corpus_id": "graph-v5-test-corpus",
+  "schema_version": "v1",
+  "seed": "fixed-v5-fixture-seed",
+  "test_only": true,
+  "workload_classes": [
+    "healthy-user-journey",
+    "seeded-failure-user-journey"
+  ]
+}

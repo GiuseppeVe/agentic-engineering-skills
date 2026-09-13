@@ -1,0 +1,24 @@
+{
+  "immutable": true,
+  "profile_id": "promotion-profile.test.v1",
+  "schema_version": "v1",
+  "test_only": true,
+  "thresholds": {
+    "max_control_overhead_rate": 0.5,
+    "max_controller_fallback_count": 0.0,
+    "max_false_ready_count": 0.0,
+    "max_interaction_count": 0.0,
+    "max_product_work_time_seconds": 60.0,
+    "max_read_only_write_count": 0.0,
+    "max_reproduction_latency_seconds": 30.0,
+    "min_restart_recovery_rate": 1.0,
+    "min_resolved_on_run_head_rate": 1.0,
+    "min_v4_relative_throughput": 1.0
+  },
+  "trial_method": "fixed-seed-single-trial-test-fixture",
+  "v4_baseline": {
+    "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "label": "test-only-v4-baseline"
+  },
+  "workload_corpus_digest": "b0d58c7f0d9b4fdffeba75b1768a2976d56dce47421db29b1857f55bcbe2e29e"
+}

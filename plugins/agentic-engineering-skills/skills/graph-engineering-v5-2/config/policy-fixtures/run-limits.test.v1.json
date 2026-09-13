@@ -1,0 +1,28 @@
+{
+  "schema_version": "v5.run_limits.v1",
+  "profile_id": "deterministic-test-limits",
+  "version": 1,
+  "values": [
+    {"name": "causal_radius", "amount": 2, "unit": "graph_hops"},
+    {"name": "failed_repair_cycles", "amount": 1, "unit": "count_per_node"},
+    {"name": "diagnostic_widening", "amount": 1, "unit": "evidence_connected_ring"},
+    {"name": "reasoning_escalation", "amount": 1, "unit": "count_per_stall_fingerprint"},
+    {"name": "discovery_commands", "amount": 12, "unit": "commands_per_cone"},
+    {"name": "discovery_duration", "amount": 60000, "unit": "milliseconds_per_cone"},
+    {"name": "repair_attempts", "amount": 2, "unit": "patch_attempts_per_cone"},
+    {"name": "repair_commands", "amount": 12, "unit": "commands_per_cone"},
+    {"name": "repair_duration", "amount": 60000, "unit": "milliseconds_per_cone"},
+    {"name": "artifact_output_per_command", "amount": 65536, "unit": "bytes_per_command"},
+    {"name": "artifact_output_per_run", "amount": 524288, "unit": "bytes_per_run"},
+    {"name": "agent_dispatches_per_cone", "amount": 4, "unit": "dispatches_per_cone"},
+    {"name": "agent_dispatches_per_run", "amount": 12, "unit": "dispatches_per_run"},
+    {"name": "model_calls_per_cone", "amount": 4, "unit": "calls_per_cone"},
+    {"name": "model_calls_per_run", "amount": 12, "unit": "calls_per_run"},
+    {"name": "model_reasoning_tokens_per_cone", "amount": 16000, "unit": "tokens_per_cone"},
+    {"name": "model_reasoning_tokens_per_run", "amount": 48000, "unit": "tokens_per_run"},
+    {"name": "model_reasoning_cost_per_cone", "amount": 100, "unit": "normalized_provider_cost_per_cone"},
+    {"name": "model_reasoning_cost_per_run", "amount": 300, "unit": "normalized_provider_cost_per_run"},
+    {"name": "global_work_commands", "amount": 48, "unit": "commands_per_run"},
+    {"name": "global_work_duration", "amount": 300000, "unit": "milliseconds_per_run"}
+  ]
+}
