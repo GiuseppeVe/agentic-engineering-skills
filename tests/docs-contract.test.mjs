@@ -113,15 +113,15 @@ test('README documents conditional workflow routing and example', () => {
     ['Consequential or disputed design', 'Grill-me'],
     ['Agreed design', 'To Spec'],
     ['Multi-step implementation', 'Writing Plans'],
-    ['large implementation', 'Sequential Task Orchestrator'],
-    ['small implementation', 'Codex Implement'],
+    ['Large implementation', 'Sequential Task Orchestrator'],
+    ['Small implementation', 'Codex Implement'],
     ['Claude Code implementation', 'Claude Implement'],
   ]) {
     assert.ok(routing.includes(`| ${situation} | \`${path}\` |`), `missing routing row: ${situation}`);
   }
 
   assert.match(routing, /composable choices, not mandatory stages/i);
-  assert.match(example, /large\/uncertain request[\s\S]*Wayfinder[\s\S]*Test Gaps \+ TDD[\s\S]*owner-approved publication/);
+  assert.match(example, /large\/uncertain request[\s\S]*Wayfinder[\s\S]*Test Gaps \+ TDD[\s\S]*owner-approved PR/i);
   assert.match(example, /small, clear change can start directly with Codex Implement/i);
 });
 
