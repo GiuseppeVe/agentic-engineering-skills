@@ -2,23 +2,60 @@
 
 ![Agentic Engineering Skills — shared workflow from evidence to reviewed delivery](assets/agentic-engineering-skills-hero.svg)
 
-This repository shares a workflow I shaped through hands-on engineering work: composable skills and agent profiles for Codex and Claude Code, covering discovery, design, frontend craft, planning, implementation, review, and cleanup. It is meant to be inspected, adapted, and extended—not followed as a course or universal prescription.
+I share this experience-shaped workflow from hands-on engineering work so others can inspect, adapt, and reuse it.
 
-Graph Engineering V5.2 remains planned and excluded until its implementation is complete and validated.
+## What this repository shares
 
-## Problem
+This repository is an experience-shaped collection of composable skills and agent profiles for Codex and Claude Code. It makes reasoning, sequencing, verification, and ownership visible enough to inspect and adapt in another project; it is a working practice, not a course or universal prescription.
 
-Agent work often jumps from a vague request to code, skipping design, test-first execution, faithful handoff import, integrated review, or cleanup. This pack supplies focused skills spanning that whole path while keeping every distributed file traceable to a pinned source.
+## My working philosophy
 
-## Philosophy
+I start from evidence instead of an implementation guess, then turn decisions into durable specifications and traceable plans. I isolate implementation work, keep worker output separate from independent evidence, and use two quality dimensions: whether delivery remains faithful to its plan and whether implemented behavior is correct. Publication and other external actions stay under explicit owner control; a plan or passing test suite does not grant publication permission.
 
-Move from evidence to explicit decisions, durable specifications and plans, isolated implementation, independent verification, and owner-approved publication. Use the smallest skill set needed for current work: skills guide judgment, but do not replace project instructions or turn a plan or passing test suite into permission to publish. See the [workflow philosophy](docs/philosophy.md) for lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
+Vendor files remain byte-exact, adaptations stay auditable, and repository-original files use this repository's MIT license. [Workflow philosophy](docs/philosophy.md) records lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
 
-Vendor files stay byte-exact, adaptations remain auditable, and original files use this repository's MIT license. `how-to-use-codex` keeps prompt and model guidance aligned with current official OpenAI documentation. For ordered implementation, `sequential-task-orchestrator` checks plan fidelity with `test-gaps` and implementation correctness with `test-driven-development`, then routes findings through TDD fixes. Frontend work can add `impeccable` for craft and critique plus `ui-ux-pro-max` for searchable design intelligence and stack-specific guidance.
+## How I use the workflow
+
+These are composable choices, not mandatory stages for every task.
+
+| Situation | Path | Purpose |
+| --- | --- | --- |
+| Large, uncertain initiative | `Wayfinder` | Map scope that reaches beyond one session. |
+| Bounded or creative design | `Brainstorming` | Clarify intent before changes. |
+| Consequential or disputed design | `Grill-me` | Pressure-test assumptions. |
+| Agreed design | `To Spec` | Create standalone specification. |
+| Multi-step implementation | `Writing Plans` | Create traceable implementation plan. |
+| large implementation | `Sequential Task Orchestrator` | Run one bounded task at a time with review. |
+| small implementation | `Codex Implement` | Execute focused change with relevant verification. |
+| Claude Code implementation | `Claude Implement` | Use host-equivalent bounded workflow. |
+
+See [workflow guide](docs/workflow.md) for routing detail and [agent profile guide](docs/agent-profiles.md) for delegation contracts.
+
+## The quality loop
+
+For ordered work, `Test Gaps` checks plan fidelity: it compares delivery with plan and finds missing or incomplete coverage. `Test-Driven Development` checks implementation correctness through failing tests, implementation, and passing tests. Findings return through the TDD fix cycle before acceptance, then independent evidence informs review.
+
+## Supporting skills
+
+I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. Graph Engineering V5.2 is planned and excluded from this inventory until implementation is complete and validated.
+
+## Example: from request to reviewed change
+
+```text
+large/uncertain request
+→ Wayfinder
+→ Brainstorming or Grill-me
+→ To Spec
+→ Writing Plans
+→ Codex Implement or Sequential Task Orchestrator
+→ Test Gaps + TDD
+→ independent review
+→ owner-approved publication
+```
+
+A small, clear change can start directly with Codex Implement while retaining relevant verification and owner gates.
 
 ## Workflow
-
-Work moves through seven composable phases, then stops at an explicit owner publication gate. `codex-implement` is the Codex route, `sequential-task-orchestrator` is the strict ordered route, and `claude-implement` is the Claude Code route. See the [workflow guide](docs/workflow.md) for detailed routing, the [workflow philosophy](docs/philosophy.md) for evidence and authority boundaries, and the [agent profile guide](docs/agent-profiles.md) for delegation contracts.
 
 ```mermaid
 flowchart LR
