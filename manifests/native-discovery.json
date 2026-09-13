@@ -8,7 +8,7 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
+    "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -44,7 +44,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
+        "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -131,7 +131,7 @@
       "version": "2.1.209 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:2f1033caee80c0c10c6e3622a175c8b8fa358a71ea4fe90174cdc773514ae381",
+        "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
         "skills": [
           "brainstorming",
           "cavecrew",

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 V4_ROOT = Path(
     os.environ.get(
         "GRAPH_V4_INSTALLED_ROOT",
-        r"C:\Users\aleda\.codex\skills-archive\graph-engineering-v4",
+        str(Path.home() / ".codex" / "skills-archive" / "graph-engineering-v4"),
     )
 )
 BASELINE_REVISION = "693f1922ef2a04088c286cab3c02b308724c2fd1"
@@ -203,7 +203,7 @@ class PackageLineageTests(unittest.TestCase):
     def test_installed_v4_matches_verified_package_manifest(self) -> None:
         self.assertTrue(V4_ROOT.is_dir(), f"archived V4 root missing: {V4_ROOT}")
         self.assertFalse(
-            Path(r"C:\Users\aleda\.codex\skills\graph-engineering-v4").exists(),
+            (Path.home() / ".codex" / "skills" / "graph-engineering-v4").exists(),
             "active V4 destination must remain absent",
         )
         self.assertEqual(package_digest(V4_ROOT), EXPECTED_V4_PACKAGE_DIGEST)

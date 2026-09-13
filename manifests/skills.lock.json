@@ -157,7 +157,7 @@
     {
       "name": "graph-engineering-v5-2",
       "sourceType": "original",
-      "localSha256": "827a99d4190fee9629330f952c6617bb0789546c5fc11c9638e9589089220821",
+      "localSha256": "3245749ebf4d107734b6916789ac37dfccd4de2c93a4f3689b58ba6d196f7a39",
       "releaseCommit": "13cfe85c1b7dc7af896df8eac1dc8c23d4fe5723",
       "license": "MIT",
       "payloadType": "directory",

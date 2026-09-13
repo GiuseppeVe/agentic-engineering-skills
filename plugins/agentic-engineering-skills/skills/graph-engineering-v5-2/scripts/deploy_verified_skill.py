@@ -29,10 +29,11 @@ from scripts.graph_v5.packaging import (
 )
 
 
-V5_DESTINATION = Path(r"C:\Users\aleda\.codex\skills\graph-engineering-v5-2")
-V5_1_ACTIVE_DESTINATION = Path(r"C:\Users\aleda\.codex\skills\graph-engineering-v5")
-V4_ACTIVE_DESTINATION = Path(r"C:\Users\aleda\.codex\skills\graph-engineering-v4")
-V4_ARCHIVE_DESTINATION = Path(r"C:\Users\aleda\.codex\skills-archive\graph-engineering-v4")
+CODEX_HOME = Path.home() / ".codex"
+V5_DESTINATION = CODEX_HOME / "skills" / "graph-engineering-v5-2"
+V5_1_ACTIVE_DESTINATION = CODEX_HOME / "skills" / "graph-engineering-v5"
+V4_ACTIVE_DESTINATION = CODEX_HOME / "skills" / "graph-engineering-v4"
+V4_ARCHIVE_DESTINATION = CODEX_HOME / "skills-archive" / "graph-engineering-v4"
 
 
 def _verified_install_path(path: Path, *, label: str, scan_tree: bool = False) -> Path:

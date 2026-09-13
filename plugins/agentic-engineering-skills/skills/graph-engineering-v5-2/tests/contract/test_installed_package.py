@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 V4_ROOT = Path(
     os.environ.get(
         "GRAPH_V4_INSTALLED_ROOT",
-        r"C:\Users\aleda\.codex\skills-archive\graph-engineering-v4",
+        str(Path.home() / ".codex" / "skills-archive" / "graph-engineering-v4"),
     )
 )
 
