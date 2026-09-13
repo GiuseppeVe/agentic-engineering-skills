@@ -31,6 +31,12 @@ const contentRules = [
 const controlledLoopbackArtifacts = new Map([
   ["plugins/agentic-engineering-skills/skills/importing-handoff/references/contract-schema.md", 1],
   ["plugins/agentic-engineering-skills/skills/importing-handoff/scripts/run-reference.mjs", 2],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/scripts/graph_v5/service_supervisor.py", 1],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/integration/test_local_system_journey.py", 1],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_adapter_manifest.py", 5],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_models.py", 2],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_real_admission.py", 2],
+  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_store_integrity.py", 1],
 ]);
 
 // These are public, pinned upstream examples retained inside the imported
@@ -57,7 +63,7 @@ function hasOnlyControlledLoopbackUrls(path, content, pattern) {
   if (!expected) return false;
   const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
   const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
-  return matches.length === expected && matches.every((match) => match[0].startsWith(["http:", "", "127.0.0.1"].join("/")));
+  return matches.length === expected && matches.every((match) => /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3})/i.test(match[0]));
 }
 
 function hasOnlyControlledThirdPartyMatches(path, content, rule, pattern) {
