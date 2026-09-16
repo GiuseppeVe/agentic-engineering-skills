@@ -4,7 +4,7 @@
 
 Conversation-approved design for the first repository update tranche. This
 document covers only `impeccable` and `ui-ux-pro-max`. `caveman` and
-`how-to-use-codex` are separate follow-up work; Graph Engineering v5.2 is
+`how-to-use-codex` are separate follow-up work; Orientated E2E Testing v5.2 is
 deferred until validated.
 
 ## Goal

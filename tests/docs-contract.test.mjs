@@ -146,7 +146,7 @@ test('README explains philosophy, quality signals, and supporting skills', () =>
   assert.match(quality, /`Test-Driven Development` checks implementation correctness/i);
   assert.match(quality, /TDD fix cycle before acceptance/i);
 
-  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture', 'Graph Engineering V5.2']) {
+  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture', 'Orientated E2E Testing v5.2']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
   assert.match(supporting, /bounded end-to-end testing and debugging route/i);

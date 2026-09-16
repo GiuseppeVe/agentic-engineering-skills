@@ -62,7 +62,7 @@ Explain the orchestrator's two review dimensions explicitly:
 
 ### Supporting skills
 
-Describe `Impeccable` and `UI UX Pro Max` as frontend craft/design support, `Caveman` as communication compression, and `How to Use Codex` as current official guidance for model-aware prompting, settings, and delegation. Clarify that `Graph Engineering V5.2` is not included because it is not yet validated.
+Describe `Impeccable` and `UI UX Pro Max` as frontend craft/design support, `Caveman` as communication compression, and `How to Use Codex` as current official guidance for model-aware prompting, settings, and delegation. Clarify that `Orientated E2E Testing v5.2` is not included because it is not yet validated.
 
 ### Example: from request to reviewed change
 
@@ -96,7 +96,7 @@ Do not change homepage, topics, visibility, branch protection, or other reposito
 - Keep installation, customization, compatibility, provenance, and license sections, improving only links or wording needed for consistency.
 - Do not duplicate the hero's full workflow labels in the opening paragraph.
 - Do not modify files under `plugins/` or any skill payload.
-- Keep Graph Engineering V5.2 explicitly outside the shipped inventory.
+- Keep Orientated E2E Testing v5.2 explicitly outside the shipped inventory.
 - Keep work isolated from `main` until explicit merge approval.
 
 ## Acceptance criteria
