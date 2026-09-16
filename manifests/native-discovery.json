@@ -8,7 +8,7 @@
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
+    "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -20,7 +20,7 @@
       "domain-modeling",
       "grill-me",
       "grilling",
-      "graph-engineering-v5-2",
+      "orientated-e2e-testing-v5-2",
       "how-to-use-codex",
       "impeccable",
       "importing-handoff",
@@ -44,7 +44,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
+        "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -56,7 +56,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
-          "graph-engineering-v5-2",
+          "orientated-e2e-testing-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
@@ -86,7 +86,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
-        "graph-engineering-v5-2",
+        "orientated-e2e-testing-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",
@@ -131,7 +131,7 @@
       "version": "2.1.209 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:13a1fbd2e8ecb1b1fe9df8b67897ebe6ae39b18a9c94322e9a056ffbbaca46c5",
+        "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -143,7 +143,7 @@
           "domain-modeling",
           "grill-me",
           "grilling",
-          "graph-engineering-v5-2",
+          "orientated-e2e-testing-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
@@ -173,7 +173,7 @@
         "domain-modeling",
         "grill-me",
         "grilling",
-        "graph-engineering-v5-2",
+        "orientated-e2e-testing-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",

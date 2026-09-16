@@ -155,9 +155,9 @@
       ]
     },
     {
-      "name": "graph-engineering-v5-2",
+      "name": "orientated-e2e-testing-v5-2",
       "sourceType": "original",
-      "localSha256": "3245749ebf4d107734b6916789ac37dfccd4de2c93a4f3689b58ba6d196f7a39",
+      "localSha256": "780430ef6856a311a0de75b4b8addca3c5a2b5175dc241f6f77fb49550b9a7e5",
       "releaseCommit": "39a4a431734daeafedb92809643034c7f678bcab",
       "license": "MIT",
       "payloadType": "directory",
@@ -288,7 +288,11 @@
       "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
       "license": "MIT",
       "payloadType": "directory",
-      "dependencies": ["codex-implement", "test-driven-development", "test-gaps"]
+      "dependencies": [
+        "codex-implement",
+        "test-driven-development",
+        "test-gaps"
+      ]
     },
     {
       "name": "test-gaps",

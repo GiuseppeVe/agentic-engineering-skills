@@ -85,9 +85,9 @@
       "upstreamPath": "skills/productivity/grilling/SKILL.md"
     },
     {
-      "name": "graph-engineering-v5-2",
+      "name": "orientated-e2e-testing-v5-2",
       "sourceType": "original",
-      "localPath": "graph-engineering-v5-2/",
+      "localPath": "orientated-e2e-testing-v5-2/",
       "license": "MIT",
       "localRoot": "projectSkills"
     },
