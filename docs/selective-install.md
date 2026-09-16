@@ -12,7 +12,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
-| `graph-engineering-v5-2` | None | `LICENSE` | Verify: bounded end-to-end trajectory testing and debugging |
+| `orientated-e2e-testing-v5-2` | None | `LICENSE` | Verify: bounded end-to-end trajectory testing and debugging |
 | `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
 | `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |

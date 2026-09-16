@@ -70,7 +70,7 @@ The opening should answer quickly:
 1. what this is: a composable skills bundle for Codex and Claude Code;
 2. why it exists: to make an experience-shaped engineering workflow inspectable and reusable;
 3. what it covers: discovery, design, planning, implementation, verification, review, and cleanup;
-4. what is not included: Graph Engineering V5.2 remains planned/out of scope until validated.
+4. what is not included: Orientated E2E Testing v5.2 remains planned/out of scope until validated.
 
 Do not rewrite the technical installation, provenance, compatibility, or license sections beyond links and wording needed for consistency.
 
@@ -87,7 +87,7 @@ Do not rewrite the technical installation, provenance, compatibility, or license
 
 ## Out of scope
 
-- Graph Engineering V5.2;
+- Orientated E2E Testing v5.2;
 - skill content or manifest changes;
 - GitHub social-preview upload;
 - branch-protection or repository-settings changes;

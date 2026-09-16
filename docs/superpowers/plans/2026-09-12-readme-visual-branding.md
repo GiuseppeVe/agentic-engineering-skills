@@ -19,7 +19,7 @@
 - **REQ-003** [constraint] — The hero is a self-contained accessible SVG with no JavaScript, `foreignObject`, base64 data, remote references, or external fonts, and remains below 1 MB. _Acceptance:_ `rg -n "<title>|<desc>" assets/agentic-engineering-skills-hero.svg` finds the required metadata, while `rg -n "<script|foreignObject|data:|@import|font-face|href=|xlink:href" assets/agentic-engineering-skills-hero.svg` returns no output; file size is `< 1048576` bytes. _Satisfied by:_ Task 1.
 - **REQ-004** [behavior] — README places the hero immediately after the repository title and keeps a fallback textual introduction. _Acceptance:_ the first README section contains the relative image reference followed by a concise paragraph describing the shared workflow. _Satisfied by:_ Task 2.
 - **REQ-005** [behavior] — README retains the existing Mermaid lifecycle diagram and links to the current workflow/philosophy documentation. _Acceptance:_ `rg -n "mermaid|docs/workflow.md|docs/philosophy.md" README.md` finds all three references. _Satisfied by:_ Task 2.
-- **REQ-006** [behavior] — README explicitly labels Graph Engineering V5.2 as planned/out of scope until validated. _Acceptance:_ `rg -ni "Graph Engineering V5\.2|planned|out of scope" README.md` finds the status statement. _Satisfied by:_ Task 2.
+- **REQ-006** [behavior] — README explicitly labels Orientated E2E Testing v5.2 as planned/out of scope until validated. _Acceptance:_ `rg -ni "Graph Engineering V5\.2|planned|out of scope" README.md` finds the status statement. _Satisfied by:_ Task 2.
 
 ### Tests
 
@@ -64,7 +64,7 @@ Expected: `True`.
 
 - [ ] **Step 1: Insert the relative hero image directly below `# Agentic Engineering Skills`.** Use alt text that describes the workflow for readers who cannot see the image.
 - [ ] **Step 2: Replace the abstract opening paragraph with a concise shared-workflow statement.** Explain that the repository shares an experience-shaped, inspectable workflow for Codex and Claude Code; do not use tutorial, course, or prescriptive language.
-- [ ] **Step 3: Add one current-scope sentence stating that Graph Engineering V5.2 is planned and excluded until validated.** Leave installation, provenance, compatibility, license, and Mermaid sections intact except for links or wording needed for consistency.
+- [ ] **Step 3: Add one current-scope sentence stating that Orientated E2E Testing v5.2 is planned and excluded until validated.** Leave installation, provenance, compatibility, license, and Mermaid sections intact except for links or wording needed for consistency.
 
 ### Task 3: Verify, review, and prepare the branch
 
@@ -91,4 +91,4 @@ git commit -m "docs: add shared workflow README branding"
 - Traceability: every requirement maps to a task, and every task lists its requirements.
 - Cross-task wiring: README path and asset location are captured by `REQ-009`.
 - Placeholder scan: no `TBD`, `TODO`, or non-objective acceptance language.
-- Scope control: no plugin payload, Graph Engineering V5.2, social-preview upload, or GitHub settings work included.
+- Scope control: no plugin payload, Orientated E2E Testing v5.2, social-preview upload, or GitHub settings work included.

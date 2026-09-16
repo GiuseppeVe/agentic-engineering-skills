@@ -61,7 +61,7 @@
       "name": "claude-implement",
       "sourceType": "original",
       "localSha256": "b8f512e526a9abcb644fd32f8b1d541d37995d782edd60fb6bb026fd04f99530",
-      "releaseCommit": "e10a314c9c0765427be6606b7bd3cd8280b0d91c",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -70,7 +70,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
-      "releaseCommit": "46a201b669a90debebdc3eaa976bc5dfa9a83c1a",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -96,7 +96,7 @@
       "name": "codex-implement",
       "sourceType": "original",
       "localSha256": "f5b0ae0bcae2e656c9897f58dcc36f1fe26bbd11dd7a3185b992ebdd06905648",
-      "releaseCommit": "e10a314c9c0765427be6606b7bd3cd8280b0d91c",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -155,10 +155,10 @@
       ]
     },
     {
-      "name": "graph-engineering-v5-2",
+      "name": "orientated-e2e-testing-v5-2",
       "sourceType": "original",
-      "localSha256": "3245749ebf4d107734b6916789ac37dfccd4de2c93a4f3689b58ba6d196f7a39",
-      "releaseCommit": "39a4a431734daeafedb92809643034c7f678bcab",
+      "localSha256": "1b0e82ff23f082e2a260eb4b9f25fb03c94c3d9ebce0f17dced0f98a71c64a30",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -167,7 +167,7 @@
       "name": "how-to-use-codex",
       "sourceType": "original",
       "localSha256": "1a1cc61905560c460bf7ed8060b70f6701c65ae6e7696206af2e7386bcf16161",
-      "releaseCommit": "b402029299c911138b2cd55f8372948ab1bc781a",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -176,7 +176,7 @@
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
-      "releaseCommit": "e8041ff1570b5b6828e483298020b4f3a5c3e0d4",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -285,16 +285,20 @@
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
       "localSha256": "26aa7d3d1c7f7b9aaaed7be38443326f1055fcd241938370ef06cb5ce01c8ac8",
-      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "directory",
-      "dependencies": ["codex-implement", "test-driven-development", "test-gaps"]
+      "dependencies": [
+        "codex-implement",
+        "test-driven-development",
+        "test-gaps"
+      ]
     },
     {
       "name": "test-gaps",
       "sourceType": "original",
       "localSha256": "355a18afe8c99566ce855e671a7b29d0c51e003c446ab5cfb548bcdb72e2a3e5",
-      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []

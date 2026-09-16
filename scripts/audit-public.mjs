@@ -31,12 +31,12 @@ const contentRules = [
 const controlledLoopbackArtifacts = new Map([
   ["plugins/agentic-engineering-skills/skills/importing-handoff/references/contract-schema.md", 1],
   ["plugins/agentic-engineering-skills/skills/importing-handoff/scripts/run-reference.mjs", 2],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/scripts/graph_v5/service_supervisor.py", 1],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/integration/test_local_system_journey.py", 1],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_adapter_manifest.py", 5],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_models.py", 2],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_real_admission.py", 2],
-  ["plugins/agentic-engineering-skills/skills/graph-engineering-v5-2/tests/unit/test_store_integrity.py", 1],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/scripts/graph_v5/service_supervisor.py", 1],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/integration/test_local_system_journey.py", 1],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_adapter_manifest.py", 5],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_models.py", 2],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_real_admission.py", 2],
+  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_store_integrity.py", 1],
 ]);
 
 // These are public, pinned upstream examples retained inside the imported

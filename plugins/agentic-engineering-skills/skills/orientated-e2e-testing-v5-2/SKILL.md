@@ -1,9 +1,9 @@
 ---
-name: graph-engineering-v5-2
-description: Use when the user explicitly invokes $graph-engineering-v5-2 to confirm and traverse one bounded observable product trajectory.
+name: orientated-e2e-testing-v5-2
+description: Use when the user explicitly invokes $orientated-e2e-testing-v5-2 to confirm and traverse one bounded observable product trajectory.
 ---
 
-# Graph Engineering v5.2
+# Orientated E2E Testing v5.2
 
 V5.2 confirms an observable product trajectory, then derives and traverses one
 Behavioral Node at a time.
