@@ -138,7 +138,7 @@ jobs:
 
       - name: Stage rename and remove one-shot workflow
         run: |
-          git rm .github/workflows/one-shot-rename-orientated-e2e.yml
+          git rm -f .github/workflows/one-shot-rename-orientated-e2e.yml
           git add -A
 
       - name: Install dependencies
