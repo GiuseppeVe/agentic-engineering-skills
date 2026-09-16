@@ -155,9 +155,9 @@
       ]
     },
     {
-      "name": "graph-engineering-v5-2",
+      "name": "orientated-e2e-testing-v5-2",
       "sourceType": "original",
-      "localSha256": "3245749ebf4d107734b6916789ac37dfccd4de2c93a4f3689b58ba6d196f7a39",
+      "localSha256": "1b0e82ff23f082e2a260eb4b9f25fb03c94c3d9ebce0f17dced0f98a71c64a30",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -285,16 +285,20 @@
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
       "localSha256": "26aa7d3d1c7f7b9aaaed7be38443326f1055fcd241938370ef06cb5ce01c8ac8",
-      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
-      "dependencies": ["codex-implement", "test-driven-development", "test-gaps"]
+      "dependencies": [
+        "codex-implement",
+        "test-driven-development",
+        "test-gaps"
+      ]
     },
     {
       "name": "test-gaps",
       "sourceType": "original",
       "localSha256": "355a18afe8c99566ce855e671a7b29d0c51e003c446ab5cfb548bcdb72e2a3e5",
-      "releaseCommit": "701eb9983c6674fadb637424a28091146c995694",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
