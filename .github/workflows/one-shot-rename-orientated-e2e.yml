@@ -1,0 +1,126 @@
+name: One-shot skill identifier rename
+
+on:
+  push:
+    branches:
+      - GiuseppeVe-patch-1
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: GiuseppeVe-patch-1
+          fetch-depth: 0
+
+      - name: Rename skill and identifiers
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib
+          import json
+          import re
+
+          root = Path.cwd()
+          old_slug = "graph-engineering-v5-2"
+          new_slug = "orientated-e2e-testing-v5-2"
+          old_display = ("Graph Engineering v5.2", "Graph Engineering V5.2")
+          new_display = "Orientated E2E Testing v5.2"
+
+          skills_root = root / "plugins" / "agentic-engineering-skills" / "skills"
+          old_dir = skills_root / old_slug
+          new_dir = skills_root / new_slug
+          if old_dir.exists():
+              if new_dir.exists():
+                  raise SystemExit(f"destination already exists: {new_dir}")
+              old_dir.rename(new_dir)
+          elif not new_dir.exists():
+              raise SystemExit(f"skill source missing: {old_dir}")
+
+          ignored_parts = {".git", "node_modules"}
+          for path in root.rglob("*"):
+              if not path.is_file() or any(part in ignored_parts for part in path.parts):
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except (UnicodeDecodeError, OSError):
+                  continue
+              updated = text.replace(old_slug, new_slug)
+              for old_name in old_display:
+                  updated = updated.replace(old_name, new_display)
+              if updated != text:
+                  path.write_text(updated, encoding="utf-8", newline="")
+
+          skill_file = new_dir / "SKILL.md"
+          skill_text = skill_file.read_text(encoding="utf-8")
+          skill_text, count = re.subn(
+              r"(?m)^name:\s*.*$",
+              f"name: {new_slug}",
+              skill_text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit("SKILL.md name field not found exactly once")
+          skill_file.write_text(skill_text, encoding="utf-8", newline="")
+
+          def sha256_path(directory: Path) -> str:
+              digest = hashlib.sha256()
+              files = sorted(
+                  (p for p in directory.rglob("*") if p.is_file()),
+                  key=lambda p: p.relative_to(directory).as_posix(),
+              )
+              for path in files:
+                  rel = path.relative_to(directory).as_posix().encode("utf-8")
+                  digest.update(rel)
+                  digest.update(b"\0")
+                  digest.update(path.read_bytes())
+                  digest.update(b"\0")
+              return digest.hexdigest()
+
+          lock_path = root / "manifests" / "skills.lock.json"
+          lock = json.loads(lock_path.read_text(encoding="utf-8"))
+          matches = [entry for entry in lock["skills"] if entry.get("name") == new_slug]
+          if len(matches) != 1:
+              raise SystemExit(f"expected one lock entry for {new_slug}, got {len(matches)}")
+          matches[0]["localSha256"] = sha256_path(new_dir)
+          lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+
+          old_refs = []
+          for path in root.rglob("*"):
+              if not path.is_file() or any(part in ignored_parts for part in path.parts):
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except (UnicodeDecodeError, OSError):
+                  continue
+              if old_slug in text or any(name in text for name in old_display):
+                  old_refs.append(str(path.relative_to(root)))
+          if old_refs:
+              raise SystemExit("stale skill identity references: " + ", ".join(old_refs))
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run repository checks
+        run: |
+          npm test
+          npm run verify:pack
+          npm run verify:upstream
+          npm run audit:public
+          git diff --check
+
+      - name: Commit rename
+        run: |
+          git rm .github/workflows/one-shot-rename-orientated-e2e.yml
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "refactor: rename skill to Orientated E2E Testing v5.2"
+          git push origin HEAD:GiuseppeVe-patch-1
