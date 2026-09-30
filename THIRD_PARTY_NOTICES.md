@@ -4,6 +4,11 @@ Repository-original material is licensed under the root MIT license. Third-party
 
 ## Repository-original skills
 
+`deslopping-cleanup`, its specialist-routing and run-report references, and the
+pipeline graphic are original GiuseppeVe material under the repository MIT
+license. Specialist names are references, not additional vendor payloads. See
+[dependency availability and license review](docs/deslopping-cleanup.md) for scope.
+
 `codex-implement`, `claude-implement`, `orientated-e2e-testing-v5-2`, `how-to-use-codex`, `sequential-task-orchestrator`, and `test-gaps` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
 
 | Skill | Source | Revision | Status | Copyright holder | License | Legal files | Modification notice |
@@ -17,6 +22,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 | `grilling` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | vendor | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Unmodified pinned copy. |
 | `orientated-e2e-testing-v5-2` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; bounded end-to-end trajectory testing and debugging. |
 | `how-to-use-codex` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` | Original skill; official OpenAI documentation links are maintained as current references. |
+| `deslopping-cleanup` | Repository-original | — | original | GiuseppeVe | MIT | `LICENSE` and skill-local `LICENSE` | Original cleanup coordinator; external specialists are referenced, not vendored. |
 | `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `6496f49a1ea0503ca130d7dd55508dd0d22aa86b` | adapted | Paulo Bakaus | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Packaged current skill and supporting references/scripts for cross-host Agent Skills distribution. |
 | `improve-codebase-architecture` | [mattpocock/skills](https://github.com/mattpocock/skills) | `391a2701dd948f94f56a39f7533f8eea9a859c87` | adapted | Matt Pocock | MIT | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Enables Codex model invocation for plugin validation and discovery. |
 | `learn-codebase` | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | `312d640b0188753acd92a1a82d95a84d5c7c43db` | adapted | Alex Newman | Apache-2.0 | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`<br>`plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Modified files carry an Adaptation notice for cross-host Agent Skills distribution. Upstream NOTICE retained verbatim. |
