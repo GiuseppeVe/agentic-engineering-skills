@@ -8,6 +8,7 @@
 | `cavecrew` | adapted | `JuliusBrussee/caveman@0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0` |
 | `caveman` | adapted | `JuliusBrussee/caveman@0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb` |
 | `cleaning-repo-with-knip` | original | Repository release `historical-commit-redacted` |
+| `deslopping-cleanup` | original | GiuseppeVe-authored cleanup coordinator and supporting references; payload release recorded in lock |
 | `codebase-design` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `domain-modeling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grill-me` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |

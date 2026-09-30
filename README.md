@@ -28,6 +28,7 @@ These are composable choices, not mandatory stages for every task.
 | Large implementation | `Sequential Task Orchestrator` | Run one bounded task at a time with review. |
 | Small implementation | `Codex Implement` | Execute focused change with relevant verification. |
 | Claude Code implementation | `Claude Implement` | Use host-equivalent bounded workflow. |
+| Repository cleanup across responsibilities | `Deslopping Cleanup` | Investigate candidates, review evidence, and commit verified cleanup batches. |
 
 See [workflow guide](docs/workflow.md) for routing detail and [agent profile guide](docs/agent-profiles.md) for delegation contracts.
 
@@ -40,6 +41,25 @@ For ordered work, `Test Gaps` checks plan fidelity: it compares delivery with pl
 I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Cleaning Repo with Knip` keeps the repository lean through verified cleanup, reviewable branches, and a durable false-positive record instead of blind deletion. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. `Orientated E2E Testing v5.2` is my bounded end-to-end testing and debugging route: it confirms one observable product trajectory and traverses it one Behavioral Node at a time. It keeps real effects isolated, evidence-backed, and reviewable, with deterministic pauses instead of broad audits or guessed repairs. `Merge Verified PR and Cleanup` closes out a reviewed pull request only after its current head passes required checks, then removes only the verified, unused branch and worktree.
 
 ## Example: choosing a route
+
+### Deslopping Cleanup
+
+[`deslopping-cleanup`](plugins/agentic-engineering-skills/skills/deslopping-cleanup/SKILL.md)
+coordinates behavior-preserving repository cleanup. Explorers gather facts;
+independent reviewers challenge them; specialist analyses resolve gaps before a
+removal strategy is approved. Each verified batch updates a cumulative report of
+removed, retained and deferred components and their actual or intended connections,
+then receives its own local commit before the next batch starts.
+
+![Deslopping Cleanup pipeline: reviewed evidence, approved batches, report and commit checkpoints](assets/deslopping-cleanup-pipeline.svg)
+
+Specialists remain distinct. `cleaning-repo-with-knip` is included; Graphify,
+Desloppify, Dependency Cruiser and the named dispatch/review skills are optional
+external capabilities, with explicit fallbacks. The bundle does not install them
+or load them automatically. See [availability and license review](docs/deslopping-cleanup.md)
+and the skill's [specialist routing](plugins/agentic-engineering-skills/skills/deslopping-cleanup/references/specialist-routing.md).
+
+### Implementation routes
 
 The diagram below shows the shared lifecycle. In practice, I choose the entry
 point and implementation path according to scope and uncertainty.

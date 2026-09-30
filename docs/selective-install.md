@@ -8,6 +8,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `cavecrew` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: investigation routing |
 | `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
+| `deslopping-cleanup` | None (optional specialist routes documented separately) | `LICENSE` and skill-local `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
 | `codebase-design` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: module boundaries |
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
