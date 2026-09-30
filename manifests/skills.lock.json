@@ -76,6 +76,15 @@
       "dependencies": []
     },
     {
+      "name": "deslopping-cleanup",
+      "sourceType": "original",
+      "localSha256": "c7dfe98e354bbdb334df7f6a560a3085a5677984d36c7f3353a1a70dc88f4080",
+      "releaseCommit": "ddc76e94a40a648f152adec7138d505f7489b270",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": []
+    },
+    {
       "name": "codebase-design",
       "sourceType": "vendor",
       "repository": "https://github.com/mattpocock/skills",

@@ -1,5 +1,36 @@
 # Release verification report
 
+## Deslopping Cleanup addition: 2026-10-01
+
+Payload commit: `ddc76e94a40a648f152adec7138d505f7489b270`, based on
+`c6f8a0af0019257437e7661a6fa59bdfea46d571`. The lock records that actual payload
+commit and directory SHA-256 for the original coordinator. This section supersedes
+the historical validation receipt below for the current skill inventory.
+
+- 29 included/requested skills, zero excluded. Only the new skill payload is added;
+  existing vendor/adapted bytes and licenses are preserved.
+- Isolated native installations succeeded with Codex 0.159.2 and Claude Code
+  2.1.260. Both actual caches contain all 29 skills, including `deslopping-cleanup`,
+  with source tree hash
+  `sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac`.
+- `verify-installed-native.mjs` passed for each host against the refreshed tracked
+  receipt. Normal host configuration was not mutated. See the receipt for successful
+  invocations and limitations; raw retry captures remain outside the public payload.
+- Local payload hash validation passed for all 29 lock entries. The SVG pipeline
+  was rendered and visually inspected; the referenced local documents exist.
+- `node scripts/verify-pack.mjs`, `node scripts/audit-public.mjs` and
+  `git diff --check` passed locally. Independent review found no metadata or
+  pipeline inconsistency after the documented corrections.
+- Earlier native verification against the old receipt failed because its inventory
+  and tree hash were stale. Earlier Claude local-path registration attempts were
+  refused; successful installation followed the CLI-required declaration in the
+  temporary settings. No installed cache was manually patched to pass comparison.
+- Unit/behavioral tests, fresh-session skill invocation and upstream re-download
+  verification were not run for this addition. Publication and CI state are not
+  claimed here; remote actions remain subject to owner approval.
+
+Availability and scoped license assessment: [Deslopping Cleanup](deslopping-cleanup.md).
+
 ## Agent profile pack
 
 Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`.
@@ -16,7 +47,7 @@ Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123
 
 Hashes cover exact UTF-8 bytes at paths recorded in `manifests/agent-profiles.json`. Provenance, MIT license, and notice references remain joined to existing Cavecrew attribution.
 
-## Validation receipt
+## Historical validation receipt
 
 Latest clean-clone gate validated implementation SHA `5320e2a`.
 

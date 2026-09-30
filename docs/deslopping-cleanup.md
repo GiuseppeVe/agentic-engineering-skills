@@ -51,9 +51,9 @@ upstream state, not pinned payloads distributed by this repository.
 
 **Publication assessment:** no specialist-redistribution obligation was identified
 for this independently authored coordinator's name references and capability
-handoffs. It can be distributed under the repository MIT license on that basis.
-This assessment is limited to the files added here and does not relicense any
-external specialist or certify third-party copies not inspected.
+handoffs. The original files are marked MIT under the repository's license.
+This is a scoped provenance check, not a legal opinion. It is limited to the files
+added here and does not relicense external specialists or certify uninspected copies.
 
 Desloppify's OSNL is not MIT: it distinguishes internal use from distributing the
 program or derivatives, with specific commercialization and redistribution terms.

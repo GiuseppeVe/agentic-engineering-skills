@@ -1,14 +1,16 @@
 {
   "schemaVersion": 2,
-  "evidenceSource": "task-10-isolated-native-installs",
-  "capturedAt": "2026-07-14",
+  "evidenceSource": "isolated-native-installs",
+  "capturedAt": "2026-10-01",
   "environment": {
-    "isolation": "Fresh native-Windows profile; USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME, and CLAUDE_CONFIG_DIR set before every command.",
-    "normalHostConfigMutated": false
+    "isolation": "Separate temporary Windows profiles; USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME and CLAUDE_CONFIG_DIR configured only on child processes. Child Git configuration sets core.autocrlf=false.",
+    "normalHostConfigMutated": false,
+    "commandNotation": "$S denotes the local repository root; $CODEX_CACHE and $CLAUDE_CACHE denote native-installed plugin roots. Raw exact command captures and retry failures are retained outside the public payload.",
+    "claudeMarketplaceDeclaration": "extraKnownMarketplaces.agentic-engineering-skills.source = directory at $S, in the temporary user settings only, as required by the CLI."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
+    "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -17,17 +19,19 @@
       "cleaning-repo-with-knip",
       "codebase-design",
       "codex-implement",
+      "deslopping-cleanup",
       "domain-modeling",
       "grill-me",
       "grilling",
-      "orientated-e2e-testing-v5-2",
       "how-to-use-codex",
       "impeccable",
       "importing-handoff",
       "improve-codebase-architecture",
       "learn-codebase",
-      "setup-matt-pocock-skills",
+      "merge-verified-pr-and-cleanup",
+      "orientated-e2e-testing-v5-2",
       "sequential-task-orchestrator",
+      "setup-matt-pocock-skills",
       "swarm-orchestration",
       "test-driven-development",
       "test-gaps",
@@ -41,10 +45,10 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.141.0",
+      "version": "codex-cli 0.159.2",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
+        "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -53,17 +57,19 @@
           "cleaning-repo-with-knip",
           "codebase-design",
           "codex-implement",
+          "deslopping-cleanup",
           "domain-modeling",
           "grill-me",
           "grilling",
-          "orientated-e2e-testing-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
           "improve-codebase-architecture",
           "learn-codebase",
-          "setup-matt-pocock-skills",
+          "merge-verified-pr-and-cleanup",
+          "orientated-e2e-testing-v5-2",
           "sequential-task-orchestrator",
+          "setup-matt-pocock-skills",
           "swarm-orchestration",
           "test-driven-development",
           "test-gaps",
@@ -83,17 +89,19 @@
         "cleaning-repo-with-knip",
         "codebase-design",
         "codex-implement",
+        "deslopping-cleanup",
         "domain-modeling",
         "grill-me",
         "grilling",
-        "orientated-e2e-testing-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",
         "improve-codebase-architecture",
         "learn-codebase",
-        "setup-matt-pocock-skills",
+        "merge-verified-pr-and-cleanup",
+        "orientated-e2e-testing-v5-2",
         "sequential-task-orchestrator",
+        "setup-matt-pocock-skills",
         "swarm-orchestration",
         "test-driven-development",
         "test-gaps",
@@ -118,20 +126,29 @@
           "exitCode": 0
         },
         {
+          "command": "codex plugin list --json",
+          "exitCode": 0
+        },
+        {
           "command": "codex plugin list --available --json",
+          "exitCode": 0
+        },
+        {
+          "command": "node scripts/verify-installed-native.mjs --host codex --installed-root $CODEX_CACHE",
           "exitCode": 0
         }
       ],
-      "modelSession": {
-        "exactInventoryClaimed": false,
-        "result": "Ambient skills and 2% skill-description context budget yielded incomplete subsets. Installed native payload inventory is authoritative receipt basis."
-      }
+      "limitations": [
+        "The available array was empty; installed plugin state was present and the actual cache supplied the inspected inventory.",
+        "PATH aliases could not be created under Temp; successful installation was unaffected.",
+        "No fresh-session skill invocation was performed."
+      ]
     },
     "claude": {
-      "version": "2.1.209 (Claude Code)",
+      "version": "2.1.260 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b53d62316d436758ea0949b8ae661e8c7f351ca88d87610cf0eda70ac342f29f",
+        "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -140,17 +157,19 @@
           "cleaning-repo-with-knip",
           "codebase-design",
           "codex-implement",
+          "deslopping-cleanup",
           "domain-modeling",
           "grill-me",
           "grilling",
-          "orientated-e2e-testing-v5-2",
           "how-to-use-codex",
           "impeccable",
           "importing-handoff",
           "improve-codebase-architecture",
           "learn-codebase",
-          "setup-matt-pocock-skills",
+          "merge-verified-pr-and-cleanup",
+          "orientated-e2e-testing-v5-2",
           "sequential-task-orchestrator",
+          "setup-matt-pocock-skills",
           "swarm-orchestration",
           "test-driven-development",
           "test-gaps",
@@ -170,17 +189,19 @@
         "cleaning-repo-with-knip",
         "codebase-design",
         "codex-implement",
+        "deslopping-cleanup",
         "domain-modeling",
         "grill-me",
         "grilling",
-        "orientated-e2e-testing-v5-2",
         "how-to-use-codex",
         "impeccable",
         "importing-handoff",
         "improve-codebase-architecture",
         "learn-codebase",
-        "setup-matt-pocock-skills",
+        "merge-verified-pr-and-cleanup",
+        "orientated-e2e-testing-v5-2",
         "sequential-task-orchestrator",
+        "setup-matt-pocock-skills",
         "swarm-orchestration",
         "test-driven-development",
         "test-gaps",
@@ -197,26 +218,30 @@
           "exitCode": 0
         },
         {
-          "command": "claude plugin validate .",
-          "exitCode": 0
-        },
-        {
           "command": "claude plugin marketplace add ./ --scope user",
           "exitCode": 0
         },
         {
-          "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user",
+          "command": "claude plugin marketplace list",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
           "exitCode": 0
         },
         {
           "command": "claude plugin list --json",
           "exitCode": 0
+        },
+        {
+          "command": "node scripts/verify-installed-native.mjs --host claude --installed-root $CLAUDE_CACHE",
+          "exitCode": 0
         }
       ],
-      "modelSession": {
-        "exactInventoryClaimed": false,
-        "result": "Fresh isolated payload verification is authoritative; no model-session inventory claim."
-      }
+      "limitations": [
+        "Earlier local-path attempts were refused; the successful run followed the CLI-required temporary user marketplace declaration.",
+        "No fresh-session skill invocation was performed."
+      ]
     }
   }
 }
