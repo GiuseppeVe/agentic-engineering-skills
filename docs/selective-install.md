@@ -14,6 +14,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
 | `orientated-e2e-testing-v5-2` | None | `LICENSE` | Verify: bounded end-to-end trajectory testing and debugging |
 | `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
+| `merge-verified-pr-and-cleanup` | None | `LICENSE` | Clean: merge a verified pull request and remove its isolated workspace |
 | `claude-implement` | None | `LICENSE` | Implement: Claude Code bounded packets and clean-room review |
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE` | Design: frontend craft and critique |

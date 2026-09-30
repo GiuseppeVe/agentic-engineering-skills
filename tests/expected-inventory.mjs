@@ -9,6 +9,7 @@ export const expectedSkills = [
   "grilling",
   "orientated-e2e-testing-v5-2",
   "how-to-use-codex",
+  "merge-verified-pr-and-cleanup",
   "claude-implement",
   "codex-implement",
   "improve-codebase-architecture",
