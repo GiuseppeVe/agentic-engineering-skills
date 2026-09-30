@@ -8,6 +8,8 @@ Repository-original material is licensed under the root MIT license. Third-party
 pipeline graphic are original GiuseppeVe material under the repository MIT
 license. Specialist names are references, not additional vendor payloads. See
 [dependency availability and license review](docs/deslopping-cleanup.md) for scope.
+The existing `cleaning-repo-with-knip` runbook is also repository-original MIT
+material; its software and helper dependencies are not bundled by this addition.
 
 `codex-implement`, `claude-implement`, `orientated-e2e-testing-v5-2`, `how-to-use-codex`, `sequential-task-orchestrator`, and `test-gaps` are original works by GiuseppeVe, created from scratch and distributed under the repository root [MIT license](LICENSE). They have no third-party attribution or retained third-party license obligations.
 

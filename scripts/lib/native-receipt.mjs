@@ -20,7 +20,7 @@ export async function hashPayloadTree(root) {
 
 export async function verifyNativeReceipt(receipt, { included, payloadRoot }) {
   if (receipt.schemaVersion !== 2) throw new Error("native receipt schemaVersion must be 2");
-  if (receipt.evidenceSource !== "task-10-isolated-native-installs") throw new Error("native receipt has invalid evidenceSource");
+  if (!["isolated-native-installs", "task-10-isolated-native-installs"].includes(receipt.evidenceSource)) throw new Error("native receipt has invalid evidenceSource");
   const expected = [...included].sort();
   const receiptSkills = sortedUnique(receipt.installedPayload?.skills, "installedPayload.skills");
   equalInventory(receiptSkills, expected, "installed payload");
