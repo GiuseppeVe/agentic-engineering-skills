@@ -14,6 +14,7 @@
 | `grilling` | vendor | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `orientated-e2e-testing-v5-2` | original | GiuseppeVe-authored bounded end-to-end trajectory testing and debugging skill; release recorded in lock |
 | `how-to-use-codex` | original | GiuseppeVe-authored Codex prompting and model-guidance skill; release recorded in lock |
+| `merge-verified-pr-and-cleanup` | original | GiuseppeVe-authored verified-PR merge and workspace-cleanup skill; release recorded in lock |
 | `impeccable` | adapted | `pbakaus/impeccable@6496f49a1ea0503ca130d7dd55508dd0d22aa86b` |
 | `claude-implement` | original | GiuseppeVe-authored Claude Code workflow; release recorded in lock |
 | `codex-implement` | original | GiuseppeVe-authored Codex workflow; release recorded in lock |
