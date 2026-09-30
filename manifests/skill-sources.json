@@ -99,6 +99,13 @@
       "localRoot": "projectSkills"
     },
     {
+      "name": "merge-verified-pr-and-cleanup",
+      "sourceType": "original",
+      "localPath": "merge-verified-pr-and-cleanup/SKILL.md",
+      "license": "MIT",
+      "localRoot": "projectSkills"
+    },
+    {
       "name": "importing-handoff",
       "sourceType": "original",
       "localPath": "importing-handoff/",

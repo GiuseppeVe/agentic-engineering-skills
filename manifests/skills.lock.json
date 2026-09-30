@@ -173,6 +173,15 @@
       "dependencies": []
     },
     {
+      "name": "merge-verified-pr-and-cleanup",
+      "sourceType": "original",
+      "localSha256": "15ed2736e0cdce3aa9c11b246e1624168aee14cb2623e8891c14ae036473e060",
+      "releaseCommit": "17ea3b1ea83ecd70dd17545ae17aa99c8b46cf3e",
+      "license": "MIT",
+      "payloadType": "file",
+      "dependencies": []
+    },
+    {
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
