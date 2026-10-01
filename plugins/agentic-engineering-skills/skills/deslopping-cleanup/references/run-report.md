@@ -69,11 +69,29 @@ component already disconnected gets a functional follow-up: intended caller,
 target contract, prerequisites, required changes and approval still needed.
 Describing intended wiring neither proves it exists nor authorizes implementing it.
 
+## Batch approval proposals
+
+Before requesting approval, present and record this proposal for each Batch-ID.
+Use one row per affected file and distinct action, including changes supporting
+the cleanup. Multiple actions on one file require separate rows.
+
+| Batch-ID | File / symbol | Proposed action | Specific rationale | Evidence / snapshot | Expected behavior / wiring impact | Uncertainty |
+|---|---|---|---|---|---|---|
+
+Explain why each specific change is appropriate for that file and cite its
+supporting evidence; rows may reference the run's shared recorded snapshot.
+A batch-level reason or component decision does not replace these justifications.
+An incomplete proposal cannot be submitted for approval or used to execute an
+unjustified action. Material changes to approved actions, scope or rationale
+require renewed approval for the affected proposal under the existing mandate.
+Preserve superseded proposal versions and their approval references.
+
 ## Batch journal
 
 For each Batch-ID record its owning Run-ID, then:
 
-1. Candidate IDs/actions; allowlist; owner approval reference; base SHA; dependencies.
+1. Candidate IDs/actions; exact file/action proposal version or reference;
+   allowlist; owner approval reference; base SHA; dependencies.
 2. Before/after inventory and wiring; diff manifest identifying validated blobs
    or equivalent reproducible content digest; unrelated changes excluded.
 3. Exploration and independent review conclusions; controller checks of material

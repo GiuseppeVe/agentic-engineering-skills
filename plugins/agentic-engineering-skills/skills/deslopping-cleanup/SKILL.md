@@ -93,6 +93,23 @@ and technical verdict in the report. Scope checks to decision-bearing claims and
 changed surfaces; do not repeat broad exploration or rerun every check by default.
 Use only authorized reads/checks; unavailable evidence is a limit, not a pass.
 
+## Justify every file action before approval
+
+Before requesting approval for any batch, present one proposal row for every
+affected file and distinct action. Identify the exact path and relevant symbol,
+concrete change, specific reason, supporting evidence and source snapshot,
+expected effect on behavior and wiring, and unresolved uncertainties. Rows may
+reference a shared recorded snapshot. Multiple actions on the same file require
+separate rows; a general batch rationale or component decision does not replace
+each action's justification.
+
+Keep the approval-facing proposal in the canonical report using
+[the report contract](references/run-report.md#batch-approval-proposals).
+An incomplete proposal cannot be submitted for batch approval; do not execute an
+action lacking its justification. Material changes to approved actions, scope or
+rationale require renewed approval of the affected proposal under the existing
+mandate. Preserve the prior proposal and its approval reference.
+
 ## Batch loop within each macro-run
 
 1. Consult the existing graph before broad source exploration when relevant.
@@ -111,7 +128,8 @@ Use only authorized reads/checks; unavailable evidence is a limit, not a pass.
    select the canonical implementation.
 4. Propose small coherent batches by responsibility and shared consumers. Each
    has Batch-ID, candidate IDs, actions, allowlist, dependencies, expected wiring,
-   authorized checks and stop conditions. Obtain specific batch approval; reuse
+   authorized checks and stop conditions. Present the justified file/action
+   proposals before obtaining specific batch approval; reuse
    existing approval only for the same actions/scope. One writer owns a batch.
 5. Apply only that batch. Review diff and wiring independently, perform authorized
    checks/rescans, compare pre/post, and update the canonical run report using
