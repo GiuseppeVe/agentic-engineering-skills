@@ -8,7 +8,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `cavecrew` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-LICENSE` | Understand: investigation routing |
 | `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
-| `deslopping-cleanup` | None (optional specialist routes documented separately) | `LICENSE` and skill-local `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
+| `deslopping-cleanup` | None | `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
 | `codebase-design` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: module boundaries |
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
 | `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
@@ -33,5 +33,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `wayfinder` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: large-work map |
 | `writing-plans` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Plan: executable tasks |
 | `writing-skills` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Verify: skill behavior testing |
+
+`deslopping-cleanup` documents optional external specialist routes, not lock-declared dependencies. Its directory includes a portable skill-local copy of the repository MIT `LICENSE`; retain that copy when selectively redistributing the skill. See [dependencies and publication review](deslopping-cleanup.md) for route availability and fallbacks.
 
 After copying, preserve flat layout `<skills-root>/<name>/SKILL.md`. Re-run host discovery. For provenance meaning see [provenance](provenance.md); for modification rules see [customization](customization.md).
