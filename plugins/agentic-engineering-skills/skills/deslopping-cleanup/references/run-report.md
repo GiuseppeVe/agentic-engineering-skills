@@ -32,6 +32,9 @@ carrying a candidate forward.
   actual baseline comparison, drift and any required evidence refresh.
 - Scope, exclusions, pre-existing changes and authorization references.
 - Authorized batch actions, local commits and checks; unresolved decisions.
+- User-confirmed reference documents for intended features/integrations, their
+  authority and current snapshots; unanswered questions, missing documentation
+  and conflicts. Keep intended lifecycle status separate from actual reachability.
 - Specialist skill/guide references; tool versions/configurations; graph and scan
   snapshots/coverage; evidence locations and limitations.
 
@@ -67,6 +70,11 @@ An unintentionally lost live connection blocks batch closure and the next batch.
 Repair within the approved scope or return the problem for a decision. A retained
 component already disconnected gets a functional follow-up: intended caller,
 target contract, prerequisites, required changes and approval still needed.
+For intentionally pending integration, record its existing plan/status; do not
+treat the missing link as a defect or invent a repair mandate. Record the owner
+and documentation check from
+[the core rule](../SKILL.md#interpret-disconnected-components-with-the-owner).
+Unresolved intent remains `defer`, not an established removal candidate.
 Describing intended wiring neither proves it exists nor authorizes implementing it.
 
 ## Batch approval proposals

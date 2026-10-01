@@ -24,6 +24,30 @@ covering the selected batches and local commits. Preserve repository approval
 gates for remote actions. Neutral cleanup is the default: functional changes,
 migrations, new wiring, installs and expanded scope require a separate decision.
 
+## Interpret disconnected components with the owner
+
+"Disconnected" describes current reachability, not lifecycle status. It does not
+mean legacy, obsolete, dead or removable: a component may implement a new feature
+deliberately awaiting integration. A missing consumer or scanner finding alone
+does not distinguish planned work from abandoned or replaced code.
+
+Before classifying a disconnected candidate, ask the user which reference
+documents describe intended features and integrations, and which are authoritative
+and current. Examples include roadmaps, Wayfinder maps, README files, engineering
+guides and architecture decisions; no particular document type is required.
+Reuse explicit answers already supplied for the current scope; ask about missing
+authority, freshness or conflicting intent instead of repeating answered questions.
+Read the relevant documents and compare their stated intent with source, history
+and actual wiring. Documentation of a planned link does not prove it exists.
+
+Record the user's answer, document references/snapshots, intended status and actual
+reachability in the canonical report; pass this context to explorers and reviewers.
+Preserve intentionally pending integration and its existing plan. If the user has
+no reference documentation, record that gap and their explicit intent, if supplied.
+If the user has not answered and intent is unknown, or intent otherwise remains
+unresolved, mark the candidate `defer`. Do not assert removal is safe or
+wire it automatically; integration remains a separate approved functional change.
+
 ## Organize the cleanup campaign
 
 Use the hierarchy: campaign -> macro-runs -> coherent batches -> commits.
@@ -123,6 +147,7 @@ mandate. Preserve the prior proposal and its approval reference.
    for disagreements, then apply the controller evidence gate before choosing
    the strategy.
 3. Classify components as remove, retain or defer with reasons and counterproof.
+   For disconnected candidates, first apply the owner/documentation check above.
    Check dynamic/external consumers, alternate modes, contracts and migrations.
    An unused export can wrap a live internal function; names/recency do not
    select the canonical implementation.

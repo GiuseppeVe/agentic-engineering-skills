@@ -57,6 +57,9 @@ Every handoff contains Campaign-ID/Run-ID, repository/branch/worktree and source
 snapshot, the specific question, candidate IDs/files/symbols, relevant
 contracts/consumers, verified facts,
 uncertainties, scope/exclusions, allowed actions and the expected result.
+For disconnected candidates, include the user's reference-document answer,
+authoritative snapshots, intended integration status and unresolved questions from
+[the core rule](../SKILL.md#interpret-disconnected-components-with-the-owner).
 Every return identifies the question answered, verdict, evidence locations and
 snapshot, counterproof, remaining uncertainty and proposed next action.
 
