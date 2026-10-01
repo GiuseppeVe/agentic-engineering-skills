@@ -48,6 +48,13 @@
       "localRoot": "projectSkills"
     },
     {
+      "name": "deslopping-cleanup",
+      "sourceType": "original",
+      "localPath": "deslopping-cleanup/",
+      "license": "MIT",
+      "localRoot": "userSkills"
+    },
+    {
       "name": "codebase-design",
       "sourceType": "vendor",
       "repository": "https://github.com/mattpocock/skills",

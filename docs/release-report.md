@@ -1,5 +1,80 @@
 # Release verification report
 
+## Campaign and controller synchronization: 2026-10-01
+
+Payload commit: `8612af774e407e8800c0225d4b1b63983152a030`. The coordinator,
+routing and report now distinguish campaigns, variable macro-runs, batches and
+commits. The controller checks primary evidence before technical decisions,
+commits and run handoffs. README and pipeline SVG describe the same hierarchy.
+The lock records that payload commit and its directory SHA-256. This section owns
+the current payload receipt; earlier sections retain their historical snapshots.
+
+- Fresh isolated Codex 0.159.2 and Claude Code 2.1.260 installations contain 29
+  skills with matching source/cache tree hash
+  `sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af`.
+- `verify-installed-native.mjs` passed for each actual cache against the refreshed
+  receipt. Ordinary profiles and existing isolated validation profiles were not
+  changed. No installed cache was patched by hand.
+- Packaging verification, public audit and diff whitespace checks passed. The
+  refreshed SVG rendered and was visually inspected. Workspace skill copies were
+  compared byte-for-byte with the personal source and plugin payload.
+- The PATH Codex binary was 0.149.0; only its version was probed. Installation used
+  the explicitly selected app CLI 0.159.2, recorded in the receipt.
+- No unit/behavioral tests, fresh-session invocation or independent agent review
+  were performed for this synchronization. Earlier review applies to its recorded
+  head, not automatically to this revision. Remote push/CI/merge remain separate.
+
+## Earlier cleanup report-table correction: 2026-10-01
+
+Payload correction commit: `96de8e9986bcbd73356399d994088526b0180cfa`.
+The component-decision table now has seven delimiter cells matching its seven
+header cells; no field or workflow changed. At that revision the lock recorded
+this corrected payload commit and its directory SHA-256. This historical section
+superseded the initial addition receipt before the later campaign update.
+
+- Source and both actual native-installed caches contain 29 skills with tree hash
+  `sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1`.
+- Codex CLI `plugin add` refreshed the isolated installed payload. Claude CLI
+  `plugin update` reported the same version; uninstall/install in the isolated
+  profile then refreshed it. No cache files were manually patched.
+- `verify-installed-native.mjs` passed for both hosts against the refreshed receipt.
+- `node scripts/verify-pack.mjs` passed for all 29 lock entries and the refreshed
+  native receipt; `git diff --check` passed.
+- Unit/behavioral tests and fresh-session invocation were not performed for this
+  formatting correction. Remote publication remains subject to owner approval.
+
+## Earlier Deslopping Cleanup addition receipt: 2026-10-01
+
+Payload commit: `ddc76e94a40a648f152adec7138d505f7489b270`, based on
+`c6f8a0af0019257437e7661a6fa59bdfea46d571`. At that revision the lock recorded
+that payload commit and directory SHA-256 for the original coordinator. The newer
+correction receipt above owns the current payload hash; this earlier receipt
+preserves the initial addition's validation history.
+
+- 29 included/requested skills, zero excluded. Only the new skill payload is added;
+  existing vendor/adapted bytes and licenses are preserved.
+- Isolated native installations succeeded with Codex 0.159.2 and Claude Code
+  2.1.260. Both actual caches contain all 29 skills, including `deslopping-cleanup`,
+  with source tree hash
+  `sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac`.
+- `verify-installed-native.mjs` passed for each host against the refreshed tracked
+  receipt. Normal host configuration was not mutated. See the receipt for successful
+  invocations and limitations; raw retry captures remain outside the public payload.
+- Local payload hash validation passed for all 29 lock entries. The SVG pipeline
+  was rendered and visually inspected; the referenced local documents exist.
+- `node scripts/verify-pack.mjs`, `node scripts/audit-public.mjs` and
+  `git diff --check` passed locally. Independent review found no metadata or
+  pipeline inconsistency after the documented corrections.
+- Earlier native verification against the old receipt failed because its inventory
+  and tree hash were stale. Earlier Claude local-path registration attempts were
+  refused; successful installation followed the CLI-required declaration in the
+  temporary settings. No installed cache was manually patched to pass comparison.
+- Unit/behavioral tests, fresh-session skill invocation and upstream re-download
+  verification were not run for this addition. Publication and CI state are not
+  claimed here; remote actions remain subject to owner approval.
+
+Availability and scoped license assessment: [Deslopping Cleanup](deslopping-cleanup.md).
+
 ## Agent profile pack
 
 Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`.
@@ -16,7 +91,7 @@ Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123
 
 Hashes cover exact UTF-8 bytes at paths recorded in `manifests/agent-profiles.json`. Provenance, MIT license, and notice references remain joined to existing Cavecrew attribution.
 
-## Validation receipt
+## Historical validation receipt
 
 Latest clean-clone gate validated implementation SHA `5320e2a`.
 

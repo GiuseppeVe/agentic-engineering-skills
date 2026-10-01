@@ -5,6 +5,7 @@ export const expectedSkills = [
   "cleaning-repo-with-knip",
   "codebase-design",
   "domain-modeling",
+  "deslopping-cleanup",
   "grill-me",
   "grilling",
   "orientated-e2e-testing-v5-2",
