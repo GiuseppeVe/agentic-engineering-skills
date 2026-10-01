@@ -24,6 +24,7 @@ jobs:
           cache: npm
       - name: Initialize isolated host profiles
         run: |
+          mkdir -p "$RUNNER_TEMP/codex-home" "$RUNNER_TEMP/claude-home"
           echo "CODEX_HOME=$RUNNER_TEMP/codex-home" >> "$GITHUB_ENV"
           echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-home" >> "$GITHUB_ENV"
       - name: Install Codex CLI

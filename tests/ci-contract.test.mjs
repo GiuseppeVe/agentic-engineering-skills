@@ -27,6 +27,7 @@ test("CI setup and executable gates are unique and ordered", async () => {
   assert.equal(checkout?.with?.["fetch-depth"], 0, "pack verification needs historic release commits");
   const profiles = steps.find(step => step.name === "Initialize isolated host profiles");
   assert.equal(profiles?.run.trim(), [
+    'mkdir -p "$RUNNER_TEMP/codex-home" "$RUNNER_TEMP/claude-home"',
     'echo "CODEX_HOME=$RUNNER_TEMP/codex-home" >> "$GITHUB_ENV"',
     'echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-home" >> "$GITHUB_ENV"',
   ].join("\n"));
