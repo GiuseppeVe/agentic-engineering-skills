@@ -56,6 +56,19 @@ then receives its own local commit before the next batch starts. The campaign
 report records run baselines, closure/acceptance criteria, controller verdicts and
 handoffs; new residuals can justify another run without prescribing a fixed count.
 
+The skill also helps determine whether a component is superseded, belongs to an
+older implementation, or still serves a current or planned responsibility. It
+combines semantic inference with source and history checks, actual consumers,
+replacement behavior, compatibility requirements and intended functionality.
+Before classifying disconnected components, it asks the owner which reference
+documents describe that intent and which are authoritative and current, then
+compares them with actual wiring. This adds context to static findings and makes
+removal, retention and deferral proposals more precise and easier to judge.
+
+An older name or a newer alternative alone does not establish obsolescence;
+disconnected code may be a new feature deliberately awaiting integration.
+Unresolved intent remains deferred rather than being presented as safe to remove.
+
 ![Deslopping Cleanup pipeline: reviewed evidence, approved batches, report and commit checkpoints](assets/deslopping-cleanup-pipeline.svg)
 
 Specialists remain distinct. `cleaning-repo-with-knip` is included; Graphify,
