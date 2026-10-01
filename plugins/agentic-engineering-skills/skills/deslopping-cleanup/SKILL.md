@@ -24,6 +24,34 @@ covering the selected batches and local commits. Preserve repository approval
 gates for remote actions. Neutral cleanup is the default: functional changes,
 migrations, new wiring, installs and expanded scope require a separate decision.
 
+## Organize the cleanup campaign
+
+Use the hierarchy: campaign -> macro-runs -> coherent batches -> commits.
+A macro-run answers a distinct analysis question on a recorded source snapshot;
+it includes discovery, independent review, decisions and any authorized cleanup.
+Its batches are execution units, not additional macro-runs or chat sessions.
+
+Propose an ordered campaign based on the repository's evidence gaps and dependency
+changes. Give each macro-run a Run-ID, objective, input baseline, primary strategy,
+supporting specialists, scope, expected output and closure/acceptance criteria.
+Explain what its strategy adds to the preceding run. Select the number and order
+from those needs; a small task may need one run. Use the suggested progression in
+[specialist routing](references/specialist-routing.md), adapting it to the mandate.
+
+For cumulative cleanup, the next macro-run starts from the preceding run's verified
+output and recorded acceptance under the current mandate. Verify the actual tree,
+commits and relevant map/scan freshness; inherited summaries do not prove readiness.
+Carry retained/deferred candidates forward with their evidence and stable IDs,
+but re-evaluate changed consumers and confirm authorization for the new snapshot.
+Earlier approvals do not automatically cover newly discovered actions.
+
+After each run, reconcile its outcomes and revise the remaining campaign. New
+orphans may justify another strategy or run; a routine rescan inside a batch does
+not require one. Record why a run is added, skipped or reordered. An architectural
+detachment that changes behavior requires a separate approved mandate; only then
+can its verified result feed a new cleanup run. No scanner finding authorizes
+severing a live connection merely to create removable code.
+
 ## Route specialists by phase
 
 Before selecting a specialist, consult
@@ -35,7 +63,37 @@ and the current mandate. Missing specialists use the documented fallback; missin
 necessary evidence keeps the candidate uncertain. This reference does not load
 or install other skills automatically.
 
-## Run loop
+## Controller evidence gate
+
+The coordinator acts as controller and owns the final technical reconciliation.
+Explorer and reviewer verdicts remain claims until the controller checks the
+material evidence used for decisions. This gate does not grant owner approval.
+
+Apply it after exploration review before choosing batches, after diff review
+before committing a batch, and at run closure before handing off its baseline:
+
+- Read the relevant source, configuration, history or actual command evidence
+  directly. Confirm files/symbols exist, cited locations and counts are accurate,
+  and the verdict concerns the requested object: file, export, function or type.
+- Trace decisive consumers, entrypoints and dynamic wiring. Check whether evidence
+  supports removal, retention or uncertainty; distinguish replaced code from code
+  never connected and intended wiring from actual wiring. Agreement between agents
+  or scanners does not establish correctness.
+- Resolve full revisions through Git; compare evidence snapshots with the actual
+  tree. After writing, inspect actual changed files/blobs against the allowlist,
+  approved actions and expected wiring. Read check results and their scope/revision;
+  a reviewer saying "passed" does not substitute for the recorded result.
+- Resolve conflicting claims using primary evidence. Return a bounded question to
+  the relevant specialist/reviewer when needed, then check the answer. Record agent
+  errors and corrections. Missing proof remains uncertain; a contradicted claim or
+  pending required check blocks the affected decision or closure.
+
+Record controller checks, evidence locations, snapshot, resolved disagreements
+and technical verdict in the report. Scope checks to decision-bearing claims and
+changed surfaces; do not repeat broad exploration or rerun every check by default.
+Use only authorized reads/checks; unavailable evidence is a limit, not a pass.
+
+## Batch loop within each macro-run
 
 1. Consult the existing graph before broad source exploration when relevant.
    Give explorers bounded questions. Handoffs contain snapshot, scope,
@@ -45,7 +103,8 @@ or install other skills automatically.
 2. Have independent reviewers check material exploration claims against sources.
    Reuse specialists for targeted discovery or specific evidence gaps;
    reconcile new findings with reviewed facts. Repeat targeted investigation
-   for disagreements before choosing the strategy.
+   for disagreements, then apply the controller evidence gate before choosing
+   the strategy.
 3. Classify components as remove, retain or defer with reasons and counterproof.
    Check dynamic/external consumers, alternate modes, contracts and migrations.
    An unused export can wrap a live internal function; names/recency do not
@@ -58,6 +117,7 @@ or install other skills automatically.
    checks/rescans, compare pre/post, and update the canonical run report using
    [the report contract](references/run-report.md). Failed checks, contradicted
    claims or an unintentionally broken live connection keep the batch open.
+   The controller checks the actual diff and review/check evidence before commit.
 6. Commit each approved, verified batch immediately before starting the next.
    Stage only its changes and report update; inspect the staged diff to exclude
    unrelated work. Use the Batch-ID in report and commit message. Compare the
@@ -71,7 +131,8 @@ in the report and working tree. A separately authorized WIP commit is labelled
 and correct within mandate; assess any revert against
 later dependencies and preserve unrelated changes. No automatic destructive reset.
 
-Close with removed/retained/deferred components, wiring residuals, batch SHAs,
-checks and limits. Update Graphify only through authorized, configured incremental
+Close each macro-run with its output baseline, review/check state, controller
+verdict, acceptance and handoff. Close the campaign with run outcomes, removed/retained/deferred components,
+wiring residuals, batch SHAs, checks and limits. Update Graphify only through authorized, configured incremental
 maintenance; record stale portions. Push/merge obey the current repository and
 environment approval policy. Skill invocation alone grants no deletion or remote authority.

@@ -68,6 +68,12 @@ when applicable. Missing optional tooling does not authorize installation. Missi
 required evidence keeps a candidate uncertain or its batch open. New wiring and
 functional changes are separate decisions from neutral cleanup.
 
+A campaign sequences complementary macro-runs with recorded input/output baselines,
+questions and closure/acceptance criteria. Run count is variable. The controller
+checks decision-bearing source claims after independent review and checks actual
+diffs and gate evidence before commit and run handoff. Specialist consensus does
+not replace that technical gate or owner authorization.
+
 Each approved, verified batch includes its report update and local commit before
 the next batch. A resulting SHA is recorded in a later report update to avoid
 commit self-reference. Publishing or merging remains subject to the host and

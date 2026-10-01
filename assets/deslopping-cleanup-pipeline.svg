@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 840" role="img" aria-labelledby="title desc">
   <title id="title">Deslopping Cleanup pipeline</title>
-  <desc id="desc">A numbered block pipeline: establish scope, explore, independently review facts, use relevant specialists, reconcile the strategy, approve a batch, apply it, review and check it, update the report, commit the verified batch, then explore the next batch or close the run. Failed checks return to repair. Uncertain candidates stay out of approved removals. Remote publication requires separate authorization.</desc>
+  <desc id="desc">A numbered block pipeline: establish scope, explore, independently review facts, use relevant specialists, reconcile the strategy, approve a batch, apply it, review and check it, update the report, commit the verified batch, then explore the next batch, close the macro-run or hand verified output to the next complementary run. The campaign has no fixed run count. The controller checks material claims, actual diffs and gate evidence. Failed checks return to repair. Uncertain candidates stay out of approved removals. Remote publication requires separate authorization.</desc>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#9b4b42"/></marker>
     <marker id="repair" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#8a553d"/></marker>
@@ -16,11 +16,17 @@
       .feedback { fill: none; stroke: #8a553d; stroke-width: 1.6; stroke-dasharray: 5 4; marker-end: url(#repair); }
     </style>
   </defs>
-  <rect width="1200" height="700" rx="12" fill="#f4efe8"/>
+  <rect width="1200" height="840" rx="12" fill="#f4efe8"/>
   <text x="48" y="42" font-size="12" font-weight="800" letter-spacing="2" fill="#9b4b42">DESLOPPING-CLEANUP</text>
-  <text x="48" y="82" font-size="32" font-weight="700">Evidence → reviewed batches → recoverable commits</text>
-  <text x="48" y="109" class="detail">Read left to right, then follow the numbered path. Use only specialists relevant to the open question.</text>
+  <text x="48" y="82" font-size="32" font-weight="700">Campaign → macro-runs → batches → commits</text>
+  <text x="48" y="109" class="detail">Variable run count. Complementary strategies consume verified output; the numbered loop operates within each run.</text>
 
+  <rect class="gate" x="48" y="132" width="1108" height="104" rx="8"/>
+  <text class="number" x="66" y="155">CAMPAIGN PLAN · VARIABLE MACRO-RUNS</text>
+  <text x="66" y="178" font-size="18" font-weight="700">Run objective + strategy → reviewed evidence → verified output → next justified strategy</text>
+  <text class="detail" x="66" y="201">Combine, skip or revisit strategies when evidence warrants it. Record baseline, closure criteria and acceptance.</text>
+  <text class="detail" x="66" y="223">Controller checks primary sources, actual diff scope and gate evidence before decisions, commits and handoffs.</text>
+  <g transform="translate(0 120)">
   <path class="edge" d="M298 201H334"/><path class="edge" d="M584 201H620"/>
   <path class="edge" d="M870 201H906"/><path class="edge" d="M1031 248V330"/>
   <path class="edge" d="M906 377H870"/><path class="edge" d="M620 377H584"/>
@@ -32,23 +38,24 @@
   <text x="246" y="461" class="detail">Failure: repair and recheck</text>
   <path class="feedback" d="M745 506V484H20V132H459V154"/>
   <rect x="605" y="472" width="264" height="25" rx="4" fill="#f4efe8"/>
-  <text x="620" y="489" class="detail">More work: explore the next batch</text>
+  <text x="620" y="489" class="detail">More work: explore next batch/run</text>
   <text x="878" y="541" font-size="11" fill="#587a62">Done</text>
 
   <g transform="translate(48 154)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">01 · ESTABLISH</text><text class="label" x="18" y="49">Scope and snapshot</text><text class="detail" x="18" y="72">Mandate, base SHA, existing work</text></g>
   <g transform="translate(334 154)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">02 · EXPLORE</text><text class="label" x="18" y="49">Gather bounded facts</text><text class="detail" x="18" y="72">Graph, sources, raw scan candidates</text></g>
   <g transform="translate(620 154)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">03 · REVIEW</text><text class="label" x="18" y="49">Challenge the findings</text><text class="detail" x="18" y="72">Independent source verification</text></g>
   <g transform="translate(906 154)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">04 · SPECIALISTS</text><text class="label" x="18" y="49">Resolve evidence gaps</text><text class="detail" x="18" y="72">Graphify · Desloppify · Knip · Cruiser</text></g>
-  <g transform="translate(906 330)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">05 · RECONCILE</text><text class="label" x="18" y="49">Choose the strategy</text><text class="detail" x="18" y="72">Remove · retain · defer; review new facts</text></g>
+  <g transform="translate(906 330)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">05 · RECONCILE</text><text class="label" x="18" y="49">Controller gate</text><text class="detail" x="18" y="72">Sources, consumers, disagreements</text></g>
   <g transform="translate(620 330)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">06 · APPROVE</text><text class="label" x="18" y="49">Authorize one batch</text><text class="detail" x="18" y="72">IDs, allowlist, dependencies, checks</text></g>
   <g transform="translate(334 330)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">07 · APPLY</text><text class="label" x="18" y="49">Make scoped changes</text><text class="detail" x="18" y="72">One writer; preserve live connections</text></g>
-  <g transform="translate(48 330)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">08 · VERIFY</text><text class="label" x="18" y="49">Review and check</text><text class="detail" x="18" y="72">Diff, wiring, authorized checks, pre/post</text></g>
-  <g transform="translate(48 506)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">09 · RECORD</text><text class="label" x="18" y="49">Update the run report</text><text class="detail" x="18" y="72">Decisions, actual links, future follow-ups</text></g>
+  <g transform="translate(48 330)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">08 · VERIFY</text><text class="label" x="18" y="49">Review and check</text><text class="detail" x="18" y="72">Diff, wiring, checks; controller gate</text></g>
+  <g transform="translate(48 506)"><rect class="box" width="250" height="94" rx="8"/><text class="number" x="18" y="23">09 · RECORD</text><text class="label" x="18" y="49">Update campaign report</text><text class="detail" x="18" y="72">Decisions, actual links, future follow-ups</text></g>
   <g transform="translate(334 506)"><rect class="finish" width="250" height="94" rx="8"/><text class="number" x="18" y="23">10 · CHECKPOINT</text><text class="label" x="18" y="49">Commit this batch</text><text class="detail" x="18" y="72">Batch-ID; confirm validated content</text></g>
-  <g transform="translate(620 506)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">11 · CONTINUE?</text><text class="label" x="18" y="49">Next batch or closure</text><text class="detail" x="18" y="72">Only after the verified local commit</text></g>
+  <g transform="translate(620 506)"><rect class="gate" width="250" height="94" rx="8"/><text class="number" x="18" y="23">11 · CONTINUE?</text><text class="label" x="18" y="49">Next batch / run / close</text><text class="detail" x="18" y="72">Next run needs accepted output</text></g>
   <g transform="translate(906 506)"><rect class="finish" width="250" height="94" rx="8"/><text class="number" x="18" y="23">12 · CLOSE</text><text class="label" x="18" y="49">Deliver traceable results</text><text class="detail" x="18" y="72">SHAs, residuals, checks and limits</text></g>
 
   <path d="M48 632H1156" stroke="#cdbfaf"/>
   <text x="48" y="659" class="detail">Uncertain claims stay open. New wiring is a separate decision. Remote publication follows the approval policy.</text>
   <text x="48" y="682" font-size="11" fill="#776c63">Original workflow artwork · MIT · No automatic installation, deletion, push or merge</text>
+  </g>
 </svg>

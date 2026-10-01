@@ -5,6 +5,35 @@ The core owns phase order, decisions, batch boundaries and commits. Specialist
 skills own their analysis procedures; this file defines handoffs, not copies of
 those procedures. Select only routes relevant to the repository and task.
 
+## Suggested progression across macro-runs
+
+Build a sequence of complementary analysis strategies, not a checklist of tools.
+The following progression is a planning aid; it does not fix a run count or require
+every strategy. Combine strategies when one bounded question suffices; separate
+them when they need different baselines, decisions or closure gates.
+
+- **Established candidates first:** when removals are already supported by reviewed
+  evidence, validate that evidence on the current tree and execute only approved
+  batches. Their verified output becomes the discovery baseline.
+- **Responsibility and symbol discovery:** use Graphify for orientation where
+  relevant, then Desloppify/source investigation for intra-file remnants and
+  overlapping implementations. Use cleaning-repo-with-knip to corroborate applicable
+  static claims. Independent review reconciles findings with actual consumers.
+- **Entrypoint reachability on the updated tree:** use Dependency Cruiser or native
+  equivalents to investigate module paths and boundaries left after earlier cleanup.
+  Distinguish production, test and dynamic/external consumers; cross-check with Knip
+  and sources. This strategy exposes different gaps from symbol discovery.
+- **Cascading residuals:** after verified removals, or a separately approved and
+  verified architectural detachment, rescan affected dependencies and symbols.
+  Review newly orphaned code, tests, configuration and documentation before planning
+  further batches. Preserve shared responsibilities and protected components.
+
+At each transition state what changed in the source tree, which question is now
+answerable, and why the next strategy is useful. Revisit an earlier strategy when
+new evidence warrants it. Graphify and Knip can support several runs without being
+standalone runs. Lint/typecheck/tests remain authorized verification gates; they
+do not establish that discovery is exhaustive.
+
 ## Locate and prepare
 
 1. Identify the open question and existing evidence. Choose a route below.
@@ -18,11 +47,15 @@ those procedures. Select only routes relevant to the repository and task.
    requiring explicit user invocation is not implicitly authorized by this router.
 4. Give the specialist a bounded handoff. Use authorized subagents when delegation
    is appropriate; reading a specialist skill does not itself create a subagent.
-5. Review the returned evidence, record its provenance and limits in the run report,
-   and reconcile disagreements before choosing removal, retention or deferral.
+5. Review returned evidence and apply the core's
+   [controller evidence gate](../SKILL.md#controller-evidence-gate). Record provenance,
+   controller checks and limits in the report; resolve material disagreements before
+   choosing removal, retention or deferral. A specialist/reviewer verdict alone does
+   not close that gate.
 
-Every handoff contains repository/branch/worktree and source snapshot, the specific
-question, candidate IDs/files/symbols, relevant contracts/consumers, verified facts,
+Every handoff contains Campaign-ID/Run-ID, repository/branch/worktree and source
+snapshot, the specific question, candidate IDs/files/symbols, relevant
+contracts/consumers, verified facts,
 uncertainties, scope/exclusions, allowed actions and the expected result.
 Every return identifies the question answered, verdict, evidence locations and
 snapshot, counterproof, remaining uncertainty and proposed next action.

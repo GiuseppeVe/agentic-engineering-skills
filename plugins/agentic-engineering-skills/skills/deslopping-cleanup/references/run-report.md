@@ -1,7 +1,7 @@
-# Canonical report for one cleanup run
+# Canonical report for one cleanup campaign
 
 Reuse the repository's existing canonical cleanup report. Otherwise, for an
-authorized execution run, create `docs/cleanup/runs/<run-id>.md` in that repository.
+authorized campaign, create `docs/cleanup/runs/<campaign-id>.md` in that repository.
 Analysis-only runs return the proposed report in the response unless writing
 documentation was requested. This report records evidence and execution; it does
 not replace the project's source-of-truth documents or approved product decisions.
@@ -10,9 +10,26 @@ Use the sections below as the report's contract. Start with known facts and add
 rows as investigation proceeds; explicitly mark unknown or pending information.
 Preserve dated corrections and failed attempts instead of erasing their history.
 
+## Campaign and macro-run plan
+
+- Campaign-ID, overall objective, repository scope and initial baseline.
+- Ordered Run-IDs with objective, analysis strategy, complementary specialists,
+  required predecessor output, expected result and closure/acceptance criteria.
+- Reasons for that sequence and for later additions, skips or reordering.
+- Overall state, accepted run outputs and remaining dependencies/decisions.
+
+Keep one canonical campaign index. If the repository already uses separate run
+reports, link them from that index instead of duplicating their detailed evidence.
+Otherwise repeat the sections below for each Run-ID in the same report. Qualify
+batch and finding references by their owning run; record cross-run provenance when
+carrying a candidate forward.
+
 ## Run and mandate
 
-- Run-ID; repository and root; branch/worktree; full base SHA; start/update dates.
+- Campaign-ID and Run-ID; objective and primary strategy; start/update dates.
+- Repository and root; branch/worktree; full input SHA and relevant content digest.
+- Predecessor Run-ID/output, closure evidence and acceptance reference, where needed;
+  actual baseline comparison, drift and any required evidence refresh.
 - Scope, exclusions, pre-existing changes and authorization references.
 - Authorized batch actions, local commits and checks; unresolved decisions.
 - Specialist skill/guide references; tool versions/configurations; graph and scan
@@ -54,12 +71,16 @@ Describing intended wiring neither proves it exists nor authorizes implementing 
 
 ## Batch journal
 
-For each Batch-ID record:
+For each Batch-ID record its owning Run-ID, then:
 
 1. Candidate IDs/actions; allowlist; owner approval reference; base SHA; dependencies.
 2. Before/after inventory and wiring; diff manifest identifying validated blobs
    or equivalent reproducible content digest; unrelated changes excluded.
-3. Exploration and independent review conclusions, disagreements and resolutions.
+3. Exploration and independent review conclusions; controller checks of material
+   claims against primary sources or actual command evidence, with snapshot and
+   evidence locations; disagreements, agent errors, corrections and technical
+   verdict. Separate reviewer conclusions from controller verification and owner
+   approval; missing proof or required checks remain pending.
 4. Each authorized check/rescan: command, scope, revision/content checked, result,
    evidence location, pending/failed/skipped status and reason.
 5. Report update, local commit subject/Batch-ID and resulting full SHA when known;
@@ -75,7 +96,21 @@ Document report changes made after checks separately; changed validated code
 requires renewed relevant verification. Never attribute results to a new SHA merely
 because only documentation or formatting appears to have changed.
 
-## Closure
+## Run closure and handoff
+
+Record the full output SHA and relevant content digest, strategy/question answered,
+new and resolved findings, review/check state, controller reconciliation and its
+evidence/limits, closure criteria and acceptance
+reference under the current mandate. Identify residuals carried forward, protected
+components, authorized scope and next-run question/input. A failed required gate
+leaves the run open; deferred items may remain when explicitly compatible with its
+closure criteria. Do not transfer an approval to new actions by implication.
+
+## Campaign closure
+
+Summarize all Run-IDs, objectives, input/output baselines and closure/acceptance
+states; explain any skipped or added runs and remaining follow-ups. Distinguish
+completion of the campaign's agreed scope from exhaustive absence of dead code.
 
 Summarize removed, retained, deferred and restored components; open connections;
 functional follow-ups; all cleanup batch IDs/full SHAs; check/review state and limits;

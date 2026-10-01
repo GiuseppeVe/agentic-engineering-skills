@@ -45,11 +45,16 @@ I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `C
 ### Deslopping Cleanup
 
 [`deslopping-cleanup`](plugins/agentic-engineering-skills/skills/deslopping-cleanup/SKILL.md)
-coordinates behavior-preserving repository cleanup. Explorers gather facts;
-independent reviewers challenge them; specialist analyses resolve gaps before a
-removal strategy is approved. Each verified batch updates a cumulative report of
+coordinates behavior-preserving repository cleanup as a campaign of macro-runs,
+coherent batches and recoverable commits. Run count and strategy order follow
+evidence gaps: each cumulative run consumes the preceding verified output and
+answers a complementary question. Explorers gather facts; independent reviewers
+challenge them; the controller directly checks decisive source claims, consumer
+links, diff scope and gate evidence before approving the technical conclusions. Each verified batch updates a cumulative report of
 removed, retained and deferred components and their actual or intended connections,
-then receives its own local commit before the next batch starts.
+then receives its own local commit before the next batch starts. The campaign
+report records run baselines, closure/acceptance criteria, controller verdicts and
+handoffs; new residuals can justify another run without prescribing a fixed count.
 
 ![Deslopping Cleanup pipeline: reviewed evidence, approved batches, report and commit checkpoints](assets/deslopping-cleanup-pipeline.svg)
 
