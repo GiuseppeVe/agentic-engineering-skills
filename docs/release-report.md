@@ -1,13 +1,38 @@
 # Release verification report
 
-## Campaign and controller synchronization: 2026-10-01
+## Action rationale synchronization: 2026-10-01
+
+Payload commit: `4d09e6571f3e77ba5d033510e91d8e79c4400fd7`, based on
+`dd6cf156e117ad5ce162ccd925359036fd5f4c5b`. Before batch approval, each file
+now gets a distinct action proposal with reasons, primary evidence and snapshot,
+behavior/wiring impact and uncertainty. Incomplete proposals block approval and execution;
+material changes require renewed approval. The lock
+records this payload commit and directory SHA-256
+`5cbec3ce61c4b3495e71ec734ed2ec5ba26bfac95720133765e1bf7b4853e8b2`.
+This section owns the current native receipt; sections below preserve historical
+validation snapshots and their exact payload revisions.
+
+- Fresh isolated WSL Ubuntu-24.04 installations using Node.js 22.23.1, Codex CLI
+  0.141.0 and Claude Code 2.1.201 succeeded through official marketplace commands.
+- Both actual native caches contain all 29 skills and match the source tree hash
+  `sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230`.
+  Cache roots were located with `locateInstalledPayload` and inventories/bytes
+  independently inspected with `inspectInstalledPayload` before receipt refresh.
+- HOME, npm global prefix, CODEX_HOME and CLAUDE_CONFIG_DIR were fresh temporary
+  directories. Normal profiles were untouched; no installed cache was patched.
+- Existing CI commands are replayed separately against the final metadata commit
+  with a full-history isolated WSL checkout. Durable command/status logs remain
+  outside the public payload. This receipt itself makes no fresh-session skill
+  invocation or behavioral correctness claim. Remote publication remains separate.
+
+## Earlier campaign and controller synchronization: 2026-10-01
 
 Payload commit: `8612af774e407e8800c0225d4b1b63983152a030`. The coordinator,
 routing and report now distinguish campaigns, variable macro-runs, batches and
 commits. The controller checks primary evidence before technical decisions,
 commits and run handoffs. README and pipeline SVG describe the same hierarchy.
-The lock records that payload commit and its directory SHA-256. This section owns
-the current payload receipt; earlier sections retain their historical snapshots.
+The lock records that payload commit and its directory SHA-256. This historical section records the campaign payload receipt; the action rationale
+section above owns the current receipt.
 
 - Fresh isolated Codex 0.159.2 and Claude Code 2.1.260 installations contain 29
   skills with matching source/cache tree hash
@@ -47,8 +72,7 @@ superseded the initial addition receipt before the later campaign update.
 
 Payload commit: `ddc76e94a40a648f152adec7138d505f7489b270`, based on
 `c6f8a0af0019257437e7661a6fa59bdfea46d571`. At that revision the lock recorded
-that payload commit and directory SHA-256 for the original coordinator. The newer
-correction receipt above owns the current payload hash; this earlier receipt
+that payload commit and directory SHA-256 for the original coordinator. The correction receipt above superseded this payload hash; this earlier receipt
 preserves the initial addition's validation history.
 
 - 29 included/requested skills, zero excluded. Only the new skill payload is added;
