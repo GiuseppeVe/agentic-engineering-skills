@@ -1,11 +1,31 @@
 # Release verification report
 
-## Deslopping Cleanup addition: 2026-10-01
+## Cleanup report-table correction: 2026-10-01
+
+Payload correction commit: `96de8e9986bcbd73356399d994088526b0180cfa`.
+The component-decision table now has seven delimiter cells matching its seven
+header cells; no field or workflow changed. The lock records this corrected
+payload commit and its directory SHA-256. This section supersedes the earlier
+addition receipt below for the current payload hash.
+
+- Source and both actual native-installed caches contain 29 skills with tree hash
+  `sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1`.
+- Codex CLI `plugin add` refreshed the isolated installed payload. Claude CLI
+  `plugin update` reported the same version; uninstall/install in the isolated
+  profile then refreshed it. No cache files were manually patched.
+- `verify-installed-native.mjs` passed for both hosts against the refreshed receipt.
+- `node scripts/verify-pack.mjs` passed for all 29 lock entries and the refreshed
+  native receipt; `git diff --check` passed.
+- Unit/behavioral tests and fresh-session invocation were not performed for this
+  formatting correction. Remote publication remains subject to owner approval.
+
+## Earlier Deslopping Cleanup addition receipt: 2026-10-01
 
 Payload commit: `ddc76e94a40a648f152adec7138d505f7489b270`, based on
-`c6f8a0af0019257437e7661a6fa59bdfea46d571`. The lock records that actual payload
-commit and directory SHA-256 for the original coordinator. This section supersedes
-the historical validation receipt below for the current skill inventory.
+`c6f8a0af0019257437e7661a6fa59bdfea46d571`. At that revision the lock recorded
+that payload commit and directory SHA-256 for the original coordinator. The newer
+correction receipt above owns the current payload hash; this earlier receipt
+preserves the initial addition's validation history.
 
 - 29 included/requested skills, zero excluded. Only the new skill payload is added;
   existing vendor/adapted bytes and licenses are preserved.

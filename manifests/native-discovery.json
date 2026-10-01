@@ -6,11 +6,12 @@
     "isolation": "Separate temporary Windows profiles; USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME and CLAUDE_CONFIG_DIR configured only on child processes. Child Git configuration sets core.autocrlf=false.",
     "normalHostConfigMutated": false,
     "commandNotation": "$S denotes the local repository root; $CODEX_CACHE and $CLAUDE_CACHE denote native-installed plugin roots. Raw exact command captures and retry failures are retained outside the public payload.",
-    "claudeMarketplaceDeclaration": "extraKnownMarketplaces.agentic-engineering-skills.source = directory at $S, in the temporary user settings only, as required by the CLI."
+    "claudeMarketplaceDeclaration": "extraKnownMarketplaces.agentic-engineering-skills.source = directory at $S, in the temporary user settings only, as required by the CLI.",
+    "payloadRefresh": "2026-10-01 table-delimiter correction at 96de8e9986bcbd73356399d994088526b0180cfa. Previous hash sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac. Codex CLI add refreshed the installed payload; Claude update reported the same version, so the isolated installation was removed and installed again using its CLI. No installed cache files were manually patched."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
+    "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -48,7 +49,7 @@
       "version": "codex-cli 0.159.2",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
+        "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -134,6 +135,10 @@
           "exitCode": 0
         },
         {
+          "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json",
+          "exitCode": 0
+        },
+        {
           "command": "node scripts/verify-installed-native.mjs --host codex --installed-root $CODEX_CACHE",
           "exitCode": 0
         }
@@ -148,7 +153,7 @@
       "version": "2.1.260 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac",
+        "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -231,6 +236,18 @@
         },
         {
           "command": "claude plugin list --json",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin update agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin uninstall agentic-engineering-skills@agentic-engineering-skills --scope user",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
           "exitCode": 0
         },
         {

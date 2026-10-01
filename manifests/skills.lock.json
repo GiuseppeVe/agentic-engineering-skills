@@ -78,8 +78,8 @@
     {
       "name": "deslopping-cleanup",
       "sourceType": "original",
-      "localSha256": "c7dfe98e354bbdb334df7f6a560a3085a5677984d36c7f3353a1a70dc88f4080",
-      "releaseCommit": "ddc76e94a40a648f152adec7138d505f7489b270",
+      "localSha256": "ba6757bbca53eda079bb5ae219863c27d8fb8847f59cb962acfffbd8bb56a640",
+      "releaseCommit": "96de8e9986bcbd73356399d994088526b0180cfa",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
