@@ -13,9 +13,33 @@ Machine-verifiable native evidence lives in schema-v2 `manifests/native-discover
 
 Validated versions: Codex CLI 0.141.0 and Claude Code 2.1.201. On Windows, set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` together for every isolated host command. Codex 0.141.0 isolates marketplace and plugin state this way. Its model-visible skill catalogue still has a 2% context budget, so large ambient catalogues can truncate one-shot enumeration; use small fresh-session batches when checking named skills.
 
-## Cleanup addition: 2026-10-01
+## Current disconnected-code safeguard receipt: 2026-10-01
 
-The current tracked receipt records isolated local installation with Codex CLI
+The current tracked receipt records fresh isolated WSL Ubuntu-24.04 installs using
+Node.js 22.23.1, Codex CLI 0.141.0 and Claude Code 2.1.201 at payload commit
+`723d93389aab2b5eb6ffd4ce5366d0e754d8c1fc`. Both actual installed caches contain
+29 skills with source-matching tree hash
+`sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc`.
+Actual cache inventories and hashes prove native packaging fidelity; both native
+verifiers passed after receipt refresh in the same WSL process. Fresh-session
+skill invocation was not performed. Fresh HOME, npm prefix, CODEX_HOME and
+CLAUDE_CONFIG_DIR isolated every command; normal profiles were untouched.
+
+## Historical action rationale receipt: 2026-10-01
+
+The earlier action rationale receipt recorded fresh isolated WSL Ubuntu-24.04 installs
+using Node.js 22.23.1, Codex CLI 0.141.0 and Claude Code 2.1.201 at payload commit
+`4d09e6571f3e77ba5d033510e91d8e79c4400fd7`. Both actual installed caches contain
+29 skills with source-matching tree hash
+`sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230`.
+Cache inventory and hashes prove native packaging fidelity; fresh-session skill
+invocation was not performed. Fresh HOME, npm prefix, CODEX_HOME and
+CLAUDE_CONFIG_DIR isolate every host command. Normal profiles were untouched.
+
+## Historical cleanup addition receipt: 2026-10-01
+
+The earlier Windows receipt at payload commit `8612af774e407e8800c0225d4b1b63983152a030`
+recorded isolated local installation with Codex CLI
 0.159.2 and Claude Code 2.1.260, and actual installed-cache inventories/hashes for
 all 29 skills. Child-only Git configuration disables CRLF conversion for byte-exact
 payload comparison. Claude required declaring the local directory marketplace

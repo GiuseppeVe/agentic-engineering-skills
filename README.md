@@ -50,11 +50,24 @@ coherent batches and recoverable commits. Run count and strategy order follow
 evidence gaps: each cumulative run consumes the preceding verified output and
 answers a complementary question. Explorers gather facts; independent reviewers
 challenge them; the controller directly checks decisive source claims, consumer
-links, diff scope and gate evidence before approving the technical conclusions. Each verified batch updates a cumulative report of
+links, diff scope and gate evidence before approving the technical conclusions. Before batch approval, every proposed file/action receives its own rationale, evidence, expected wiring impact and uncertainty in the run report. Each verified batch updates a cumulative report of
 removed, retained and deferred components and their actual or intended connections,
 then receives its own local commit before the next batch starts. The campaign
 report records run baselines, closure/acceptance criteria, controller verdicts and
 handoffs; new residuals can justify another run without prescribing a fixed count.
+
+The skill also helps determine whether a component is superseded, belongs to an
+older implementation, or still serves a current or planned responsibility. It
+combines semantic inference with source and history checks, actual consumers,
+replacement behavior, compatibility requirements and intended functionality.
+Before classifying disconnected components, it asks the owner which reference
+documents describe that intent and which are authoritative and current, then
+compares them with actual wiring. This adds context to static findings and makes
+removal, retention and deferral proposals more precise and easier to judge.
+
+An older name or a newer alternative alone does not establish obsolescence;
+disconnected code may be a new feature deliberately awaiting integration.
+Unresolved intent remains deferred rather than being presented as safe to remove.
 
 ![Deslopping Cleanup pipeline: reviewed evidence, approved batches, report and commit checkpoints](assets/deslopping-cleanup-pipeline.svg)
 
