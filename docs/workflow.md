@@ -32,6 +32,8 @@ This guide is the relevant-stage backlink and conditional routing surface for ev
 
 `cleaning-repo-with-knip` removes verified dead code and records false positives. `codex-implement` and `claude-implement` keep delivery approval separate from worker output; clean temporary artifacts and debug residue before that gate.
 
+`deslopping-cleanup` coordinates a cleanup campaign through complementary macro-runs and coherent batches. Independent reviewers check exploration claims and batch diffs; the controller checks decision-bearing source evidence before selecting batches, actual diffs and check evidence before committing, and the verified output baseline before run handoff. Each approved, verified batch updates its run report and receives a separate local commit before the next batch. Missing required evidence keeps the candidate uncertain or its batch open; publishing and merging follow repository approval gates. See [dependencies and publication review](deslopping-cleanup.md).
+
 ## Routing and evidence gates
 
 ```mermaid
