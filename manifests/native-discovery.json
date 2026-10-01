@@ -5,13 +5,13 @@
   "environment": {
     "isolation": "Fresh separate temporary WSL Ubuntu-24.04 HOME, npm global prefix, CODEX_HOME and CLAUDE_CONFIG_DIR. Native directories exist before CLI installation; child Git core.autocrlf=false.",
     "normalHostConfigMutated": false,
-    "commandNotation": "Commands run from the isolated repository checkout at payload commit 4d09e6571f3e77ba5d033510e91d8e79c4400fd7. PATH explicitly selects Node.js 22.23.1 and the isolated npm prefix. Actual cache roots were located with locateInstalledPayload and inspected with inspectInstalledPayload.",
+    "commandNotation": "Commands run from the isolated repository checkout at payload commit 723d93389aab2b5eb6ffd4ce5366d0e754d8c1fc. PATH explicitly selects Node.js 22.23.1 and the isolated npm prefix. Actual cache roots were located with locateInstalledPayload and inspected with inspectInstalledPayload.",
     "claudeMarketplaceDeclaration": "The fresh isolated Claude profile registered the directory marketplace using claude plugin marketplace add ./ --scope user.",
-    "payloadRefresh": "Action rationale payload at 4d09e6571f3e77ba5d033510e91d8e79c4400fd7. Previous historical Windows payload hash sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af. Both fresh native installs matched current source; no installed cache was manually patched."
+    "payloadRefresh": "Disconnected-code safeguard payload at 723d93389aab2b5eb6ffd4ce5366d0e754d8c1fc. Previous action rationale payload hash sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230. Both fresh native installs matched current source; no installed cache was manually patched."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230",
+    "treeHash": "sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -49,7 +49,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230",
+        "treeHash": "sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -141,7 +141,7 @@
       "version": "2.1.201 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:50482b8953ebb5df63ef6dd3c0dc77d37b17865f95737ddb6f0d6b6c13ba6230",
+        "treeHash": "sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc",
         "skills": [
           "brainstorming",
           "cavecrew",

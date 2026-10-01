@@ -1,6 +1,34 @@
 # Release verification report
 
-## Action rationale synchronization: 2026-10-01
+## Disconnected-code safeguard synchronization: 2026-10-01
+
+Payload commit: `723d93389aab2b5eb6ffd4ce5366d0e754d8c1fc`, based on
+`4c7ca24f095d0f71424a20c41f38e3c990ead34e`. Disconnected code now requires
+owner clarification about reference documents, their authority and currency,
+and intended integration before cleanup classification. Missing documentation
+can be resolved through explicit owner intent; unresolved intent defers the action.
+Disconnected status alone does not establish legacy or dead code: a new feature
+may still await integration. The documentation/intent context is recorded in
+reports and handoffs. The lock records this payload commit and directory SHA-256
+`ec0290324a8fbfc403e603f4271cb732d850bb3bcbbcc63c31c78cb915aad7ac`.
+This section owns the current native receipt; sections below retain historical
+payload revisions and their validation evidence.
+
+- Fresh isolated WSL Ubuntu-24.04 installations using Node.js 22.23.1, Codex CLI
+  0.141.0 and Claude Code 2.1.201 succeeded through official marketplace commands.
+- Both actual native caches contain all 29 skills and match the source tree hash
+  `sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc`.
+  `locateInstalledPayload` and `inspectInstalledPayload` observed installed roots,
+  inventories and bytes before receipt refresh; both native verifiers then passed
+  against that refreshed receipt in the same WSL process.
+- Fresh HOME, npm global prefix, CODEX_HOME and CLAUDE_CONFIG_DIR isolated every
+  native command. Normal profiles were untouched; no installed cache was patched.
+- Existing CI commands are replayed separately against the final metadata commit
+  in a full-history isolated WSL checkout. Durable command/status logs remain
+  outside the public payload. No fresh-session skill invocation or behavioral
+  correctness claim is made here. Remote publication remains separate.
+
+## Earlier action rationale synchronization: 2026-10-01
 
 Payload commit: `4d09e6571f3e77ba5d033510e91d8e79c4400fd7`, based on
 `dd6cf156e117ad5ce162ccd925359036fd5f4c5b`. Before batch approval, each file
@@ -9,8 +37,8 @@ behavior/wiring impact and uncertainty. Incomplete proposals block approval and 
 material changes require renewed approval. The lock
 records this payload commit and directory SHA-256
 `5cbec3ce61c4b3495e71ec734ed2ec5ba26bfac95720133765e1bf7b4853e8b2`.
-This section owns the current native receipt; sections below preserve historical
-validation snapshots and their exact payload revisions.
+This historical action rationale receipt was superseded by the disconnected-code
+safeguard receipt above; its inventory and hash remain the recorded snapshot.
 
 - Fresh isolated WSL Ubuntu-24.04 installations using Node.js 22.23.1, Codex CLI
   0.141.0 and Claude Code 2.1.201 succeeded through official marketplace commands.
@@ -31,8 +59,8 @@ Payload commit: `8612af774e407e8800c0225d4b1b63983152a030`. The coordinator,
 routing and report now distinguish campaigns, variable macro-runs, batches and
 commits. The controller checks primary evidence before technical decisions,
 commits and run handoffs. README and pipeline SVG describe the same hierarchy.
-The lock records that payload commit and its directory SHA-256. This historical section records the campaign payload receipt; the action rationale
-section above owns the current receipt.
+The lock records that payload commit and its directory SHA-256. This historical section records the campaign payload receipt; the disconnected-code
+safeguard section above owns the current receipt.
 
 - Fresh isolated Codex 0.159.2 and Claude Code 2.1.260 installations contain 29
   skills with matching source/cache tree hash
