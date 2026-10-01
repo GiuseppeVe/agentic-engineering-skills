@@ -32,6 +32,9 @@ carrying a candidate forward.
   actual baseline comparison, drift and any required evidence refresh.
 - Scope, exclusions, pre-existing changes and authorization references.
 - Authorized batch actions, local commits and checks; unresolved decisions.
+- User-confirmed reference documents for intended features/integrations, their
+  authority and current snapshots; unanswered questions, missing documentation
+  and conflicts. Keep intended lifecycle status separate from actual reachability.
 - Specialist skill/guide references; tool versions/configurations; graph and scan
   snapshots/coverage; evidence locations and limitations.
 
@@ -67,13 +70,36 @@ An unintentionally lost live connection blocks batch closure and the next batch.
 Repair within the approved scope or return the problem for a decision. A retained
 component already disconnected gets a functional follow-up: intended caller,
 target contract, prerequisites, required changes and approval still needed.
+For intentionally pending integration, record its existing plan/status; do not
+treat the missing link as a defect or invent a repair mandate. Record the owner
+and documentation check from
+[the core rule](../SKILL.md#interpret-disconnected-components-with-the-owner).
+Unresolved intent remains `defer`, not an established removal candidate.
 Describing intended wiring neither proves it exists nor authorizes implementing it.
+
+## Batch approval proposals
+
+Before requesting approval, present and record this proposal for each Batch-ID.
+Use one row per affected file and distinct action, including changes supporting
+the cleanup. Multiple actions on one file require separate rows.
+
+| Batch-ID | File / symbol | Proposed action | Specific rationale | Evidence / snapshot | Expected behavior / wiring impact | Uncertainty |
+|---|---|---|---|---|---|---|
+
+Explain why each specific change is appropriate for that file and cite its
+supporting evidence; rows may reference the run's shared recorded snapshot.
+A batch-level reason or component decision does not replace these justifications.
+An incomplete proposal cannot be submitted for approval or used to execute an
+unjustified action. Material changes to approved actions, scope or rationale
+require renewed approval for the affected proposal under the existing mandate.
+Preserve superseded proposal versions and their approval references.
 
 ## Batch journal
 
 For each Batch-ID record its owning Run-ID, then:
 
-1. Candidate IDs/actions; allowlist; owner approval reference; base SHA; dependencies.
+1. Candidate IDs/actions; exact file/action proposal version or reference;
+   allowlist; owner approval reference; base SHA; dependencies.
 2. Before/after inventory and wiring; diff manifest identifying validated blobs
    or equivalent reproducible content digest; unrelated changes excluded.
 3. Exploration and independent review conclusions; controller checks of material
