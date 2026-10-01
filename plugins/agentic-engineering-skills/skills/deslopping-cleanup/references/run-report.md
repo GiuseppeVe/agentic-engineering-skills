@@ -21,7 +21,7 @@ Preserve dated corrections and failed attempts instead of erasing their history.
 ## Component decisions
 
 | Component-ID | Responsibility, file/symbol | Present/reachable now | Decision | Execution state | Reason and evidence/counterproof | Batch-ID |
-|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 
 Decision: `remove`, `retain`, `defer`.
 Execution: `proposed`, `approved`, `applied`, `verified`, `committed`, `restored`.
