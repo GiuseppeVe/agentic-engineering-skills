@@ -22,8 +22,15 @@ test("CI setup and executable gates are unique and ordered", async () => {
   const workflow = await loadWorkflow();
   const steps = workflow.jobs.verify.steps;
   assert.ok(steps.some(step => step.uses === "actions/setup-node@v4" && step.with?.["node-version"] === 22));
-  assert.equal(workflow.jobs.verify.env?.CODEX_HOME, "${{ runner.temp }}/codex-home");
-  assert.equal(workflow.jobs.verify.env?.CLAUDE_CONFIG_DIR, "${{ runner.temp }}/claude-home");
+  assert.equal(workflow.jobs.verify.env, undefined, "runner context must not be used in job env");
+  const checkout = steps.find(step => step.uses === "actions/checkout@v4");
+  assert.equal(checkout?.with?.["fetch-depth"], 0, "pack verification needs historic release commits");
+  const profiles = steps.find(step => step.name === "Initialize isolated host profiles");
+  assert.equal(profiles?.run.trim(), [
+    'echo "CODEX_HOME=$RUNNER_TEMP/codex-home" >> "$GITHUB_ENV"',
+    'echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-home" >> "$GITHUB_ENV"',
+  ].join("\n"));
+  assert.ok(steps.indexOf(profiles) < steps.findIndex(step => step.run?.startsWith("npm install --global")), "profiles must be initialized before host commands");
 
   const runs = steps.filter(step => "run" in step).map(step => step.run.trim());
   assert.equal(new Set(runs).size, runs.length, "every executable run step must be unique");
@@ -48,4 +55,5 @@ test("CI setup and executable gates are unique and ordered", async () => {
   assert.ok(runs.some(command => command.startsWith("codex plugin add ") && command.includes("--json")));
   assert.ok(runs.some(command => command.startsWith("claude plugin install ")));
   assert.ok(runs.some(command => command.startsWith("claude plugin list --json")));
+  assert.ok(runs.includes("claude plugin marketplace add ./ --scope user"));
 });

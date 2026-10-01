@@ -12,17 +12,20 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      CODEX_HOME: ${{ runner.temp }}/codex-home
-      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude-home
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+      - name: Initialize isolated host profiles
+        run: |
+          echo "CODEX_HOME=$RUNNER_TEMP/codex-home" >> "$GITHUB_ENV"
+          echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-home" >> "$GITHUB_ENV"
       - name: Install Codex CLI
         run: npm install --global @openai/codex@0.141.0
       - name: Install Claude Code validator
@@ -48,7 +51,7 @@ jobs:
       - name: Validate Claude Code plugin
         run: claude plugin validate .
       - name: Add local Claude marketplace
-        run: claude plugin marketplace add . --scope user
+        run: claude plugin marketplace add ./ --scope user
       - name: Install Claude plugin
         run: claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user
       - name: Capture Claude plugin list
