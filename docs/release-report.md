@@ -1,12 +1,36 @@
 # Release verification report
 
-## Cleanup report-table correction: 2026-10-01
+## Campaign and controller synchronization: 2026-10-01
+
+Payload commit: `8612af774e407e8800c0225d4b1b63983152a030`. The coordinator,
+routing and report now distinguish campaigns, variable macro-runs, batches and
+commits. The controller checks primary evidence before technical decisions,
+commits and run handoffs. README and pipeline SVG describe the same hierarchy.
+The lock records that payload commit and its directory SHA-256. This section owns
+the current payload receipt; earlier sections retain their historical snapshots.
+
+- Fresh isolated Codex 0.159.2 and Claude Code 2.1.260 installations contain 29
+  skills with matching source/cache tree hash
+  `sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af`.
+- `verify-installed-native.mjs` passed for each actual cache against the refreshed
+  receipt. Ordinary profiles and existing isolated validation profiles were not
+  changed. No installed cache was patched by hand.
+- Packaging verification, public audit and diff whitespace checks passed. The
+  refreshed SVG rendered and was visually inspected. Workspace skill copies were
+  compared byte-for-byte with the personal source and plugin payload.
+- The PATH Codex binary was 0.149.0; only its version was probed. Installation used
+  the explicitly selected app CLI 0.159.2, recorded in the receipt.
+- No unit/behavioral tests, fresh-session invocation or independent agent review
+  were performed for this synchronization. Earlier review applies to its recorded
+  head, not automatically to this revision. Remote push/CI/merge remain separate.
+
+## Earlier cleanup report-table correction: 2026-10-01
 
 Payload correction commit: `96de8e9986bcbd73356399d994088526b0180cfa`.
 The component-decision table now has seven delimiter cells matching its seven
-header cells; no field or workflow changed. The lock records this corrected
-payload commit and its directory SHA-256. This section supersedes the earlier
-addition receipt below for the current payload hash.
+header cells; no field or workflow changed. At that revision the lock recorded
+this corrected payload commit and its directory SHA-256. This historical section
+superseded the initial addition receipt before the later campaign update.
 
 - Source and both actual native-installed caches contain 29 skills with tree hash
   `sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1`.

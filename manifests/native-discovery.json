@@ -3,15 +3,15 @@
   "evidenceSource": "isolated-native-installs",
   "capturedAt": "2026-10-01",
   "environment": {
-    "isolation": "Separate temporary Windows profiles; USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME and CLAUDE_CONFIG_DIR configured only on child processes. Child Git configuration sets core.autocrlf=false.",
+    "isolation": "Fresh separate temporary Windows profiles for this campaign/controller update. USERPROFILE, APPDATA, LOCALAPPDATA, HOME, CODEX_HOME and CLAUDE_CONFIG_DIR are child-process-only. Child Git sets core.autocrlf=false.",
     "normalHostConfigMutated": false,
-    "commandNotation": "$S denotes the local repository root; $CODEX_CACHE and $CLAUDE_CACHE denote native-installed plugin roots. Raw exact command captures and retry failures are retained outside the public payload.",
-    "claudeMarketplaceDeclaration": "extraKnownMarketplaces.agentic-engineering-skills.source = directory at $S, in the temporary user settings only, as required by the CLI.",
-    "payloadRefresh": "2026-10-01 table-delimiter correction at 96de8e9986bcbd73356399d994088526b0180cfa. Previous hash sha256:c6784a12914e21fc14051d5e02c87831efd0d190205b6b1ff253236f5b453cac. Codex CLI add refreshed the installed payload; Claude update reported the same version, so the isolated installation was removed and installed again using its CLI. No installed cache files were manually patched."
+    "commandNotation": "$S is the local source repository; $CODEX159 is the explicitly selected app CLI 0.159.2; $CODEX_CACHE and $CLAUDE_CACHE are actual native-installed plugin roots. Raw exact stdout/stderr captures remain outside the public payload.",
+    "claudeMarketplaceDeclaration": "The temporary user settings declare the directory marketplace at $S, as required by the CLI.",
+    "payloadRefresh": "Campaign/macro-run planning and controller evidence gate at 8612af774e407e8800c0225d4b1b63983152a030. Previous payload hash sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1. Both fresh native installs were compared to current source; no installed cache was manually patched."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
+    "treeHash": "sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -49,7 +49,7 @@
       "version": "codex-cli 0.159.2",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
+        "treeHash": "sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -115,27 +115,19 @@
       ],
       "commands": [
         {
-          "command": "codex --version",
+          "command": "$CODEX159 --version",
           "exitCode": 0
         },
         {
-          "command": "codex plugin marketplace add $S --json",
+          "command": "$CODEX159 plugin marketplace add $S --json",
           "exitCode": 0
         },
         {
-          "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json",
+          "command": "$CODEX159 plugin add agentic-engineering-skills@agentic-engineering-skills --json",
           "exitCode": 0
         },
         {
-          "command": "codex plugin list --json",
-          "exitCode": 0
-        },
-        {
-          "command": "codex plugin list --available --json",
-          "exitCode": 0
-        },
-        {
-          "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json",
+          "command": "$CODEX159 plugin list --json",
           "exitCode": 0
         },
         {
@@ -144,8 +136,9 @@
         }
       ],
       "limitations": [
-        "The available array was empty; installed plugin state was present and the actual cache supplied the inspected inventory.",
-        "PATH aliases could not be created under Temp; successful installation was unaffected.",
+        "The shell PATH CLI was 0.149.0; it was only version-probed. The app CLI 0.159.2 was explicitly selected for installation.",
+        "The list response confirmed installed/enabled state; its available array was empty. Inventory comes from actual installed cache.",
+        "Temporary PATH alias creation warned but installation succeeded.",
         "No fresh-session skill invocation was performed."
       ]
     },
@@ -153,7 +146,7 @@
       "version": "2.1.260 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:09b325db89bc166f46b58d4295d97498a0a37caa96069c2e363ce15342df41b1",
+        "treeHash": "sha256:8d884fb3757bac22be51723b32b501b6ce0fd1b404cc79fd45f25e3fad0f22af",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -227,10 +220,6 @@
           "exitCode": 0
         },
         {
-          "command": "claude plugin marketplace list",
-          "exitCode": 0
-        },
-        {
           "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
           "exitCode": 0
         },
@@ -239,24 +228,12 @@
           "exitCode": 0
         },
         {
-          "command": "claude plugin update agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
-          "exitCode": 0
-        },
-        {
-          "command": "claude plugin uninstall agentic-engineering-skills@agentic-engineering-skills --scope user",
-          "exitCode": 0
-        },
-        {
-          "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user --yes",
-          "exitCode": 0
-        },
-        {
           "command": "node scripts/verify-installed-native.mjs --host claude --installed-root $CLAUDE_CACHE",
           "exitCode": 0
         }
       ],
       "limitations": [
-        "Earlier local-path attempts were refused; the successful run followed the CLI-required temporary user marketplace declaration.",
+        "The directory marketplace was declared only in this temporary user profile.",
         "No fresh-session skill invocation was performed."
       ]
     }
