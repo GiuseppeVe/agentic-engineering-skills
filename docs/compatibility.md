@@ -13,10 +13,24 @@ Machine-verifiable native evidence lives in schema-v2 `manifests/native-discover
 
 Validated versions: Codex CLI 0.141.0 and Claude Code 2.1.201. On Windows, set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` together for every isolated host command. Codex 0.141.0 isolates marketplace and plugin state this way. Its model-visible skill catalogue still has a 2% context budget, so large ambient catalogues can truncate one-shot enumeration; use small fresh-session batches when checking named skills.
 
-## Current disconnected-code safeguard receipt: 2026-10-01
+## Current campaign phases receipt: 2026-10-04
 
 The current tracked receipt records fresh isolated WSL Ubuntu-24.04 installs using
 Node.js 22.23.1, Codex CLI 0.141.0 and Claude Code 2.1.201 at payload commit
+`d63ddb21d7c422ba91b5e95e73e9737f6b8be49b`. Both actual installed caches contain
+29 skills with source-matching tree hash
+`sha256:b0357546f5b5f5dd8d85180875c0b5ef932e8f6b3d0fe66af189e157f0ba69db`.
+Actual cache inventories and hashes prove native packaging fidelity; both native
+verifiers passed against the refreshed receipt in the same WSL process.
+Fresh-session skill invocation was not performed. Fresh HOME, npm prefix,
+CODEX_HOME and CLAUDE_CONFIG_DIR isolated every command; normal profiles were
+untouched.
+
+## Historical disconnected-code safeguard receipt: 2026-10-01
+
+The earlier disconnected-code safeguard receipt recorded fresh isolated WSL
+Ubuntu-24.04 installs using Node.js 22.23.1, Codex CLI 0.141.0 and Claude Code
+2.1.201 at payload commit
 `723d93389aab2b5eb6ffd4ce5366d0e754d8c1fc`. Both actual installed caches contain
 29 skills with source-matching tree hash
 `sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc`.
