@@ -69,6 +69,14 @@ An older name or a newer alternative alone does not establish obsolescence;
 disconnected code may be a new feature deliberately awaiting integration.
 Unresolved intent remains deferred rather than being presented as safe to remove.
 
+Removals need at least two independent kinds of evidence, such as static analysis,
+reference search, history, flow tracing or runtime observation, and no unresolved
+counterproof. After discovery, the campaign can continue with branch integration
+(conflict inventory, per-area decisions, completeness and semantic-conflict
+checks), operational residue (configuration, stored data, external artifacts and
+deployments, each non-file action separately approved) and workspace closure
+(inventory of unique work, including ignored files, before any deletion).
+
 ![Deslopping Cleanup pipeline: reviewed evidence, approved batches, report and commit checkpoints](assets/deslopping-cleanup-pipeline.svg)
 
 Specialists remain distinct. `cleaning-repo-with-knip` is included; Graphify,
