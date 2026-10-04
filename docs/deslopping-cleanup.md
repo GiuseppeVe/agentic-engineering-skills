@@ -1,15 +1,20 @@
 # Deslopping Cleanup: dependencies and publication review
 
 `deslopping-cleanup` is repository-original material under [MIT](../LICENSE).
-Its directory contains the coordinator, specialist-routing reference, run-report
-contract and a portable copy of the repository license. It includes no specialist
-source code, scripts, skill text or third-party runtime.
+Its directory contains the coordinator, a portable copy of the repository license
+and six references: specialist routing, the run-report contract, delegation
+(brief and return contract), branch integration, operational residue and
+workspace closure. It includes no specialist source code, scripts, skill text or
+third-party runtime.
 
 ## Availability
 
 Inventory inspected on 2026-10-01 against base
 `c6f8a0af0019257437e7661a6fa59bdfea46d571`, plus this addition.
 Availability in an author's host catalog is not availability in this bundle.
+The history, non-code consumer, runtime evidence and flow investigation routes are
+direct investigation with native tools (Git, text search, owner-authorized
+read-only observation) and need no external skill.
 
 | Routing target | Included in this bundle? | Usable route when absent |
 | --- | --- | --- |
@@ -78,3 +83,10 @@ Each approved, verified batch includes its report update and local commit before
 the next batch. A resulting SHA is recorded in a later report update to avoid
 commit self-reference. Publishing or merging remains subject to the host and
 repository approval policy.
+
+After discovery, a campaign may continue with branch integration, operational
+residue and workspace closure, each with its own reference. Actions outside files
+(environment variables, stored data, cloud resources, remote branches, deploys)
+each need their own owner approval and are handed to the owner when the
+environment reserves them. Secret values are never read; secret-bearing files are
+never archived in Git.
