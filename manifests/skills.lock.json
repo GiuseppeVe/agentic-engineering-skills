@@ -302,12 +302,11 @@
     {
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
-      "localSha256": "26aa7d3d1c7f7b9aaaed7be38443326f1055fcd241938370ef06cb5ce01c8ac8",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "localSha256": "36a4f3edcf0d01a1114738e6f611b8c5596e041a4d815483071f55250fcf77ba",
+      "releaseCommit": "fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
-        "codex-implement",
         "test-driven-development",
         "test-gaps"
       ]

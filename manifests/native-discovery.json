@@ -1,17 +1,17 @@
 {
   "schemaVersion": 2,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-10-04",
+  "capturedAt": "2026-10-09",
   "environment": {
-    "isolation": "Fresh separate temporary WSL Ubuntu-24.04 HOME, npm global prefix, CODEX_HOME and CLAUDE_CONFIG_DIR. Native directories exist before CLI installation; child Git core.autocrlf=false.",
+    "isolation": "Fresh separate temporary WSL Ubuntu-24.04 HOME, npm prefix, CODEX_HOME and CLAUDE_CONFIG_DIR inside Hermes scratch. Child Git core.autocrlf=false.",
     "normalHostConfigMutated": false,
-    "commandNotation": "Commands run from the isolated repository checkout at payload commit d63ddb21d7c422ba91b5e95e73e9737f6b8be49b. PATH explicitly selects Node.js 22.23.1 and the isolated npm prefix. Actual cache roots were located with locateInstalledPayload and inspected with inspectInstalledPayload.",
-    "claudeMarketplaceDeclaration": "The fresh isolated Claude profile registered the directory marketplace using claude plugin marketplace add ./ --scope user.",
-    "payloadRefresh": "Campaign phases payload at d63ddb21d7c422ba91b5e95e73e9737f6b8be49b. Previous disconnected-code safeguard payload hash sha256:9e75692e38f2cdbf28bc1df71e67a00e91b18d88755f28fc27ebe34b40ca13dc. Both fresh native installs matched current source; no installed cache was manually patched."
+    "commandNotation": "Commands run from isolated repository checkout at payload commit fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c, on Node.js v22.23.1; PATH selects isolated npm prefix. Actual cache roots resolved by locateInstalledPayload.",
+    "claudeMarketplaceDeclaration": "Fresh isolated Claude profile registered directory marketplace using claude plugin marketplace add ./ --scope user.",
+    "payloadRefresh": "Dedicated sequential worker payload at fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c; both fresh native installations match source. No installed caches manually patched."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:b0357546f5b5f5dd8d85180875c0b5ef932e8f6b3d0fe66af189e157f0ba69db",
+    "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -49,7 +49,7 @@
       "version": "codex-cli 0.141.0",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b0357546f5b5f5dd8d85180875c0b5ef932e8f6b3d0fe66af189e157f0ba69db",
+        "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -132,16 +132,15 @@
         }
       ],
       "limitations": [
-        "Installed SKILL.md inventory and complete payload bytes were observed from the actual isolated native cache.",
-        "No fresh-session skill invocation or behavioral validation was performed by this receipt capture.",
-        "Codex warned that PATH helper aliases could not be created under temporary /tmp CODEX_HOME; native install and actual cache comparison still succeeded."
+        "Installed SKILL.md inventory and complete payload bytes observed from actual isolated native cache.",
+        "No fresh-session skill invocation or behavioral validation was performed by this receipt capture."
       ]
     },
     "claude": {
       "version": "2.1.201 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:b0357546f5b5f5dd8d85180875c0b5ef932e8f6b3d0fe66af189e157f0ba69db",
+        "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -228,7 +227,7 @@
         }
       ],
       "limitations": [
-        "Installed SKILL.md inventory and complete payload bytes were observed from the actual isolated native cache.",
+        "Installed SKILL.md inventory and complete payload bytes observed from actual isolated native cache.",
         "No fresh-session skill invocation or behavioral validation was performed by this receipt capture."
       ]
     }
