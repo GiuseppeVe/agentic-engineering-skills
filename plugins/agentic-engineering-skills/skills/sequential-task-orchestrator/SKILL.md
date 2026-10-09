@@ -33,8 +33,11 @@ the run `BLOCKED`/report it after safe checks.
 
 ## Fixed child skills
 
-- Implementer: `$codex-implement` in bounded worker mode. Launch its side chat
-  with model `gpt-5.6-terra` and thinking `xhigh`.
+- Implementer: read and follow the dedicated
+  [Sequential Task Worker](references/sequential-task-worker.md) skill. It is
+  model-independent and contains no internal planning/review cycle. Launch its
+  side chat with model `gpt-5.6-terra` and thinking `xhigh` as this runner's
+  current configuration, not a requirement of the worker skill.
 - Reviewer: `$test-gaps` and `$test-driven-development`. Launch its side chat
   with model `gpt-5.6-sol` and thinking `high`.
 - Optional reviewer audit: `$agent-architecture-audit` when the reviewer finds
