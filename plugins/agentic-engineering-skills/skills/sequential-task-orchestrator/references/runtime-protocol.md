@@ -130,6 +130,11 @@ explicit stop plus archive, with the reason recorded in the ledger.
 
 ## Implementer envelope
 
+Resolve `worker_skill_ref` to the readable path of
+`references/sequential-task-worker.md` relative to this orchestrator's skill
+location, not the project's worktree. Pass that exact path to the child;
+the reference is not a separately registered top-level slash command.
+If it is unreadable, block dispatch rather than substitute another workflow.
 Send exactly this role context plus task-specific references:
 
 ```text
@@ -140,9 +145,11 @@ Read:
 - plan: {{plan_ref}}
 - spec: {{spec_ref}}
 - code/worktree: {{workspace_ref}}
+- worker skill: {{worker_skill_ref}}
 
-Use $codex-implement in bounded worker mode.
-Implement only this task. Do not implement adjacent tasks or review them.
+Read and follow the worker skill at the exact path above.
+Implement only this task. Do not implement adjacent tasks, spawn agents or
+start an internal planning/review cycle. The parent manages review and acceptance.
 
 Return:
 - status
