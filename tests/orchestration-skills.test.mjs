@@ -20,6 +20,25 @@ test("orchestrator package wires plan fidelity and implementation correctness re
   assert.match(source, /runtime-protocol\.md/);
 });
 
+test("sequential dispatch resolves its dedicated worker reference without the full implementation cycle", async () => {
+  const source = await skill("sequential-task-orchestrator");
+  const protocol = await readFile(path.join(skillsRoot, "sequential-task-orchestrator", "references", "runtime-protocol.md"), "utf8");
+  const ref = "references/sequential-task-worker.md";
+  assert.ok(source.includes(`](${ref})`));
+  assert.match(protocol, /worker skill: \{\{worker_skill_ref\}\}/);
+  assert.match(protocol, /Read and follow the worker skill at the exact path above/);
+  assert.match(protocol, /Resolve `worker_skill_ref`/);
+  assert.doesNotMatch(source + protocol, /\$codex-implement|bounded worker mode/);
+  const worker = await readFile(path.join(skillsRoot, "sequential-task-orchestrator", ref), "utf8");
+  assert.match(worker, /^---\nname: sequential-task-worker\n/);
+  assert.match(worker, /Do not spawn agents/);
+  assert.match(worker, /Scheduling, review, integration and acceptance belong to the parent/);
+  assert.match(worker, /Missing scope or conflicting acceptance criteria/);
+  assert.match(worker, /RED.*GREEN/s);
+  assert.match(worker, /commit SHA/);
+  assert.doesNotMatch(worker, /Sol|Terra|gpt-\d|claude-|required_profile|xhigh/);
+});
+
 test("Test Gaps skill exposes coverage-gap discovery commands", async () => {
   const source = await skill("test-gaps");
 

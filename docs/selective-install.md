@@ -23,7 +23,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `importing-handoff` | None | `LICENSE` | Implement: exact frontend handoff import |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
 | `setup-matt-pocock-skills` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: project setup |
-| `sequential-task-orchestrator` | `codex-implement`; `test-driven-development`; `test-gaps` | `LICENSE` | Implement: strictly ordered execution and per-task review |
+| `sequential-task-orchestrator` | `test-driven-development`; `test-gaps` | `LICENSE` | Implement: strictly ordered execution with its bundled worker reference and per-task review |
 | `swarm-orchestration` | None | `plugins/agentic-engineering-skills/licenses/ruvnet-ruflo-LICENSE` | Implement: multi-agent coordination |
 | `test-driven-development` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Verify: red-green-refactor |
 | `test-gaps` | None | `LICENSE` | Verify: missing coverage suggestions |
