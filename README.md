@@ -135,6 +135,8 @@ claude plugin install agentic-engineering-skills@agentic-engineering-skills
 
 Confirm discovery with `codex plugin list --available --json` or `claude plugin list`. Then start a fresh host session and invoke one included skill, such as `brainstorming`; plugin listing alone does not prove fresh-session invocation.
 
+Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see [agent profile guide](docs/agent-profiles.md).
+
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 
 ## Customize

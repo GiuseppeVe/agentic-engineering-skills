@@ -1,7 +1,7 @@
 ---
 name: terra-worker
 description: Implements one bounded implementation packet without expanding scope.
-model: opus
+model: claude-sonnet-5-5
 effort: high
 ---
 

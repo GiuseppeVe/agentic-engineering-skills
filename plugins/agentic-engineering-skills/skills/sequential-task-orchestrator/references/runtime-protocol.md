@@ -102,8 +102,8 @@ Create side tasks with these fixed settings:
 
 | Role | `model` | `thinking` |
 | --- | --- | --- |
-| Implementer | `gpt-5.6-terra` | `xhigh` |
-| Reviewer | `gpt-5.6-sol` | `high` |
+| Implementer | `gpt-6.1-sol` | `high` |
+| Reviewer | `gpt-6.1-sol` | `xhigh` |
 
 Record the selected `model` and `thinking` in the ledger before requesting
 child creation. Do not omit or substitute these settings.

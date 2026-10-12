@@ -28,9 +28,9 @@ jobs:
           echo "CODEX_HOME=$RUNNER_TEMP/codex-home" >> "$GITHUB_ENV"
           echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude-home" >> "$GITHUB_ENV"
       - name: Install Codex CLI
-        run: npm install --global @openai/codex@0.141.0
+        run: npm install --global @openai/codex@0.159.2
       - name: Install Claude Code validator
-        run: npm install --global @anthropic-ai/claude-code@2.1.201
+        run: npm install --global @anthropic-ai/claude-code@2.1.296
       - name: Install dependencies
         run: npm ci
       - name: Test contracts
