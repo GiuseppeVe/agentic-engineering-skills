@@ -1,5 +1,37 @@
 # Release verification report
 
+## Role-routing synchronization: 2026-10-12
+
+Payload commit: `ac0190a94d80dbd1fd51ae55dcce482661e06490`. Implementation
+attachments use neutral planner, spec-aware-tester and clean-room-reviewer
+names. Codex independent session profiles select Sol/xhigh for those roles and
+Sol/high for bounded workers and both ordered retries. Claude callers select
+Opus 5.5/medium for planning, Opus 5.5/high for semantic review, and
+Sonnet 5.5/high for the existing bounded Terra packet-worker exception.
+Sequential orchestration retains its single child slot, dedicated neutral
+worker reference and acceptance gates; only calling-layer model selection changed.
+Seven host-neutral base contracts, vendor payloads and retained licenses are
+unchanged. The original stamping script records this reachable payload revision.
+This section owns the current native receipt; earlier sections are historical.
+
+- Official npm CLI versions were verified available and installed in a fresh
+  isolated prefix: Codex 0.159.2 and Claude Code 2.1.296, on Node.js v26.7.0.
+- Both real isolated marketplace installs contain 29 skills. Complete installed
+  payload bytes match source hash
+  `sha256:e73e4efcf35eb6a9e2c916ae44e8d663583763d65f5b5557a3261ef8d2d55884`.
+  Both `verify:installed-native` commands exited 0 after actual cache inspection.
+- Each host used separate fresh HOME, USERPROFILE, APPDATA, LOCALAPPDATA,
+  CODEX_HOME and CLAUDE_CONFIG_DIR. No normal user-home CLI upgrade or manual
+  package-cache edit occurred.
+- Routing regressions were observed RED before implementation and GREEN after.
+  `npm ci`, `npm test` (116/116), `verify:pack`, `verify:upstream`,
+  `audit:public` and `git diff --check` passed. Logs remain outside public payload.
+- This receipt proves packaging fidelity. It does not prove fresh-session skill
+  invocation, account model access or effective per-role effort. Native agent
+  definitions, CLI session profiles and Markdown attachments are separate;
+  the bundle does not automatically register or create all of them.
+- No push, pull request or merge was performed. Publication remains owner-controlled.
+
 ## Campaign phases synchronization: 2026-10-04
 
 Payload commit: `d63ddb21d7c422ba91b5e95e73e9737f6b8be49b`, based on
@@ -16,8 +48,8 @@ hidden-consumer checklist and history, non-code consumer and runtime evidence
 routes. Two independent clean-room reviews preceded the payload. The lock records
 this payload commit and directory SHA-256
 `a536efb6733829769187c932ec7a4dfe9a068d8feb6bb291ba611aa2298bb177`.
-This section owns the current native receipt; sections below retain historical
-payload revisions and their validation evidence.
+This historical campaign receipt was superseded by the role-routing receipt
+above; its payload revision and validation evidence remain the recorded snapshot.
 
 - Fresh isolated WSL Ubuntu-24.04 installations using Node.js 22.23.1, Codex CLI
   0.141.0 and Claude Code 2.1.201 succeeded through official marketplace commands.

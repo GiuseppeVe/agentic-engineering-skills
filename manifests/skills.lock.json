@@ -60,8 +60,8 @@
     {
       "name": "claude-implement",
       "sourceType": "original",
-      "localSha256": "b8f512e526a9abcb644fd32f8b1d541d37995d782edd60fb6bb026fd04f99530",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "localSha256": "9b7d5079a581680d36c79a188a6c590c431c2553d726e231d007a7cb59038e7d",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -70,7 +70,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b96a7a52aeddd2c7cd70e61ca75b5807f4b59368012b624d03adb1a0d4cb0e25",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -79,7 +79,7 @@
       "name": "deslopping-cleanup",
       "sourceType": "original",
       "localSha256": "a536efb6733829769187c932ec7a4dfe9a068d8feb6bb291ba611aa2298bb177",
-      "releaseCommit": "d63ddb21d7c422ba91b5e95e73e9737f6b8be49b",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -104,8 +104,8 @@
     {
       "name": "codex-implement",
       "sourceType": "original",
-      "localSha256": "f5b0ae0bcae2e656c9897f58dcc36f1fe26bbd11dd7a3185b992ebdd06905648",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "localSha256": "c1c164f236b65dc474f1775f016a166960883b3cf5596a28d0c439a4030d3e82",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -167,7 +167,7 @@
       "name": "orientated-e2e-testing-v5-2",
       "sourceType": "original",
       "localSha256": "1b0e82ff23f082e2a260eb4b9f25fb03c94c3d9ebce0f17dced0f98a71c64a30",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -175,8 +175,8 @@
     {
       "name": "how-to-use-codex",
       "sourceType": "original",
-      "localSha256": "1a1cc61905560c460bf7ed8060b70f6701c65ae6e7696206af2e7386bcf16161",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "localSha256": "28c20485d8cc22dc4c447d16bbf57e0c92e7629a2748b5b25647421695978b58",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -185,7 +185,7 @@
       "name": "merge-verified-pr-and-cleanup",
       "sourceType": "original",
       "localSha256": "15ed2736e0cdce3aa9c11b246e1624168aee14cb2623e8891c14ae036473e060",
-      "releaseCommit": "17ea3b1ea83ecd70dd17545ae17aa99c8b46cf3e",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -194,7 +194,7 @@
       "name": "importing-handoff",
       "sourceType": "original",
       "localSha256": "d533c47f9f4970f8882972594e1890ab9e8ae3908acbbc260f7c1d9e37462dce",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -302,8 +302,8 @@
     {
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
-      "localSha256": "36a4f3edcf0d01a1114738e6f611b8c5596e041a4d815483071f55250fcf77ba",
-      "releaseCommit": "fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c",
+      "localSha256": "7e0dadd179a9703854ff6319eba72df17fdf34e7d1132148ee140eaf779bb1d0",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -315,7 +315,7 @@
       "name": "test-gaps",
       "sourceType": "original",
       "localSha256": "355a18afe8c99566ce855e671a7b29d0c51e003c446ab5cfb548bcdb72e2a3e5",
-      "releaseCommit": "ad3de2340a27884a36bd09b1f58696bac1c80cf8",
+      "releaseCommit": "ac0190a94d80dbd1fd51ae55dcce482661e06490",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []

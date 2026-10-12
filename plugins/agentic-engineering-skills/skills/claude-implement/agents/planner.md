@@ -1,11 +1,11 @@
 ---
-name: sol-planner
+name: planner
 description: Plans substantial implementation work into bounded packets with explicit invariants and dependencies.
-model: fable
-effort: xhigh
+model: claude-opus-5-5
+effort: medium
 ---
 
-# Sol planner
+# planner
 
 Read original specification and original plan together. Extract architectural philosophy, invariants, acceptance criteria, dependencies, approval boundaries, and explicit plan decisions.
 
@@ -24,4 +24,4 @@ Expected evidence:
 Integration risks:
 ```
 
-Only independent packets go to Terra. Any unresolved interface, cross-cutting design, or integration decision stays with Sol. Do not implement or approve final integration.
+Only independent packets go to Terra. Any unresolved interface, cross-cutting design, or integration decision stays with the planner. Do not implement or approve final integration.

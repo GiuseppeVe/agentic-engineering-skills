@@ -36,7 +36,49 @@ test("sequential dispatch resolves its dedicated worker reference without the fu
   assert.match(worker, /Missing scope or conflicting acceptance criteria/);
   assert.match(worker, /RED.*GREEN/s);
   assert.match(worker, /commit SHA/);
-  assert.doesNotMatch(worker, /Sol|Terra|gpt-\d|claude-|required_profile|xhigh/);
+  assert.doesNotMatch(worker, /Sol|Terra|gpt-\d|claude-|required_profile|model_reasoning_effort|effort\s*[:=]|\b(?:xhigh|medium|high)\b/);
+});
+
+test("implementation attachments use neutral names and host-specific approved routing", async () => {
+  for (const host of ["codex", "claude"]) {
+    const name = `${host}-implement`;
+    const source = await skill(name);
+    assert.doesNotMatch(source, /sol-(planner|spec-aware-tester|clean-room-reviewer)|gpt-5\.6|--model (?:fable|opus)\b/);
+    for (const role of ["planner", "spec-aware-tester", "clean-room-reviewer"]) {
+      assert.ok(source.includes(`agents/${role}.md`));
+      const attachment = await readFile(path.join(skillsRoot, name, "agents", `${role}.md`), "utf8");
+      assert.match(attachment, new RegExp(`^name: ${role}$`, "m"));
+      if (host === "codex") {
+        assert.match(attachment, new RegExp(`^required_profile: ${role}$`, "m"));
+        assert.match(source, new RegExp(`codex -p ${role} `));
+        assert.match(source, /\$CODEX_HOME\/<name>\.config\.toml/);
+        assert.match(source, /gpt-6\.1-sol/);
+      } else {
+        assert.match(attachment, /^model: claude-opus-5-5$/m);
+        assert.match(attachment, new RegExp(`^effort: ${role === "planner" ? "medium" : "high"}$`, "m"));
+        assert.match(source, new RegExp(`--agent ${role} --model claude-opus-5-5 --effort ${role === "planner" ? "medium" : "high"}`));
+      }
+    }
+    const worker = await readFile(path.join(skillsRoot, name, "agents", "terra-worker.md"), "utf8");
+    assert.match(worker, host === "codex" ? /^required_profile: worker$/m : /^model: claude-sonnet-5-5$/m);
+    if (host === "claude") assert.match(worker, /^effort: high$/m);
+    assert.match(source, /controller\/orchestrator.*separate contexts|Context isolation contract/s);
+    assert.match(source, /original, unabridged/);
+  }
+  const codex = await skill("codex-implement");
+  assert.match(codex, /first retry, second retry in this order/);
+  assert.match(codex, /once more with `worker` \(Sol\/high\) in another fresh context/);
+});
+
+test("sequential calling layer selects Sol/high worker and Sol/xhigh reviewer without changing queue", async () => {
+  const source = await skill("sequential-task-orchestrator");
+  const protocol = await readFile(path.join(skillsRoot, "sequential-task-orchestrator", "references", "runtime-protocol.md"), "utf8");
+  assert.match(source, /model `gpt-6\.1-sol` and thinking `high`/);
+  assert.match(source, /model `gpt-6\.1-sol` and thinking `xhigh`/);
+  assert.match(protocol, /\| Implementer \| `gpt-6\.1-sol` \| `high` \|/);
+  assert.match(protocol, /\| Reviewer \| `gpt-6\.1-sol` \| `xhigh` \|/);
+  assert.match(source, /One side-chat slot only/);
+  assert.match(protocol, /Even if a later task is independent, keep it queued/);
 });
 
 test("Test Gaps skill exposes coverage-gap discovery commands", async () => {

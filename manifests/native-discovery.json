@@ -1,17 +1,17 @@
 {
   "schemaVersion": 2,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-10-09",
+  "capturedAt": "2026-10-12",
   "environment": {
-    "isolation": "Fresh separate temporary WSL Ubuntu-24.04 HOME, npm prefix, CODEX_HOME and CLAUDE_CONFIG_DIR inside Hermes scratch. Child Git core.autocrlf=false.",
+    "isolation": "Fresh separate Windows HOME, USERPROFILE, APPDATA, LOCALAPPDATA, CODEX_HOME and CLAUDE_CONFIG_DIR under Hermes scratch; official npm CLIs installed in isolated prefix. Child Git core.autocrlf=false and core.eol=lf.",
     "normalHostConfigMutated": false,
-    "commandNotation": "Commands run from isolated repository checkout at payload commit fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c, on Node.js v22.23.1; PATH selects isolated npm prefix. Actual cache roots resolved by locateInstalledPayload.",
+    "commandNotation": "Commands run from isolated local clone at payload commit ac0190a94d80dbd1fd51ae55dcce482661e06490, Node.js v26.7.0; node invokes pinned official npm CLI wrappers. Actual installed cache roots resolved by locateInstalledPayload.",
     "claudeMarketplaceDeclaration": "Fresh isolated Claude profile registered directory marketplace using claude plugin marketplace add ./ --scope user.",
-    "payloadRefresh": "Dedicated sequential worker payload at fdaa94f057f73a0bacf72c37bf8b6d2d5a99e61c; both fresh native installations match source. No installed caches manually patched."
+    "payloadRefresh": "Neutral role-routing payload at ac0190a94d80dbd1fd51ae55dcce482661e06490; both real isolated installations compared against complete source payload bytes. No package cache manually patched."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills/skills",
-    "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
+    "treeHash": "sha256:e73e4efcf35eb6a9e2c916ae44e8d663583763d65f5b5557a3261ef8d2d55884",
     "skills": [
       "brainstorming",
       "cavecrew",
@@ -46,10 +46,10 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.141.0",
+      "version": "codex-cli 0.159.2",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
+        "treeHash": "sha256:e73e4efcf35eb6a9e2c916ae44e8d663583763d65f5b5557a3261ef8d2d55884",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -132,15 +132,15 @@
         }
       ],
       "limitations": [
-        "Installed SKILL.md inventory and complete payload bytes observed from actual isolated native cache.",
-        "No fresh-session skill invocation or behavioral validation was performed by this receipt capture."
+        "Actual isolated native cache inventory and complete installed bytes match source.",
+        "Packaging fidelity only; no fresh-session inference or role discovery claimed by this receipt."
       ]
     },
     "claude": {
-      "version": "2.1.201 (Claude Code)",
+      "version": "2.1.296 (Claude Code)",
       "discoveryBasis": "isolated-installed-payload",
       "installedPayload": {
-        "treeHash": "sha256:c869d63abb40f82f82903a1f2f5ca6d5121a29d330be2a543a58e61052c97fad",
+        "treeHash": "sha256:e73e4efcf35eb6a9e2c916ae44e8d663583763d65f5b5557a3261ef8d2d55884",
         "skills": [
           "brainstorming",
           "cavecrew",
@@ -227,8 +227,8 @@
         }
       ],
       "limitations": [
-        "Installed SKILL.md inventory and complete payload bytes observed from actual isolated native cache.",
-        "No fresh-session skill invocation or behavioral validation was performed by this receipt capture."
+        "Actual isolated native cache inventory and complete installed bytes match source.",
+        "Packaging fidelity only; no fresh-session inference or role discovery claimed by this receipt."
       ]
     }
   }
