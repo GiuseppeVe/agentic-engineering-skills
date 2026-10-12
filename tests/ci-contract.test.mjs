@@ -35,12 +35,12 @@ test("CI setup and executable gates are unique and ordered", async () => {
 
   const runs = steps.filter(step => "run" in step).map(step => step.run.trim());
   assert.equal(new Set(runs).size, runs.length, "every executable run step must be unique");
-  assert.ok(runs.includes("npm install --global @openai/codex@0.141.0"));
-  assert.ok(runs.includes("npm install --global @anthropic-ai/claude-code@2.1.201"));
+  assert.ok(runs.includes("npm install --global @openai/codex@0.159.2"));
+  assert.ok(runs.includes("npm install --global @anthropic-ai/claude-code@2.1.296"));
 
   const gates = [
-    "npm install --global @openai/codex@0.141.0",
-    "npm install --global @anthropic-ai/claude-code@2.1.201",
+    "npm install --global @openai/codex@0.159.2",
+    "npm install --global @anthropic-ai/claude-code@2.1.296",
     "npm ci",
     "npm test",
     "npm run verify:pack",

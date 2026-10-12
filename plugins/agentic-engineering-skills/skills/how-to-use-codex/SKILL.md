@@ -7,7 +7,7 @@ description: Use when a user says "scrivi un prompt per Codex", "genera un promp
 
 ## Goal
 
-Create one paste-ready prompt. Input: task + supplied context. Output: task-specific prompt plus material missing decisions. GPT-5.6 and GPT-6 Astra work best with a lean outcome contract: goal, context, hard constraints, authority, proof, success criteria, output shape. State rules once. Do not narrate steps unless they encode real requirements.
+Create one paste-ready prompt. Input: task + supplied context. Output: task-specific prompt plus material missing decisions. Use a lean outcome contract: goal, context, hard constraints, authority, proof, success criteria, output shape. State rules once. Do not narrate steps unless they encode real requirements.
 
 ## Current Official Guidance
 
@@ -33,6 +33,8 @@ Deliverable: [exact final-answer structure, e.g. findings ranked with evidence; 
 
 For `answer/explain/review/diagnose/plan`, authority defaults to inspect and report only: no changes. For `change/build/fix`, allow in-scope local edits and non-destructive validation. Always require confirmation for external writes, destructive actions, purchases, credentials, installs, commit/push, or material scope expansion unless user explicitly authorizes them.
 
+User authority governs in-scope choices within higher-priority instructions, host policy and sandbox boundaries. A prompt cannot override those controls.
+
 ## Keep It Lean
 
 - Include context that changes decisions: paths, interfaces, expected behavior, constraints, links/files, examples that fix measured gaps.
@@ -42,24 +44,27 @@ For `answer/explain/review/diagnose/plan`, authority defaults to inspect and rep
 - Short output: say what must remain, then what may be omitted. Never use generic "be concise" alone.
 - Do not repeat policy, tool instructions, or examples. Expose/request only task-relevant tools or sources.
 
-## GPT-5.6 Model Choice
+## Workflow role selection
 
-Recommend separately from prompt when requested. `gpt-5.6` aliases Sol.
+These are approved workflow decisions, not benchmark claims or universal model recommendations. Verify exact IDs and supported effort against the current host catalog before persisting or dispatching. Preserve an explicitly requested model; historical IDs are not declared retired by this skill.
 
-| Tier | Use for |
-|---|---|
-| Sol | complex reasoning/coding, uncertain architecture, high-value review |
-| Terra | normal coding workload needing intelligence/cost balance |
-| Luna | simple, bounded, high-volume/cost-sensitive API work |
+| Role class | Codex model | Effort |
+|---|---|---|
+| Exploration | `gpt-6-luna` | `high` |
+| Planning and semantic review | `gpt-6.1-sol` | `xhigh` |
+| Implementation and research | `gpt-6.1-sol` | `high` |
+| Mechanical tests and log scanning | `gpt-6-luna` | `medium` |
 
-Codex UI availability is account/runtime-specific. Never promise Luna, Pro mode, exact reasoning controls, or a model picker exists. If user controls API: start `medium`; use `low` for latency; raise to `high`/`xhigh` only after measured quality gain; reserve `max` and Pro mode for hard quality-first work. Prompt stays outcome-focused; never ask model to "think harder."
+Native role TOMLs, independent CLI session profiles and Markdown attachments are separate mechanisms. Current CLI `-p` layers `$CODEX_HOME/<name>.config.toml`; it does not select a native agent. The workflow supplies contracts, not account access or automatic role registration. Inherit the main session's provider, tools and security settings; choose model and effort only at the calling layer.
+
+For broader model recommendations, fetch current official guidance and evaluate task-specific quality/cost evidence. Do not infer availability or effective routing from a prompt, help output, or model self-report.
 
 ## GPT-6 Astra Model Choice
 
 Recommend separately from prompt when requested. Verify the current model page before making a current recommendation. GPT-6 Astra is intended for the hardest end-to-end work; choose a simpler available model when task scope and measured quality allow it.
 
 - Preserve the user's explicitly requested model and effective reasoning level during migration unless official guidance requires a change.
-- GPT-6 Astra does not support `none` reasoning effort. Start with `low` for routine work; raise effort only when task complexity or measured quality justifies it.
+- Verify supported reasoning efforts in the current catalog before selecting one; preserve requested effort when supported.
 - Codex UI availability is account/runtime-specific. Never promise a model picker, Pro mode, exact controls, pricing, or access.
 - Keep prompts outcome-focused. Do not ask a model to "think harder."
 
@@ -84,7 +89,7 @@ Output prompt first in one Markdown code block. Then, if useful, give a model re
 
 ## Sources
 
-Only when model availability, pricing, API controls, or current guidance is material, refresh facts from the official OpenAI documentation: https://developers.openai.com/api/docs/guides/latest-model and https://developers.openai.com/api/docs/models.
+Only when model availability, pricing, API controls, or current guidance is material, refresh facts from the official OpenAI documentation: https://developers.openai.com/api/docs/guides/latest-model and https://developers.openai.com/api/docs/models. For native roles and session configuration, consult https://learn.chatgpt.com/docs/agent-configuration/subagents and current installed CLI help.
 
 
 
