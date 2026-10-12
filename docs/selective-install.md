@@ -36,4 +36,6 @@ Complete plugin is supported install path. Selective installation is advanced: c
 
 `deslopping-cleanup` documents optional external specialist routes, not lock-declared dependencies. Its directory includes a portable skill-local copy of the repository MIT `LICENSE`; retain that copy when selectively redistributing the skill. See [dependencies and publication review](deslopping-cleanup.md) for route availability and fallbacks.
 
+Implementation role attachments do not register native agents or create CLI session profiles. Codex requires separate minimal `$CODEX_HOME/<name>.config.toml` layers for `planner`, `spec-aware-tester`, `clean-room-reviewer` (Sol/xhigh) and `worker` (Sol/high). Claude `--agent` examples require separately registered matching roles; use the explicit model/effort in each calling workflow. Keep the bounded Terra packet worker's Sonnet/high exception separate from generic Sonnet/medium workers. See [agent profiles](agent-profiles.md).
+
 After copying, preserve flat layout `<skills-root>/<name>/SKILL.md`. Re-run host discovery. For provenance meaning see [provenance](provenance.md); for modification rules see [customization](customization.md).

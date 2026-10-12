@@ -69,4 +69,6 @@ Use Codex native delegation capabilities to assign a complete profile payload pl
 
 Use Claude Code native delegation capabilities to assign a complete profile payload plus bounded task context. Keep host-specific commands in calling workflow or project instructions, not inside profiles. Confirm available native delegation behavior in current Claude Code environment; profile distribution alone does not register agents automatically.
 
+Implementation workflows use neutral planner, spec-aware-tester and clean-room-reviewer attachments. Codex CLI session layers (`$CODEX_HOME/<name>.config.toml`) select Sol/xhigh for these roles and Sol/high for bounded workers and both retries. Native agent TOMLs are separate registrations. Claude callers use separately installed native role names with Opus 5.5/medium for planners, Opus 5.5/high for semantic review and Sonnet 5.5/high for the existing Terra packet-worker exception; generic workers remain Sonnet/medium. The bundle distributes Markdown contracts; it does not install user-home session profiles or register every native role. Verify discovery and effective routing in the target host.
+
 Return to [README](../README.md).
