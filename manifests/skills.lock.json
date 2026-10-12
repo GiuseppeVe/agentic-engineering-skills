@@ -60,7 +60,7 @@
     {
       "name": "claude-implement",
       "sourceType": "original",
-      "localSha256": "b8f512e526a9abcb644fd32f8b1d541d37995d782edd60fb6bb026fd04f99530",
+      "localSha256": "9b7d5079a581680d36c79a188a6c590c431c2553d726e231d007a7cb59038e7d",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -104,7 +104,7 @@
     {
       "name": "codex-implement",
       "sourceType": "original",
-      "localSha256": "f5b0ae0bcae2e656c9897f58dcc36f1fe26bbd11dd7a3185b992ebdd06905648",
+      "localSha256": "c1c164f236b65dc474f1775f016a166960883b3cf5596a28d0c439a4030d3e82",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -175,7 +175,7 @@
     {
       "name": "how-to-use-codex",
       "sourceType": "original",
-      "localSha256": "1a1cc61905560c460bf7ed8060b70f6701c65ae6e7696206af2e7386bcf16161",
+      "localSha256": "28c20485d8cc22dc4c447d16bbf57e0c92e7629a2748b5b25647421695978b58",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "file",
@@ -302,7 +302,7 @@
     {
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
-      "localSha256": "36a4f3edcf0d01a1114738e6f611b8c5596e041a4d815483071f55250fcf77ba",
+      "localSha256": "7e0dadd179a9703854ff6319eba72df17fdf34e7d1132148ee140eaf779bb1d0",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
