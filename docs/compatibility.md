@@ -15,7 +15,7 @@ Current isolated-install versions: Codex CLI 0.159.2 and Claude Code 2.1.296. Pa
 
 ## Current role-routing receipt: 2026-10-12
 
-Real isolated Windows installations used Node.js v24.16.0, Codex CLI 0.159.2
+Real isolated Windows installations used Node.js v26.7.0, Codex CLI 0.159.2
 and Claude Code 2.1.296 at reachable payload commit
 `ac0190a94d80dbd1fd51ae55dcce482661e06490`. Both native caches contain 29 skills;
 complete installed bytes match source tree hash

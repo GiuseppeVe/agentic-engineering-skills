@@ -15,7 +15,7 @@ unchanged. The original stamping script records this reachable payload revision.
 This section owns the current native receipt; earlier sections are historical.
 
 - Official npm CLI versions were verified available and installed in a fresh
-  isolated prefix: Codex 0.159.2 and Claude Code 2.1.296, on Node.js v24.16.0.
+  isolated prefix: Codex 0.159.2 and Claude Code 2.1.296, on Node.js v26.7.0.
 - Both real isolated marketplace installs contain 29 skills. Complete installed
   payload bytes match source hash
   `sha256:e73e4efcf35eb6a9e2c916ae44e8d663583763d65f5b5557a3261ef8d2d55884`.
