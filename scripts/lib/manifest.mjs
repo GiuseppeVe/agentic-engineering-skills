@@ -171,7 +171,7 @@ function validateRawPatch(bytes) {
   let text;
   try { text = new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
   catch { throw new Error("patch artifact is not valid UTF-8 text"); }
-  if (!/^diff --git \S+ .+(?:\r?\n|$)/.test(text) || !/^diff --git /m.test(text)) throw new Error("invalid patch artifact: expected non-empty diff --git patch");
+  if (!/^diff --git \S+ .+(?:\r?\n|$)/.test(text)) throw new Error("invalid patch artifact: expected non-empty diff --git patch");
   return text;
 }
 

@@ -43,7 +43,7 @@ const trackedFiles = adaptedEntries.length
   : new Set();
 for (const entry of adaptedEntries) {
   const patch = join(root, entry.patchPath);
-  if ((await loadPatchBytes(patch, root)).length === 0) throw new Error(`empty patch for ${entry.name}`);
+  await loadPatchBytes(patch, root);
   for (const artifact of await listPatchBundlePaths(patch, root)) {
     const relativeArtifact = relative(root, artifact).split("\\").join("/");
     if (!trackedFiles.has(relativeArtifact)) throw new Error(`${entry.name}: patch chunk is not tracked: ${relativeArtifact}`);
