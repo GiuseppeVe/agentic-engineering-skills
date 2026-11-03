@@ -85,7 +85,7 @@
       "name": "claude-implement",
       "sourceType": "original",
       "localSha256": "a9aa30f07a17cd020ae88331312a8002b3964168105087528e1059ac95ca27f7",
-      "releaseCommit": "bc29dca1d39efd8eadf2046e97b9914f054f2800",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [],
@@ -95,7 +95,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "bed90675999d9277c4cb7999cca66e564800636bc8b48deae126af6bf64cc7db",
-      "releaseCommit": "73ef86caacee353dc2e45e5616c9484ceb5fde22",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -123,7 +123,7 @@
       "name": "codex-implement",
       "sourceType": "original",
       "localSha256": "da7b6dcb5340636569343c2ef6d0fa21a3d346f3aa3b2ddcfebe3044a7b7a8c2",
-      "releaseCommit": "bf8d616b9f4bd1e8b8c67105dd4044cefb88429c",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -132,7 +132,7 @@
       "name": "coordinating-implementation-programs",
       "sourceType": "original",
       "localSha256": "d0fa7bfd217cf314eb26eea11076bc7cc78c2bb09698ad8e2c5398de5d19e8d8",
-      "releaseCommit": "d4c29e90a9f3f310f57bcf2365b5f4329e7e7b16",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -143,7 +143,7 @@
       "name": "deslopping-cleanup",
       "sourceType": "original",
       "localSha256": "a751a5eb74377dfe3be83a880eb6b6d166b1ec14fce6cf227c14e40747475ed4",
-      "releaseCommit": "73ef86caacee353dc2e45e5616c9484ceb5fde22",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -200,7 +200,7 @@
       "name": "graphify-start",
       "sourceType": "original",
       "localSha256": "87a530cb801ebc8f6ffacb535a81629048a86138a929149d35619c5c0779dc8f",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -342,7 +342,7 @@
       "name": "marketing-screenshots",
       "sourceType": "original",
       "localSha256": "0bdc354c9ad4db2d6bcd5f5695f857beb0dbda841fddbe50f5d607893fe37f46",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -351,7 +351,7 @@
       "name": "master-orchestrator",
       "sourceType": "original",
       "localSha256": "3f18d910d72f83c81e2aa018db461e80ac82d28e2c1f329a7883ba24342f308d",
-      "releaseCommit": "73ef86caacee353dc2e45e5616c9484ceb5fde22",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -360,7 +360,7 @@
       "name": "mdx-to-html",
       "sourceType": "original",
       "localSha256": "122c491403b0af0e9d0bd75929748fa3e522fefd599869c7fa6a5a1abce61dd9",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -369,7 +369,7 @@
       "name": "orchestrating-gemini-workers",
       "sourceType": "original",
       "localSha256": "a8869f56954ef468fdd7c6ce80cc717aca47cd8ed2faedb0cd9ba64ae937d75b",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -397,7 +397,7 @@
       "name": "sequential-task-orchestrator",
       "sourceType": "original",
       "localSha256": "a75c8a36c7e6f86ffd70c914f503e2bb4beaaf87c9be91c1218cf4e0d64902cd",
-      "releaseCommit": "22a3235ae7d80941385bd030614ff6d800ae8bd5",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -408,7 +408,7 @@
       "name": "setup-goal",
       "sourceType": "original",
       "localSha256": "3c5a58ebbf6bae50513103b03635d13f39bc7c519c977e6a8e38239643024db5",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -417,7 +417,7 @@
       "name": "setup-harness-evaluation",
       "sourceType": "original",
       "localSha256": "92790d23645ecd4516bd91644d41b294933999c948e77ff296917ec3b4f2c5b1",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -426,7 +426,7 @@
       "name": "setup-workflow-comparison",
       "sourceType": "original",
       "localSha256": "1905cce8610938a481a9c4fec92feae519d3eb126ffd9a81bddaa5f413f9be6d",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -435,7 +435,7 @@
       "name": "simplify",
       "sourceType": "original",
       "localSha256": "9ecf57ab4bb1943947099307a107dda7021694022888f6bc0b817f75f70e589c",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -520,7 +520,7 @@
       "name": "writing-for-agents",
       "sourceType": "original",
       "localSha256": "0071124a923559493bc8924a90fb87bceb048d31ad2ce785fa4281d7c506bfa7",
-      "releaseCommit": "387d1616bd10f5022e265870c2bb8fff8821ae0b",
+      "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
