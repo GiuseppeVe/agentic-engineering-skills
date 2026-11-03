@@ -570,7 +570,6 @@ async function main() {
       }
       if (hasOnlyControlledSyntheticPath(normalizedPath, content, rule, pattern)) continue;
       if (bundle && hasOnlyControlledSyntheticChunk(bundle.parentPath, bundle.content, content, rule, pattern)) continue;
-      if (hasOnlyControlledThirdPartyMatches(normalizedPath, content, rule)) continue;
       if (pattern.test(content)) findings.push(`${file.displayPath}:${rule}`);
     }
   }
