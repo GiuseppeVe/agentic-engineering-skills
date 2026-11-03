@@ -73,6 +73,8 @@ test("directory patch preserves executable modes from Git index and applies them
       writeFile(join(next, "fixture", "ordinary.txt"), "new\n"),
     ]);
     await exec("git", ["init", "-q", repo]);
+    // Make the Git index authoritative even on POSIX filesystems.
+    await exec("git", ["-C", repo, "config", "core.filemode", "false"]);
     await exec("git", ["-C", repo, "add", "--", "old", "next"]);
     await exec("git", ["-C", repo, "update-index", "--chmod=+x", "--", "old/fixture/upstream.sh", "next/fixture/upstream.sh", "next/fixture/new-script.sh", "next/fixture/mode-change.sh"]);
 
@@ -84,6 +86,8 @@ test("directory patch preserves executable modes from Git index and applies them
     assert.match(patch, /diff --git a\/fixture\/upstream\.sh b\/fixture\/upstream\.sh\nindex [0-9a-f]+\.\.[0-9a-f]+ 100755\n/);
 
     await cp(join(old, "fixture"), join(apply, "fixture"), { recursive: true });
+    // git apply --index requires the existing file to match its index mode.
+    await chmod(join(apply, "fixture", "upstream.sh"), 0o755);
     await exec("git", ["init", "-q", apply]);
     await exec("git", ["-C", apply, "add", "--", "fixture"]);
     await exec("git", ["-C", apply, "update-index", "--chmod=+x", "--", "fixture/upstream.sh"]);

@@ -96,9 +96,100 @@ const controlledThirdPartyArtifacts = new Map([
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live/sveltekit-adapter.mjs", { "url:non-public": 1 }],
 ]);
 
-function nonPublicUrlMatches(content) {
+function literalNonPublicUrlMatches(content) {
   const candidates = /https?:\/\/[^\s"'`<>]+/gi;
-  return [...content.matchAll(candidates)].filter(isNonPublicUrl);
+  const schemes = /https?:\/\//gi;
+  const matches = [];
+  for (const candidate of content.matchAll(candidates)) {
+    if (isNonPublicUrl(candidate)) matches.push(candidate);
+    for (const scheme of candidate[0].matchAll(schemes)) {
+      if (scheme.index === 0) continue;
+      // Classify the authority without repeatedly parsing the shared URL tail.
+      const authorityStart = scheme.index + scheme[0].length;
+      const separator = candidate[0].slice(authorityStart).search(/[/?#\\]/);
+      const authorityEnd = separator < 0 ? candidate[0].length : authorityStart + separator;
+      const authorityUrl = candidate[0].slice(scheme.index, authorityEnd);
+      if (!isNonPublicUrl({ 0: authorityUrl })) continue;
+      // Keep the original match and position for exact exceptions.
+      const match = [candidate[0].slice(scheme.index)];
+      match.index = candidate.index + scheme.index;
+      matches.push(match);
+    }
+  }
+  return matches;
+}
+
+function decodeQueryValue(value, offsets, decodePlus) {
+  let decoded = "";
+  const nextOffsets = [];
+  let changed = false;
+  for (let index = 0; index < value.length; index += 1) {
+    const sourceOffset = offsets ? offsets[index] : index;
+    const hex = value[index] === "%" ? value.slice(index + 1, index + 3) : "";
+    if (/^[\da-f]{2}$/i.test(hex)) {
+      const byte = Number.parseInt(hex, 16);
+      if (byte <= 0x7f) {
+        decoded += String.fromCharCode(byte);
+        nextOffsets.push(sourceOffset);
+        changed = true;
+        index += 2;
+        continue;
+      }
+    }
+    if (decodePlus && value[index] === "+") {
+      decoded += " ";
+      changed = true;
+    } else {
+      decoded += value[index];
+    }
+    nextOffsets.push(sourceOffset);
+  }
+  return { value: decoded, offsets: nextOffsets, changed };
+}
+
+function nonPublicUrlMatches(content) {
+  const matches = literalNonPublicUrlMatches(content);
+  const seen = new Set(matches.map((match) => match.index));
+  const candidates = /https?:\/\/[^\s"'`<>]+/gi;
+  for (const candidate of content.matchAll(candidates)) {
+    const text = candidate[0];
+    const question = text.indexOf("?");
+    if (question < 0) continue;
+    const fragment = text.indexOf("#", question + 1);
+    const queryEnd = fragment < 0 ? text.length : fragment;
+    let segmentStart = question + 1;
+    while (segmentStart <= queryEnd) {
+      const ampersand = text.indexOf("&", segmentStart);
+      const segmentEnd = ampersand < 0 || ampersand > queryEnd ? queryEnd : ampersand;
+      const segment = text.slice(segmentStart, segmentEnd);
+      const equals = segment.indexOf("=");
+      const valueStart = equals >= 0 ? segmentStart + equals + 1 : segmentStart;
+      const rawValue = text.slice(valueStart, segmentEnd);
+      let value = rawValue;
+      let offsets;
+      // Inspect the literal value, then decode at most two ASCII percent-encoding layers.
+      for (let pass = 0; pass <= 2; pass += 1) {
+        for (const match of literalNonPublicUrlMatches(value)) {
+          const rawOffset = offsets ? offsets[match.index] : match.index;
+          const index = candidate.index + valueStart + rawOffset;
+          if (seen.has(index)) continue;
+          const recovered = [rawValue.slice(rawOffset)];
+          recovered.index = index;
+          recovered.recoveredFromQuery = true;
+          matches.push(recovered);
+          seen.add(index);
+        }
+        if (pass === 2 || (!value.includes("%") && (pass > 0 || !value.includes("+")))) break;
+        const decoded = decodeQueryValue(value, offsets, pass === 0);
+        if (!decoded.changed) break;
+        value = decoded.value;
+        offsets = decoded.offsets;
+      }
+      if (segmentEnd === queryEnd) break;
+      segmentStart = segmentEnd + 1;
+    }
+  }
+  return matches;
 }
 
 function urlAuthority(match) {
@@ -201,9 +292,10 @@ function hasOnlyControlledLoopbackUrls(path, content) {
 function hasOnlyControlledTestLoopbackUrls(path, content) {
   const expected = controlledTestLoopbackArtifacts.get(path);
   if (!expected) return false;
-  const matches = nonPublicUrlMatches(content).map((match) => match[0]).sort();
-  return matches.length === expected.length
-    && [...expected].sort().every((url, index) => matches[index] === url);
+  const matches = nonPublicUrlMatches(content);
+  if (matches.length !== expected.length) return false;
+  const urls = matches.map((match) => match[0]).sort();
+  return [...expected].sort().every((url, index) => urls[index] === url);
 }
 
 function isLoopbackUrl(match) {
@@ -461,7 +553,13 @@ async function main() {
       const normalizedPath = file.displayPath.split(path.sep).join("/");
       if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
       if (rule === "url:non-public") {
-        if (nonPublicUrlMatches(content).length === 0) continue;
+        const urlMatches = nonPublicUrlMatches(content);
+        if (urlMatches.length === 0) continue;
+        // Query-recovered matches never qualify for fixture exceptions.
+        if (urlMatches.some((match) => match.recoveredFromQuery)) {
+          findings.push(file.displayPath + ":" + rule);
+          continue;
+        }
         if (hasOnlyControlledLoopbackUrls(normalizedPath, content)
           || hasOnlyControlledTestLoopbackUrls(normalizedPath, content)
           || hasOnlyControlledThirdPartyMatches(normalizedPath, content, rule)

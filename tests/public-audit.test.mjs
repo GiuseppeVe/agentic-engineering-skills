@@ -168,6 +168,128 @@ test("controlled loopback exception rejects punctuated URLs with userinfo", asyn
   assert.equal(result.stderr.includes(privateUrl), false);
 });
 
+const nestedPublicProxy = ["https:/", "proxy.example.com"].join("/");
+const nestedPrivateHost = ["http:/", "service.internal"].join("/");
+const nestedPrivateIpv4 = ["http:/", "192.168.1.2"].join("/");
+const nestedPublicHost = ["https:/", "public.example"].join("/");
+const nestedPrivateCases = [
+  ["query redirect", nestedPublicProxy + "/?redirect=" + nestedPrivateHost, nestedPrivateHost],
+  ["URL path", nestedPublicProxy + "/path/" + nestedPrivateIpv4 + "/status", nestedPrivateIpv4],
+  ["multiple nested URLs", nestedPublicProxy + "/?next=" + nestedPublicHost + "/?redirect=" + nestedPrivateHost, nestedPrivateHost],
+  ["IPv6 URL", nestedPublicProxy + "/?redirect=" + ["http:/", "[::1]"].join("/"), ["http:/", "[::1]"].join("/")],
+  ["userinfo before a private host", nestedPublicProxy + "/?redirect=" + ["http:/", "public.example@192.168.1.2"].join("/"), ["http:/", "public.example@192.168.1.2"].join("/")],
+];
+
+for (const [label, content, privateUrl] of nestedPrivateCases) {
+  test("reports nested private URL in " + label + " without exposing it", async () => {
+    const result = await runFiles([["notes.md", content]]);
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stdout, /:url:non-public$/m);
+    assert.equal(result.stdout.includes(privateUrl), false);
+    assert.equal(result.stderr.includes(privateUrl), false);
+  });
+}
+
+test("allows nested public URLs and private-looking text in public hosts", async () => {
+  const publicUrls = [
+    nestedPublicProxy + "/?redirect=" + nestedPublicHost,
+    nestedPublicProxy + "/path/" + ["http:/", "service.internal.example"].join("/"),
+    nestedPublicProxy + "/?redirect=" + ["http:/", "service.internal@public.example"].join("/"),
+    nestedPublicProxy + "/path/" + ["http:/", "service.internalhttps:", "", "public.example"].join("/"),
+    nestedPublicProxy + "/?redirect=service.internal",
+  ];
+  const result = await runFiles([["notes.md", publicUrls.join("\n")]]);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("exact test-server exception does not hide a nested private URL", async () => {
+  const fixturePath = "tests/impeccable-agent-mcp.test.mjs";
+  const fixturePort = ["$", "{server.address().port}"].join("");
+  const fixtureUrl = ["http:/", "127.0.0.1:" + fixturePort].join("/");
+  const content = '"' + fixtureUrl + '"\n' + nestedPublicProxy + "/?redirect=" + nestedPrivateHost;
+  const result = await runRepositoryFiles([[fixturePath, content]]);
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stdout, /:url:non-public$/m);
+  assert.equal(result.stdout.includes(nestedPrivateHost), false);
+  assert.equal(result.stderr.includes(nestedPrivateHost), false);
+});
+
+test("counted loopback exception does not hide a nested private URL", async () => {
+  const fixturePath = "plugins/agentic-engineering-skills/skills/brainstorming/visual-companion.md";
+  const fixtureUrl = ["http:/", "localhost:52341"].join("/");
+  const content = '"' + fixtureUrl + '"\n' + nestedPublicProxy + "/?redirect=" + nestedPrivateHost;
+  const result = await runRepositoryFiles([[fixturePath, content]]);
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stdout, /:url:non-public$/m);
+  assert.equal(result.stdout.includes(nestedPrivateHost), false);
+  assert.equal(result.stderr.includes(nestedPrivateHost), false);
+});
+
+test("exact test-server exception permits unrelated nested public URLs", async () => {
+  const fixturePath = "tests/impeccable-agent-mcp.test.mjs";
+  const fixturePort = ["$", "{server.address().port}"].join("");
+  const fixtureUrl = ["http:/", "127.0.0.1:" + fixturePort].join("/");
+  const content = '"' + fixtureUrl + '"\n' + nestedPublicProxy + "/?redirect=" + nestedPublicHost;
+  const result = await runRepositoryFiles([[fixturePath, content]]);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+const encodedPrivateCases = [
+  ["percent-encoded redirect", encodeURIComponent(nestedPrivateHost)],
+  ["double-encoded redirect", encodeURIComponent(encodeURIComponent(nestedPrivateIpv4 + "/status"))],
+  ["encoded IPv6 redirect", encodeURIComponent(["http:/", "[::1]"].join("/"))],
+  ["encoded userinfo before private host", encodeURIComponent(["http:/", "public.example@192.168.1.2"].join("/"))],
+  ["malformed escape before encoded redirect", "%ZZ" + encodeURIComponent(nestedPrivateHost)],
+  ["literal redirect followed by another parameter", nestedPrivateHost + "&view=summary"],
+];
+
+for (const [label, value] of encodedPrivateCases) {
+  test("reports " + label + " without exposing it", async () => {
+    const content = nestedPublicProxy + "/?redirect=" + value;
+    const result = await runFiles([["notes.md", content]]);
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stdout, /:url:non-public$/m);
+    assert.equal(result.stdout.includes(value), false);
+    assert.equal(result.stderr.includes(value), false);
+  });
+}
+
+test("permits encoded public redirects and malformed or deeply encoded public values", async () => {
+  const publicWithUserinfo = ["http:/", "service.internal@public.example"].join("/");
+  let deeplyEncoded = nestedPublicHost;
+  for (let i = 0; i < 32; i += 1) deeplyEncoded = encodeURIComponent(deeplyEncoded);
+  const publicValues = [
+    encodeURIComponent(nestedPublicHost),
+    encodeURIComponent(publicWithUserinfo),
+    encodeURIComponent(encodeURIComponent(nestedPublicHost)),
+    "%ZZ%2F" + encodeURIComponent(nestedPublicHost),
+    deeplyEncoded,
+    encodeURIComponent("service.internal"),
+  ];
+  const result = await runFiles([["notes.md", publicValues.map((value) => nestedPublicProxy + "/?redirect=" + value).join("\n")]]);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("exact test-server exception does not hide an encoded private redirect", async () => {
+  const fixturePath = "tests/impeccable-agent-mcp.test.mjs";
+  const fixturePort = ["$", "{server.address().port}"].join("");
+  const fixtureUrl = ["http:/", "127.0.0.1:" + fixturePort].join("/");
+  const content = '"' + fixtureUrl + '"\n' + nestedPublicProxy + "/?redirect=" + encodeURIComponent(nestedPrivateHost);
+  const result = await runRepositoryFiles([[fixturePath, content]]);
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stdout, /:url:non-public$/m);
+});
+
+test("encoded test-server redirect is not an exact fixture exception", async () => {
+  const fixturePath = "tests/impeccable-agent-mcp.test.mjs";
+  const fixturePort = ["$", "{server.address().port}"].join("");
+  const fixtureUrl = ["http:/", "127.0.0.1:" + fixturePort].join("/");
+  const content = nestedPublicProxy + "/?redirect=" + encodeURIComponent(fixtureUrl);
+  const result = await runRepositoryFiles([[fixturePath, content]]);
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stdout, /:url:non-public$/m);
+});
+
 const serializedWindowsPaths = [
   ["JSON Windows home", ["C:", "Users", "example", "private", "repo"].join("\\")],
   ["JSON Windows home user root", ["E:", "USERS", "example"].join("\\")],

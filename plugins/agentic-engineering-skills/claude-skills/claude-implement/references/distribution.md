@@ -8,4 +8,4 @@ Any required copy, hash, or model-command mismatch blocks final clean approval. 
 
 ## Forward validation
 
-Run `tests/forward-tests.md` after every change. Distribution is blocked until it prevents out-of-packet interface changes, clean-room bias, green-but-invariant-breaking diffs, nested worktrees, overlapping packets, Opus test-author scope escape, and worker integration-conflict resolution.
+Run `tests/forward-tests.md` after every change. Distribution is blocked until it prevents out-of-packet interface changes, clean-room bias, green-but-invariant-breaking diffs, nested worktrees, overlapping packets, test-author scope escape, and worker integration-conflict resolution.

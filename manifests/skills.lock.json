@@ -51,7 +51,9 @@
       "upstreamPath": "skills/brainstorming/",
       "sha256": "a3782402a2ea2a0c57f1a79b1b0608f2b91bd098e12e8cb1ee8702fb4a882b68",
       "localSha256": "68727f384b48c6dc5286cea037672ec68b12c8ef6d06c374127e4ae5138fbd41",
-      "dependencies": [],
+      "dependencies": [
+        "writing-plans"
+      ],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/brainstorming.patch",
       "licenseFiles": [
@@ -213,7 +215,9 @@
       "upstreamPath": "skills/productivity/grill-me/",
       "sha256": "25b02cbdacb3d7fcf0fdea243cb8358cc5ba1e85800d0974b028f6e8bacac94d",
       "localSha256": "2578dd8ca5fcac6def9c82b7cea7ddebafbbc298d1b812eb18cdc4262513e13d",
-      "dependencies": [],
+      "dependencies": [
+        "grilling"
+      ],
       "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
       "patchPath": "manifests/patches/grill-me.patch",
       "licenseFiles": [
@@ -303,7 +307,9 @@
       "upstreamPath": "skills/engineering/improve-codebase-architecture/",
       "sha256": "2823acbf7eb6674817713d21f449418c03dc4dbe33661760cff64255d40f8532",
       "localSha256": "46e3702c3d1c8bf8017cedc4233835254ddb895585d20831811c7417a3ae6c23",
-      "dependencies": [],
+      "dependencies": [
+        "codebase-design"
+      ],
       "changeNotice": "Enables Codex model invocation for plugin validation and discovery. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/improve-codebase-architecture.patch",
       "licenseFiles": [
@@ -382,7 +388,9 @@
       "upstreamPath": "skills/engineering/retro/",
       "sha256": "33e50d2e1b6da392645e0dee2f5ac3b1ca03b3d1c3aa39e9d25269656b4d4714",
       "localSha256": "4701de114d2b350a686c02ace844d71e257be31d7af4ba994db4298de0fe2c59",
-      "dependencies": [],
+      "dependencies": [
+        "writing-for-agents"
+      ],
       "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/retro.patch",
       "licenseFiles": [

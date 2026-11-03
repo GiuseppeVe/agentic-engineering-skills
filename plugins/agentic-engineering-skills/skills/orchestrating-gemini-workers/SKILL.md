@@ -29,7 +29,7 @@ If `dsh`, a compatible Gemini adapter/model, or the required sandbox/approval pr
 .\orchestration\run-worker.ps1 -Model 37 -Brief G25 -AutoApprove
 ```
 
-`-Model` selects `model-<id>.yml`. `-Brief` reads `orchestration/briefs/<name>.md`, copies it to sandbox as `BRIEF-<name>.md`, sends only instruction to read it, then deletes the copy. Keep brief in a file: PowerShell interpolation corrupts backticks/`${...}`. Transcript: `orchestration/reports/<brief>-<model>.log`.
+`-Model` selects `model-<id>.yml`. `-Brief` reads `orchestration/briefs/<name>.md`, creates an exclusive temporary `BRIEF-<run-id>.md` in the sandbox, sends only the instruction to read it, and removes its own copy when the run closes. Keep brief in a file: PowerShell interpolation corrupts backticks/`${...}`. Each run retains its transcript as `orchestration/reports/<brief>-<model>-<run-id>.log` and reports its path; the launcher propagates the worker exit code.
 
 `-AutoApprove` selects `base.yml` for non-interactive execution. Without it launcher selects `probe.yml`, which is not shipped; supply an authorized compatible overlay or stop. Interactive approval cannot be answered in headless mode. Confirm exact sandbox/approval pair is registered, rather than bypassing a denied policy.
 

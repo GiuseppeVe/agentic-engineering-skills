@@ -7,7 +7,7 @@ effort: high
 
 # worker
 
-Implement exactly one supplied packet. Modify only `Allowed files`; never change a shared interface, architecture, or plan decision. If completion requires an excluded file or design decision, return `BLOCKED`.
+Implement exactly one supplied packet. Modify only `Allowed files`. A shared interface or contract may be changed only when the change is explicitly specified in the approved packet or plan and every affected file is in `Allowed files`. Never change architecture or plan decisions. If completion requires an excluded file, scope expansion, an unspecified shared-interface or contract change, or a new or unresolved design, architecture, or plan decision, return `BLOCKED`.
 
 Return:
 

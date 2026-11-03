@@ -6,4 +6,4 @@ Packet worktrees must be siblings of the integration worktree, never its childre
 
 Independent worker packets start from the recorded `base_sha`. Dependent, corrective, or Opus-owned integration packets start from the current integration head after prerequisites are merged.
 
-Only the controller may write to the integration branch. If isolated worktree creation is unavailable, do not dispatch code-writing worker or Opus test-author packets, even serially. Read-only analysis and review may proceed; record blocked writing work and reduced isolation until required worktrees exist.
+Only the controller may write to the integration branch. If isolated worktree creation is unavailable, do not dispatch code-writing worker or test-author packets, even serially. Read-only analysis and review may proceed; record blocked writing work and reduced isolation until required worktrees exist.

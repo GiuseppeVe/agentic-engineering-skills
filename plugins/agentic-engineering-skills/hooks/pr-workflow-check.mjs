@@ -229,10 +229,22 @@ export function runCli(argv) {
         }
       } catch { return blocked('Could not verify trusted billing policy or GitHub billing evidence'); }
     }
+    const prUnchanged = current => before.state === 'OPEN' && current.state === 'OPEN' && before.headRefOid === current.headRefOid && before.headRefName === current.headRefName && before.baseRefOid === current.baseRefOid && before.baseRefName === current.baseRefName;
+    const workspaceUnchanged = () => command('git', ['rev-parse', 'HEAD']).trim() === workspaceHead && command('git', ['status', '--porcelain']).trim() === '';
+    const evidenceUnchanged = current => JSON.stringify(readReview(reviewPath)) === JSON.stringify(review) && JSON.stringify(readTrustedPolicy(url, current)) === JSON.stringify(trustedPolicy);
     const after = view(url, 'headRefOid,headRefName,state,baseRefOid,baseRefName');
-    if (before.state !== 'OPEN' || after.state !== 'OPEN' || before.headRefOid !== after.headRefOid || before.headRefName !== after.headRefName || before.baseRefOid !== after.baseRefOid || before.baseRefName !== after.baseRefName) return blocked('PR head or base changed or PR closed');
-    if (command('git', ['rev-parse', 'HEAD']).trim() !== workspaceHead || command('git', ['status', '--porcelain']).trim() !== '') return blocked('Workspace changed during preflight');
-    if (result.ready && (JSON.stringify(readReview(reviewPath)) !== JSON.stringify(review) || JSON.stringify(readTrustedPolicy(url, after)) !== JSON.stringify(trustedPolicy))) return blocked('Review evidence or CI policy changed during preflight');
+    if (!prUnchanged(after)) return blocked('PR head or base changed or PR closed');
+    if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
+    if (result.ready && !evidenceUnchanged(after)) return blocked('Review evidence or CI policy changed during preflight');
+    if (result.ready && result.mode === 'hosted') {
+      const latestChecks = JSON.parse(command('gh', ['pr', 'checks', url, '--json', 'name,bucket,link'], { allowed: [0, 1, 8] }));
+      const latest = assessPreflight({ ...inputs, checks: latestChecks });
+      if (!latest.ready || latest.mode !== 'hosted') return blocked('Hosted CI checks changed during preflight');
+      const final = view(url, 'headRefOid,headRefName,state,baseRefOid,baseRefName');
+      if (!prUnchanged(final)) return blocked('PR head or base changed or PR closed');
+      if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
+      if (!evidenceUnchanged(final)) return blocked('Review evidence or CI policy changed during preflight');
+    }
     return result;
   } catch { return blocked('Could not verify PR, CI, worktree or review evidence'); }
 }

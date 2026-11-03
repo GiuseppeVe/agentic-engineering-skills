@@ -70,7 +70,7 @@ Planner emits every packet with: `id`, objective, scope, dependencies, allowed f
 - **Dependent:** wait for declared prerequisite evidence.
 - **Architecture-sensitive or integration:** retain with planner. Do not delegate architectural decisions to worker.
 
-Worker scope is binding. A required shared interface, contract, or non-allowed file means `BLOCKED`, never an edit. Controller either creates a new planner-approved packet or changes the plan with required approval.
+Worker scope is binding. A shared interface or contract may be changed only when the change is explicitly specified in the approved packet or plan and every affected file is in `Allowed files`. Never delegate architecture or plan decisions to a worker. If completion requires an excluded file, scope expansion, an unspecified shared-interface or contract change, or a new or unresolved design, architecture, or plan decision, return `BLOCKED`. Controller either creates a new planner-approved packet or changes the plan with required approval.
 
 ## Test and review loop
 
@@ -87,7 +87,7 @@ Approval requires: required tests pass; every requirement maps to code/test evid
 
 | Red flag | Required action |
 |---|---|
-| Worker wants a shared-interface change | Block packet; planner re-scopes or revises plan. |
+| Shared-interface or contract change unspecified in the approved packet or plan, or affecting files outside `Allowed files` | Block packet; planner re-scopes or revises plan. |
 | Reviewer receives worker/tester notes | Rebuild clean-room input without them. |
 | Tests pass but an invariant conflicts | Request rework or block; cite invariant. |
 | Reviewer lacks original spec or plan | Stop before approval. |
