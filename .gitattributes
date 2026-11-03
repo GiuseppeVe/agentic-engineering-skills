@@ -1,3 +1,8 @@
+# Keep public documentation and the root license consistent across checkouts.
+/*.md text eol=lf
+/docs/**/*.md text eol=lf
+/LICENSE text eol=lf
+
 # Preserve native plugin payload and upstream legal bytes across host checkouts.
 plugins/agentic-engineering-skills/plugin.json -text
 plugins/agentic-engineering-skills/.claude-plugin/** -text
