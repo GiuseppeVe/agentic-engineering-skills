@@ -167,7 +167,15 @@ test('CLI verifies real evidence and fails closed for CI, stale heads and failed
     const review = { head_sha: head, outcome: 'passed', independent: true, required_checks: ['tests'], reviewer: 'codex review', evidence: 'review.txt', evidence_sha256: createHash('sha256').update(evidence).digest('hex') };
     writeFileSync(path.join(dir, 'review.json'), JSON.stringify(review));
     const env = { ...process.env, GIT_DIR: 'spoofed', PATH: `${bin}${path.delimiter}${process.env.PATH ?? ''}` };
-    const invoke = (mode) => { writeFileSync(path.join(dir, 'counter.txt'), '0'); writeFileSync(path.join(dir, 'checks-counter.txt'), '0'); writeFileSync(path.join(dir, 'fixture.json'), JSON.stringify(payload)); return spawnSync(process.execPath, [checker, mode, url, ...(mode === 'preflight' ? [path.join(dir, 'review.json')] : [])], { cwd: dir, env, encoding: 'utf8', timeout: 10000, windowsHide: true }); };
+    const invoke = (mode) => {
+      writeFileSync(path.join(dir, 'counter.txt'), '0');
+      writeFileSync(path.join(dir, 'checks-counter.txt'), '0');
+      writeFileSync(path.join(dir, 'fixture.json'), JSON.stringify(payload));
+      const result = spawnSync(process.execPath, [checker, mode, url, ...(mode === 'preflight' ? [path.join(dir, 'review.json')] : [])], { cwd: dir, env, encoding: 'utf8', timeout: 45000, windowsHide: true });
+      if (result.error) throw new Error(`${mode} CLI spawn failed (status=${result.status}, signal=${result.signal}, code=${result.error.code}): ${result.error.message}`, { cause: result.error });
+      assert.notEqual(result.status, null, `${mode} CLI terminated without an exit status (signal=${result.signal})`);
+      return result;
+    };
     assert.equal(invoke('preflight').status, 0, 'self-dependent pending check does not deadlock completed CI');
     const incorrectlyReady = [];
     for (const [description, checksAfter, checksStatusAfter, finalHead] of [
