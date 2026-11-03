@@ -86,7 +86,7 @@
     {
       "name": "claude-implement",
       "sourceType": "original",
-      "localSha256": "a9aa30f07a17cd020ae88331312a8002b3964168105087528e1059ac95ca27f7",
+      "localSha256": "2a4facc811f511c6f0c82dd104a4894aa2c1067273529bdd13f89512e3b0e31b",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -124,7 +124,7 @@
     {
       "name": "codex-implement",
       "sourceType": "original",
-      "localSha256": "da7b6dcb5340636569343c2ef6d0fa21a3d346f3aa3b2ddcfebe3044a7b7a8c2",
+      "localSha256": "e8229d7957624f0086ca1f06cd5e380c9960c9af6b7eecf844776e77259bc9fd",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -374,7 +374,7 @@
     {
       "name": "orchestrating-gemini-workers",
       "sourceType": "original",
-      "localSha256": "a8869f56954ef468fdd7c6ce80cc717aca47cd8ed2faedb0cd9ba64ae937d75b",
+      "localSha256": "d24af4d1f89bf61909064f488d0b4df389f2ca31e2d237b2edcfba8b78b34433",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
