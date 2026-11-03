@@ -1,4 +1,6 @@
-TgH|#;yunoN1+iOhG+(v^!jq$-2;IABm?sfz0$a0S~ers1`cQm?={L
+2+;etGvjx?2_Eq8b3z_{HjG5;EjXMMePt_bQA20YbqGKsa8YnBO
+z^Uza(%hi=?V|^H>E7G%u5iKoZwJ~(0k|8h}C6oq`yhg-!*kHf8YW)1Bv$hfqPr3x4
+zZB-9;L~)H?+TgH|#;yunoN1+iOhG+(v^!jq$-2;IABm?sfz0$a0S~ers1`cQm?={L
 z1^*Dxg+y3SK=6jcv+YHEUxycdhI-+!>khrN?%~>4PX!#VX^zDQI#dQEz4t)8`yQ&^
 zu7R_e0Jp<JWy*muPf$A|pU*N!$KkAlSVKD7he&Dv(9_~<pG&u`qyMwV=2@p$mW3N~
 zM0w-?72kwtqy)zA`1u{bQfzctA7}k%wI6mm9I-i8sYsja_WBzA$cFCv@>1&Yj)qL;
@@ -19277,9 +19279,4 @@ index 0000000..917cbf5
 +  'product sans': GOOGLE_DOMAINS,
 +  'geist': VERCEL_DOMAINS,
 +  'geist sans': VERCEL_DOMAINS,
-+  'geist mono': VERCEL_DOMAINS,
-+  'mona sans': GITHUB_DOMAINS,
-+};
-+
-+function isBrandFontOnOwnDomain(font) {
-+  if (typeof location === 'undefined')
++  'geist mono': VER

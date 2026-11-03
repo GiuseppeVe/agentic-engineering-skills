@@ -4,6 +4,7 @@
     "argumentHint": "[feature description]"
   },
   "init": {
+    "$comment": "Adapted from pbakaus/impeccable: the init description omits the offer to create DESIGN.md for existing code.",
     "description": "Sets up a project for impeccable. Runs a multi-round discovery interview when context is missing and writes PRODUCT.md (strategic: users, brand, principles); pre-configures live mode; then recommends the best commands to run next. Every other command reads these files before doing work. Use once per project.",
     "argumentHint": ""
   },

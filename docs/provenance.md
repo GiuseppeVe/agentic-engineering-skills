@@ -23,7 +23,7 @@
 | `marketing-screenshots` | original | `private-source@private-revision-redacted` (`.agents/skills/marketing-screenshots/`); upstream provenance undocumented in source-project |
 | `master-orchestrator` | original | Owner-supplied, untracked local source-project snapshot; both host paths and exact source-file hashes recorded in the source manifest. No source-project commit is claimed. |
 | `mdx-to-html` | original | `private-source@private-revision-redacted` (`.agents/skills/mdx-to-html/`); upstream provenance undocumented in source-project |
-| `impeccable` | adapted | `pbakaus/impeccable@6496f49a1ea0503ca130d7dd55508dd0d22aa86b` |
+| `impeccable` | adapted | `pbakaus/impeccable@6496f49a1ea0503ca130d7dd55508dd0d22aa86b`; `scripts/VERSION` is byte-identical to tag `skill-v4.8.0` at `414603bf14c7a344edb466bb1f85690c77ce8b7d` |
 | `claude-implement` | original | GiuseppeVe-authored Claude Code workflow, packaged in `claude-skills/claude-implement/` for Claude-only discovery; release recorded in lock |
 | `codex-implement` | original | Updated GiuseppeVe-authored Codex workflow; release recorded in lock |
 | `improve-codebase-architecture` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |

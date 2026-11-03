@@ -18,11 +18,15 @@
   "adaptationNotice": {
     "skill": "impeccable",
     "path": "plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE",
-    "formatLimitedFiles": [
-      "scripts/VERSION",
-      "scripts/command-metadata.json"
-    ],
+    "formatLimitedFiles": [],
     "compressedUpstreamFile": "skill/scripts/data/font-index.json",
-    "packagedRepresentation": "scripts/data/font-index.json.deflate"
+    "packagedRepresentation": "scripts/data/font-index.json.deflate",
+    "versionSource": {
+      "repository": "https://github.com/pbakaus/impeccable",
+      "tag": "skill-v4.8.0",
+      "revision": "414603bf14c7a344edb466bb1f85690c77ce8b7d",
+      "path": "skill/scripts/VERSION",
+      "sha256": "447836d46f39c5900faf74ad6a6554b8e1fafeca1f78de0416d5f05c6e09a080"
+    }
   }
 }

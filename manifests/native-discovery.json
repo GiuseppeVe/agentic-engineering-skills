@@ -3,7 +3,7 @@
   "evidenceSource": "isolated-native-installs",
   "capturedAt": "2026-11-03",
   "environment": {
-    "isolation": "Separate short-lived native host profiles and allowlisted child environments; the local marketplace ran from a temporary snapshot verified against the original marketplace and payload. User configuration paths were isolated and no credential variables were passed to the child processes.",
+    "isolation": "Separate short-lived native host profiles and allowlisted child environments; the local marketplace ran from a temporary snapshot verified against the original marketplace and payload. User configuration paths were isolated and only inert fixture credentials were passed to child processes.",
     "commandNotation": "Native commands ran from the verified temporary local marketplace snapshot using Node.js v24.16.0.",
     "payloadRefresh": "Both installed full file inventories and file bytes match the original source; the four Claude Impeccable agent files were also checked individually. No model was invoked; hooks were not executed."
   },
@@ -130,8 +130,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:61cc8b5775240f3a9f0e151de4949f4542b5689a2893d408ca763959ad1f8dc0",
-        "fullTreeHash": "sha256:9291f4b15180295f4ad25ffd6093f5a5bb3b1619de78b36ffef08e6f18bb3a14",
+        "treeHash": "sha256:6498bd69aab8819e997f6412c4403684300ea0e6d8cd0905bd6eca380cd587eb",
+        "fullTreeHash": "sha256:c4b05820530a346e2fea8c43f3dbdd0c2d1220d1e37799762193bfde5fcf1f7c",
         "fileCount": 537
       },
       "commands": [
@@ -240,8 +240,8 @@
           "claude-skills",
           "skills"
         ],
-        "treeHash": "sha256:79609e96aded24d60f947940e3e513515055aaae467e2f6dc6a73109a341d278",
-        "fullTreeHash": "sha256:9291f4b15180295f4ad25ffd6093f5a5bb3b1619de78b36ffef08e6f18bb3a14",
+        "treeHash": "sha256:5a796615ec0fc6554b718821286c8f67be22003e5dad68d7b70e38035a52e503",
+        "fullTreeHash": "sha256:c4b05820530a346e2fea8c43f3dbdd0c2d1220d1e37799762193bfde5fcf1f7c",
         "fileCount": 537
       },
       "installedAgents": [
