@@ -1,6 +1,8 @@
-import { open, readFile } from "node:fs/promises";
+import { lstat, open, readFile, realpath } from "node:fs/promises";
+import { isIP } from "node:net";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { listPatchBundlePaths, loadPatchBytes, PATCH_CHUNK_POINTER_MAGIC } from "./lib/manifest.mjs";
 
 const DEFAULT_MAX_FILE_BYTES = 1024 * 1024;
 
@@ -17,10 +19,10 @@ const contentRules = [
   ["secret:github-token", new RegExp(`\\b${["ghp", ""].join("_")}[A-Za-z0-9]{20,}`)],
   ["secret:pem-private-key", new RegExp(`${["-----BEGIN", "(?:[A-Z0-9]+ )?PRIVATE", "KEY-----"].join(" ")}`)],
   ["private-path:linux-home", /\/home\/[^/\s]+(?:\/[^\s]*)?/],
-  ["private-path:windows-home", /\b[A-Za-z]:\\Users\\[^\\\s]+(?:\\[^\s]*)?/i],
+  ["private-path:windows-home", /\b[A-Za-z]:[\\/]+Users[\\/]+[^\\/\s"']+(?:[\\/]+[^\s"']*)?/i],
   [
     "url:non-public",
-    /https?:\/\/(?:localhost|127(?:\.\d{1,3}){3}|10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2}|[^\s/:]+\.(?:internal|local|localhost))(?:[:/][^\s]*)?/i,
+    /https?:\/\/[^\s"'`<>]+/gi,
   ],
   [
     "legal-template:unresolved",
@@ -28,15 +30,52 @@ const contentRules = [
   ],
 ];
 
+// Exact path and count plus an explicit localhost/127.0.0.0/8 authority check.
 const controlledLoopbackArtifacts = new Map([
-  ["plugins/agentic-engineering-skills/skills/importing-handoff/references/contract-schema.md", 1],
-  ["plugins/agentic-engineering-skills/skills/importing-handoff/scripts/run-reference.mjs", 2],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/scripts/graph_v5/service_supervisor.py", 1],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/integration/test_local_system_journey.py", 1],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_adapter_manifest.py", 5],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_models.py", 2],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_real_admission.py", 2],
-  ["plugins/agentic-engineering-skills/skills/orientated-e2e-testing-v5-2/tests/unit/test_store_integrity.py", 1],
+  ["manifests/patches/brainstorming.patch", 2],
+  ["manifests/patches/impeccable.patch", 18],
+  ["manifests/patches/ui-ux-pro-max.patch", 1],
+  ["plugins/agentic-engineering-skills/skills/archify/bin/open-artifact.mjs", 1],
+  ["plugins/agentic-engineering-skills/skills/brainstorming/visual-companion.md", 1],
+  ["plugins/agentic-engineering-skills/skills/impeccable/reference/generate.md", 1],
+  ["plugins/agentic-engineering-skills/skills/impeccable/reference/live-setup.md", 5],
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/SKILL.md", 1],
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/references/examples.md", 1],
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/references/marketing-screenshots.config.mjs.example", 1],
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/scripts/marketing-screenshots.mjs", 1],
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/tests/marketing-screenshots.test.mjs", 2],
+]);
+
+const fixtureServerUrl = ["http:/", "127.0.0.1:" + ["$", "{server.address().port}"].join("")].join("/");
+const controlledTestLoopbackArtifacts = new Map([
+  ["tests/impeccable-agent-discovery.test.mjs", [fixtureServerUrl, fixtureServerUrl + "/v1"]],
+  ["tests/impeccable-agent-mcp.test.mjs", [fixtureServerUrl]],
+]);
+
+const controlledIpv6LoopbackArtifacts = new Map();
+
+// One exact fixture path match; any extra or different Linux home path still fails.
+const controlledSyntheticPathArtifacts = new Map([
+  ["plugins/agentic-engineering-skills/skills/marketing-screenshots/tests/marketing-screenshots.test.mjs", {
+    rule: "private-path:linux-home",
+    count: 1,
+    prefix: "/tmp/assets",
+    match: ["", "home", "home--raw.png'"].join("/"),
+  }],
+  ["manifests/patches/ui-ux-pro-max.patch", {
+    rule: "private-path:windows-home",
+    count: 1,
+    prefix: '@""',
+    match: ["C:", "Users", "data", "config.json"].join("\\"),
+  }],
+]);
+
+const controlledRemovedPrivateUrlArtifacts = new Map([
+  ["manifests/patches/archify.patch", {
+    count: 1,
+    match: ["http:/", "git.internal:3000", "Platform", "Services", "service"].join("/"),
+    section: "diff --git a/archify/references/authoring-contract.md b/archify/references/authoring-contract.md",
+  }],
 ]);
 
 // These are public, pinned upstream examples retained inside the imported
@@ -48,32 +87,185 @@ const controlledThirdPartyArtifacts = new Map([
   ["plugins/agentic-engineering-skills/skills/impeccable/reference/live.md", { "url:non-public": 5 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/detector/cli/main.mjs", { "url:non-public": 2 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/detector/node/file-system.mjs", { "url:non-public": 1 }],
-  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-browser.js", { "url:non-public": 19 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-browser.js", { "url:non-public": 21 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-complete.mjs", { "url:non-public": 1 }],
-  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-copy-edit-agent.mjs", { "secret:anthropic-key": 1 }],
-  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-inject.mjs", { "url:non-public": 4 }],
+  ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-inject.mjs", { "url:non-public": 2 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-poll.mjs", { "url:non-public": 1 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-server.mjs", { "url:non-public": 3 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live-status.mjs", { "url:non-public": 1 }],
   ["plugins/agentic-engineering-skills/skills/impeccable/scripts/live/sveltekit-adapter.mjs", { "url:non-public": 1 }],
 ]);
 
-function hasOnlyControlledLoopbackUrls(path, content, pattern) {
-  const expected = controlledLoopbackArtifacts.get(path);
-  if (!expected) return false;
-  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
-  const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
-  return matches.length === expected && matches.every((match) => /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3})/i.test(match[0]));
+function nonPublicUrlMatches(content) {
+  const candidates = /https?:\/\/[^\s"'`<>]+/gi;
+  return [...content.matchAll(candidates)].filter(isNonPublicUrl);
 }
 
-function hasOnlyControlledThirdPartyMatches(path, content, rule, pattern) {
-  const expected = controlledThirdPartyArtifacts.get(path)?.[rule];
+function urlAuthority(match) {
+  const authorityStart = match[0].indexOf("://") + 3;
+  const authority = match[0].slice(authorityStart).split(/[/?#\\]/, 1)[0];
+  const hostStart = authority.lastIndexOf("@") + 1;
+  const ipv6Close = authority[hostStart] === "[" ? authority.indexOf("]", hostStart) : -1;
+  const protectedBracket = ipv6Close < 0 ? -1 : authorityStart + ipv6Close;
+  let end = match[0].length;
+  while (end > authorityStart && /[)\],.!?;]/.test(match[0][end - 1])) {
+    // The bracket enclosing a literal IPv6 hostname belongs to the URL.
+    if (end - 1 === protectedBracket) break;
+    end -= 1;
+  }
+  const candidate = match[0].slice(0, end);
+  try {
+    const url = new URL(candidate);
+    return {
+      hostname: url.hostname.toLowerCase().replace(/^\[|\]$/g, "").replace(/\.$/, ""),
+      hasUserInfo: url.username !== "" || url.password !== "",
+    };
+  } catch {
+    // Static loopback authorities with templated ports are still classifiable.
+  }
+  try {
+    const schemeEnd = candidate.indexOf("://");
+    if (schemeEnd < 0) throw new Error("invalid URL");
+    const authority = candidate.slice(schemeEnd + 3).split(/[/?#]/, 1)[0];
+    const at = authority.lastIndexOf("@");
+    const hasUserInfo = at >= 0;
+    const hostPort = authority.slice(at + 1);
+    let host = hostPort;
+    let port = "";
+    if (hostPort.startsWith("[")) {
+      const close = hostPort.indexOf("]");
+      if (close < 0) throw new Error("invalid IPv6 authority");
+      host = hostPort.slice(0, close + 1);
+      port = hostPort.slice(close + 1);
+    } else {
+      const colon = hostPort.lastIndexOf(":");
+      if (colon >= 0 && hostPort.indexOf(":") === colon) {
+        host = hostPort.slice(0, colon);
+        port = hostPort.slice(colon);
+      }
+    }
+    if (!host || /[${}]/.test(host)) throw new Error("ambiguous host");
+    // Dynamic port placeholders do not change hostname classification.
+    if (/[${}]/.test(port)) port = ":1";
+    const url = new URL(`${candidate.slice(0, schemeEnd)}://${host}${port}/`);
+    return {
+      hostname: url.hostname.toLowerCase().replace(/^\[|\]$/g, "").replace(/\.$/, ""),
+      hasUserInfo,
+    };
+  } catch {
+    return { hostname: "<invalid>", hasUserInfo: true };
+  }
+}
+
+function isNonPublicUrl(match) {
+  const { hostname } = urlAuthority(match);
+  if (!hostname) return false;
+  if (hostname === "localhost" || /\.(?:internal|local|localhost)$/.test(hostname)) return true;
+
+  if (isIP(hostname) === 4) {
+    const octets = hostname.split(".").map(Number);
+    if (octets.length !== 4) return false;
+    const [first, second] = octets;
+    return first === 0
+      || first === 10
+      || first === 127
+      || (first === 169 && second === 254)
+      || (first === 172 && second >= 16 && second <= 31)
+      || (first === 192 && second === 168)
+      || (first === 100 && second >= 64 && second <= 127);
+  }
+
+  if (isIP(hostname) !== 6) return false;
+  if (hostname === "::" || hostname === "::1" || /^(?:fc|fd)/.test(hostname)) return true;
+  const firstHextet = Number.parseInt(hostname.split(":", 1)[0], 16);
+  if (firstHextet >= 0xfe80 && firstHextet <= 0xfebf) return true;
+  const mapped = hostname.match(/^::ffff:([\da-f]{1,4}):([\da-f]{1,4})$/i);
+  if (!mapped) return false;
+  const high = Number.parseInt(mapped[1], 16);
+  const low = Number.parseInt(mapped[2], 16);
+  const ipv4 = `${high >>> 8}.${high & 255}.${low >>> 8}.${low & 255}`;
+  return isNonPublicUrl({ 0: `http://${ipv4}` });
+}
+
+function hasOnlyControlledLoopbackUrls(path, content) {
+  const expected = controlledLoopbackArtifacts.get(path);
   if (!expected) return false;
+  const matches = nonPublicUrlMatches(content);
+  const ipv6Expected = controlledIpv6LoopbackArtifacts.get(path) ?? 0;
+  if (matches.length !== expected + ipv6Expected) return false;
+  const ipv6Matches = matches.filter(isControlledIpv6LoopbackUrl);
+  return ipv6Matches.length === ipv6Expected
+    && matches.every((match) => isLoopbackUrl(match) || isControlledIpv6LoopbackUrl(match));
+}
+
+function hasOnlyControlledTestLoopbackUrls(path, content) {
+  const expected = controlledTestLoopbackArtifacts.get(path);
+  if (!expected) return false;
+  const matches = nonPublicUrlMatches(content).map((match) => match[0]).sort();
+  return matches.length === expected.length
+    && [...expected].sort().every((url, index) => matches[index] === url);
+}
+
+function isLoopbackUrl(match) {
+  const { hostname, hasUserInfo } = urlAuthority(match);
+  if (!hostname || hasUserInfo) return false;
+  if (hostname === "localhost") return true;
+  return isIP(hostname) === 4 && Number(hostname.split(".")[0]) === 127;
+}
+
+function isControlledIpv6LoopbackUrl(match) {
+  const { hostname, hasUserInfo } = urlAuthority(match);
+  return !hasUserInfo && hostname === "::1";
+}
+
+function hasOnlyControlledSyntheticPath(path, content, rule, pattern) {
+  const expected = controlledSyntheticPathArtifacts.get(path);
+  if (!expected || expected.rule !== rule) return false;
   const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
   const matches = [...content.matchAll(new RegExp(pattern.source, flags))];
+  if (matches.length !== expected.count) return false;
+  return matches.every((match) => match[0] === expected.match
+    && content.slice(match.index - expected.prefix.length, match.index) === expected.prefix);
+}
+
+function hasOnlyControlledRemovedPrivateUrls(path, content, rule) {
+  if (rule !== "url:non-public") return false;
+  const expected = controlledRemovedPrivateUrlArtifacts.get(path);
+  if (!expected) return false;
+  const matches = nonPublicUrlMatches(content);
+  if (matches.length !== expected.count) return false;
+  return matches.every((match) => {
+    if (match[0] !== expected.match) return false;
+    const lineStart = content.lastIndexOf("\n", match.index) + 1;
+    if (content[lineStart] !== "-") return false;
+    const sectionStart = content.lastIndexOf("diff --git ", match.index);
+    if (sectionStart < 0) return false;
+    const sectionEnd = content.indexOf("\n", sectionStart);
+    const section = content.slice(sectionStart, sectionEnd < 0 ? content.length : sectionEnd);
+    return section === expected.section;
+  });
+}
+
+function hasOnlyControlledLoopbackChunk(parentPath, aggregate, chunk) {
+  if (!hasOnlyControlledLoopbackUrls(parentPath, aggregate)) return false;
+  const matches = nonPublicUrlMatches(chunk);
+  return matches.every(isLoopbackUrl);
+}
+
+function hasOnlyControlledSyntheticChunk(parentPath, aggregate, chunk, rule, pattern) {
+  if (!hasOnlyControlledSyntheticPath(parentPath, aggregate, rule, pattern)) return false;
+  const expected = controlledSyntheticPathArtifacts.get(parentPath);
+  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
+  const matches = [...chunk.matchAll(new RegExp(pattern.source, flags))];
+  return matches.every((match) => expected.match.includes(match[0]));
+}
+
+function hasOnlyControlledThirdPartyMatches(path, content, rule) {
+  const expected = controlledThirdPartyArtifacts.get(path)?.[rule];
+  if (!expected || rule !== "url:non-public") return false;
+  const matches = nonPublicUrlMatches(content);
   if (matches.length !== expected) return false;
-  if (rule === "url:non-public") return matches.every((match) => /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3})/i.test(match[0]));
-  return rule === "secret:anthropic-key";
+  return matches.every(isLoopbackUrl);
 }
 
 function fail(message) {
@@ -99,6 +291,11 @@ function parseArgs(argv) {
     }
   }
   return { testFileList, maxFileBytes };
+}
+
+function isWithin(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
 }
 
 function gitTrackedFiles(root) {
@@ -131,7 +328,10 @@ async function explicitTestFiles(listPath, root) {
     const displayPath = relative && !relative.startsWith("..") && !path.isAbsolute(relative)
       ? relative
       : path.basename(absolute);
-    return { path: absolute, displayPath };
+    const trustedRoot = relative && !relative.startsWith("..") && !path.isAbsolute(relative)
+      ? root
+      : path.dirname(absolute);
+    return { path: absolute, displayPath, trustedRoot };
   });
 }
 
@@ -158,11 +358,24 @@ async function legalTemplateAllowedPaths(root) {
   return allowed;
 }
 
-async function readCapped(filePath, maxFileBytes) {
-  const handle = await open(filePath, "r");
+async function readCapped(filePath, maxFileBytes, trustedRoot) {
+  const absoluteRoot = path.resolve(trustedRoot);
+  const absoluteFile = path.resolve(filePath);
+  if (!isWithin(absoluteRoot, absoluteFile)) throw new Error("public audit path escapes trusted root");
+  const rootMetadata = await lstat(absoluteRoot);
+  if (rootMetadata.isSymbolicLink() || !rootMetadata.isDirectory()) {
+    throw new Error("public audit trusted root must be a regular directory");
+  }
+  const [realRoot, realFile] = await Promise.all([realpath(absoluteRoot), realpath(absoluteFile)]);
+  if (!isWithin(realRoot, realFile)) throw new Error("public audit path escapes trusted root through a linked ancestor");
+
+  const metadata = await lstat(absoluteFile);
+  if (metadata.isSymbolicLink() || !metadata.isFile()) {
+    throw new Error("public audit requires a regular file");
+  }
+  if (metadata.size > maxFileBytes) return { oversized: true };
+  const handle = await open(absoluteFile, "r");
   try {
-    const metadata = await handle.stat();
-    if (metadata.size > maxFileBytes) return { oversized: true };
     const buffer = Buffer.allocUnsafe(maxFileBytes + 1);
     const { bytesRead } = await handle.read(buffer, 0, buffer.length, 0);
     if (bytesRead > maxFileBytes) return { oversized: true };
@@ -178,8 +391,48 @@ async function main() {
   const files = testFileList
     ? await explicitTestFiles(testFileList, root)
     : gitTrackedFiles(root);
+  const trackedPaths = new Set(files.map((file) => path.resolve(file.path)));
   const legalTemplateAllowed = await legalTemplateAllowedPaths(root);
   const findings = [];
+  const patchContentByPath = new Map();
+  const verifiedBundleByChunkPath = new Map();
+
+  for (const file of files.filter((candidate) => candidate.path.endsWith(".patch"))) {
+    const trustedRoot = file.trustedRoot ?? root;
+    const pointer = await readCapped(file.path, maxFileBytes, trustedRoot);
+    if (pointer.oversized) continue;
+    if (!pointer.content.startsWith("diff --git ") && !pointer.content.startsWith(PATCH_CHUNK_POINTER_MAGIC)) {
+      throw new Error(`invalid patch artifact header: ${file.displayPath}`);
+    }
+
+    const bundlePaths = await listPatchBundlePaths(file.path, trustedRoot);
+    const chunkPaths = bundlePaths.slice(1);
+    const everyChunkTracked = chunkPaths.every((chunkPath) => trackedPaths.has(path.resolve(chunkPath)));
+    if (!everyChunkTracked) findings.push(`${file.displayPath}:patch:untracked-chunk`);
+
+    let everyChunkWithinLimit = true;
+    for (const chunkPath of chunkPaths) {
+      const metadata = await lstat(chunkPath);
+      if (metadata.isSymbolicLink() || !metadata.isFile()) {
+        throw new Error(`patch chunk must be a regular file: ${chunkPath}`);
+      }
+      if (metadata.size > maxFileBytes) {
+        findings.push(`${path.relative(root, chunkPath)}:size:release-limit`);
+        everyChunkWithinLimit = false;
+      }
+    }
+    if (!everyChunkWithinLimit) continue;
+
+    const content = (await loadPatchBytes(file.path, trustedRoot)).toString("utf8");
+    patchContentByPath.set(path.resolve(file.path), content);
+    if (chunkPaths.length > 0 && everyChunkTracked) {
+      const bundle = {
+        parentPath: file.displayPath.split(path.sep).join("/"),
+        content,
+      };
+      for (const chunkPath of chunkPaths) verifiedBundleByChunkPath.set(path.resolve(chunkPath), bundle);
+    }
+  }
 
   for (const file of files) {
     const basename = path.basename(file.path);
@@ -189,18 +442,38 @@ async function main() {
       continue;
     }
 
-    const result = await readCapped(file.path, maxFileBytes);
+    const result = await readCapped(file.path, maxFileBytes, file.trustedRoot ?? root);
     if (result.oversized) {
       findings.push(`${file.displayPath}:size:release-limit`);
       continue;
     }
+    const absolutePath = path.resolve(file.path);
+    if (file.displayPath.split(path.sep).join("/").includes(".patch.parts/")
+      && !verifiedBundleByChunkPath.has(absolutePath)) {
+      throw new Error(`patch chunk has no validated pointer: ${file.displayPath}`);
+    }
+    const content = file.path.endsWith(".patch")
+      ? patchContentByPath.get(absolutePath) ?? result.content
+      : result.content;
+    const bundle = verifiedBundleByChunkPath.get(absolutePath);
 
     for (const [rule, pattern] of contentRules) {
       const normalizedPath = file.displayPath.split(path.sep).join("/");
       if (rule.startsWith("legal-template:") && legalTemplateAllowed.has(normalizedPath)) continue;
-      if (rule === "url:non-public" && hasOnlyControlledLoopbackUrls(normalizedPath, result.content, pattern)) continue;
-      if (hasOnlyControlledThirdPartyMatches(normalizedPath, result.content, rule, pattern)) continue;
-      if (pattern.test(result.content)) findings.push(`${file.displayPath}:${rule}`);
+      if (rule === "url:non-public") {
+        if (nonPublicUrlMatches(content).length === 0) continue;
+        if (hasOnlyControlledLoopbackUrls(normalizedPath, content)
+          || hasOnlyControlledTestLoopbackUrls(normalizedPath, content)
+          || hasOnlyControlledThirdPartyMatches(normalizedPath, content, rule)
+          || hasOnlyControlledRemovedPrivateUrls(normalizedPath, content, rule)
+          || (bundle && hasOnlyControlledLoopbackChunk(bundle.parentPath, bundle.content, content))) continue;
+        findings.push(`${file.displayPath}:${rule}`);
+        continue;
+      }
+      if (hasOnlyControlledSyntheticPath(normalizedPath, content, rule, pattern)) continue;
+      if (bundle && hasOnlyControlledSyntheticChunk(bundle.parentPath, bundle.content, content, rule, pattern)) continue;
+      if (hasOnlyControlledThirdPartyMatches(normalizedPath, content, rule)) continue;
+      if (pattern.test(content)) findings.push(`${file.displayPath}:${rule}`);
     }
   }
 

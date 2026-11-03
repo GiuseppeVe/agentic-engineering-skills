@@ -1,7 +1,41 @@
 diff --git a/learn-codebase/SKILL.md b/learn-codebase/SKILL.md
-index 0697397..ca54074 100644
+index 0697397..ffc0c69 100644
 --- a/learn-codebase/SKILL.md
 +++ b/learn-codebase/SKILL.md
-@@ -5,0 +6,2 @@
+@@ -3 +3,2 @@
+-description: Prime a codebase by reading every source file in full. Use when starting work on a new or unfamiliar project, or when the user asks to "learn the codebase", "read the codebase", "prime", or "get up to speed".
++description: Use only when the user explicitly asks to "learn the codebase", "read the codebase", "prime", or "get up to speed" by reading every source file in full.
++disable-model-invocation: true
+@@ -6 +7 @@
+-# Learn Codebase
 +> **Adaptation:** Based on `thedotmack/claude-mem`; adjusted for portable Codex and Claude Code codebase discovery.
-+
+@@ -8,4 +9 @@
+-Please learn about the codebase by systematically and thoroughly reading
+-EVERY SOURCE FILE IN FULL, no matter how many there are. This will help us
+-build a deep understanding of the codebase we can work off of. This is
+-critical and non negotiable.
++# Learn Codebase
+@@ -13,3 +11 @@
+-For large files, use the `Read` tool's `offset` and `limit` parameters
+-to page through the file in chunks (e.g. `offset: 1, limit: 500`, then
+-`offset: 501, limit: 500`).
++Systematically read **every source file in full**, regardless of count. Build a shared understanding before development.
+@@ -17 +13 @@
+-## Note for Reviewers
++Page large files with the host's supported offset/limit mechanism. For example, read `offset: 1, limit: 500`, then `offset: 501, limit: 500`; continue to EOF.
+@@ -19,3 +15 @@
+-This skill uses tokens but front-loads a cognitive cache to make development
+-less costly over the life of the project. Please keep this in mind before
+-deciding to warn the user over cost.
++Reviewers: this intentionally front-loads token use to reduce repeated discovery. Account for that purpose before warning about cost.
+diff --git b/learn-codebase/agents/openai.yaml b/learn-codebase/agents/openai.yaml
+new file mode 100644
+index 0000000..a08cb38
+--- /dev/null
++++ b/learn-codebase/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: Learn Codebase
++  short_description: Read a codebase on explicit request
++policy:
++  allow_implicit_invocation: false

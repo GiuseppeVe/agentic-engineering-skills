@@ -1,18 +1,19 @@
 diff --git a/to-spec/SKILL.md b/to-spec/SKILL.md
-index f3cca8d..96346b2 100644
+index f3cca8d..494b5fa 100644
 --- a/to-spec/SKILL.md
 +++ b/to-spec/SKILL.md
-@@ -3,2 +3,2 @@
+@@ -3 +3 @@
 -description: Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.
--disable-model-invocation: true
-+description: Turn the current conversation, wayfinder map, or planning context into a standalone user-readable MDX spec and publish/link it through the project issue tracker — no interview, just synthesis of what you've already discussed.
-+disable-model-invocation: false
-@@ -7 +7,3 @@
++description: Use when the user asks to turn an existing conversation, wayfinder map, or planning context into a standalone MDX spec.
+@@ -7 +7 @@
 -This skill takes the current conversation context and codebase understanding and produces a spec (you may know this document as a PRD). Do NOT interview the user — just synthesize what you already know.
-+> **Adaptation:** Based on `mattpocock/skills`; adjusted for portable Codex and Claude Code skill-pack use.
++> **Adaptation:** Based on `mattpocock/skills`; adapted for portable Codex and Claude Code use and explicit tracker-publication authorization.
+@@ -9 +9,47 @@
+-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
++Synthesize existing conversation, wayfinder map, or codebase context into a standalone spec (PRD). Do not interview the user or require seam confirmation. Carry every known requirement, invariant, and proposed default into the artifact. Unknown required behavior or invariants remain explicit unresolved decisions; a recommendation is a proposal until accepted. Use the template contracts below to represent readiness and open decisions.
 +
-+This skill takes the current conversation context, wayfinder map, or codebase understanding and produces a spec (you may know this document as a PRD). Do NOT interview the user — just synthesize what you already know.
-@@ -10,0 +13,46 @@
++Inspect existing tracker configuration and triage vocabulary read-only. If setup is missing, continue the local spec and prepare the required setup proposal. Any configuration, credential, or external-state mutation requires applicable authorization before execution. Skill invocation itself does not grant that permission.
++
 +## Output
 +
 +Write the spec as a standalone `.mdx` artifact, not a `.md` file.
@@ -20,18 +21,16 @@ index f3cca8d..96346b2 100644
 +**Save specs to:** `docs/superpowers/specs/YYYY-MM-DD-<feature-name>.mdx`
 +- User preferences for spec location override this default, but the file extension stays `.mdx`.
 +
-+Use the issue tracker as the publication and coordination surface: create or update the relevant spec issue, link the `.mdx` file from it, and apply the `ready-for-agent` triage label. The `.mdx` file is the durable source of truth; the tracker issue points readers and agents to it.
++The `.mdx` file is the durable source of truth; the project issue tracker is its publication and coordination surface. Publication follows the authorization gate in the process below.
 +
 +## Agent-Native MDX Discipline
 +
 +Treat the spec as a reviewable artifact, not chat-only prose. The `.mdx` file must stand alone for a reader who never saw the chat, source discussion, wayfinder map, or prior drafts.
 +
 +- **Lead with context.** Explain the problem, destination, scope, and user impact before implementation detail.
-+- **Link the map.** If this spec follows wayfinder, link the map and material decision tickets in `## Related Work`.
 +- **Use MDX blocks only when useful.** Plain Markdown is valid MDX. Add diagrams, file maps, decision tables, callouts, or review surfaces when they make the spec easier to read.
 +- **Keep it user-readable.** Prefer short sections, tables for comparisons, and Mermaid diagrams for relationships. Avoid dumping implementation minutiae into prose.
 +- **No revision memos.** If adapting an existing `.md`, issue body, or pasted draft, publish a clean standalone `.mdx` proposal. Do not write "unlike the previous version" or "preserve prior spec".
-+- **Open questions live at the bottom.** If a decision would affect architecture, UX, data shape, rollout, or scope and cannot be resolved from existing context, either choose a recommended default with rationale or add it to `## Open Questions`.
 +
 +### Useful MDX Sections
 +
@@ -58,43 +57,39 @@ index f3cca8d..96346b2 100644
 +| --- | --- | --- |
 +| Backend API | `backend/...` | Add endpoint contract |
 +````
+@@ -13 +59,5 @@
+-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
++1. Inspect only missing context needed to describe the current system. Use the project domain glossary and respect applicable ADRs. Reuse prior exploration.
 +
-@@ -15 +63,8 @@
++2. If the project maintains an implementation-findings or recurring-gaps log, check it for past issues in this area. Address recurring failures explicitly as requirements, constraints, or open questions. If a relevant log is unavailable, disclose that limit.
++
++3. Gather planning artifacts for the template's `## Related Work` contract. Select existing test seams at the highest useful boundary; propose a new seam only where existing ones cannot verify required behavior. Use as few seams as needed. Record unresolved seam choices in Open Questions and continue drafting.
+@@ -15 +65 @@
 -2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
-+2. Identify the spec's relationship to surrounding planning artifacts before writing:
-+
-+- If this spec follows a wayfinder map, link the map and every closed decision ticket that materially shaped the spec. Do not restate ticket bodies; link them and summarize only the decision gist.
-+- If this spec splits, supersedes, depends on, or continues another spec, link that spec and state the relationship.
-+- If this spec is expected to feed a later implementation plan or ticket split, note that downstream artifact even if it does not exist yet.
-+- If no related artifact exists, say so explicitly in the spec.
-+
-+3. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
-@@ -19 +74,9 @@
++4. Write the `.mdx` using the template, including its requirements, invariants, executor, status, and open-decision contracts. Continue the draft while decisions or publication remain blocked.
+@@ -17 +67 @@
+-Check with the user that these seams match their expectations.
++5. Self-review before any publication. Verify `.mdx` extension, standalone context, complete template obligations and Related Work, no unresolved placeholders, and valid Markdown-compatible MDX, Mermaid, and tables. Trace known requirements, invariants, unknowns, and proposed defaults from context to the artifact; check acceptance drafts and testing decisions. Verify status, executor selection, and intended tracker labels against the template contracts.
+@@ -19 +69 @@
 -3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
-+4. Write the spec using the template below as `.mdx`, then publish/link it through the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
-+
-+5. Self-review the `.mdx` before publishing:
-+
-+- The file extension is `.mdx`, not `.md`.
-+- It stands alone without chat context.
-+- `## Related Work` links all relevant wayfinder/spec/ticket/plan artifacts.
-+- No placeholder text remains.
-+- Any Mermaid/table/MDX block renders as valid Markdown-compatible MDX.
-@@ -22,0 +86,10 @@
++6. Publish only when existing session authorization and applicable permissions allow tracker writes. Create or update the relevant spec issue and link the `.mdx`. Make `ready-for-agent` reflect the template status: apply it only for Ready for planning; remove it from a blocked draft when authorized. No additional triage is needed. If approval is required or tracker access/configuration is missing, deliver the reviewed local spec, prepared issue content, and concrete setup or publication proposal; report the pending action and request only the missing authorization or setup information. Already authorized actions need no repeated permission request. The skill does not grant tracker-write or setup-mutation permission.
+@@ -22,0 +73,12 @@
 +# <Feature Name> Spec
 +
 +> **For agentic workers:** This `.mdx` spec is the source of truth. Preserve the `## Related Work` links when creating plans or tickets from it.
++>
++> **Downstream execution:** State the executor selected explicitly by the user or applicable project instructions. If none is selected, write "Executor selection pending in planning."
 +
 +**Goal:** <one sentence describing what this spec enables>
 +
-+**Status:** Ready for planning
++**Status:** State "Ready for planning" only when remaining questions do not block safe, testable planning. Otherwise write "Draft - blocked" and identify the blocking Open Questions. Unknown required invariants, unresolved requirements that prevent acceptance criteria, and unaccepted defaults needed to settle those decisions are blockers. Nonblocking executor selection or tracker setup remains explicitly pending without inventing a decision.
 +
 +---
 +
-@@ -26,0 +100,12 @@
+@@ -26,0 +89,12 @@
 +## Related Work
 +
-+Links to the wayfinder map, decision tickets, predecessor specs, sibling specs, downstream plans, or downstream ticket sets that frame this spec.
++Link the wayfinder map, decision tickets, predecessor/sibling specs, downstream plans, and ticket sets that frame this spec. State whether this spec splits, supersedes, depends on, or continues them. Identify the expected downstream plan or ticket split even if it does not exist yet. Use links and decision gists rather than restating ticket bodies.
 +
 +For a wayfinder-derived spec, include:
 +
@@ -104,3 +99,55 @@ index f3cca8d..96346b2 100644
 +
 +For a non-wayfinder spec, include related specs/plans/tickets if they exist. If none exist, write "None."
 +
+@@ -30,0 +105,18 @@
++## Requirements Draft
++
++Atomic obligations this spec imposes. Each requirement should be independently verifiable. The downstream plan will refine these into a formal Requirements Inventory with `REQ-NNN` identifiers, acceptance oracles, and task mappings.
++
++| # | Type | Obligation | Acceptance (draft) |
++| --- | --- | --- | --- |
++| R1 | behavior | <what the system must do> | <how to verify> |
++| R2 | constraint | <cross-cutting rule> | <objective check> |
++| R3 | contract | <wiring between components> | <integration test or trace> |
++
++Types: `behavior` (runtime behavior), `constraint` (cross-cutting rule), `contract` (cross-component wiring), `test` (test the plan promises to add).
++
++If no requirements can be stated yet, write "Deferred to planning phase" with rationale.
++
++## Invariants
++
++List required properties that must always hold, including recovery, retries, data integrity, and other domain constraints supported by existing context. For each, record the agreed rule and observable verification. If the context leaves a required invariant unknown, include an explicit unknown entry linked to a blocking Open Question; retain any proposed default there with its rationale. Never turn an unknown or proposal into an agreed invariant.
++
+@@ -45 +137 @@
+-A list of implementation decisions that were made. This can include:
++List agreed implementation decisions here. Preserve unaccepted recommendations in Open Questions as proposed defaults with rationale. Agreed decisions can include:
+@@ -63,3 +155,5 @@
+-- A description of what makes a good test (only test external behavior, not implementation details)
+-- Which modules will be tested
+-- Prior art for the tests (i.e. similar types of tests in the codebase)
++- **Test philosophy:** Tests must verify external behavior and invariants, not implementation details. Passing tests are evidence, not proof — the downstream spec-aware tester validates whether tests demonstrate stated philosophy and invariants.
++- **Seams:** Which existing seams will be tested. Prefer existing seams to new ones; use the highest seam possible.
++- **Invariant tests:** Which invariants from the spec require dedicated test cases beyond functional coverage. These are the tests that catch "green but wrong."
++- **Prior art:** Similar test patterns already in the codebase to follow for consistency.
++- **Modules under test:** Which modules will be tested and at what level (unit, integration, end-to-end).
+@@ -73 +167,11 @@
+-Any further notes about the feature.
++Any further notes about the feature. Skip this section if empty.
++
++## Open Questions
++
++Place every unresolved architecture, UX, data shape, rollout, scope, test-seam, requirement, or invariant decision here, at the bottom. Preserve supplied proposed defaults and their rationale even when a decision remains blocked. A proposed default does not resolve a blocker until accepted.
++
++| Question / unknown | Known constraints | Proposed default and rationale | Blocking? Why? | Resolution needed |
++| --- | --- | --- | --- | --- |
++| <unresolved decision> | <known facts> | <existing recommendation, or none established> | <yes/no and effect on planning> | <decision or evidence needed> |
++
++Skip this section only when no unresolved decisions remain.
+diff --git b/to-spec/agents/openai.yaml b/to-spec/agents/openai.yaml
+new file mode 100644
+index 0000000..5b1f887
+--- /dev/null
++++ b/to-spec/agents/openai.yaml
+@@ -0,0 +1,2 @@
++policy:
++  allow_implicit_invocation: false

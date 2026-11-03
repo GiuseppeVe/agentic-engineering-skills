@@ -10,10 +10,8 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8');
 const json = (path) => JSON.parse(read(path));
 const lock = json('manifests/skills.lock.json').skills;
 const names = lock.map(({ name }) => name).sort();
-const profiles = json('manifests/agent-profiles.json').profiles.map(({ name }) => name).sort();
 const docs = [
   'README.md',
-  'docs/agent-profiles.md',
   'docs/philosophy.md',
   'docs/workflow.md',
   'docs/customization.md',
@@ -22,6 +20,7 @@ const docs = [
   'docs/release-checklist.md',
   'docs/release-report.md',
   'docs/selective-install.md',
+  'docs/plugin-hooks.md',
 ];
 
 function tableRows(markdown) {
@@ -59,12 +58,15 @@ test('README has required exact section sequence and manifest-derived install co
   assert.deepEqual(sections, [
     'What this repository shares',
     'My working philosophy',
+    'Graph workflows',
     'How I use the workflow',
     'The quality loop',
+    'Hooks I use',
     'Supporting skills',
     'Example: choosing a route',
     'Workflow at a glance',
     'Install',
+    'Why version 1.1',
     'Customize',
     'Compatibility',
     'Provenance',
@@ -85,6 +87,43 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /`claude plugin list`/);
   assert.match(source, /fresh host session/i);
   assert.match(source, /invoke one included skill/i);
+});
+
+test('README links the plugin hooks guide and guide states real runtime limits', () => {
+  const readme = read('README.md');
+  const guide = read('docs/plugin-hooks.md');
+  const hooks = section(readme, 'Hooks I use');
+  assert.match(hooks, /PostToolUse/);
+  assert.match(hooks, /successful `gh pr create`[\s\S]*GitHub MCP[\s\S]*in both cases[\s\S]*valid GitHub PR URL/);
+  assert.match(hooks, /`cleaning-repo-with-knip` first[\s\S]*authorized safe fixes[\s\S]*`simplify`/);
+  assert.match(hooks, /`gh pr merge`[\s\S]*positive read-only GitHub check/);
+  assert.match(hooks, /do not run the skills[\s\S]*delete branches or worktrees themselves/);
+  assert.match(hooks, /Node\.js 22 or newer[\s\S]*post-merge reminder requires[\s\S]*GitHub CLI[\s\S]*successful merge verification/);
+  assert.match(hooks, /post-PR reminder only uses `gh`[\s\S]*valid PR URL[\s\S]*`gh` is unavailable or the branch lookup fails/);
+  assert.match(hooks, /reviewed and trusted[\s\S]*fresh session/);
+  assert.equal((readme.match(/\[plugin hooks guide\]\(docs\/plugin-hooks\.md\)/g) ?? []).length, 1);
+  assert.match(guide, /PostToolUse/);
+  assert.match(guide, /Node\.js 22 or newer/);
+  assert.match(guide, /GitHub CLI as `gh` from the process `PATH`/);
+  assert.match(guide, /In both cases, the tool result must contain a valid GitHub pull request URL/);
+  assert.match(guide, /post-merge hook emits no reminder if merge verification fails/);
+  assert.match(guide, /failed head-branch lookup does not suppress an otherwise eligible PR reminder/);
+  assert.doesNotMatch(guide, /A failed lookup or incomplete result emits no reminder/);
+  assert.match(guide, /mcp__\.\*\(create_pull_request\|pull_request\.\*create\|create_pr\)/);
+  assert.match(guide, /do not run skills, edit repository files, commit, push, comment, merge, or publish/i);
+  assert.match(guide, /not enforcement/i);
+  assert.match(guide, /deduplicates by pull request URL within a session/i);
+  assert.match(guide, /SHA-256 digests/);
+  assert.match(guide, /older than 14 days is treated as expired/);
+  assert.match(guide, /lazy expiration, not a background cleanup/i);
+  assert.match(guide, /Raw session IDs and PR URLs are not written/);
+  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs/);
+  for (const path of [
+    'plugins/agentic-engineering-skills/hooks/hooks.json',
+    'plugins/agentic-engineering-skills/hooks/post-merge.mjs',
+    'plugins/agentic-engineering-skills/hooks/post-pr.mjs',
+    'plugins/agentic-engineering-skills/hooks/pr-skills.json',
+  ]) assert.ok(existsSync(resolve(root, path)), `missing hook reference target: ${path}`);
 });
 
 test('README keeps the hero-led opening and experience-shaped framing', () => {
@@ -108,12 +147,15 @@ test('README documents conditional workflow routing and example', () => {
   const example = section(source, 'Example: choosing a route');
 
   for (const [situation, path] of [
+    ['Research, analysis, audit, or design program', 'Master Orchestrator'],
     ['Large, uncertain initiative', 'Wayfinder'],
+    ['Outcome-driven native Goal run', 'Setup Goal'],
     ['Bounded or creative design', 'Brainstorming'],
     ['Consequential or disputed design', 'Grill-me'],
     ['Agreed design', 'To Spec'],
     ['Multi-step implementation', 'Writing Plans'],
-    ['Large implementation', 'Sequential Task Orchestrator'],
+    ['Implementation program with multiple approved plans', 'Coordinating Implementation Programs'],
+    ['One implementation plan', 'Sequential Task Orchestrator'],
     ['Small implementation', 'Codex Implement'],
     ['Claude Code implementation', 'Claude Implement'],
   ]) {
@@ -121,7 +163,12 @@ test('README documents conditional workflow routing and example', () => {
   }
 
   assert.match(routing, /composable choices, not mandatory stages/i);
-  assert.match(example, /diagram below shows the shared lifecycle/i);
+  assert.match(routing, /setup-goal\/SKILL\.md/);
+  assert.match(routing, /outcome, constraints, and progress metrics[\s\S]*`runbook\.md`/);
+  assert.match(routing, /final confirmation to start that version[\s\S]*Only then[\s\S]*native Goal/);
+  assert.match(routing, /no native Goal capability[\s\S]*activation is reported as blocked/);
+  assert.doesNotMatch(source, /long-task-run|Long Task Run/i);
+  assert.match(example, /diagram below shows the shared lifecycle of delivery responsibilities/i);
   assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Sequential Task Orchestrator/i);
   assert.match(example, /small, well-understood change[\s\S]*Codex Implement[\s\S]*owner-approval gates/i);
 });
@@ -142,15 +189,51 @@ test('README explains philosophy, quality signals, and supporting skills', () =>
     /explicit owner control/i,
   ]) assert.match(philosophy, concept);
 
-  assert.match(quality, /`Test Gaps` checks plan fidelity/i);
-  assert.match(quality, /`Test-Driven Development` checks implementation correctness/i);
+  assert.doesNotMatch(quality, /Test Gaps/i);
+  assert.match(quality, /`Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness/i);
   assert.match(quality, /TDD fix cycle before acceptance/i);
 
-  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture', 'Orientated E2E Testing v5.2', 'Merge Verified PR and Cleanup']) {
+  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
-  assert.match(supporting, /bounded end-to-end testing and debugging route/i);
-  assert.match(supporting, /deterministic pauses instead of broad audits/i);
+  assert.match(supporting, /post-merge reminder/i);
+});
+
+test('graph workflow documentation explains both available orchestration routes', () => {
+  const source = read('README.md');
+  const graph = section(source, 'Graph workflows');
+  const rationale = section(source, 'Why version 1.1');
+  assert.match(graph, /new chat and an explicit orchestration skill/i);
+  assert.match(graph, /`\$master-orchestrator`/);
+  assert.match(graph, /master-orchestrator\/SKILL\.md/);
+  assert.match(graph, /when supported and authorized/i);
+  assert.match(graph, /map of decisions and a separate map of shared contracts/i);
+  assert.match(graph, /master itself does not implement code/i);
+  assert.match(graph, /Graphify.*semantic codebase graph[\s\S]*separate tool/i);
+
+  const available = graph.slice(graph.indexOf('### Research'), graph.indexOf('### Implementation'));
+  const preview = graph.slice(graph.indexOf('### Implementation'));
+  assert.match(available, /available/i);
+  assert.match(preview, /coordinating-implementation-programs\/SKILL\.md/);
+  assert.match(preview, /sequential-task-orchestrator/);
+  assert.match(preview, /visible subordinate thread/i);
+  assert.match(preview, /host cannot create the required visible threads/i);
+
+  for (const [part, path] of [
+    [available, 'assets/graph-workflow-non-implementation.svg'],
+    [preview, 'assets/graph-workflow-implementation.svg'],
+  ]) {
+    assert.ok(part.includes(`](${path})`), `missing workflow image: ${path}`);
+    const asset = read(path);
+    assert.match(asset, /role="img"/);
+    assert.match(asset, /aria-labelledby="title desc"/);
+    assert.match(asset, /<title id="title">[^<]+<\/title>/);
+    assert.match(asset, /<desc id="desc">[^<]+<\/desc>/);
+    assert.doesNotMatch(asset, /<script|<foreignObject|<image|https?:\/\/(?!www\.w3\.org\/2000\/svg)/i, 'workflow images must remain self-contained static artwork');
+  }
+  assert.match(rationale, /graph workflows[\s\S]*PR lifecycle hooks/i);
+  assert.match(rationale, /Knip[\s\S]*Simplify[\s\S]*verify the merge[\s\S]*clean up/i);
+  assert.match(rationale, /remind the agent/i);
 });
 
 test('README owns the canonical workflow overview without duplicating it in the guide', () => {
@@ -202,7 +285,6 @@ test('primary documentation links a complete, auditable workflow philosophy', ()
   for (const link of [
     '[Workflow guide](workflow.md)',
     '[Provenance guide](provenance.md)',
-    '[Agent profiles](agent-profiles.md)',
     '[Release checklist](release-checklist.md)',
     '[Customization guide](customization.md)',
   ]) assert.ok(philosophy.includes(link), `missing related-work link: ${link}`);
@@ -216,17 +298,12 @@ test('workflow presents seven phases in order and maps included skills', () => {
   assert.match(source, /not every skill/i);
 });
 
-test('aggregate routing guides cover every public skill and agent profile', () => {
+test('workflow guide covers every public skill', () => {
   const workflow = read('docs/workflow.md');
-  const agentProfiles = read('docs/agent-profiles.md');
 
   assert.match(workflow, /\[workflow philosophy\]\(philosophy\.md\)/i);
   assert.match(workflow, /every included public skill/i);
   for (const name of names) assert.match(workflow, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
-
-  assert.match(agentProfiles, /\[workflow philosophy\]\(philosophy\.md\)/i);
-  assert.match(agentProfiles, /every included public agent profile/i);
-  for (const name of profiles) assert.match(agentProfiles, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
 });
 
 test('compatibility names exactly two verified hosts', () => {

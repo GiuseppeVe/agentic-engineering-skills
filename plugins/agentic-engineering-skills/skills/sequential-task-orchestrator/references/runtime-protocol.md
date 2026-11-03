@@ -1,254 +1,36 @@
 # Runtime Protocol
 
-## Run bootstrap
+## Setup and run state
 
-On a new run, generate the run ID in memory and make run workspace bootstrap
-the first state-changing operation. Before any child creation:
+Verify the plan, spec and any supplied contracts map, including their revisions. Before dispatch, create one branch and shared worktree from the intended revision, respecting repository rules; wait until usable and record `run_branch`, `run_worktree` and `starting_revision`. Keep the main checkout unchanged and pass the exact shared `workspace_ref` to every subthread. Pending setup creates no child; definitive failure is `BLOCKED`.
 
-1. Create one dedicated branch and worktree from the intended starting
-   revision, without cleaning, resetting, stashing, or committing unrelated
-   changes in the main checkout.
-2. Wait for setup to become terminal and usable.
-3. Record `run_branch`, `run_worktree`, and `starting_revision`.
-4. Set `workspace_ref` to the exact run worktree. Use it for orchestrator
-   reads/writes, integration, and every child prompt.
+Initialize or resume a non-versioned ledger outside the run worktree; record its location and reuse it on resume. Track the run and task identifiers, input references and revisions, task queue, `current_task`, `side_slot`, child roles and lifecycle, confirmed and provisional identifiers, host routing information when available, effective model/effort, worktree/branch, implementation and review commits, integration target and result, tests, findings, assumptions and blockers. Record transitions; on resume reconcile the ledger with host status and Git state before dispatch.
 
-The main checkout is not a run workspace. Do not replace the shared run
-worktree with a separate worktree per child. If bootstrap is pending, create no
-child and wait. If it fails definitively, create no child; mark the run
-`BLOCKED` and report after safe checks.
+## Dispatch and verification
 
-Only a ready, recorded run worktree may transition into `READY` and permit the
-first implementer.
+Process tasks in order with one slot: implementation **or** review. Before creating a visible subthread, verify that the slot is free, the task is `current_task`, no same-task child is pending/active, and all predecessors are `ACCEPTED`; then reserve the slot before creation. Keep later tasks queued. If the host cannot create the requested visible subthread, report `BLOCKED`.
 
-## Inputs
+A pending or active child owns the slot. Record provisional identifiers separately; a timeout, progress update or queued message is not completion. If evidence is missing, follow up in the same subthread. If identity or activity remains unresolved after safe checks, retain the slot and report `NEEDS_ATTENTION` or `BLOCKED`. If multiple children are pending/active, record each, suspend dispatch, integration and worktree mutation, and reconcile all before continuing. Record failures or stops; replace a child only after confirming it cannot continue to modify the worktree.
 
-Require:
+Release the slot only after the child’s turn ends, its final result and commit/worktree evidence are verified, outstanding work cannot modify the worktree, and the role is recorded complete. Keep later tasks blocked or assigned so earlier children cannot take them during review. The session may remain open; request shutdown during final cleanup.
 
-```text
-plan_ref
-task_selector
-project/workspace_ref
-spec_ref per task, or a resolvable spec location in the plan
-integration_target (optional; explicit remote sidebranch for incremental integration)
-```
+## Subthread assignments
 
-The worktree is the code input. Do not paste source code into child prompts.
-Read plan/spec only to identify the selected task and construct the envelopes;
-do not reinterpret domain behavior.
+For each role, pass the task ID, plan and spec references, exact shared worktree and required output fields. Do not paste source code, child-skill internals, implementation strategy or test commands into the assignment.
 
-## Ledger
+- **Implementation:** use the available implementation skill in bounded worker mode; implement only the selected task and commit it on the run branch. Return status, commit, changed files, tests/results, assumptions and blockers. The orchestrator verifies the exact commit, diff, branch and worktree before dispatching review.
+- **Review:** create a different subthread on the verified implementation commit/diff; run `test-driven-development` against the task and its requirements. Return findings, tests/results, changed files, fix commit when applicable and blockers. Use `agent-architecture-audit` for architecture-sensitive work only when available; record the gap if unavailable, and block only if the plan requires it.
 
-Initialize or resume one non-versioned ledger per run:
+Coordinate any fixes through the same single-slot lifecycle. Never expand silently into unrelated tasks. Honor explicit model/effort requirements and higher-priority host instructions; otherwise use host defaults. Record effective supported settings.
 
-```text
-<project>/.codex/orchestration/<run-id>.json
-```
+## Integration and closeout
 
-Track at least:
+After review and fixes, verify the accepted commit/diff and evidence. If an integration target is provided, integrate the exact accepted range before the next task only when the slot is free and the target can accept it without replacing remote work. Require explicit human authorization for `main`; divergence or non-fast-forward is `BLOCKED`, with no force-push or reset. Verify the target contains the accepted commit and record the resulting SHA. A failed integration leaves the task unaccepted and later tasks queued. If no target is supplied, record the omission and accept locally.
 
-```text
-run_id, plan_ref, task_queue, current_task, side_slot
-task_state, threadId, hostId, clientThreadId
-model, thinking
-run_worktree, run_branch, starting_revision
-worktree, branch, implementation_commit, review_commit
-integration_target, integration_commit, integration_status
-tests, findings, assumptions, blockers
-```
+If the assignment includes a PR, follow the repository’s review, gate, merge and cleanup rules on the exact head. For a map-master assignment, report readiness and wait for its merge go-ahead. Complete the authorized merge and cleanup; report any unfinished cleanup and do not remove a worktree while outstanding work could affect it.
 
-Update ledger after child creation, provisioning transition, terminal result,
-verification, archival, integration, and acceptance. On resume, reconcile
-ledger with current thread/worktree state before creating anything.
+## Decisions and reporting
 
-## State machine
+Ask the human only for structural contradictions, missing or conflicting acceptance criteria that change scope, unreadable required artifacts, a missing workspace, or an unresolved subthread launch after safe checks. For ordinary choices, use the least-expansive interpretation and record assumptions. Respect previously granted authorization and applicable higher-priority requirements.
 
-For each task, enforce:
-
-```text
-RUN_WORKTREE_PENDING
-→ RUN_WORKTREE_READY
-→ READY
-→ IMPLEMENTER_PENDING
-→ IMPLEMENTER_ACTIVE
-→ IMPLEMENTATION_VERIFIED
-→ REVIEWER_PENDING
-→ REVIEWER_ACTIVE
-→ REVIEW_VERIFIED
-→ INTEGRATION
-→ ACCEPTED
-→ NEXT_TASK
-```
-
-Terminal alternatives: `NEEDS_ATTENTION`, `FAILED`, `BLOCKED`, `CANCELLED`.
-
-Use one mutex:
-
-```text
-side_slot ∈ {free, implementer(task_id), reviewer(task_id)}
-```
-
-Set the slot before requesting child creation. A pending child occupies it.
-Before any creation, assert the slot is free, no same-task child is
-pending/active, all predecessor tasks are `ACCEPTED`, and the task has no
-accepted implementation/review pair.
-
-## Child lifecycle
-
-Use a fresh user-visible side task for each role. Creation is non-blocking.
-Record returned identifiers immediately.
-
-Create side tasks with these fixed settings:
-
-| Role | `model` | `thinking` |
-| --- | --- | --- |
-| Implementer | `gpt-6.1-sol` | `high` |
-| Reviewer | `gpt-6.1-sol` | `xhigh` |
-
-Record the selected `model` and `thinking` in the ledger before requesting
-child creation. Do not omit or substitute these settings.
-
-If creation returns ready `threadId` and `hostId`, mark the child active and
-wait for terminal progress. If it returns only `clientThreadId`, mark
-provisioning pending. Never pass that value to a tool requiring `threadId`.
-Do not create a fallback, fork, retry, replacement, reviewer, or next task
-while unresolved. Wait for a definitive ready, failed, cancelled, or stopped
-result. If no definitive resolver exists, mark `BLOCKED`; do not guess.
-
-Release the slot only after:
-
-```text
-terminal child state
-→ final output read
-→ commit/worktree evidence verified
-→ child archived
-```
-
-Missing or ambiguous output means `NEEDS_ATTENTION`: send a follow-up to the
-same child and keep the slot. A replacement requires definitive failure or
-explicit stop plus archive, with the reason recorded in the ledger.
-
-## Implementer envelope
-
-Resolve `worker_skill_ref` to the readable path of
-`references/sequential-task-worker.md` relative to this orchestrator's skill
-location, not the project's worktree. Pass that exact path to the child;
-the reference is not a separately registered top-level slash command.
-If it is unreadable, block dispatch rather than substitute another workflow.
-Send exactly this role context plus task-specific references:
-
-```text
-Role: implementation worker.
-Task: {{task_id}}.
-
-Read:
-- plan: {{plan_ref}}
-- spec: {{spec_ref}}
-- code/worktree: {{workspace_ref}}
-- worker skill: {{worker_skill_ref}}
-
-Read and follow the worker skill at the exact path above.
-Implement only this task. Do not implement adjacent tasks, spawn agents or
-start an internal planning/review cycle. The parent manages review and acceptance.
-
-Return:
-- status
-- commit
-- changed files
-- tests and results
-- assumptions
-- blockers
-```
-
-Do not add domain instructions, implementation strategy, or test commands.
-
-## Implementation verification
-
-Do not treat “done” as evidence. Read the final response, inspect exact
-worktree/branch state, confirm commit/diff and changed files, and preserve test
-commands/results reported by the child. If required evidence is absent, keep
-the same child open with `NEEDS_ATTENTION`.
-
-## Reviewer envelope
-
-Start only after implementation verification and archival. Reviewer must use
-the exact implementation commit/diff and worktree state:
-
-```text
-Role: test-gap reviewer and fixer.
-Task: {{task_id}}.
-
-Read again:
-- plan: {{plan_ref}}
-- spec: {{spec_ref}}
-- code/worktree: {{workspace_ref}}
-- implementation commit/diff: {{implementation_commit_or_diff}}
-
-Use $test-gaps and $test-driven-development.
-Use $agent-architecture-audit when the task or diff is architecture-sensitive.
-Review and fix only this task and regressions directly caused by it.
-
-Return:
-- status
-- findings
-- tests and results
-- changed files
-- fix commit, if any
-- unresolved blockers
-```
-
-Reviewer may add regression tests and fix findings within scope. It must not
-silently expand into adjacent tasks.
-
-## Integration and cross-task fixes
-
-Integrate only after reviewer terminal output, verification, and archival:
-
-```text
-implementation commit
-→ reviewer on exact state
-→ optional reviewer fix commit
-→ parent verifies current diff/evidence
-→ incremental integration, when `integration_target` is configured
-→ task ACCEPTED
-```
-
-For configured incremental integration:
-
-1. Confirm `side_slot` is free and the reviewer is archived.
-2. Fetch/read the integration target and verify it can accept the exact
-   accepted run commit without replacing remote history. Non-fast-forward or
-   divergence is `BLOCKED`; do not force-push, reset, or auto-rebase.
-3. Push or merge only the accepted commit range into the explicit target.
-   `main` is forbidden unless the human explicitly selected it.
-4. Verify the target contains the accepted commit and record
-   `integration_target`, resulting `integration_commit`, command/result, and
-   any assumptions in the ledger.
-5. Only then set the task `ACCEPTED` and advance `current_task`.
-
-Integration failure leaves the task before `ACCEPTED` and blocks later task
-dispatch. Release/promotion gates are separate: they may block release without
-blocking a verified incremental integration into its non-main sidebranch.
-
-Parent may handle a cross-task defect only while the side slot is free. Record
-affected task IDs, changed files, tests, and resulting commit before resuming
-the queue. Never mutate the worktree while a child is pending/active.
-
-Even if a later task is independent, keep it queued until the current task is
-`ACCEPTED`.
-
-## Stop and report
-
-Ask the human only for structural plan contradictions, missing/conflicting
-acceptance criteria that change scope, unreadable artifacts, missing workspace,
-or unresolved provisioning after safe checks. For ordinary ambiguity, choose
-the least-expansive interpretation and record the assumption.
-
-Final report must include one row per task:
-
-```text
-task_id | implementation commit | reviewer result | fix commit | tests | assumptions | blockers
-```
-
-State whether the selected range completed. Never claim completion when plan,
-spec, commit, worktree, or review evidence is missing.
+Report each task’s implementation/review/fix commits, tests and results, findings, assumptions and blockers; include integration and cleanup results when applicable. Do not report completion without the required plan, spec, commit, worktree and review evidence.

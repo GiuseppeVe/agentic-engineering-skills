@@ -1,32 +1,36 @@
 # Workflow
 
+A new chat explicitly invoking `master-orchestrator` starts the available non-implementation graph workflow. The master turns the request into ready, scoped nodes, delegates investigation and deliverables to distinct agents, and updates dependencies and decisions from filtered reports. For large design programs it also maintains decision and contract maps through its conditional `coordinating-design` reference. User-visible child chats and persistent state require host capability and authorization. For an approved implementation program, invoke `coordinating-implementation-programs` in a new chat: it dispatches visible plan threads using `sequential-task-orchestrator`, coordinates dependencies and integration, and respects host capability and authorization. A single plan can use `sequential-task-orchestrator` directly. This task graph is distinct from Graphify’s semantic codebase graph.
+
 Seven phases form a composable path. Not every skill runs on every task; choose only skills matching risk and scope. The [workflow philosophy](philosophy.md) defines decision gates, required evidence, optional-tool fallbacks, and owner authority over publication.
 
 This guide is the relevant-stage backlink and conditional routing surface for every included public skill. Each skill appears under the phase where it can contribute; its presence is an option, not a mandate. Select it only when task scope, risk, and the philosophy's evidence gates justify that route.
 
 ## Understand
 
-`learn-codebase` builds broad project context. `brainstorming` clarifies intent before creative changes. `grill-me` and `grilling` pressure-test uncertain proposals. `caveman` keeps collaboration compact; `cavecrew` helps route focused investigation.
+`learn-codebase` builds broad project context. `graphify-start` routes codebase questions through the project Graphify protocol when present, then `graphify` can build and query a persistent knowledge graph. `ask-matt` routes a situation to an available skill or flow. `brainstorming` clarifies intent before creative changes. `grill-me` and `grilling` pressure-test uncertain proposals. `caveman` keeps collaboration compact.
 
 ## Design
 
-`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `impeccable` and `ui-ux-pro-max` guide frontend visual, interaction, accessibility, and design-system decisions. `setup-matt-pocock-skills` prepares supporting project conventions when those engineering skills need them.
+`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. `impeccable` and `ui-ux-pro-max` guide frontend visual, interaction, accessibility, and design-system decisions. `marketing-screenshots` captures real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
 
 ## Plan
 
-`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks and offers `sequential-task-orchestrator` when execution must remain strictly ordered.
+`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `handoff` saves a compact continuation document when work moves between agents. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks and offers `sequential-task-orchestrator` when execution must remain strictly ordered. `setup-goal` turns an agreed outcome into a runbook and activates the host-native Goal only after approval.
 
 ## Implement
 
-`using-git-worktrees` isolates changes. After review and required checks pass, `merge-verified-pr-and-cleanup` verifies the current PR head, follows repository approval gates, confirms the merge, then cleans up only its unused workspace. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `sequential-task-orchestrator` executes strictly ordered plans through one implementer and one review cycle per task; `claude-implement` supplies the same bounded-packet and clean-review workflow in Claude Code. The orchestrator uses `test-gaps` for plan fidelity and `test-driven-development` for implementation correctness. `swarm-orchestration` coordinates independent multi-agent work when scope warrants it. `importing-handoff` is specialized route for frontend handoffs: it preserves observed behavior, records compatibility boundaries, and requires complete reference/candidate evidence before user inspection.
+Repository instructions determine worktree isolation and merge approval. The post-merge hook reminds the agent to verify the merge and inspect ownership before workspace cleanup. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `sequential-task-orchestrator` executes strictly ordered plans through one implementer and one review cycle per task; `claude-implement` supplies the same bounded-packet and clean-review workflow in Claude Code. The orchestrator uses `test-driven-development` for plan fidelity, requirement coverage, missing cases, and implementation correctness. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
 
 ## Verify
 
-`test-driven-development` requires observed failing tests before implementation and passing tests afterward. `orientated-e2e-testing-v5-2` provides bounded end-to-end testing and debugging for one confirmed observable product trajectory. `writing-skills` includes methods for exercising skill behavior, not only validating Markdown shape.
+`test-driven-development` requires observed failing tests before implementation and passing tests afterward. `mdx-to-html` creates standalone review pages from explicit MDX inputs. `setup-harness-evaluation` and `setup-workflow-comparison` collect independent run evidence for the user’s manual evaluation.
 
 ## Review
 
-`codex-implement` and `claude-implement` require semantic test validation plus a fresh clean-room approval gate; choose the host-native skill. `grill-me` or `grilling` can challenge consequential design decisions before publication.
+`codex-implement` and `claude-implement` require semantic test validation plus a fresh clean-room approval gate; choose the host-native skill. `grill-me` or `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session.
+
+The post-PR hook depends on `simplify` to review the PR diff for behavior-preserving cleanup. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
 
 ## Clean
 
@@ -57,20 +61,8 @@ flowchart TD
 
 Optional integrations strengthen these stages but never become hidden dependencies. If orchestration, worktrees, GitHub CLI, browser tooling, Graphviz, or Knip is unavailable, use the documented manual fallback in the [workflow philosophy](philosophy.md) and report what actually ran.
 
-## Phase-to-profile mapping
+## Implementation role routing
 
-Profiles are optional role contracts consumed by workflow skills. They do not make this workflow an executable harness. Exact responsibilities and result envelope: [agent profile guide](agent-profiles.md).
-
-| Profile | Workflow phase | Wiring |
-| --- | --- | --- |
-| `cleanup` | Clean | Removes only explicitly scoped temporary artifacts after verification and review. |
-| `controller` | Cross-phase | Routes bounded work, manages retry and escalation, and assembles trace evidence. |
-| `implementer` | Implement | Owns one planned task and returns test-first change evidence. |
-| `planner` | Design, Plan | Converts findings and requirements into bounded tasks and acceptance criteria. |
-| `researcher` | Understand, Design | Collects read-only evidence before planning or consequential decisions. |
-| `reviewer` | Design, Plan, Review | Applies independent spec, quality, security, or fidelity lenses. |
-| `test-runner` | Verify | Runs named commands and reports results without modifying implementation. |
-
-Implementation workflows use neutral planner, spec-aware-tester and clean-room-reviewer attachments. Codex CLI session layers (`$CODEX_HOME/<name>.config.toml`) select Sol/xhigh for these roles and Sol/high for bounded workers and both retries. Native agent TOMLs are separate registrations. Claude callers use separately installed native role names with Opus 5.5/medium for planners, Opus 5.5/high for semantic review and Sonnet 5.5/high for the existing Terra packet-worker exception; generic workers remain Sonnet/medium. The bundle distributes Markdown contracts; it does not install user-home session profiles or register every native role. Verify discovery and effective routing in the target host.
+Implementation workflows use neutral planner, spec-aware-tester and clean-room-reviewer attachments. Codex CLI session layers (`$CODEX_HOME/<name>.config.toml`) select Sol/xhigh for these roles and Sol/high for bounded workers and both retries. Native agent TOMLs are separate registrations. Claude callers use separately installed native role names with Opus 5.5/medium for planners, Opus 5.5/high for semantic review and Sonnet 5.5/high for the existing Terra packet-worker exception; generic workers remain Sonnet/medium. The bundle distributes skill-specific role attachments; it does not install user-home session profiles or register every native role. Verify discovery and effective routing in the target host.
 
 Return to [README](../README.md).

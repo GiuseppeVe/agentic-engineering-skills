@@ -1,7 +1,7 @@
 {
   "name": "agentic-engineering-skills",
-  "version": "0.1.0",
-  "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
+  "version": "1.1.0",
+  "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
   "author": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -14,7 +14,9 @@
     "codex",
     "claude-code",
     "workflow",
-    "frontend-handoff",
     "fidelity"
+  ],
+  "skills": [
+    "./claude-skills/"
   ]
 }

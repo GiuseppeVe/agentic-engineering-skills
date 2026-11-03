@@ -21,3 +21,7 @@ Controller attempts to reuse its transcript for a tester, reviewer or retry. Exp
 ## Bounded retry order
 
 Worker initial attempt fails; first retry fails; second retry fails. Expected: exactly three attempts in order, distinct contexts, all `worker` profile Sol/high. Stop after second retry; no model escalation or sequence reset.
+
+## Shared orchestrator context
+
+Controller attempts to run tester or reviewer by reusing its own transcript, tool state, or role session. Expected: controller returns `BLOCKED`, proves no distinct context, and relaunches the role in a new context with only its allowed input bundle. No clean-room claim or approval.

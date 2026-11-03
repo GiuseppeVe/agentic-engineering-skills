@@ -4,16 +4,18 @@ Only hosts below are verified. Other Agent Skills hosts are unverified manual-ad
 
 | Host | Status | Payload |
 | --- | --- | --- |
-| `Codex` | Verified | `.codex-plugin/plugin.json` and flat Agent Skills directory |
-| `Claude Code` | Verified | `.claude-plugin/plugin.json` and same flat Agent Skills directory |
+| `Codex` | Verified | `.codex-plugin/plugin.json` and 35 shared skills under `skills/` |
+| `Claude Code` | Verified | `.claude-plugin/plugin.json`, 35 shared skills plus Claude-only `claude-skills/claude-implement/` |
 
-Both hosts consume shared payload at `plugins/agentic-engineering-skills/`; this prevents host-specific skill drift. See [installation](../README.md#install) and [provenance](provenance.md).
+Both hosts consume the shared `skills/` payload at `plugins/agentic-engineering-skills/`. The Claude manifest additionally declares `claude-skills/`, so Claude Implement is absent from Codex discovery. See [installation](../README.md#install) and [provenance](provenance.md).
 
-Machine-verifiable native evidence lives in schema-v2 `manifests/native-discovery.json`: host versions, exact isolated install/discovery commands and exit codes, and per-host installed inventories/tree hashes. `npm run verify:pack` checks tracked receipt against lock and source bytes. CI then performs fresh official marketplace installs, locates each installed plugin root from native CLI JSON or isolated host cache, and runs `npm run verify:installed-native` against actual installed bytes. Any host transform, missing `SKILL.md`, extra skill, or byte drift fails CI. Dynamic receipts stay in runner temp; normal host config is untouched. Supporting smoke commands: `codex plugin list --available --json` and `claude plugin list`; then start a fresh corresponding host session. `docs/release-report.md` remains supporting evidence.
+Claude Code discovers the four `impeccable-*` specialists under the `agentic-engineering-skills:` namespace. Codex does not register plugin-provided agent profiles automatically: if a matching specialist is not already available, Impeccable sends its bundled TOML contract to a fresh generic subagent. Model choice and enforced read-only tools depend on the host's subagent capabilities.
 
-Current isolated-install versions: Codex CLI 0.159.2 and Claude Code 2.1.296. Packaging fidelity is separate from model/effort inference and fresh-session role discovery. On Windows, set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` together for every isolated host command. Codex 0.141.0 isolates marketplace and plugin state this way. Its model-visible skill catalogue still has a 2% context budget, so large ambient catalogues can truncate one-shot enumeration; use small fresh-session batches when checking named skills.
+Machine-verifiable native evidence lives in schema-v3 `manifests/native-discovery.json`: host versions, exact isolated install/discovery commands and exit codes, and per-host installed inventories/tree hashes. `npm run verify:pack` checks tracked receipt against lock and source bytes. CI then performs fresh official marketplace installs, locates each installed plugin root from native CLI JSON or isolated host cache, and runs `npm run verify:installed-native` against actual installed bytes. Any host transform, missing `SKILL.md`, extra skill, or byte drift fails CI. Dynamic receipts stay in runner temp; normal host config is untouched. Supporting smoke commands: `codex plugin list --available --json` and `claude plugin list`; then start a fresh corresponding host session. `docs/release-report.md` remains supporting evidence.
 
-## Current role-routing receipt: 2026-10-12
+The latest isolated-install versions are recorded in `manifests/native-discovery.json`. Packaging fidelity is separate from model/effort inference and fresh-session role discovery. On Windows, set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` together for every isolated host command. Codex 0.141.0 isolates marketplace and plugin state this way. Its model-visible skill catalogue still has a 2% context budget, so large ambient catalogues can truncate one-shot enumeration; use small fresh-session batches when checking named skills.
+
+## Historical role-routing receipt: 2026-10-12
 
 Real isolated Windows installations used Node.js v26.7.0, Codex CLI 0.159.2
 and Claude Code 2.1.296 at reachable payload commit
@@ -26,7 +28,7 @@ normal user-home CLI upgrade or manual package-cache patch occurred.
 
 This receipt proves installation fidelity only. No fresh-session skill inference
 or native-agent registration is claimed by it. Role attachments, CLI session
-layers and native-agent definitions remain separate. See [agent profiles](agent-profiles.md).
+layers and native-agent definitions remain separate. Consult the relevant implementation skill for its routing requirements.
 
 ## Historical campaign phases receipt: 2026-10-04
 

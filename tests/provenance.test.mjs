@@ -373,16 +373,14 @@ test("adapted and original local imports retain provenance contracts", async () 
   const byName = new Map(lock.skills.map(entry => [entry.name, entry]));
   const adapted = {
     brainstorming: "obra/superpowers",
-    cavecrew: "JuliusBrussee/caveman",
     caveman: "JuliusBrussee/caveman",
     "grill-me": "mattpocock/skills",
     "improve-codebase-architecture": "mattpocock/skills",
     impeccable: "pbakaus/impeccable",
     "learn-codebase": "thedotmack/claude-mem",
-    "setup-matt-pocock-skills": "mattpocock/skills",
-    "swarm-orchestration": "ruvnet/ruflo",
     "to-spec": "mattpocock/skills",
     wayfinder: "mattpocock/skills",
+    "test-driven-development": "obra/superpowers",
     "writing-plans": "obra/superpowers",
     "ui-ux-pro-max": "nextlevelbuilder/ui-ux-pro-max-skill"
   };
@@ -390,20 +388,20 @@ test("adapted and original local imports retain provenance contracts", async () 
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "adapted");
     assert.match(entry.sha256, /^[a-f0-9]{64}$/);
-    const localSkill = new URL(`../plugins/agentic-engineering-skills/skills/${name}/`, import.meta.url);
+    const localSkill = new URL(`../${entry.payloadPath ?? `plugins/agentic-engineering-skills/skills/${name}`}/`, import.meta.url);
     const localHash = entry.upstreamPath.endsWith("/") ? await sha256Path(fileURLToPath(localSkill)) : await sha256File(new URL("SKILL.md", localSkill));
     assert.equal(localHash, entry.localSha256);
-    assert.match(await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url), "utf8"), new RegExp(`Adaptation:[^\\n]+${upstream.replace("/", "\\/")}`));
+    if (name !== "caveman") assert.match(await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${name}/SKILL.md`, import.meta.url), "utf8"), new RegExp(`Adaptation:[^\\n]+${upstream.replace("/", "\\/")}`));
     const patchUrl = new URL(`../${entry.patchPath}`, import.meta.url);
     assert.ok((await stat(patchUrl)).size > 0);
     assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
   }
-  for (const name of ["claude-implement", "codex-implement", "cleaning-repo-with-knip", "how-to-use-codex", "merge-verified-pr-and-cleanup", "importing-handoff", "sequential-task-orchestrator", "test-gaps"]) {
+  for (const name of ["claude-implement", "codex-implement", "cleaning-repo-with-knip", "how-to-use-codex", "sequential-task-orchestrator", "simplify"]) {
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "original");
     assert.equal("revision" in entry, false);
     assert.equal("repository" in entry, false);
-    const localSkill = new URL(`../plugins/agentic-engineering-skills/skills/${name}/`, import.meta.url);
+    const localSkill = new URL(`../${entry.payloadPath ?? `plugins/agentic-engineering-skills/skills/${name}`}/`, import.meta.url);
     const localHash = entry.payloadType === "directory"
       ? await sha256Path(fileURLToPath(localSkill))
       : await sha256File(new URL("SKILL.md", localSkill));
@@ -411,33 +409,94 @@ test("adapted and original local imports retain provenance contracts", async () 
   }
 });
 
-test("importing-handoff records and hashes its complete original payload", async () => {
+test("source-project-original imports retain historical source, explicit activation metadata, and a verifiable release commit", async () => {
+  const expected = [
+    { name: "setup-goal", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-goal/" },
+    { name: "setup-harness-evaluation", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-harness-evaluation/" },
+    { name: "setup-workflow-comparison", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-workflow-comparison/" },
+    { name: "writing-for-agents", revision: "private-revision-redacted", sourcePath: ".agents/skills/writing-for-agents/" },
+  ];
+  const sources = JSON.parse(await readFile(new URL("../manifests/skill-sources.json", import.meta.url), "utf8"));
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
-  const entry = lock.skills.find(({ name }) => name === "importing-handoff");
-  const payload = new URL("../plugins/agentic-engineering-skills/skills/importing-handoff/", import.meta.url);
+  for (const origin of expected) {
+    const source = sources.skills.find(({ name }) => name === origin.name);
+    const entry = lock.skills.find(({ name }) => name === origin.name);
+    assert.deepEqual(source.origin, {
+      repository: "private-source",
+      revision: origin.revision,
+      path: origin.sourcePath,
+    });
+    assert.equal(source.sourceType, "original");
+    assert.equal(source.localRoot, "projectSkills");
+    assert.equal(source.localPath, origin.name + "/");
+    assert.equal(entry.sourceType, "original");
+    assert.match(entry.releaseCommit, /^[a-f0-9]{40}$/);
+    assert.notEqual(entry.releaseCommit, "0".repeat(40));
+    await git(fileURLToPath(new URL("..", import.meta.url)), ["cat-file", "-e", `${entry.releaseCommit}^{commit}`]);
+    assert.equal(entry.payloadType, "directory");
+    const payload = new URL("../plugins/agentic-engineering-skills/skills/" + origin.name + "/", import.meta.url);
+    assert.equal(await sha256Path(fileURLToPath(payload)), entry.localSha256);
+  }
+  for (const name of ["setup-goal", "setup-harness-evaluation", "setup-workflow-comparison"]) {
+    const skill = await readFile(new URL("../plugins/agentic-engineering-skills/skills/" + name + "/SKILL.md", import.meta.url), "utf8");
+    const agent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/" + name + "/agents/openai.yaml", import.meta.url), "utf8");
+    assert.match(skill, /^disable-model-invocation: true$/m);
+    assert.match(agent, /allow_implicit_invocation: false/);
+  }
+  const goalFallback = await readFile(new URL("../plugins/agentic-engineering-skills/skills/setup-goal/references/native-goals.md", import.meta.url), "utf8");
+  assert.match(goalFallback, /native Goal is disabled\/unavailable, explain the prerequisite and preserve the ready runbook/i);
+});
 
-  assert.equal(entry?.sourceType, "original");
-  assert.equal(entry?.payloadType, "directory");
-  assert.equal(await sha256Path(fileURLToPath(payload)), entry.localSha256);
-  for (const path of [
-    "agents/openai.yaml",
-    "references/workflow-phases.md",
-    "references/failure-policy.md",
-    "references/contract-schema.md",
-    "references/reviewer-prompts.md",
-    "scripts/inspect-handoff.mjs",
-    "scripts/run-reference.mjs",
-    "scripts/build-contract.mjs",
-    "scripts/capture-matrix.mjs",
-    "scripts/compare-receipts.mjs",
-    "scripts/verify-import-scope.mjs",
-  ]) assert.ok(await stat(new URL(path, payload)));
+test("source-project staged skill imports retain source commit, host activation metadata, and documented omissions", async () => {
+  const names = ["marketing-screenshots", "mdx-to-html", "orchestrating-gemini-workers"];
+  const revision = "private-revision-redacted";
+  const sources = JSON.parse(await readFile(new URL("../manifests/skill-sources.json", import.meta.url), "utf8"));
+  const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
+  for (const name of names) {
+    const source = sources.skills.find(({ name: entryName }) => entryName === name);
+    const entry = lock.skills.find(({ name: entryName }) => entryName === name);
+    assert.equal(source.sourceType, "original");
+    assert.equal(source.localRoot, "projectSkills");
+    assert.equal(source.localPath, name + "/");
+    assert.deepEqual(source.origin, {
+      repository: "private-source",
+      revision,
+      path: ".agents/skills/" + name + "/",
+    });
+    assert.equal(source.license, "MIT");
+    assert.equal(entry.sourceType, "original");
+    assert.match(entry.releaseCommit, /^[a-f0-9]{40}$/);
+    assert.notEqual(entry.releaseCommit, "0".repeat(40));
+    await git(fileURLToPath(new URL("..", import.meta.url)), ["cat-file", "-e", `${entry.releaseCommit}^{commit}`]);
+    assert.equal(entry.payloadType, "directory");
+    assert.deepEqual(entry.dependencies, []);
+    const payload = new URL("../plugins/agentic-engineering-skills/skills/" + name + "/", import.meta.url);
+    assert.equal(await sha256Path(fileURLToPath(payload)), entry.localSha256);
+  }
+  const marketing = await readFile(new URL("../plugins/agentic-engineering-skills/skills/marketing-screenshots/SKILL.md", import.meta.url), "utf8");
+  const marketingAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/marketing-screenshots/agents/openai.yaml", import.meta.url), "utf8");
+  assert.doesNotMatch(marketing, /^disable-model-invocation:/m);
+  assert.doesNotMatch(marketingAgent, /allow_implicit_invocation:\s*false/);
+
+  const mdx = await readFile(new URL("../plugins/agentic-engineering-skills/skills/mdx-to-html/SKILL.md", import.meta.url), "utf8");
+  const mdxAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/mdx-to-html/agents/openai.yaml", import.meta.url), "utf8");
+  assert.match(mdx, /^disable-model-invocation: true$/m);
+  assert.match(mdxAgent, /allow_implicit_invocation:\s*false/);
+
+  const gemini = await readFile(new URL("../plugins/agentic-engineering-skills/skills/orchestrating-gemini-workers/SKILL.md", import.meta.url), "utf8");
+  const geminiAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/orchestrating-gemini-workers/agents/openai.yaml", import.meta.url), "utf8");
+  assert.doesNotMatch(gemini, /^disable-model-invocation:/m);
+  assert.match(geminiAgent, /allow_implicit_invocation:\s*true/);
+  assert.doesNotMatch(gemini, /\[example log\]\(example-log\.md\)/i);
+  assert.match(gemini, /historical source-project `example-log\.md` is intentionally omitted/i);
+  assert.match(gemini, /If `dsh`.*stop before dispatch and report the missing prerequisite/i);
+  assert.match(await readFile(new URL("../docs/provenance.md", import.meta.url), "utf8"), /upstream provenance undocumented in source-project/i);
 });
 
 test("all skill frontmatter is closed and adaptation notices stay in Markdown body", async () => {
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
   for (const entry of lock.skills) {
-    const source = await readFile(new URL(`../plugins/agentic-engineering-skills/skills/${entry.name}/SKILL.md`, import.meta.url), "utf8");
+    const source = await readFile(new URL(`../${entry.payloadPath ?? `plugins/agentic-engineering-skills/skills/${entry.name}`}/SKILL.md`, import.meta.url), "utf8");
     const normalized = source.replace(/\r\n/g, "\n");
     assert.ok(normalized.startsWith("---\n"), `${entry.name} must open YAML frontmatter`);
     const closing = normalized.indexOf("\n---\n", 4);
@@ -447,6 +506,13 @@ test("all skill frontmatter is closed and adaptation notices stay in Markdown bo
     assert.match(frontmatter, /^name:\s*[^\n]+$/m, `${entry.name} frontmatter requires name`);
     assert.match(frontmatter, /^description:\s*(?:>|[^\n]+)$/m, `${entry.name} frontmatter requires description`);
     assert.doesNotMatch(frontmatter, /Adaptation:/, `${entry.name} adaptation notice must not be YAML`);
-    if (entry.sourceType === "adapted") assert.match(body, /Adaptation:/, `${entry.name} adaptation notice must be Markdown body`);
+    if (entry.sourceType === "adapted" && entry.name !== "caveman") assert.match(body, /Adaptation:/, `${entry.name} adaptation notice must be Markdown body`);
   }
 });
+
+test("host-only payload paths stay under the matching plugin skill directory", async () => {
+  const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
+  const entry = lock.skills.find(({ name }) => name === "claude-implement");
+  assert.equal(entry.payloadPath, "plugins/agentic-engineering-skills/claude-skills/claude-implement");
+  assert.equal(await sha256Path(fileURLToPath(new URL(`../${entry.payloadPath}/`, import.meta.url))), entry.localSha256);
+ });

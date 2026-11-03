@@ -1,0 +1,28 @@
+# Project configuration, loaded by `capture --all` or `capture --scene NAME`.
+# Functions may be used in `setup` for small real-UI interactions.
+export default {
+  baseUrl: 'http://127.0.0.1:5173',
+  outputDir: 'artifacts/marketing-screenshots',
+  capture: { locale: 'en-US', timezoneId: 'UTC', colorScheme: 'light' },
+  viewports: {
+    mobile: { width: 390, height: 844, dpr: 3 },
+    tablet: { width: 768, height: 1024, dpr: 2 },
+    desktop: { width: 1440, height: 1024, dpr: 2 },
+  },
+  devices: { phone: { padding: 60, shadow: true } },
+  canvases: {
+    'landing-hero': { width: 1600, height: 1200, background: '#f7f8fc', align: 'right' },
+    'pitch-16x9': { width: 1920, height: 1080, background: '#111827', align: 'center' },
+    square: { width: 1600, height: 1600, background: '#f7f8fc', align: 'center' },
+  },
+  scenes: [
+    {
+      name: 'landing',
+      route: '/',
+      viewport: 'mobile',
+      readySelector: '[data-screenshot-ready]', // Prefer a semantic app-owned ready marker.
+      outputs: ['phone', 'landing-hero', 'pitch-16x9'],
+    },
+    // { name: 'onboarding-01', route: '/onboarding', viewport: 'mobile', setup: async ({ page }) => page.getByRole('button', { name: 'Start' }).click() },
+  ],
+};

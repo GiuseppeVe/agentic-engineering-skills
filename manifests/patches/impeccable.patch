@@ -1,7 +1,2 @@
-diff --git a/skill/ b/plugins/agentic-engineering-skills/skills/impeccable/
---- a/skill/
-+++ b/plugins/agentic-engineering-skills/skills/impeccable/
-@@
-+Adaptation record: the upstream Impeccable skill is packaged in the flat plugin layout.
-+The package keeps the current skill instructions, command references, scripts, and data;
-+host-specific source locations are normalized for Codex and Claude Code discovery.
+AGENTIC-PATCH-CHUNKS/1
+{"version":1,"byteLength":3472301,"sha256":"c990f30f4b9d900486f706addbe4a9525ca4b11139cbded407126f962f01509d","chunks":[{"path":"impeccable.patch.parts/c990f30f4b9d900486f706addbe4a9525ca4b11139cbded407126f962f01509d/000001.txt","byteLength":921600,"sha256":"ccef7d21a3ea234ed2182a5b58b08da862b7f596cc66137caf82206caa3a5dce"},{"path":"impeccable.patch.parts/c990f30f4b9d900486f706addbe4a9525ca4b11139cbded407126f962f01509d/000002.txt","byteLength":921600,"sha256":"d84fbd2da653810c422b9a59fc4bcaf9c5122cd7a3ed40da329decb2fd6c15a5"},{"path":"impeccable.patch.parts/c990f30f4b9d900486f706addbe4a9525ca4b11139cbded407126f962f01509d/000003.txt","byteLength":921600,"sha256":"fea0ed6fe27cc0d2014e1b30aba6e5b9096feefc825995d9872fc2edcc114f1a"},{"path":"impeccable.patch.parts/c990f30f4b9d900486f706addbe4a9525ca4b11139cbded407126f962f01509d/000004.txt","byteLength":707501,"sha256":"84708469157f46b08a9b1e40a83d1111c6d13ed5c60a40a0945c4ebe10ec70e2"}]}

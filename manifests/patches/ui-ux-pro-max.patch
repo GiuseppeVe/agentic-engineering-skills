@@ -1,7 +1,2 @@
-diff --git a/.claude/skills/ui-ux-pro-max/ b/plugins/agentic-engineering-skills/skills/ui-ux-pro-max/
---- a/.claude/skills/ui-ux-pro-max/
-+++ b/plugins/agentic-engineering-skills/skills/ui-ux-pro-max/
-@@
-+Adaptation record: the upstream UI UX Pro Max skill is packaged in the flat plugin layout.
-+The package keeps the current skill instructions, searchable design data, and helper scripts;
-+host-specific source locations are normalized for Codex and Claude Code discovery.
+AGENTIC-PATCH-CHUNKS/1
+{"version":1,"byteLength":5255736,"sha256":"6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff","chunks":[{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000001.txt","byteLength":921600,"sha256":"35ea32ff2311533818182195da90ed09fed60233b66f9a045dde2e7a4798cb08"},{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000002.txt","byteLength":921600,"sha256":"a0f6bd9eb122402b4315dea3863104c48160e2e608984dff3caec9f3c710f357"},{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000003.txt","byteLength":921600,"sha256":"b7990c0b29d823a1c475ee75a0d2c820f5d1ec21199bd2fff5bb5969264b2ca4"},{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000004.txt","byteLength":921600,"sha256":"c6214e970f958db5fe660efdec60744a6ca774bb72b5406289d5d7d9a0dcadc5"},{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000005.txt","byteLength":921600,"sha256":"3cd8929c92b1184c7110151c0807524e1e3e30b9d8e6a9f130c1bee018672e70"},{"path":"ui-ux-pro-max.patch.parts/6a2e2b42be2c2135fd6a99bf7a0a54adfd19013e761a6a6845a895797d05e8ff/000006.txt","byteLength":647736,"sha256":"8686a9ddc0cb1da3967a4d81f6b061ac8c3f0f3794fd11b080cc69b0be31cffc"}]}

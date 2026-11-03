@@ -1,0 +1,12 @@
+{
+  "steps": [
+    {
+      "skill": "cleaning-repo-with-knip",
+      "role": "ottimizza, non solo analizza: applica le correzioni sicure sulle modifiche della PR dopo aver verificato riferimenti, compatibilità e registro delle conservazioni; i finding fuori perimetro restano follow-up"
+    },
+    {
+      "skill": "simplify",
+      "role": "dopo Knip, sulle sole modifiche della PR: solo semplificazioni che preservano il comportamento"
+    }
+  ]
+}
