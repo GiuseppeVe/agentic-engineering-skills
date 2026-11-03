@@ -569,7 +569,7 @@ export function describeNoProviderError({
       lines.push('  • Claude CLI: installed; CLAUDE_CODE_OAUTH_TOKEN is set but the CLI still rejected it. The token may be expired or invalid.');
     } else {
       lines.push('  • Claude CLI: installed but not selected. If Apply still fails, the subprocess may be unable to read your `claude /login` credentials (on macOS, the Keychain can be unreachable from a no-TTY child).');
-      lines.push('      Headless fix: run `claude setup-token` once, then `export CLAUDE_CODE_OAUTH_TOKEN=<the printed sk-ant-oat01-… token>` before starting `live-server.mjs`.');
+      lines.push('      Headless fix: run `claude setup-token` once, then `export CLAUDE_CODE_OAUTH_TOKEN=<the printed <your token>… token>` before starting `live-server.mjs`.');
       lines.push('      Alternative: `export ANTHROPIC_API_KEY=<key>` if you have console.anthropic.com credits.');
     }
   } else {

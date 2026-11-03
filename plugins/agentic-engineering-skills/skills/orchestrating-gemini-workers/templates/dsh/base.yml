@@ -1,0 +1,36 @@
+# Overlay headless per i worker: applicato con --patch a ogni invocazione.
+# Non tocca il profilo dell'utente.
+
+# La UI web di dsh-agy non ha un webServer in headless: resterebbe "pending"
+# e il boot fallirebbe l'assert di attivazione. L'adapter LLM sta nella riga
+# `dsh-agy`, che resta attiva.
+- id: dsh-agy-web
+  disabled: true
+
+# Il worker gira non interattivo: nessuno puo' rispondere a un prompt di
+# approvazione. La scrittura resta confinata alla workspace root (process.cwd()).
+- id: sandbox-policy
+  config:
+    mode: workspace-write
+    workspaceRoot: !!js process.cwd()
+
+- id: approval
+  config:
+    policy: never
+
+# La coppia (sandbox workspace-write, approval never) non corrisponde a nessun
+# preset di serie, e il plugin dei preset rifiuta di partire senza corrispondenza
+# esatta. Registra il preset dedicato e impostalo come default.
+- id: permission
+  config:
+    defaultPreset: workspace-auto
+    presets:
+      read-only:
+        sandbox: read-only
+        approval: ask
+      workspace-write:
+        sandbox: workspace-write
+        approval: ask
+      workspace-auto:
+        sandbox: workspace-write
+        approval: never

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Goal"
+  short_description: "Co-design a runbook, then launch the native Goal"
+  default_prompt: "Use $setup-goal with my desired outcome in this fresh session. Discuss and agree outcome, constraints, then progress metrics; write runbook.md, ask final confirmation, and launch the native Goal while keeping the runbook updated."
+policy:
+  allow_implicit_invocation: false

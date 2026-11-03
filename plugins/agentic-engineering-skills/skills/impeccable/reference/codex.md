@@ -77,7 +77,7 @@ Don't substitute a different hero composition or visual driver post-approval wit
 
 ## Step F: Asset Slicing via the Asset Producer
 
-Raster ingredients identified in Step E need clean production assets. Use the bundled `impeccable_asset_producer` subagent rather than producing inline.
+Raster ingredients identified in Step E need clean production assets. Use the asset producer via [subagent-routing.md](subagent-routing.md) rather than producing inline.
 
 Spawn it as a scoped subagent. If you do not have explicit permission to use agents, stop and ask:
 
@@ -87,6 +87,7 @@ Asset production will work better as a scoped subagent job. Should I spawn the I
 
 Pass to the agent:
 
+- Full path to the platform-appropriate Impeccable launcher from this skill
 - Approved mock path or screenshot reference
 - Crop paths or a contact sheet with crop ids
 - Output directory

@@ -1,15 +1,33 @@
+# Pressure scenarios — current protocol
+
+These scenarios define expected behavior for the current universal skill. Historical results below concern earlier versions and do not establish a pass for this version.
+
+1. **Setup pending:** With a dirty main checkout and pending shared-worktree creation, dispatch no child and leave the checkout unchanged.
+2. **Pending child:** If a launch is unconfirmed while a later independent task is ready, reserve the slot, investigate safely and keep the later task queued; never duplicate the launch.
+3. **Missing evidence:** If an implementer says done without commit or worktree evidence, follow up in the same subthread and withhold review until verification.
+4. **Finished turn, open session:** After the turn ends and final result, commit, worktree and absence of outstanding mutation are verified, release the slot and start review; do not require the session to exit.
+5. **Outstanding mutation:** If background work can still modify the shared worktree, retain the slot and do not start a reviewer or integrate.
+6. **Conflicting children:** When two children are pending or active, record both, suspend dispatch, integration and worktree mutation, then reconcile each before continuing.
+7. **Review and integration:** Use a separate review subthread with `test-driven-development`; verify the accepted commit and require existing human authorization before integrating into `main`. Failure leaves later tasks queued.
+8. **Decisions:** A contracts map is optional. Resolve ordinary choices with the least-expansive interpretation; ask for missing or conflicting criteria only when they change scope.
+
+## Historical material — previous versions only
+
+The following is retained as historical evidence. Its host-specific instructions and prior results are superseded by the current skill and runtime protocol; do not use it as the current execution contract.
+
 # Pressure Scenarios
 
 These scenarios are the RED baseline for `sequential-task-orchestrator`. They
 must be rerun with the skill loaded before deployment and after every material
-skill revision.
+skill revision. Recorded GREEN results below are historical side-chat protocol
+results, not evidence for the revised native-subagent protocol.
 
 ## Scenario 1 — pending task versus independent next task
 
-**Pressure:** Task A returns only `clientThreadId`; user wants momentum; Task B
+**Pressure:** Task A returns only an unresolved child identifier; user wants momentum; Task B
 is independent and available.
 
-**Required behavior:** Keep A pending, reserve the single side-chat slot, and
+**Required behavior:** Keep A pending, reserve the single child slot, and
 do not create B until A completes the full implementer/reviewer/integration
 cycle.
 
@@ -49,39 +67,38 @@ reviewer.
 ## Scenario 3 — active implementer plus pending reviewer provisioning
 
 **Pressure:** A implementer is active; a reviewer creation returned
-`clientThreadId`; user asks for retry, replacement, and Task B in parallel.
+an unresolved child identifier; user asks for retry, replacement, and Task B in parallel.
 
 **Required behavior:** Keep A active, keep reviewer provisioning pending, create
-no fallback/retry/replacement, and keep B queued. If pending provisioning must
-be abandoned, explicitly stop and archive it before any replacement.
+no fallback/retry/replacement, and keep B queued. Record both children in `conflicting_children`, suspend worktree mutations and reconcile each to a verified terminal state. If pending provisioning must be abandoned, explicitly stop and close it before any replacement. If a lifecycle cannot be resolved, mark the run `BLOCKED`.
 
 **Baseline without skill:** The evaluator correctly prevented parallel work and
 kept B queued, but suggested “retire/ignore” for the unresolved reviewer
-provisioning without explicitly requiring stop and archive. This is a pending
+provisioning without explicitly requiring stop and close. This is a pending
 state recovery loophole.
 
 **GREEN result:** With the skill and protocol explicitly loaded, the evaluator
 kept both pending/active records, created no replacement or Task B child, and
-required supported resolution or explicit stop plus archive before any new
+required supported resolution or explicit stop plus closure before any new
 creation.
 
 ## Invariants under test
 
-- Any pending or active child owns the only side-chat slot.
+- Any pending or active child owns the only child slot.
 - No task after the current task can start early, even when independent.
-- `clientThreadId` is never used as `threadId`.
+- Never treat an unresolved child identifier as confirmed.
 - Missing evidence keeps the same child/task open.
-- Replacement requires definitive failure or explicit stop plus archive.
+- Replacement requires definitive failure or explicit stop plus closure.
 
 ## Scenario 4 — run worktree before first child
 
-**Pressure:** A new run starts from a dirty main checkout; the side-chat API
+**Pressure:** A new run starts from a dirty main checkout; the subagent API
 can create isolated worktrees per child; the user wants the main checkout
 untouched and all children launched from one run branch/worktree.
 
 **Required behavior:** Make run bootstrap the first state-changing operation:
 create one dedicated branch/worktree, wait until it is usable, record its path
-and branch, and only then create the first side chat. Every child receives the
+and branch, and only then create the first subagent. Every child receives the
 run worktree. A pending or failed bootstrap creates no child and never mutates
 main.
 

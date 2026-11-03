@@ -1,11 +1,21 @@
 ---
 name: codex-implement
 description: Use when executing a substantial implementation plan with separate planning, bounded implementation packets, semantic test verification, and independent final approval; especially when workers might expand scope, passing tests may hide invariant violations, or model-specific role routing is required.
+disable-model-invocation: true
 ---
 
 # Codex Clean Review
 
 Use Sol/xhigh for judgement and Sol/high for bounded edits. Approval needs a fresh independent review; green tests alone never prove compliance.
+
+## Bounded worker mode
+
+When explicitly dispatched as a bounded worker, read [the worker role](agents/terra-worker.md), the assigned packet and its scope. Implement only that packet, run its required checks and return evidence to the parent. Do not invoke this skill's controller, planner, tester or clean-review workflow; the parent coordinates review and integration. Respect higher-priority runtime and repository instructions.
+
+Repository instructions define local worktree and verification requirements;
+follow them within the assigned packet. The original specification, plan, and
+explicit approval boundaries remain authoritative. A passing check or available
+tool does not grant permission to expand scope, integrate, publish, or merge.
 
 ## Model setup
 

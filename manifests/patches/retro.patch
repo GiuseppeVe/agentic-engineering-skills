@@ -1,0 +1,10 @@
+diff --git a/retro/SKILL.md b/retro/SKILL.md
+index 12149ac..7066d6b 100644
+--- a/retro/SKILL.md
++++ b/retro/SKILL.md
+@@ -3 +3 @@
+-description: "Conduct a retrospective on a coding session."
++description: Conduct a retrospective on a coding session.
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on Matt Pocock's `retro`; adapted with explicit-invocation host metadata.
++

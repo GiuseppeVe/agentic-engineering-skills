@@ -1,0 +1,5 @@
+interface:
+  display_name: MDX to HTML
+  short_description: Convert MDX to standalone HTML
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,10 @@
+# Copia un file per ciascun modello che vuoi poter invocare, es.
+# model-37.yml, model-flash.yml ecc. Il nome deve combaciare col parametro
+# -Model passato a run-worker.ps1 ("model-<Model>.yml").
+#
+# Contenuto tipico: overlay che seleziona il modello/adapter dsh-agy da usare.
+# ADATTA ai campi reali del tuo dsh-agy.
+
+- id: dsh-agy
+  config:
+    model: <nome-modello>

@@ -1,123 +1,82 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when a spec or requirements need a multi-step implementation plan before code changes, including standalone MDX plans.
 ---
-
-> **Adaptation:** Based on `obra/superpowers`; adjusted for portable Codex and Claude Code skill-pack use.
 
 # Writing Plans
 
-## Overview
+> **Adaptation:** Based on `obra/superpowers`; updated with the Alfe writing-plans workflow for portable Codex and Claude Code skill-pack use.
 
-Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, code, tests, commands, docs, risks, and acceptance evidence. DRY, YAGNI, TDD, frequent commits.
 
-Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
+Announce: "I'm using the writing-plans skill to create the implementation plan."
 
-**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
+## Artifact and scope
 
-**Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
+- Respect system and host constraints. Within those constraints, follow explicit user instructions over repository defaults. Otherwise use the repository's canonical plan location (for example, `docs/work/plans/` in Alfe). Use `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.mdx` only when neither provides a location.
+- For multiple review artifacts, use `docs/superpowers/plans/YYYY-MM-DD-<feature-name>/plan.mdx` as the fallback, with optional `canvas.mdx` for visual review and `prototype.mdx` for interaction notes.
+- Use local MDX first. A hosted Plan MCP surface is required only if the user requests it or already uses it.
+- Plans stand alone without chat, previous drafts, or spec discussions. Adapt existing or pasted plans into clean proposals, not revision memos.
+- Planning/review is read-only for source code. When execution is already authorized, continue within that authority; otherwise obtain the required authorization before changes. Follow host and project worktree rules; use an available worktree tool when its behavior meets them.
+- For independent subsystems not already split during brainstorming, suggest separate plans. Each must produce independently working, testable software.
 
-**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
-- (User preferences for plan location override this default)
+## Research and decisions
 
-## Scope Check
+Before naming tasks, read actual files, schemas, actions, helpers, tests, docs, and project conventions. For each area, name reused files, symbols, components, and contracts before additions.
 
-If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+If an approved `to-spec` artifact exists, reference it as source of truth instead of restating or silently changing requirements. Keep planning/executor prompts outcome-focused: goal, relevant context, hard constraints, approval boundaries, validation, deliverable. State each rule once; omit boilerplate that changes no decision.
 
-## Requirements Inventory (MANDATORY)
+Resolve hard-to-reverse choices before task breakdown: data models, public identifiers, wire formats, ownership/auth boundaries, migrations, worker topology, rollout. For unresolved architecture, UX, data, rollout, or scope decisions, choose a recommended default with rationale or record a question. Material gaps in requirements, authority, or acceptance evidence belong in `## Open Questions` at the bottom.
 
-**Every plan MUST carry an explicit, enumerated Requirements Inventory immediately after the header, before the File Structure section.** This is the single source of truth for *what the plan obligates*. The downstream executor (`codex-implement in Codex or claude-implement in Claude Code` Phase 1) copies this list verbatim to drive its fidelity-coverage gate — so a complete inventory turns that extraction into a 1:1 parse instead of a lossy re-inference. An incomplete inventory is a **plan failure**, exactly like a placeholder.
+Plain Markdown is valid MDX. Use file maps, annotated code, decision tables, or diagrams only when useful; skip empty optional sections. UI/product plans may use `canvas.mdx` or a top "Visual Review" section with wireframes/states. Backend/data/worker plans use inline diagrams or file maps when relationships need explanation. A useful decision table records decision, choice, rationale, and reversibility.
 
-**The Prose-Is-Not-A-Requirement rule:** every obligation the plan imposes MUST appear as a `REQ-NNN` line in this inventory. Prose, task bodies, and code comments may *explain* an obligation, but they may never *introduce* one that is absent from the inventory. If you find yourself writing "the worker must…" / "ensure that…" / "X has to…" anywhere outside the inventory, stop and add the matching `REQ` first.
+## Plan structure
 
-### Schema
-
-Each requirement is one line:
-
-```
-- **REQ-NNN** [type] — <atomic obligation>. _Acceptance:_ <objective oracle>. _Satisfied by:_ Task N
-```
-
-- **`REQ-NNN`** — stable, never reused, never renumbered once assigned.
-- **`type`** — one of:
-  - `behavior` — runtime behavior the system must exhibit.
-  - `test` — a test the plan promises to add or keep.
-  - `contract` — a cross-task wiring obligation (see Cross-Task Contracts below).
-  - `constraint` — a cross-cutting rule that applies in more than one place ("all timestamps UTC ISO-8601", "all urls must be https"). These are the ones prose hides and inference drops.
-- **One requirement = one atomic checkable claim.** Split compound obligations ("validate X and enqueue Y") into two `REQ`s.
-- **`Acceptance:` is mandatory and must be objective** — a test name, a command + expected output, or a grep-able artifact. "Works correctly" / "is handled" is not an acceptance oracle; it is a placeholder. If you cannot state an objective oracle, the requirement is too vague to implement — sharpen it or drop it.
-- **`Satisfied by:`** names the Task(s) that implement it. Every `REQ` maps to ≥1 task; every task maps back to ≥1 `REQ` (see Task Structure `Satisfies:` line).
-
-### Cross-Task Contracts (MANDATORY subsection)
-
-The most error-prone obligations have **no single owning task**: "A is wired/consumed/imported by B", a config key one task sets and another reads, a migration a later task depends on, a value stub one task leaves for another to replace. Per-task review never catches these because no single task owns them — they fall through the gap.
-
-List every such contract as a `REQ` of `type: contract`. Each one names *both* endpoints and the wiring that must hold:
-
-```
-- **REQ-007** [contract] — `SubscriptionStore.getSecret` is passed into `DeliveryWorker` as its `secretResolver` (same secret source on both ends). _Acceptance:_ integration test registers a sub, ingests a matching event, asserts the delivered `X-Signature` equals an HMAC independently computed with the stored secret. _Satisfied by:_ Task 10 (wiring) + Task 11 (test).
-```
-
-If there are no cross-task contracts, write `_None._` — explicit emptiness proves you checked.
-
-### Worked example
-
-```markdown
-## Requirements Inventory
-
-### Behavior & constraints
-- **REQ-001** [behavior] — `ingest(event)` rejects an event with empty `type` with `ValidationError`. _Acceptance:_ `eventIngestor.test.ts` "rejects empty type" passes. _Satisfied by:_ Task 6.
-- **REQ-002** [behavior] — delivery retries any non-2xx or network error up to 5 attempts, exponential backoff from 1s. _Acceptance:_ retry test asserts 5 calls, sleeps `[1000,2000,4000,8000]`. _Satisfied by:_ Task 8.
-- **REQ-003** [constraint] — every timestamp recorded anywhere (log lines AND dead-letter `failedAt`) is a UTC ISO-8601 string. _Acceptance:_ grep for timestamp assignments shows all flow through `clock.now()`; clock test asserts `/Z$/`. _Satisfied by:_ Task 2, applied in Task 7 & Task 8.
-
-### Tests
-- **REQ-004** [test] — unit test proves invalid events are rejected. _Acceptance:_ test file exists and passes. _Satisfied by:_ Task 6.
-
-### Cross-task contracts
-- **REQ-005** [contract] — `store.getSecret` wired as the worker's `secretResolver`. _Acceptance:_ integration test asserts delivered signature matches independent HMAC with stored secret. _Satisfied by:_ Task 10 + Task 11.
-```
-
-## File Structure
-
-Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
-
-- Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
-- You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
-- Files that change together should live together. Split by responsibility, not by technical layer.
-- In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
-
-This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
-
-## Bite-Sized Task Granularity
-
-**Each step is one action (2-5 minutes):**
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
-
-## Plan Document Header
-
-**Every plan MUST start with this header:**
+Every plan starts with this header, immediately followed by `## Requirements Inventory`, then `## File Structure` before tasks:
 
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED EXECUTION SKILL: Choose `codex-implement` for Codex, `sequential-task-orchestrator` for strictly ordered multi-task execution, or `claude-implement` for Claude Code. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** Use the selected available mode: `codex-implement` in Codex, `claude-implement` in Claude Code, `sequential-task-orchestrator` for strict ordered execution, or inline execution with explicit checkpoints. Default to the host-specific implementation skill when available, otherwise inline. Use an explicitly available model if selected. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** [One sentence describing what this builds]
-
-**Architecture:** [2-3 sentences about approach]
-
+**Goal:** [One sentence]
+**Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies/libraries]
 
 ---
 ```
 
-The Requirements Inventory section comes immediately after this header.
+### Requirements Inventory (mandatory)
 
-## Task Structure
+Inventory is the single source of obligations and executor fidelity coverage (`codex-implement`, `claude-implement`, or `sequential-task-orchestrator` when selected; inline execution uses the same checklist). Every obligation from the spec, prose, task bodies, or code comments must have a `REQ-NNN` entry. Prose may explain requirements, not introduce unlisted ones. An incomplete inventory is a plan failure.
+
+One line per atomic, checkable obligation:
+
+```markdown
+- **REQ-NNN** [type] — <obligation>. _Acceptance:_ <objective oracle>. _Satisfied by:_ Task N
+```
+
+- IDs stay stable: never reuse or renumber assigned IDs.
+- Types: `behavior` (runtime behavior), `test` (test added/kept), `contract` (cross-task wiring), `constraint` (cross-cutting rule, such as UTC timestamps).
+- Split compound claims, such as validation and enqueueing, into separate requirements.
+- `Acceptance:` is mandatory: test name, command + expected output, or grep-able artifact. "Works" / "is handled" is a placeholder. Sharpen vague requirements or drop them.
+- Every requirement names at least one task in `Satisfied by:`. Every task has a nonempty `**Satisfies:**` listing matching real IDs. Check both directions.
+
+#### Cross-Task Contracts (mandatory subsection)
+
+List every dependency spanning tasks as `[contract]`: imports/consumers, config producers/readers, migrations/dependents, stubs/later replacements. Name both endpoints and required wiring. If none, write `_None._` after checking.
+
+```markdown
+- **REQ-007** [contract] — `SubscriptionStore.getSecret` is passed into `DeliveryWorker.secretResolver`. _Acceptance:_ integration test registers a subscription, ingests a matching event, and verifies delivered `X-Signature` against HMAC independently computed with the stored secret. _Satisfied by:_ Task 10 (wiring), Task 11 (test).
+```
+
+### File Structure
+
+Map every created/modified file and its responsibility before tasks. Use clear interfaces and focused files; co-locate files that change together, split by responsibility rather than technical layer. Follow existing conventions. Do not unilaterally restructure large-file codebases; a split of an unwieldy file being changed may be planned with rationale. Each task produces coherent, self-contained changes.
+
+### Task structure
+
+Each step is one 2-5 minute action. Use this shape; replace sample paths/code with complete task-specific content:
 
 ````markdown
 ### Task N: [Component Name]
@@ -162,62 +121,31 @@ git commit -m "feat: add specific feature"
 ```
 ````
 
-The `**Satisfies:**` line is mandatory on every task and lists the `REQ` ids that task implements. A task that satisfies no `REQ` is either dead work or a sign of a missing inventory entry.
+## Completeness and self-review
 
-## No Placeholders
+Exact paths, complete code for every code-changing step, exact commands and expected output are required. Repeat needed code rather than "Similar to Task N"; engineers may read tasks out of order. All referenced types/functions/methods must be defined in a task or identified existing code. Placeholders (`TBD`, `TODO`, "implement later", "fill in details"), vague validation/error-handling/edge-case directions, and "write tests for the above" without test code fail the plan.
 
-Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
-- "TBD", "TODO", "implement later", "fill in details"
-- "Add appropriate error handling" / "add validation" / "handle edge cases"
-- "Write tests for the above" (without actual test code)
-- "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
-- Steps that describe what to do without showing how (code blocks required for code steps)
-- References to types, functions, or methods not defined in any task
-- A `REQ` whose `Acceptance:` is non-objective ("works", "is handled") — an acceptance placeholder is still a placeholder
-- An obligation stated only in prose with no matching `REQ`
+Review yourself, not by subagent dispatch; use the spec with fresh eyes:
 
-## Remember
-- Exact file paths always
-- Complete code in every step — if a step changes code, show the code
-- Exact commands with expected output
-- DRY, YAGNI, TDD, frequent commits
+1. Map every spec requirement to a `REQ`; add gaps.
+2. Scan architecture, context, tasks, comments for MUST/SHALL/REQUIRED/"has to"/"ensure that"/"always"/"never". Capture each obligation, especially cross-cutting constraints, in the inventory.
+3. Check every task's external assumptions for a contract naming both endpoints; verify `_None._` claims.
+4. Verify bidirectional `Satisfied by:` / `Satisfies:` links, with no orphan requirements or tasks.
+5. Replace non-objective acceptance oracles.
+6. Fix placeholders and missing concrete code/commands.
+7. Check later types, signatures, and property names match earlier definitions.
 
-## Self-Review
+Fix issues inline; no separate re-review required. Preserve required content even under deadline pressure.
 
-After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
+## Execution handoff
 
-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a `REQ` that captures it? List any gaps and add the missing `REQ`s.
+After saving, report the `.mdx` path. If the user already authorized execution, choose an available mode consistent with their instructions and continue. Otherwise, present appropriate choices and wait for authorization:
 
-**2. Inventory completeness (no prose-only obligations):** Re-read every task body, the architecture, and any context section hunting for MUST / SHALL / REQUIRED / "has to" / "ensure that" / "always" / "never". Every one MUST already exist as a `REQ`. If it only lives in prose, add the `REQ` now. Pay special attention to `constraint`-type obligations ("all X must be Y") — these apply in multiple places and are the ones inference drops.
+1. **Host-specific implementation (default when available)** — `codex-implement` in Codex or `claude-implement` in Claude Code: bounded packets, semantic testing, clean-room review. Use `sequential-task-orchestrator` for strict ordered execution, per-task review, and resumable state.
+2. **Inline Execution** — small or tightly coupled work with explicit checkpoints; fallback when executors are unavailable.
 
-**3. Cross-task contracts captured:** Re-read each task asking "does this task assume something it does not itself produce — an import, a config key, a wired dependency, a value another task fills in?" Every such assumption MUST be a `REQ` of type `contract` naming both endpoints. If the Cross-Task Contracts subsection says `_None._`, double-check that is truly the case.
+**Model choice:** If explicitly available, offer a model suited to the work, such as Sol for architecture-sensitive or high-value reasoning and independent review. This is a model choice within the selected execution mode, not a separate execution skill.
 
-**4. Traceability (both directions):** Every `REQ` has a `Satisfied by:` naming ≥1 task, and that task's `**Satisfies:**` line lists that `REQ`. Every task's `**Satisfies:**` line is non-empty. No orphans either way.
+Routing: use `dispatching-parallel-agents` for small independent workstreams when available; for large distributed work, use available agent-coordination tools. The generic term “swarm” means multi-agent coordination. Keep architecture-sensitive work with controller or an explicitly available suitable model. Check runtime availability; do not invoke missing skills/models.
 
-**5. Acceptance oracles:** Every `REQ` has an objective `Acceptance:` — a test name, command + expected output, or grep-able artifact. Replace any non-objective oracle.
-
-**6. Placeholder scan:** Search your plan for the red flags in the "No Placeholders" section above. Fix them.
-
-**7. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
-
-If you find issues, fix them inline. No need to re-review — just fix and move on.
-
-## Execution Handoff
-
-After saving the plan, offer execution choice:
-
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
-
-**1. Host-specific implementation (recommended)** - Run `codex-implement` in Codex or `claude-implement` in Claude Code for a bounded plan. Run `sequential-task-orchestrator` when tasks require strict order, one active side-chat, per-task review, and resumable state.
-
-**2. Manual Execution** - Execute tasks in this session with explicit checkpoints and user approvals
-
-**Which approach?"**
-
-**If Host-specific implementation chosen:**
-- **REQUIRED SKILL:** Use `codex-implement` in Codex, `sequential-task-orchestrator` for strict ordered execution, or `claude-implement` in Claude Code.
-- Use bounded packets, semantic validation, and clean-room review. The sequential orchestrator invokes `test-gaps` and `test-driven-development` as its review pair.
-
-**If Manual Execution chosen:**
-- No required legacy superpowers skill
-- Batch execution with explicit checkpoints for review
+Choose models and reasoning effort only from options actually available in the host. Match them to the task and validate on representative work.

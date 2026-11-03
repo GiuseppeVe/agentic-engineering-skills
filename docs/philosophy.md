@@ -30,7 +30,7 @@ Implement on a dedicated branch or worktree and keep file ownership explicit. Se
 
 Tests validate observable behavior. Reviews compare the result with requirements, repository rules, and public-safety constraints. A frontend handoff import additionally needs a runnable immutable reference, complete observable contract, identical reference/candidate matrix, and explicit treatment of boundary deviations. Before release, scan public artifacts for secrets, private data, internal names, logs, and temporary residue. Verify provenance before copied or adapted third-party material enters the repository.
 
-For ordered plans, `sequential-task-orchestrator` supplies two review signals: `test-gaps` checks implementation fidelity against the plan, while `test-driven-development` checks implementation correctness. Findings are fixed through the TDD cycle before acceptance.
+For ordered plans, `sequential-task-orchestrator` uses `test-driven-development` to check plan fidelity, requirement coverage, missing cases, and implementation correctness. Findings are fixed through the TDD cycle before acceptance.
 
 ## Treat maintenance as research-led change
 
@@ -78,7 +78,6 @@ Each handoff should state the decision or requirement being advanced, the durabl
 
 - [Workflow guide](workflow.md) — phase-to-skill routing.
 - [Provenance guide](provenance.md) — import gate and license discipline.
-- [Agent profiles](agent-profiles.md) — public role contracts.
 - [Release checklist](release-checklist.md) — verification and publication controls.
 - [Customization guide](customization.md) — safe local tailoring.
 

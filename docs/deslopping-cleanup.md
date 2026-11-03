@@ -19,7 +19,7 @@ read-only observation) and need no external skill.
 | Routing target | Included in this bundle? | Usable route when absent |
 | --- | --- | --- |
 | `cleaning-repo-with-knip` | Yes, repository-original MIT runbook | Use available Knip output or native reference/dependency analysis; keep unsupported claims uncertain. |
-| Graphify | No skill or runtime | Targeted text/language searches and source confirmation. |
+| Graphify | Skill included; runtime external | Targeted text/language searches and source confirmation. |
 | Desloppify | No skill or runtime | Symbol/reference analysis and semantic review. |
 | Dependency Cruiser | No dedicated skill or runtime | Language tooling and manual import/consumer tracing. |
 | `dispatching-parallel-agents` | No | Authorized native explorer/reviewer delegation. |
@@ -28,9 +28,8 @@ read-only observation) and need no external skill.
 | `verification-before-completion` | No | Authorized repository checks with explicit revision, results and limits. |
 
 The included researcher/reviewer/controller role contracts can support native
-delegation; they do not automatically register agents. `swarm-orchestration` is
-an existing, separate bundle skill and is not an implicit substitute for
-`swarm-advanced`. Follow the current repository's routing and permissions.
+delegation; they do not automatically register agents. Follow the current
+repository's routing and permissions for multi-agent investigation.
 
 The Knip runbook mentions a parser helper, agent types and a dispatch subskill
 that are not shipped in its directory. The coordinator requires checking actual

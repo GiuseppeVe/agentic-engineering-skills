@@ -1,0 +1,16 @@
+diff --git a/handoff/SKILL.md b/handoff/SKILL.md
+index a224edc..20d8637 100644
+--- a/handoff/SKILL.md
++++ b/handoff/SKILL.md
+@@ -4,2 +3,0 @@
+-argument-hint: "What will the next session be used for?"
+-disable-model-invocation: true
+@@ -7,0 +6,2 @@
++> **Adaptation:** Based on Matt Pocock's `handoff`; adapted with portable host metadata for cross-host distribution.
++
+diff --git a/handoff/agents/openai.yaml b/handoff/agents/openai.yaml
+index 6e1d8da..166a019 100644
+--- a/handoff/agents/openai.yaml
++++ b/handoff/agents/openai.yaml
+@@ -3,0 +4 @@
++  default_prompt: "What will the next session be used for?"

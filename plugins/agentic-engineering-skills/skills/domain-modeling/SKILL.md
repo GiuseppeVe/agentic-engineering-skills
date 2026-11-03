@@ -1,74 +1,32 @@
 ---
 name: domain-modeling
-description: Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.
+description: Use when discussing codebase terminology, writing or editing its glossary or context docs, or recording or editing an ADR.
 ---
+
+> Adaptation: Derived from mattpocock/skills; domain-document conventions are discovered per repository, with bundled formats used only as fallbacks.
 
 # Domain Modeling
 
-Actively build and sharpen the project's domain model as you design. This is the *active* discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
+Actively challenge terms, probe relationships with edge cases, and record resolved language and decisions as they crystallise. Merely reading a glossary for vocabulary does not require this skill.
 
-## File structure
+## Locate the context
 
-Most repos have a single context:
-
-```
-/
-├── CONTEXT.md
-├── docs/
-│   └── adr/
-│       ├── 0001-event-sourced-orders.md
-│       └── 0002-postgres-for-write-model.md
-└── src/
-```
-
-If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
-
-```
-/
-├── CONTEXT-MAP.md
-├── docs/
-│   └── adr/                          ← system-wide decisions
-├── src/
-│   ├── ordering/
-│   │   ├── CONTEXT.md
-│   │   └── docs/adr/                 ← context-specific decisions
-│   └── billing/
-│       ├── CONTEXT.md
-│       └── docs/adr/
-```
-
-Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+- Read repository instructions and any configured domain-document guidance first.
+- Discover existing maps and terminology sources, such as `GLOSSARY-MAP.md`, `CONTEXT-MAP.md`, `GLOSSARY.md`, `CONTEXT.md`, or context-specific equivalents. Follow their links and infer the relevant context; ask if unclear.
+- Find the existing ADR register and its README or equivalent policy. Common locations include `docs/architecture/adr/`, `docs/adr/`, and context-local registers. Follow that register's status, numbering, and approval rules.
+- Preserve the repository's names, layout, and formats. Do not rename `CONTEXT.md` to `GLOSSARY.md`, or create a parallel glossary/map/ADR register.
+- If no domain-language convention exists, infer single- versus multi-context layout from the repo. For a single context, propose a root `GLOSSARY.md`; for a clear multi-context repo, propose a root `GLOSSARY-MAP.md` linking context glossaries. Use the bundled format as a fallback, and ask before writing if the convention remains ambiguous.
+- Create a terminology document only when the first term is resolved and the current task authorizes documentation edits. Record ADRs in the existing project register only when its local policy permits, the decision qualifies, and the task authorizes that write.
 
 ## During the session
 
-### Challenge against the glossary
+1. **Challenge conflicts immediately.** Compare user language with the glossary and stated behaviour with code; surface contradictions for resolution. For example: "The glossary defines cancellation as whole-Order, but you described partial cancellation. Which is right?"
+2. **Sharpen vague or overloaded terms.** Propose a precise canonical term; distinguish concepts such as Customer and User instead of calling both account.
+3. **Stress-test relationships.** Invent concrete edge cases that force precision about concept boundaries.
+4. **Record each resolved term immediately when the current task authorizes documentation edits**, using the repository's established glossary/context format. If none exists, use [GLOSSARY-FORMAT.md](GLOSSARY-FORMAT.md) as the fallback for the terminology document chosen above. Keep it to domain terms: no implementation details, specifications, scratch notes, or implementation decisions. In an exploratory discussion without write authorization, present a proposed entry instead; discussion alone does not authorize a repo edit.
+5. **Offer ADRs sparingly:** only when all three hold:
+   - **Hard to reverse:** changing the decision later has meaningful cost.
+   - **Surprising without context:** a future reader would ask why.
+   - **Real trade-off:** genuine alternatives were considered and one chosen for specific reasons.
 
-When the user uses a term that conflicts with the existing language in `CONTEXT.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"
-
-### Sharpen fuzzy language
-
-When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account' — do you mean the Customer or the User? Those are different things."
-
-### Discuss concrete scenarios
-
-When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
-
-### Cross-reference with code
-
-When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
-
-### Update CONTEXT.md inline
-
-When a term is resolved, update `CONTEXT.md` right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
-
-`CONTEXT.md` should be totally devoid of implementation details. Do not treat `CONTEXT.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
-
-### Offer ADRs sparingly
-
-Only offer to create an ADR when all three are true:
-
-1. **Hard to reverse** — the cost of changing your mind later is meaningful
-2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
-3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
-
-If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+If any ADR condition is missing, skip it. For qualifying decisions, use [ADR-FORMAT.md](ADR-FORMAT.md).

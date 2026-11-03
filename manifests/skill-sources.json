@@ -1,25 +1,36 @@
 {
   "skills": [
     {
+      "name": "archify",
+      "sourceType": "adapted",
+      "repository": "https://github.com/tt-a1i/archify",
+      "revision": "208acba8d412335185b2056fedf54b3405df43fb",
+      "upstreamPath": "archify/",
+      "localRoot": "projectSkills",
+      "localPath": "archify/",
+      "changeNotice": "Packaged Archify skill and its supporting assets for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/archify.patch"
+    },
+    {
+      "name": "ask-matt",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "upstreamPath": "skills/engineering/ask-matt/",
+      "localRoot": "projectSkills",
+      "localPath": "ask-matt/",
+      "changeNotice": "Adapted host metadata and routing for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/ask-matt.patch"
+    },
+    {
       "name": "brainstorming",
       "sourceType": "adapted",
       "repository": "https://github.com/obra/superpowers",
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
-      "upstreamPath": "skills/brainstorming/SKILL.md",
-      "localPath": "brainstorming/SKILL.md",
+      "upstreamPath": "skills/brainstorming/",
+      "localPath": "brainstorming/",
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/brainstorming.patch",
-      "localRoot": "projectSkills"
-    },
-    {
-      "name": "cavecrew",
-      "sourceType": "adapted",
-      "repository": "https://github.com/JuliusBrussee/caveman",
-      "revision": "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0",
-      "upstreamPath": "skills/cavecrew/SKILL.md",
-      "localPath": "cavecrew/SKILL.md",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/cavecrew.patch",
       "localRoot": "projectSkills"
     },
     {
@@ -27,39 +38,37 @@
       "sourceType": "adapted",
       "repository": "https://github.com/JuliusBrussee/caveman",
       "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
-      "upstreamPath": "skills/caveman/SKILL.md",
-      "localPath": "caveman/SKILL.md",
-      "changeNotice": "Merged current local Caveman rules with the latest pinned upstream clarity register for cross-host Agent Skills distribution.",
+      "upstreamPath": "skills/caveman/",
+      "localPath": "caveman/",
+      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied Alfe snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
       "patchPath": "manifests/patches/caveman.patch",
       "localRoot": "projectSkills"
     },
     {
       "name": "claude-implement",
       "sourceType": "original",
-      "localPath": "claude-implement/",
+      "localPath": "claude-skills/claude-implement/",
       "license": "MIT",
-      "localRoot": "userSkills"
+      "localRoot": "pluginSkills",
+      "payloadPath": "plugins/agentic-engineering-skills/claude-skills/claude-implement"
     },
     {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
-      "localPath": "cleaning-repo-with-knip/SKILL.md",
+      "localPath": "cleaning-repo-with-knip/",
       "license": "MIT",
       "localRoot": "projectSkills"
     },
     {
-      "name": "deslopping-cleanup",
-      "sourceType": "original",
-      "localPath": "deslopping-cleanup/",
-      "license": "MIT",
-      "localRoot": "userSkills"
-    },
-    {
       "name": "codebase-design",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/codebase-design/SKILL.md"
+      "upstreamPath": "skills/engineering/codebase-design/",
+      "localRoot": "projectSkills",
+      "localPath": "codebase-design/",
+      "changeNotice": "Added Alfe-aligned design guidance and host metadata to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "patchPath": "manifests/patches/codebase-design.patch"
     },
     {
       "name": "codex-implement",
@@ -69,34 +78,91 @@
       "localRoot": "projectSkills"
     },
     {
+      "name": "coordinating-implementation-programs",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "coordinating-implementation-programs/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "state": "untracked-local-snapshot",
+        "path": ".agents/skills/coordinating-implementation-programs/SKILL.md",
+        "sha256": "55dd6947be8649bdce97e7d7feec946ea89d8f97e70867f6b45e78bbba36494b"
+      }
+    },
+    {
+      "name": "deslopping-cleanup",
+      "sourceType": "original",
+      "localPath": "deslopping-cleanup/",
+      "license": "MIT",
+      "localRoot": "userSkills"
+    },
+    {
       "name": "domain-modeling",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/domain-modeling/SKILL.md"
+      "upstreamPath": "skills/engineering/domain-modeling/",
+      "localRoot": "projectSkills",
+      "localPath": "domain-modeling/",
+      "changeNotice": "Added Alfe-aligned glossary and ADR guidance and host metadata to the pinned upstream skill.",
+      "patchPath": "manifests/patches/domain-modeling.patch"
+    },
+    {
+      "name": "graphify",
+      "sourceType": "adapted",
+      "repository": "https://github.com/Graphify-Labs/graphify",
+      "revision": "a5957aa6ef51c9be8d054de9783d25046c187f3f",
+      "upstreamPath": "graphify/skills/codex/",
+      "localRoot": "projectSkills",
+      "localPath": "graphify/",
+      "changeNotice": "Composed from the eight pinned Codex reference files under `graphify/skills/codex/` and the sibling `graphify/skill-codex.md` entrypoint; added the entrypoint and adapted references/assets for the cross-host distribution. Includes fresh-context dispatch guidance.",
+      "patchPath": "manifests/patches/graphify.patch"
+    },
+    {
+      "name": "graphify-start",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "graphify-start/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "445bf4f655eaecc5fe530b2cc72b27bd1b414cea",
+        "path": ".agents/skills/graphify-start/"
+      }
     },
     {
       "name": "grill-me",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/productivity/grill-me/SKILL.md",
-      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
-      "patchPath": "manifests/patches/grill-me.patch"
+      "upstreamPath": "skills/productivity/grill-me/",
+      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
+      "patchPath": "manifests/patches/grill-me.patch",
+      "localRoot": "projectSkills",
+      "localPath": "grill-me/"
     },
     {
       "name": "grilling",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/productivity/grilling/SKILL.md"
+      "upstreamPath": "skills/productivity/grilling/",
+      "localRoot": "projectSkills",
+      "localPath": "grilling/",
+      "changeNotice": "Added host metadata and Alfe-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "patchPath": "manifests/patches/grilling.patch"
     },
     {
-      "name": "orientated-e2e-testing-v5-2",
-      "sourceType": "original",
-      "localPath": "orientated-e2e-testing-v5-2/",
-      "license": "MIT",
-      "localRoot": "projectSkills"
+      "name": "handoff",
+      "sourceType": "adapted",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "upstreamPath": "skills/productivity/handoff/",
+      "localRoot": "projectSkills",
+      "localPath": "handoff/",
+      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/handoff.patch"
     },
     {
       "name": "how-to-use-codex",
@@ -106,67 +172,110 @@
       "localRoot": "projectSkills"
     },
     {
-      "name": "merge-verified-pr-and-cleanup",
-      "sourceType": "original",
-      "localPath": "merge-verified-pr-and-cleanup/SKILL.md",
-      "license": "MIT",
-      "localRoot": "projectSkills"
-    },
-    {
-      "name": "importing-handoff",
-      "sourceType": "original",
-      "localPath": "importing-handoff/",
-      "license": "MIT",
-      "localRoot": "userSkills"
+      "name": "impeccable",
+      "sourceType": "adapted",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
+      "upstreamPath": "skill/",
+      "localPath": "impeccable/",
+      "localRoot": "projectSkills",
+      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for cross-host distribution. Includes fresh-context subagent routing and portable specialist contracts.",
+      "patchPath": "manifests/patches/impeccable.patch"
     },
     {
       "name": "improve-codebase-architecture",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
-      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
-      "patchPath": "manifests/patches/improve-codebase-architecture.patch"
-    },
-    {
-      "name": "impeccable",
-      "sourceType": "adapted",
-      "repository": "https://github.com/pbakaus/impeccable",
-      "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
-      "upstreamPath": "skill/",
-      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/impeccable.patch"
+      "upstreamPath": "skills/engineering/improve-codebase-architecture/",
+      "changeNotice": "Enables Codex model invocation for plugin validation and discovery. Includes fresh-context dispatch guidance.",
+      "patchPath": "manifests/patches/improve-codebase-architecture.patch",
+      "localRoot": "projectSkills",
+      "localPath": "improve-codebase-architecture/"
     },
     {
       "name": "learn-codebase",
       "sourceType": "adapted",
       "repository": "https://github.com/thedotmack/claude-mem",
       "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
-      "upstreamPath": "plugin/skills/learn-codebase/SKILL.md",
-      "localPath": "learn-codebase/SKILL.md",
+      "upstreamPath": "plugin/skills/learn-codebase/",
+      "localPath": "learn-codebase/",
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/learn-codebase.patch",
       "localRoot": "userSkills"
     },
     {
-      "name": "setup-matt-pocock-skills",
-      "sourceType": "adapted",
-      "repository": "https://github.com/mattpocock/skills",
-      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/setup-matt-pocock-skills/",
-      "changeNotice": "Enables Codex model invocation for plugin validation and discovery.",
-      "patchPath": "manifests/patches/setup-matt-pocock-skills.patch"
+      "name": "marketing-screenshots",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "marketing-screenshots/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "2a113cd1dfb10c879a44ce8e6115daea74c8cbc7",
+        "path": ".agents/skills/marketing-screenshots/"
+      }
     },
     {
-      "name": "swarm-orchestration",
+      "name": "master-orchestrator",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "master-orchestrator/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "state": "untracked-local-snapshot",
+        "paths": [
+          ".agents/skills/master-orchestrator/",
+          ".claude/skills/master-orchestrator/"
+        ],
+        "files": {
+          ".agents/skills/master-orchestrator/agents/openai.yaml": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+          ".agents/skills/master-orchestrator/references/coordinating-design.md": "8e268a947a927f7c2cc9edd109e423a4a24e28ac9882071aa8dfbdeaa653ae39",
+          ".agents/skills/master-orchestrator/SKILL.md": "1ab6737377144752ff612068625b3f373c5198e5e65abcdeb3a34f905ff1e3d4",
+          ".claude/skills/master-orchestrator/references/coordinating-design.md": "8e268a947a927f7c2cc9edd109e423a4a24e28ac9882071aa8dfbdeaa653ae39",
+          ".claude/skills/master-orchestrator/SKILL.md": "a24200ddd7242adfd9f44635f3ef2087d839195e61660f940b15f9a9a60cf0d5"
+        },
+        "packagingChanges": [
+          "Combined Claude explicit-only frontmatter with Codex explicit-only metadata.",
+          "Added host-discovered or same-plugin Wayfinder fallback without requiring project-local paths."
+        ]
+      }
+    },
+    {
+      "name": "mdx-to-html",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "mdx-to-html/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "2a113cd1dfb10c879a44ce8e6115daea74c8cbc7",
+        "path": ".agents/skills/mdx-to-html/"
+      }
+    },
+    {
+      "name": "orchestrating-gemini-workers",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "orchestrating-gemini-workers/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "2a113cd1dfb10c879a44ce8e6115daea74c8cbc7",
+        "path": ".agents/skills/orchestrating-gemini-workers/"
+      }
+    },
+    {
+      "name": "retro",
       "sourceType": "adapted",
-      "repository": "https://github.com/ruvnet/ruflo",
-      "revision": "7ef4d4e655d81c0451f6f40f35729cce6c9928e7",
-      "upstreamPath": ".agents/skills/swarm-orchestration/SKILL.md",
-      "localPath": "swarm-orchestration/SKILL.md",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/swarm-orchestration.patch",
-      "localRoot": "projectSkills"
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "upstreamPath": "skills/engineering/retro/",
+      "localRoot": "projectSkills",
+      "localPath": "retro/",
+      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "patchPath": "manifests/patches/retro.patch"
     },
     {
       "name": "sequential-task-orchestrator",
@@ -176,27 +285,67 @@
       "localRoot": "projectSkills"
     },
     {
-      "name": "test-gaps",
+      "name": "setup-goal",
       "sourceType": "original",
-      "localPath": "test-gaps/SKILL.md",
+      "localRoot": "projectSkills",
+      "localPath": "setup-goal/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "6028e13227a82206dcc3b8f3bd75b845585c2d1d",
+        "path": ".agents/skills/setup-goal/"
+      }
+    },
+    {
+      "name": "setup-harness-evaluation",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "setup-harness-evaluation/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "f7b6d200c34399fc19bc3106443e50dad685d934",
+        "path": ".agents/skills/setup-harness-evaluation/"
+      }
+    },
+    {
+      "name": "setup-workflow-comparison",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "setup-workflow-comparison/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "f7b6d200c34399fc19bc3106443e50dad685d934",
+        "path": ".agents/skills/setup-workflow-comparison/"
+      }
+    },
+    {
+      "name": "simplify",
+      "sourceType": "original",
+      "localPath": "simplify/SKILL.md",
       "license": "MIT",
       "localRoot": "projectSkills"
     },
     {
       "name": "test-driven-development",
-      "sourceType": "vendor",
+      "sourceType": "adapted",
       "repository": "https://github.com/obra/superpowers",
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
-      "upstreamPath": "skills/test-driven-development/"
+      "upstreamPath": "skills/test-driven-development/",
+      "localPath": "test-driven-development/",
+      "localRoot": "projectSkills",
+      "changeNotice": "Condensed cross-host TDD guidance with explicit behavioral coverage-gap assessment and updated anti-patterns. Includes fresh-context dispatch guidance.",
+      "patchPath": "manifests/patches/test-driven-development.patch"
     },
     {
       "name": "to-spec",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/to-spec/SKILL.md",
-      "localPath": "to-spec/SKILL.md",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "upstreamPath": "skills/engineering/to-spec/",
+      "localPath": "to-spec/",
+      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
       "patchPath": "manifests/patches/to-spec.patch",
       "localRoot": "projectSkills"
     },
@@ -207,25 +356,32 @@
       "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
       "upstreamPath": ".claude/skills/ui-ux-pro-max/",
       "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/ui-ux-pro-max.patch"
-    },
-    {
-      "name": "using-git-worktrees",
-      "sourceType": "vendor",
-      "repository": "https://github.com/obra/superpowers",
-      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
-      "upstreamPath": "skills/using-git-worktrees/"
+      "patchPath": "manifests/patches/ui-ux-pro-max.patch",
+      "localRoot": "projectSkills",
+      "localPath": "ui-ux-pro-max/"
     },
     {
       "name": "wayfinder",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/engineering/wayfinder/SKILL.md",
-      "localPath": "wayfinder/SKILL.md",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "upstreamPath": "skills/engineering/wayfinder/",
+      "localPath": "wayfinder/",
+      "changeNotice": "Adapted for the cross-host Agent Skills distribution. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/wayfinder.patch",
       "localRoot": "projectSkills"
+    },
+    {
+      "name": "writing-for-agents",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "writing-for-agents/",
+      "license": "MIT",
+      "origin": {
+        "repository": "https://github.com/GiuseppeVe/alfe_AI_app",
+        "revision": "445bf4f655eaecc5fe530b2cc72b27bd1b414cea",
+        "path": ".agents/skills/writing-for-agents/"
+      }
     },
     {
       "name": "writing-plans",
@@ -237,13 +393,6 @@
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "localRoot": "projectSkills"
-    },
-    {
-      "name": "writing-skills",
-      "sourceType": "vendor",
-      "repository": "https://github.com/obra/superpowers",
-      "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
-      "upstreamPath": "skills/writing-skills/"
     }
   ]
 }

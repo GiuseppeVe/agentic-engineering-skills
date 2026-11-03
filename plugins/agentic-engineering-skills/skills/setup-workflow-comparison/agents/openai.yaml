@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Workflow Comparison"
+  short_description: "Launch variants; collect outcomes for your evaluation"
+  default_prompt: "Use $setup-workflow-comparison to launch the same task in independent threads with different approaches, models, or parameters and report outcomes and differences for my evaluation."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Implementation graph workflow — in development</title>
+  <desc id="desc">Preview of the intended entry point only. A user will start a new chat, explicitly select a future implementation master, and provide the objective and instructions. The orchestration skill and detailed execution graph are still being developed and are not included as an available workflow in this release. No dispatch rules or implementation stages are specified here.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#8b8075"/></marker>
+    <style>
+      text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #241f1c; }
+      .label { font-size: 22px; font-weight: 700; }
+      .detail { font-size: 16px; fill: #63584e; }
+      .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; fill: #8a553d; }
+      .box { fill: #fffaf3; stroke: #cdbfaf; stroke-width: 1.5; }
+      .future { fill: #eee7dd; stroke: #8b8075; stroke-width: 1.5; stroke-dasharray: 7 5; }
+      .edge { fill: none; stroke: #8b8075; stroke-width: 2; stroke-dasharray: 7 5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="420" rx="12" fill="#f4efe8"/>
+  <text x="48" y="42" class="eyebrow">GRAPH WORKFLOW · IN DEVELOPMENT</text>
+  <text x="48" y="84" font-size="33" font-weight="700">Implementation orchestration comes next.</text>
+  <text x="48" y="116" class="detail">The entry point is intended; the skill and execution graph are still being defined.</text>
+
+  <rect class="box" x="48" y="165" width="306" height="116" rx="9"/>
+  <text class="eyebrow" x="68" y="193">USER · NEW CHAT</text>
+  <text class="label" x="68" y="224">Task and instructions</text>
+  <text class="detail" x="68" y="253">Desired result, scope, constraints</text>
+
+  <path class="edge" d="M354 223H412"/>
+  <rect class="future" x="426" y="165" width="330" height="116" rx="9"/>
+  <text class="eyebrow" x="446" y="193">FUTURE EXPLICIT INVOCATION</text>
+  <text class="label" x="446" y="224">Implementation master</text>
+  <text class="detail" x="446" y="253">Skill not available in this release</text>
+
+  <path class="edge" d="M756 223H814"/>
+  <rect class="future" x="828" y="165" width="324" height="116" rx="9"/>
+  <text class="eyebrow" x="848" y="193">DETAILS TO FOLLOW</text>
+  <text class="label" x="848" y="224">Execution graph in design</text>
+  <text class="detail" x="848" y="253">Dispatch and lifecycle not specified</text>
+
+  <path d="M48 326H1152" stroke="#cdbfaf"/>
+  <text x="48" y="358" class="detail">Current bounded implementation skills remain available independently.</text>
+  <text x="48" y="387" font-size="14" fill="#776c63">This preview does not define a new skill name, execution procedure, or automatic authority.</text>
+</svg>

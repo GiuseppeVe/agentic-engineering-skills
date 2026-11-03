@@ -1,5 +1,167 @@
 # Release verification report
 
+## Caveman startup hook smoke: 2026-11-03
+
+Both host runs used an isolated local fake API server and dummy credentials; no real model inference was performed.
+
+- Claude Code 2.1.317 loaded the plugin with `--plugin-dir`. `SessionStart` and `SubagentStart` both exited 0, and Caveman context was observed.
+- Codex 0.163.0 installed the plugin through an isolated marketplace. Both startup events were observed, including Caveman context delivered to the subagent. Hook trust was bypassed only for the test process.
+
+These synthetic host checks do not establish persistent hook trust or normal approval through the host UI.
+
+## Generic profile removal: 2026-11-03
+
+The seven optional generic role contracts and their profile manifests have been removed. Skill-specific implementation attachments, host-native role configuration, and the Caveman startup hooks remain separate. A fresh isolated installation for each host confirmed the generic payload and profile manifest are absent while the relevant specialist attachments, 35 Codex skills and 36 Claude Code skills remain present. This checks packaging and inventory, not model invocation or live orchestration.
+
+## Historical unified Caveman candidate: 2026-11-03
+
+That candidate contained 36 skills: 35 for Codex and 36 for Claude Code. `caveman` follows the owner-supplied unified Alfe version; `setup-matt-pocock-skills` was removed along with active routes to it. The separate legacy skills named in the cleanup request were already absent. Existing third-party skill attribution remained in place. Generic profiles were subsequently removed.
+
+Fresh isolated native installations and payload comparisons passed for Codex (`sha256:e6457b41007ed11334bda49d5c36ca7c3382e69b7ebcfcd4c1c797f216736db9`) and Claude Code (`sha256:ab5b08666c0304e6a97da80da8b42cdf35ec50d711ba3eec5f954756ac5560f3`). This evidence covers installation, inventory and bytes, not invocation or live hook behavior.
+
+## Implementation program coordinator: 2026-11-03
+
+The prior candidate contained 37 skills: 36 exposed to Codex and 37 to Claude Code. The added `coordinating-implementation-programs` is the byte-identical owner-supplied Alfe snapshot. A run requires a host capable of visible subordinate threads and remains subject to host instructions and user authorization.
+
+Fresh isolated native plugin installs and payload comparisons passed on both hosts. Codex discovered 36 skills with payload hash `sha256:e053c863a50a70752438df729e3e4372fc57791bb12dc839f2a7112bd3cd0fd9`; Claude Code discovered 37 with `sha256:21b128a948ae0b2384705d310c04199b12f2440a24a7e199ab06d7e7055a76b5`. These checks establish installed bytes and discovery, not skill execution, live orchestration, or hook behavior.
+
+## Long-task-run removal: 2026-11-02
+
+The prior candidate contained 36 skills: 35 exposed to Codex and 36 to Claude
+Code. `long-task-run` is absent from the package and both installed inventories.
+`master-orchestrator` remains explicit-only on both hosts, and
+`claude-implement` remains in the Claude-only skill root. This schema 3 native
+receipt supersedes the earlier 36-Codex/37-Claude proof below.
+
+Fresh isolated Windows installs used Codex CLI 0.163.0, Claude Code 2.1.296
+and Node.js 24.16.0. Marketplace installation, plugin listing and both installed
+payload verifiers exited 0. Source, snapshot and installed cache matched each
+host's manifest-selected inventory and hash:
+
+- Codex: 35 skills from `skills/`, hash
+  `sha256:eb1a24dc0614603130b8c338e6b3ad50c0a12528e535077ebfe6b1cb6dd4ee0d`.
+- Claude Code: 36 skills from `skills/` and `claude-skills/`, hash
+  `sha256:6b625f12056e9714098ac4ff0c6a52c0def4abf09242d5abe029e46b3b204594`.
+- Offline `codex debug prompt-input` showed exactly 17 unique implicit skills.
+  All 18 explicit-only skills, including `master-orchestrator`, were omitted
+  by policy. No duplicate entries appeared; neither `long-task-run` nor
+  `claude-implement` appeared. `claude plugin details` listed the expected
+  36 skills without `long-task-run`.
+- All five hook files matched source, snapshot and both installed caches, with
+  tree hash
+  `sha256:e6aa673d676f0893449276ce8fd6321cfa184d8fa03b551aafdd313dc57dc310`.
+  Hooks were not executed; this evidence does not establish live hook behavior
+  or skill invocation in a model session.
+- Raw command logs remain outside the public payload at
+  `<user-temp>/aes3-native-no-longtask-20261102/logs`.
+
+No Alfe checkout or normal agent profile was changed; no push, merge or
+publication was performed.
+
+## Master orchestrator packaging: 2026-11-02
+
+This earlier candidate contained 37 skills: 36 exposed to Codex and 37 to Claude
+Code. The added `master-orchestrator` is explicit-only on both hosts;
+`claude-implement` remains in the Claude-only skill root. This schema 3 native
+receipt supersedes the earlier 35-Codex/36-Claude proof below.
+
+Fresh isolated Windows installs used Codex CLI 0.163.0, Claude Code 2.1.296
+and Node.js 24.16.0. Marketplace installation, plugin listing and both installed
+payload verifiers exited 0. Source, snapshot and installed cache matched each
+host's manifest-selected inventory and hash:
+
+- Codex: 36 skills from `skills/`, hash
+  `sha256:1a0cf0918389cf38d60b7bf7bead8acd77f82307898bba52f1438016ebe95abd`.
+- Claude Code: 37 skills from `skills/` and `claude-skills/`, hash
+  `sha256:b4c1c522639d6a90bbeb65499cd483c6bd9e664b29e6ed711846f4ef651838e0`.
+- Offline `codex debug prompt-input` showed exactly 17 unique implicit skills.
+  All 19 explicit-only skills, including `master-orchestrator`, were omitted
+  by policy. No duplicate skill entries or `claude-implement` appeared.
+  `claude plugin details` listed all 37 expected skills.
+- All five hook files matched source, snapshot and both installed caches, with
+  tree hash
+  `sha256:e6aa673d676f0893449276ce8fd6321cfa184d8fa03b551aafdd313dc57dc310`.
+  Hooks were not executed; this evidence does not establish live hook behavior
+  or skill invocation in a model session.
+- Raw command logs remain outside the public payload at
+  `<user-temp>/aes3-native-next-20261102/logs`.
+
+No Alfe checkout or normal agent profile was changed; no push, merge or
+publication was performed.
+
+## Project skill-set alignment: 2026-11-02
+
+This earlier candidate contained 36 skills: 35 exposed to Codex and 36 to Claude
+Code, with `claude-implement` in the Claude-only skill root. This matches the union of the Alfe project
+Codex and Claude Code skill directories. Eight obsolete plugin skills were
+removed together with their manifest entries and stale routing. The retained
+role contracts preserve their separate Cavecrew attribution and license.
+Sequential orchestration now routes to the current host-specific Alfe workflow:
+native Codex subagents or separate Codex/Claude CLI processes in Claude Code.
+
+Fresh isolated Windows installs used Codex CLI 0.163.0, Claude Code 2.1.296
+and Node.js 24.16.0. Marketplace installation, plugin listing and both installed
+payload verifiers exited 0. The schema 3 receipt in
+`manifests/native-discovery.json` records separate host inventories and hashes:
+
+- Codex loads 35 skills from `skills/`; source, snapshot and installed cache
+  match hash
+  `sha256:3e984483a232bccea3bc59e5ec614518dffa79b7b76a8670c9885ef6c1cc935c`.
+- Claude Code loads 36 skills from `skills/` and `claude-skills/`; source,
+  snapshot and installed cache match hash
+  `sha256:66207560e19213f2ff3f5fb49a5753416291f5c838ca0648c4364e5b90497bb0`.
+- Offline native discovery through `codex debug prompt-input` showed exactly
+  17 unique implicit skills, with all 18 explicit-only skills omitted by policy.
+  It showed no duplicate orchestrator entries and no `claude-implement`.
+  `claude plugin details` listed the expected 36 skills.
+- All five hook files matched the source snapshot in both installed caches, with
+  tree hash
+  `sha256:e6aa673d676f0893449276ce8fd6321cfa184d8fa03b551aafdd313dc57dc310`.
+  Hooks were not executed; this receipt does not establish live hook behavior
+  or skill invocation in a model session.
+- Raw command logs remain outside the public payload at
+  `<user-temp>/aes3-native-final-20261102/logs`.
+
+The earlier 44-skill native-install receipt below is historical and is
+superseded by this schema 3 evidence. No Alfe checkout or normal agent profile
+was changed; no push, merge or publication was performed.
+
+## Version 1.1 alignment: 2026-11-02
+
+This earlier candidate contained 44 skill directories, including an independent
+`long-task-run` implementation explicitly enabled by the owner for this plugin.
+
+- Fresh isolated Windows installs with Codex CLI 0.163.0 and Claude Code
+  2.1.296 succeeded. Both installed caches contained all 44 skill directories
+  and 628 files identical to the source snapshot, with common tree hash
+  `sha256:eb26cc08f81c4022dda15ae4bd9f57cbc62ad5f6ade1c71644cf00042d0a4034`.
+- Both caches contained the same five hook files as the source snapshot; their
+  common tree hash was
+  `sha256:e6aa673d676f0893449276ce8fd6321cfa184d8fa03b551aafdd313dc57dc310`.
+  This proves installation fidelity, not live host discovery or hook execution.
+- Pinned upstream and license checks passed; 22 patches reconstructed their
+  target payloads using the generator's canonical line-ending rules.
+- No changes were made to Alfe, its installed agents or the normal user profiles.
+  No release, push or merge has been performed.
+
+## Skill synchronization packaging: 2026-11-02
+
+Payload: uncommitted changes based on `908a2ff`; no release commit or publish.
+Five existing skills were updated: Caveman, Cleaning Repo with Knip, Codex
+Implement, Test-Driven Development and Writing Plans. The directory hash is
+`sha256:518d1b12d753240002368b75ab71122b59c5c6d0cff2dac9152246ca26673f62`.
+
+- Separate isolated Windows host profiles used Codex CLI 0.163.0 and Claude
+  Code 2.1.296 with Node.js 24.16.0. Official marketplace install/list commands
+  completed successfully; Claude plugin validation also passed.
+- Both actual installed plugin caches contain 29 skills and 299 files identical
+  byte-for-byte to the uncommitted source snapshot. Normal user profiles and
+  installed caches were not changed; no package cache was manually patched.
+- This receipt establishes packaging fidelity, not skill invocation, role
+  discovery, model access or authorization to publish. Before release, stamp
+  original payloads to an actual commit and rerun the applicable gates.
+
+
 ## Role-routing synchronization: 2026-10-12
 
 Payload commit: `ac0190a94d80dbd1fd51ae55dcce482661e06490`. Implementation
@@ -12,7 +174,7 @@ Sequential orchestration retains its single child slot, dedicated neutral
 worker reference and acceptance gates; only calling-layer model selection changed.
 Seven host-neutral base contracts, vendor payloads and retained licenses are
 unchanged. The original stamping script records this reachable payload revision.
-This section owns the current native receipt; earlier sections are historical.
+This section owned the native receipt at the time; subsequent sections supersede it.
 
 - Official npm CLI versions were verified available and installed in a fresh
   isolated prefix: Codex 0.159.2 and Claude Code 2.1.296, on Node.js v26.7.0.
@@ -190,9 +352,9 @@ preserves the initial addition's validation history.
 
 Availability and scoped license assessment: [Deslopping Cleanup](deslopping-cleanup.md).
 
-## Agent profile pack
+## Historical agent profile pack (removed)
 
-Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`.
+This section records an earlier candidate, not the current payload. Seven host-neutral role contracts adapted Cavecrew at revision `0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0`.
 
 | Profile | Local payload SHA-256 |
 | --- | --- |
@@ -204,7 +366,7 @@ Seven host-neutral role contracts adapt Cavecrew at revision `0d95a81d35a9f2d123
 | `reviewer` | `e88701f78b72f81afc55ea474758248ee2baab5f81f64daa54c46c413a592595` |
 | `test-runner` | `a00f02866cea8c71a8ad77d15c971b07fb528945dd418080da107c4a76550a3a` |
 
-Hashes cover exact UTF-8 bytes at paths recorded in `manifests/agent-profiles.json`. Provenance, MIT license, and notice references remain joined to existing Cavecrew attribution.
+Hashes covered the historical UTF-8 payloads and the manifest then in use. The generic profiles and their manifest are no longer distributed.
 
 ## Historical validation receipt
 
@@ -220,9 +382,9 @@ Latest clean-clone gate validated implementation SHA `5320e2a`.
 | Full local suite | `npm test` | 0 | 100 total, 92 passed, 0 failed, 8 skipped because Windows disallowed fixture symlink creation. |
 | Upstream | `npm run verify:upstream` | 0 | All 17 vendor and adapted upstream payloads verified against pinned sources; payload was restored byte-exact to base after clean-clone fidelity verification. |
 
-## Host boundary
+## Historical host boundary
 
-Profiles are declarative role contracts consumed by workflow skills, not an executable harness. They do not guarantee automatic native registration in Codex or Claude Code; host orchestration remains responsible for delegation, permissions, lifecycle, and result handling.
+The removed profiles were declarative role contracts, not an executable harness or native registrations. Host orchestration remains responsible for delegation, permissions, lifecycle, and result handling.
 
 Publication completed through GitHub pull request #4; merge and implementation-branch cleanup are complete.
 

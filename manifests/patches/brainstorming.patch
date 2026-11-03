@@ -1,5 +1,5 @@
 diff --git a/brainstorming/SKILL.md b/brainstorming/SKILL.md
-index b0d52b2..e5a3c6d 100644
+index b0d52b2..3459aaa 100644
 --- a/brainstorming/SKILL.md
 +++ b/brainstorming/SKILL.md
 @@ -5,0 +6,2 @@
@@ -25,3 +25,991 @@ index b0d52b2..e5a3c6d 100644
 @@ -149 +156 @@
 -**This offer MUST be its own message.** Only the offer — no clarifying question, summary, or other content. Wait for the user's response. If they accept, start the server with `--open` so their browser opens to the first screen automatically. If they decline, continue text-only and don't offer again unless they raise it.
 +**This offer MUST be its own message.** Do not combine it with clarifying questions, context summaries, or any other content. The message should contain ONLY the offer above and nothing else. Wait for the user's response before continuing. If they decline, proceed with text-only brainstorming.
+@@ -159 +166 @@
+-`skills/brainstorming/visual-companion.md`
++`visual-companion.md`
+diff --git b/brainstorming/agents/openai.yaml b/brainstorming/agents/openai.yaml
+new file mode 100644
+index 0000000..530b4fd
+--- /dev/null
++++ b/brainstorming/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: "Brainstorming"
++  short_description: "Explore intent, requirements, and design before implementation"
++policy:
++  allow_implicit_invocation: true
+diff --git a/brainstorming/scripts/frame-template.html b/brainstorming/scripts/frame-template.html
+index f540bb8..dcfe018 100644
+--- a/brainstorming/scripts/frame-template.html
++++ b/brainstorming/scripts/frame-template.html
+@@ -12 +12 @@
+-     * - Header branding and connection status
++     * - Fixed header and selection indicator bar
+@@ -16 +16 @@
+-     * Content is injected via placeholder comment in #frame-content.
++     * Content is injected via placeholder comment in #claude-content.
+@@ -66,6 +66,8 @@
+-    .brand { display: flex; align-items: center; min-width: 0; overflow: hidden; color: var(--text-secondary); line-height: 1; }
+-    .brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; min-width: 0; max-width: 100%; line-height: 1; }
+-    .brand-copy { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1; transform: translateY(-1px); }
+-    .brand-logo { display: block; height: 1em; width: auto; max-width: 180px; flex-shrink: 0; filter: invert(1); }
+-    @media (prefers-color-scheme: dark) {
+-      .brand-logo { filter: none; }
++    .header {
++      background: var(--bg-secondary);
++      padding: 0.5rem 1.5rem;
++      display: flex;
++      justify-content: space-between;
++      align-items: center;
++      border-bottom: 1px solid var(--border);
++      flex-shrink: 0;
+@@ -73,2 +75,3 @@
+-    .status { font-size: 0.7rem; color: var(--status-color, var(--success)); display: flex; align-items: center; gap: 0.4rem; justify-self: end; white-space: nowrap; line-height: 1; }
+-    .status::before { content: ''; width: 6px; height: 6px; background: var(--status-color, var(--success)); border-radius: 50%; }
++    .header h1 { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
++    .header .status { font-size: 0.7rem; color: var(--success); display: flex; align-items: center; gap: 0.4rem; }
++    .header .status::before { content: ''; width: 6px; height: 6px; background: var(--success); border-radius: 50%; }
+@@ -77 +80 @@
+-    #frame-content { padding: 2rem; min-height: 100%; }
++    #claude-content { padding: 2rem; min-height: 100%; }
+@@ -79 +82 @@
+-    .header {
++    .indicator-bar {
+@@ -81 +84 @@
+-      border-bottom: 1px solid var(--border);
++      border-top: 1px solid var(--border);
+@@ -84,5 +87 @@
+-      display: grid;
+-      grid-template-columns: minmax(0, 1fr) auto;
+-      align-items: center;
+-      gap: 1rem;
+-      min-height: 42px;
++      text-align: center;
+@@ -90,3 +89 @@
+-    .header .brand { justify-self: start; width: 100%; font-size: 0.75rem; line-height: 1; }
+-    .header .status { grid-column: 2; line-height: 1; }
+-    .header span {
++    .indicator-bar span {
+@@ -96 +93 @@
+-    .header .selected-text {
++    .indicator-bar .selected-text {
+@@ -202,2 +199,2 @@
+-    <!-- BRANDING -->
+-    <div class="status">Connecting…</div>
++    <h1><a href="https://github.com/obra/superpowers" style="color: inherit; text-decoration: none;">Superpowers Brainstorming</a></h1>
++    <div class="status">Connected</div>
+@@ -207 +204 @@
+-    <div id="frame-content">
++    <div id="claude-content">
+@@ -211,0 +209,4 @@
++  <div class="indicator-bar">
++    <span id="indicator-text">Click an option above, then return to the terminal</span>
++  </div>
++
+diff --git a/brainstorming/scripts/helper.js b/brainstorming/scripts/helper.js
+index e11d264..111f97f 100644
+--- a/brainstorming/scripts/helper.js
++++ b/brainstorming/scripts/helper.js
+@@ -2,15 +2 @@
+-  const MIN_RECONNECT_MS = 500;
+-  const MAX_RECONNECT_MS = 30000;
+-  const TOMBSTONE_AFTER_MS = 15000; // show the "paused" overlay after this long disconnected
+-
+-  // Pure: next backoff delay (doubles, capped). Exported for unit tests.
+-  function nextReconnectDelay(current, max) {
+-    return Math.min(current * 2, max);
+-  }
+-  if (typeof module !== 'undefined' && module.exports) {
+-    module.exports = { nextReconnectDelay, MIN_RECONNECT_MS, MAX_RECONNECT_MS, TOMBSTONE_AFTER_MS };
+-  }
+-
+-  // Everything below is browser-only; bail out when loaded in Node (tests).
+-  if (typeof window === 'undefined') return;
+-
++  const WS_URL = 'ws://' + window.location.host;
+@@ -19,57 +4,0 @@
+-  let reconnectDelay = MIN_RECONNECT_MS;
+-  let reconnectTimer = null;
+-  let disconnectedSince = null;
+-  let everConnected = false;
+-  let tombstoneShown = false;
+-
+-  function sessionKey() {
+-    try {
+-      return window.sessionStorage && window.sessionStorage.getItem('brainstorm-session-key');
+-    } catch (e) {}
+-    return null;
+-  }
+-
+-  function websocketUrl() {
+-    const key = sessionKey();
+-    return 'ws://' + window.location.host + (key ? '/?key=' + encodeURIComponent(key) : '');
+-  }
+-
+-  function reloadAfterRecovery() {
+-    const key = sessionKey();
+-    if (key) {
+-      window.location.replace('/?key=' + encodeURIComponent(key));
+-    } else {
+-      window.location.reload();
+-    }
+-  }
+-
+-  // Reflect connection state in the frame's status pill (absent on full-doc screens).
+-  function setStatus(state) {
+-    const el = document.querySelector('.status');
+-    if (!el) return;
+-    const map = {
+-      connecting:   ['Connecting…',   'var(--text-tertiary)'],
+-      connected:    ['Connected',     'var(--success)'],
+-      reconnecting: ['Reconnecting…', 'var(--warning)'],
+-      disconnected: ['Disconnected',  'var(--error)']
+-    };
+-    const [text, color] = map[state] || map.disconnected;
+-    el.textContent = text;
+-    el.style.setProperty('--status-color', color);
+-  }
+-
+-  // Self-styled so it works on framed and full-document screens alike.
+-  function showTombstone() {
+-    if (tombstoneShown) return;
+-    tombstoneShown = true;
+-    const el = document.createElement('div');
+-    el.id = 'bs-tombstone';
+-    el.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;' +
+-      'align-items:center;justify-content:center;padding:2rem;text-align:center;' +
+-      'background:rgba(20,20,22,0.92);color:#f5f5f7;font-family:system-ui,sans-serif';
+-    el.innerHTML = '<div style="max-width:480px">' +
+-      '<h2 style="margin:0 0 .5rem;font-weight:600">Companion paused</h2>' +
+-      '<p style="margin:0;opacity:.85">This brainstorm companion has stopped. ' +
+-      'Ask your coding agent to bring it back — this page reconnects automatically.</p></div>';
+-    if (document.body) document.body.appendChild(el);
+-  }
+@@ -78,3 +7 @@
+-    if (reconnectTimer) { clearTimeout(reconnectTimer); reconnectTimer = null; }
+-    setStatus(everConnected ? 'reconnecting' : 'connecting');
+-    ws = new WebSocket(websocketUrl());
++    ws = new WebSocket(WS_URL);
+@@ -83,6 +9,0 @@
+-      const recovered = tombstoneShown;
+-      everConnected = true;
+-      disconnectedSince = null;
+-      reconnectDelay = MIN_RECONNECT_MS;
+-      tombstoneShown = false;
+-      setStatus('connected');
+@@ -91,4 +11,0 @@
+-      // Recovered from a tombstoned outage (e.g. the server restarted on the same
+-      // port) — reload through the keyed bootstrap when possible so the cookie is
+-      // refreshed before the visible URL returns to bare /.
+-      if (recovered) reloadAfterRecovery();
+@@ -98,3 +15,4 @@
+-      let data;
+-      try { data = JSON.parse(msg.data); } catch (e) { return; }
+-      if (data.type === 'reload') window.location.reload();
++      const data = JSON.parse(msg.data);
++      if (data.type === 'reload') {
++        window.location.reload();
++      }
+@@ -104,10 +22 @@
+-      ws = null;
+-      if (disconnectedSince === null) disconnectedSince = Date.now();
+-      if (Date.now() - disconnectedSince >= TOMBSTONE_AFTER_MS) {
+-        setStatus('disconnected');
+-        showTombstone();
+-      } else {
+-        setStatus('reconnecting');
+-      }
+-      reconnectTimer = setTimeout(connect, reconnectDelay);
+-      reconnectDelay = nextReconnectDelay(reconnectDelay, MAX_RECONNECT_MS);
++      setTimeout(connect, 1000);
+@@ -115,3 +23,0 @@
+-
+-    // Let onclose own reconnection so we don't schedule it twice.
+-    ws.onerror = () => { try { ws.close(); } catch (e) {} };
+@@ -140,0 +47,15 @@
++    // Update indicator bar (defer so toggleSelect runs first)
++    setTimeout(() => {
++      const indicator = document.getElementById('indicator-text');
++      if (!indicator) return;
++      const container = target.closest('.options') || target.closest('.cards');
++      const selected = container ? container.querySelectorAll('.selected') : [];
++      if (selected.length === 0) {
++        indicator.textContent = 'Click an option above, then return to the terminal';
++      } else if (selected.length === 1) {
++        const label = selected[0].querySelector('h3, .content h3, .card-body h3')?.textContent?.trim() || selected[0].dataset.choice;
++        indicator.innerHTML = '<span class="selected-text">' + label + ' selected</span> — return to terminal to continue';
++      } else {
++        indicator.innerHTML = '<span class="selected-text">' + selected.length + ' selected</span> — return to terminal to continue';
++      }
++    }, 0);
+diff --git a/brainstorming/scripts/server.cjs b/brainstorming/scripts/server.cjs
+index a828b35..562c17f 100644
+--- a/brainstorming/scripts/server.cjs
++++ b/brainstorming/scripts/server.cjs
+@@ -10 +9,0 @@
+-const MAX_FRAME_PAYLOAD_BYTES = 10 * 1024 * 1024;
+@@ -57,5 +56 @@
+-    const extendedLen = buffer.readBigUInt64BE(2);
+-    if (extendedLen > BigInt(MAX_FRAME_PAYLOAD_BYTES)) {
+-      throw new Error('WebSocket frame payload exceeds maximum allowed size');
+-    }
+-    payloadLen = Number(extendedLen);
++    payloadLen = Number(buffer.readBigUInt64BE(2));
+@@ -65,4 +59,0 @@
+-  if (payloadLen > MAX_FRAME_PAYLOAD_BYTES) {
+-    throw new Error('WebSocket frame payload exceeds maximum allowed size');
+-  }
+-
+@@ -85,15 +76 @@
+-const PORT_FILE = process.env.BRAINSTORM_PORT_FILE || null;
+-const randomPort = () => 49152 + Math.floor(Math.random() * 16383);
+-// Prefer an explicit port, else the port this session last bound (so a restart
+-// reuses it and an already-open browser tab reconnects), else a random high port.
+-function preferredPort() {
+-  if (process.env.BRAINSTORM_PORT) return Number(process.env.BRAINSTORM_PORT);
+-  if (PORT_FILE) {
+-    try {
+-      const p = Number(fs.readFileSync(PORT_FILE, 'utf-8').trim());
+-      if (Number.isInteger(p) && p > 1023 && p < 65536) return p;
+-    } catch (e) { /* no prior port recorded */ }
+-  }
+-  return randomPort();
+-}
+-let PORT = preferredPort();
++const PORT = process.env.BRAINSTORM_PORT || (49152 + Math.floor(Math.random() * 16383));
+@@ -105,8 +81,0 @@
+-const SUPERPOWERS_VERSION = readSuperpowersVersion();
+-const SUPERPOWERS_BRAND_IMAGE_URL = 'https://primeradiant.com/brand/superpowers-visual-brainstorming-logo.png';
+-const TELEMETRY_DISABLE_ENV_VARS = [
+-  'SUPERPOWERS_DISABLE_TELEMETRY',
+-  'DISABLE_TELEMETRY',
+-  'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC'
+-];
+-const SUPERPOWERS_TELEMETRY_DISABLED = TELEMETRY_DISABLE_ENV_VARS.some(name => isTruthyEnv(process.env[name]));
+@@ -115,38 +83,0 @@
+-// Per-session secret key. The companion is reachable by any local browser tab
+-// and, when bound to a non-loopback host, by any host that can route to it.
+-// The key authenticates the real client uniformly across loopback, tunnel, and
+-// remote binds — and defeats DNS rebinding — where a Host/Origin allowlist
+-// cannot. It rides the served URL as ?key= and is mirrored into a cookie on
+-// first load so same-origin subresources and the WebSocket carry it for free.
+-// Persisted alongside the port (BRAINSTORM_TOKEN_FILE) so a restart keeps the
+-// same key and an already-open tab's cookie still validates.
+-const TOKEN_FILE = process.env.BRAINSTORM_TOKEN_FILE || null;
+-function generateToken() {
+-  return crypto.randomBytes(32).toString('hex');
+-}
+-
+-function chmodOwnerOnly(file) {
+-  try { fs.chmodSync(file, 0o600); } catch (e) { /* best effort */ }
+-}
+-
+-function initialToken() {
+-  if (process.env.BRAINSTORM_TOKEN) {
+-    return { value: process.env.BRAINSTORM_TOKEN, source: 'env' };
+-  }
+-  if (TOKEN_FILE) {
+-    try {
+-      const t = fs.readFileSync(TOKEN_FILE, 'utf-8').trim();
+-      if (/^[0-9a-f]{32,}$/i.test(t)) {
+-        chmodOwnerOnly(TOKEN_FILE);
+-        return { value: t, source: 'file' };
+-      }
+-    } catch (e) { /* no prior token recorded */ }
+-  }
+-  return { value: generateToken(), source: 'generated' };
+-}
+-
+-const tokenInfo = initialToken();
+-let TOKEN = tokenInfo.value;
+-let tokenSource = tokenInfo.source;
+-let COOKIE_NAME = 'brainstorm-key-' + PORT; // refined to the actual bound port in onListen
+-
+@@ -161,2 +92 @@
+-function waitingPage() {
+-  return renderBranding(`<!DOCTYPE html>
++const WAITING_PAGE = `<!DOCTYPE html>
+@@ -165,16 +94,0 @@
+-<style>
+-body { font-family: system-ui, sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; }
+-h1 { color: #333; } p { color: #666; }
+-.brand { display: flex; align-items: center; min-width: 0; overflow: hidden; margin-bottom: 1.5rem; color: #666; font-size: 0.9rem; line-height: 1; }
+-.brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; min-width: 0; max-width: 100%; line-height: 1; }
+-.brand-copy { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1; transform: translateY(-1px); }
+-.brand-logo { display: block; height: 1em; width: auto; max-width: 180px; filter: invert(1); }
+-</style>
+-</head>
+-<body><!-- BRANDING --><h1>Brainstorm Companion</h1>
+-<p>Waiting for the agent to push a screen...</p></body></html>`);
+-}
+-
+-const FORBIDDEN_PAGE = `<!DOCTYPE html>
+-<html>
+-<head><meta charset="utf-8"><title>Session key required</title>
+@@ -182 +96 @@
+-h1 { color: #333; } p { color: #666; } code { background: #f0f0f0; padding: 0.1em 0.3em; border-radius: 4px; }</style>
++h1 { color: #333; } p { color: #666; }</style>
+@@ -184,17 +98,2 @@
+-<body><h1>Session key required</h1>
+-<p>This page needs the full URL your coding agent gave you, including the
+-<code>?key=&hellip;</code> part. Copy the complete URL and open it again.</p></body></html>`;
+-
+-function bootstrapPage(key) {
+-  const jsonKey = JSON.stringify(String(key));
+-  return `<!DOCTYPE html>
+-<html>
+-<head><meta charset="utf-8"><title>Opening Brainstorm Companion</title></head>
+-<body>
+-<script>
+-try { sessionStorage.setItem('brainstorm-session-key', ${jsonKey}); } catch (e) {}
+-location.replace('/');
+-</script>
+-</body>
+-</html>`;
+-}
++<body><h1>Brainstorm Companion</h1>
++<p>Waiting for the agent to push a screen...</p></body></html>`;
+@@ -208,50 +106,0 @@
+-function readSuperpowersVersion() {
+-  const root = path.join(__dirname, '../../..');
+-  const manifests = [
+-    path.join(root, 'package.json'),
+-    path.join(root, '.codex-plugin/plugin.json')
+-  ];
+-
+-  for (const manifest of manifests) {
+-    try {
+-      const data = JSON.parse(fs.readFileSync(manifest, 'utf-8'));
+-      if (data.version) return String(data.version);
+-    } catch (e) {
+-      // Packaged Codex plugins omit package.json; try the next manifest.
+-    }
+-  }
+-
+-  return 'unknown';
+-}
+-
+-function isTruthyEnv(value) {
+-  if (!value) return false;
+-  const normalized = String(value).trim().toLowerCase();
+-  if (!normalized) return false;
+-  return !['0', 'false', 'no', 'off'].includes(normalized);
+-}
+-
+-function escapeHtmlText(value) {
+-  return String(value)
+-    .replace(/&/g, '&amp;')
+-    .replace(/</g, '&lt;')
+-    .replace(/>/g, '&gt;')
+-    .replace(/"/g, '&quot;');
+-}
+-
+-function brandMarkup() {
+-  const version = escapeHtmlText(SUPERPOWERS_VERSION);
+-  const text = SUPERPOWERS_TELEMETRY_DISABLED
+-    ? 'Prime Radiant Superpowers v' + version
+-    : 'Superpowers v' + version;
+-  const logo = SUPERPOWERS_TELEMETRY_DISABLED
+-    ? ''
+-    : '<img class="brand-logo" src="' + SUPERPOWERS_BRAND_IMAGE_URL + '?v=' + encodeURIComponent(SUPERPOWERS_VERSION) + '" alt="Prime Radiant" referrerpolicy="no-referrer" decoding="async">';
+-
+-  return '<div class="brand"><a href="https://github.com/obra/superpowers">' + logo + '<span class="brand-copy">' + text + '</span></a></div>';
+-}
+-
+-function renderBranding(html) {
+-  return html.split('<!-- BRANDING -->').join(brandMarkup());
+-}
+-
+@@ -264 +113 @@
+-  return renderBranding(frameTemplate).replace('<!-- CONTENT -->', content);
++  return frameTemplate.replace('<!-- CONTENT -->', content);
+@@ -269 +118 @@
+-    .filter(f => !f.startsWith('.') && f.endsWith('.html'))
++    .filter(f => f.endsWith('.html'))
+@@ -272 +120,0 @@
+-      if (!isRegularFileInsideContentDir(fp)) return null;
+@@ -275 +122,0 @@
+-    .filter(Boolean)
+@@ -280,105 +126,0 @@
+-function urlHostForHttp(host) {
+-  const h = String(host);
+-  if (h.startsWith('[') && h.endsWith(']')) return h;
+-  return h.includes(':') ? '[' + h + ']' : h;
+-}
+-
+-function companionUrl() {
+-  return 'http://' + urlHostForHttp(URL_HOST) + ':' + PORT + '/?key=' + TOKEN;
+-}
+-
+-function browserLauncherForPlatform(url, {
+-  platform = process.platform,
+-  osRelease = require('os').release(),
+-  env = process.env
+-} = {}) {
+-  const isWSL = platform === 'linux' && /microsoft/i.test(osRelease);
+-  if (platform === 'darwin') return { bin: 'open', args: [url] };
+-  if (platform === 'win32' || isWSL) {
+-    return { bin: 'rundll32.exe', args: ['url.dll,FileProtocolHandler', url] };
+-  }
+-  if (env.DISPLAY || env.WAYLAND_DISPLAY) return { bin: 'xdg-open', args: [url] };
+-  return null;
+-}
+-
+-function isRegularFileInsideContentDir(filePath) {
+-  let stat, realContentDir, realFilePath;
+-  try {
+-    stat = fs.lstatSync(filePath);
+-    if (stat.isSymbolicLink()) return false;
+-    if (!stat.isFile()) return false;
+-    if (stat.nlink !== 1) return false;
+-    realContentDir = fs.realpathSync(CONTENT_DIR);
+-    realFilePath = fs.realpathSync(filePath);
+-  } catch (e) {
+-    return false;
+-  }
+-  return realFilePath.startsWith(realContentDir + path.sep);
+-}
+-
+-// ========== Authentication ==========
+-
+-function timingSafeEqualStr(a, b) {
+-  const ab = Buffer.from(String(a));
+-  const bb = Buffer.from(String(b));
+-  if (ab.length !== bb.length) return false;
+-  return crypto.timingSafeEqual(ab, bb);
+-}
+-
+-function parseCookies(header) {
+-  const out = {};
+-  if (!header) return out;
+-  for (const part of header.split(';')) {
+-    const eq = part.indexOf('=');
+-    if (eq < 0) continue;
+-    out[part.slice(0, eq).trim()] = part.slice(eq + 1).trim();
+-  }
+-  return out;
+-}
+-
+-// A request is authorized if it carries the session key as ?key= or as the
+-// session cookie. Both are compared in constant time.
+-function isAuthorized(req) {
+-  const q = req.url.indexOf('?');
+-  if (q >= 0) {
+-    const params = new URLSearchParams(req.url.slice(q + 1));
+-    if (params.has('key')) {
+-      const key = params.get('key');
+-      return Boolean(key && timingSafeEqualStr(key, TOKEN));
+-    }
+-  }
+-  const cookie = parseCookies(req.headers['cookie'])[COOKIE_NAME];
+-  if (cookie && timingSafeEqualStr(cookie, TOKEN)) return true;
+-  return false;
+-}
+-
+-function pathnameOf(url) {
+-  const q = url.indexOf('?');
+-  return q >= 0 ? url.slice(0, q) : url;
+-}
+-
+-function queryKey(url) {
+-  const q = url.indexOf('?');
+-  if (q < 0) return null;
+-  return new URLSearchParams(url.slice(q + 1)).get('key');
+-}
+-
+-function securityHeaders(headers = {}) {
+-  return {
+-    'Referrer-Policy': 'no-referrer',
+-    'Cache-Control': 'no-store',
+-    'X-Frame-Options': 'DENY',
+-    'Content-Security-Policy': "frame-ancestors 'none'",
+-    'Cross-Origin-Resource-Policy': 'same-origin',
+-    ...headers
+-  };
+-}
+-
+-function isAllowedWebSocketOrigin(req) {
+-  const origin = req.headers.origin;
+-  if (!origin) return true;
+-  const host = req.headers.host;
+-  if (!host) return false;
+-  return origin === 'http://' + host;
+-}
+-
+@@ -388,19 +130,2 @@
+-  if (!isAuthorized(req)) {
+-    res.writeHead(403, securityHeaders({ 'Content-Type': 'text/html; charset=utf-8' }));
+-    res.end(FORBIDDEN_PAGE);
+-    return;
+-  }
+-  touchActivity(); // only authorized requests count as activity
+-
+-  // Mirror the key into a cookie so same-origin subresources (/files/*) can
+-  // authenticate after bootstrap. HttpOnly keeps it away from page scripts; the
+-  // WebSocket Origin check below is what blocks cross-origin localhost injection.
+-  res.setHeader('Set-Cookie',
+-    COOKIE_NAME + '=' + TOKEN + '; HttpOnly; SameSite=Strict; Path=/');
+-
+-  const pathname = pathnameOf(req.url);
+-  const keyFromQuery = queryKey(req.url);
+-  if (req.method === 'GET' && pathname === '/' && keyFromQuery && timingSafeEqualStr(keyFromQuery, TOKEN)) {
+-    res.writeHead(200, securityHeaders({ 'Content-Type': 'text/html; charset=utf-8' }));
+-    res.end(bootstrapPage(keyFromQuery));
+-  } else if (req.method === 'GET' && pathname === '/') {
++  touchActivity();
++  if (req.method === 'GET' && req.url === '/') {
+@@ -410 +135 @@
+-      : waitingPage();
++      : WAITING_PAGE;
+@@ -418 +143 @@
+-    res.writeHead(200, securityHeaders({ 'Content-Type': 'text/html; charset=utf-8' }));
++    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+@@ -420,7 +145,5 @@
+-  } else if (req.method === 'GET' && pathname.startsWith('/files/')) {
+-    const fileName = path.basename(pathname.slice(7));
+-    const filePath = path.join(CONTENT_DIR, fileName);
+-    // Reject empty/dotfile names and anything that isn't a regular file —
+-    // `/files/` would otherwise resolve to CONTENT_DIR and crash readFileSync (EISDIR).
+-    if (!fileName || fileName.startsWith('.') || !isRegularFileInsideContentDir(filePath)) {
+-      res.writeHead(404, securityHeaders());
++  } else if (req.method === 'GET' && req.url.startsWith('/files/')) {
++    const fileName = req.url.slice(7);
++    const filePath = path.join(CONTENT_DIR, path.basename(fileName));
++    if (!fs.existsSync(filePath)) {
++      res.writeHead(404);
+@@ -432 +155 @@
+-    res.writeHead(200, securityHeaders({ 'Content-Type': contentType }));
++    res.writeHead(200, { 'Content-Type': contentType });
+@@ -435 +158 @@
+-    res.writeHead(404, securityHeaders());
++    res.writeHead(404);
+@@ -445,2 +167,0 @@
+-  if (!isAuthorized(req) || !isAllowedWebSocketOrigin(req)) { socket.destroy(); return; }
+-
+@@ -513 +234 @@
+-  if (event && event.choice) {
++  if (event.choice) {
+@@ -526,24 +246,0 @@
+-// Best-effort: open the user's browser the first time a screen is actually ready
+-// to show. Skips when disabled, on a non-loopback (remote) bind, or when a
+-// browser is already connected. Override the launcher with BRAINSTORM_OPEN_CMD.
+-let browserOpened = false;
+-function maybeOpenBrowser() {
+-  if (browserOpened) return;
+-  browserOpened = true;
+-  if (!process.env.BRAINSTORM_OPEN) return; // opt-in: only after the user approves the companion
+-  if (HOST !== '127.0.0.1' && HOST !== 'localhost') return;
+-  if (clients.size > 0) return; // the user already opened it
+-  const url = companionUrl(); // must carry the key or the gate 403s it
+-  const cp = require('child_process');
+-  // Operator-provided launcher: run as given (this env var is trusted operator input).
+-  if (process.env.BRAINSTORM_OPEN_CMD) {
+-    try { cp.exec(process.env.BRAINSTORM_OPEN_CMD + ' ' + JSON.stringify(url), () => {}); } catch (e) { /* best effort */ }
+-    return;
+-  }
+-  // Platform launchers: pass the URL as an argv element via execFile (no shell),
+-  // so a url-host containing shell metacharacters can't inject a command.
+-  const launcher = browserLauncherForPlatform(url);
+-  if (!launcher) return; // headless: nothing to open
+-  try { cp.execFile(launcher.bin, launcher.args, () => {}); } catch (e) { /* best effort */ }
+-}
+-
+@@ -552,12 +249 @@
+-// Idle timeout: shut down after this long with no activity. Default 4 hours;
+-// override with BRAINSTORM_IDLE_TIMEOUT_MS (start-server.sh: --idle-timeout-minutes).
+-const IDLE_TIMEOUT_MS = (() => {
+-  const ms = Number(process.env.BRAINSTORM_IDLE_TIMEOUT_MS);
+-  return Number.isFinite(ms) && ms > 0 ? ms : 4 * 60 * 60 * 1000;
+-})();
+-// How often the watchdog checks for owner-death / idleness. Configurable mainly
+-// so tests can run fast; production default is 60s.
+-const LIFECYCLE_CHECK_MS = (() => {
+-  const ms = Number(process.env.BRAINSTORM_LIFECYCLE_CHECK_MS);
+-  return Number.isFinite(ms) && ms > 0 ? ms : 60 * 1000;
+-})();
++const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+@@ -584 +270 @@
+-    fs.readdirSync(CONTENT_DIR).filter(f => !f.startsWith('.') && f.endsWith('.html'))
++    fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.html'))
+@@ -591 +277 @@
+-    if (!filename || filename.startsWith('.') || !filename.endsWith('.html')) return;
++    if (!filename || !filename.endsWith('.html')) return;
+@@ -606 +291,0 @@
+-        maybeOpenBrowser();
+@@ -626,5 +310,0 @@
+-    // Close any upgraded WebSocket sockets so server.close() can complete and
+-    // the process actually exits instead of lingering on an open connection.
+-    for (const socket of clients) {
+-      try { socket.destroy(); } catch (e) { /* already gone */ }
+-    }
+@@ -639 +319 @@
+-  // Periodically exit if the owner process died or we've been idle too long.
++  // Check every 60s: exit if owner process died or idle for 30 minutes
+@@ -643 +323 @@
+-  }, LIFECYCLE_CHECK_MS);
++  }, 60 * 1000);
+@@ -659,22 +339 @@
+-  // If the preferred port is already taken (e.g. a previous server is still
+-  // alive), fall back to a random port once instead of failing.
+-  let triedFallback = false;
+-
+-  function onListen() {
+-    // Cookie name keys on the ACTUAL bound port (may differ from the preferred
+-    // one after an EADDRINUSE fallback) so it can't collide with another server's
+-    // cookie in the shared localhost jar.
+-    COOKIE_NAME = 'brainstorm-key-' + PORT;
+-    // Record the bound port AND token so the next restart of this session reuses
+-    // them — but ONLY when we got our preferred port. On a fallback we bound a
+-    // *different* port because someone else holds the preferred one; persisting
+-    // would overwrite the shared files and strand that other session's open tab.
+-    if (PORT_FILE && !triedFallback) {
+-      try { fs.writeFileSync(PORT_FILE, String(PORT)); } catch (e) { /* best effort */ }
+-      if (TOKEN_FILE) {
+-        try {
+-          fs.writeFileSync(TOKEN_FILE, TOKEN, { mode: 0o600 });
+-          chmodOwnerOnly(TOKEN_FILE);
+-        } catch (e) { /* best effort */ }
+-      }
+-    }
++  server.listen(PORT, HOST, () => {
+@@ -683,2 +342,2 @@
+-      url_host: URL_HOST, url: companionUrl(),
+-      screen_dir: CONTENT_DIR, state_dir: STATE_DIR, idle_timeout_ms: IDLE_TIMEOUT_MS
++      url_host: URL_HOST, url: 'http://' + URL_HOST + ':' + PORT,
++      screen_dir: CONTENT_DIR, state_dir: STATE_DIR
+@@ -687,21 +346 @@
+-    // server-info embeds the key — keep it owner-only.
+-    fs.writeFileSync(path.join(STATE_DIR, 'server-info'), info + '\n', { mode: 0o600 });
+-  }
+-
+-  server.on('error', (err) => {
+-    if (err.code === 'EADDRINUSE' && !triedFallback) {
+-      if (tokenSource === 'env') {
+-        console.error('Server failed to bind: preferred port is in use and BRAINSTORM_TOKEN is set; refusing fallback with explicit token');
+-        process.exit(1);
+-      }
+-      triedFallback = true;
+-      PORT = randomPort();
+-      if (tokenSource === 'file') {
+-        TOKEN = generateToken();
+-        tokenSource = 'generated-fallback';
+-      }
+-      server.listen(PORT, HOST, onListen);
+-    } else {
+-      console.error('Server failed to bind:', err.message);
+-      process.exit(1);
+-    }
++    fs.writeFileSync(path.join(STATE_DIR, 'server-info'), info + '\n');
+@@ -709 +347,0 @@
+-  server.listen(PORT, HOST, onListen);
+@@ -716,8 +354 @@
+-module.exports = {
+-  computeAcceptKey,
+-  encodeFrame,
+-  decodeFrame,
+-  browserLauncherForPlatform,
+-  OPCODES,
+-  MAX_FRAME_PAYLOAD_BYTES
+-};
++module.exports = { computeAcceptKey, encodeFrame, decodeFrame, OPCODES };
+diff --git a/brainstorming/scripts/start-server.sh b/brainstorming/scripts/start-server.sh
+index 016a8e4..9ef6dcb 100755
+--- a/brainstorming/scripts/start-server.sh
++++ b/brainstorming/scripts/start-server.sh
+@@ -14,3 +13,0 @@
+-#   --idle-timeout-minutes <n>  Shut down after n minutes idle (default 240 = 4h).
+-#   --open                Auto-open the browser on the first screen (use only
+-#                         after the user approves the visual companion).
+@@ -28 +24,0 @@
+-IDLE_TIMEOUT_MINUTES=""
+@@ -43,8 +38,0 @@
+-    --idle-timeout-minutes)
+-      IDLE_TIMEOUT_MINUTES="$2"
+-      shift 2
+-      ;;
+-    --open)
+-      export BRAINSTORM_OPEN=1
+-      shift
+-      ;;
+@@ -74,23 +61,0 @@
+-if [[ -n "$IDLE_TIMEOUT_MINUTES" ]]; then
+-  if ! [[ "$IDLE_TIMEOUT_MINUTES" =~ ^[0-9]+$ ]] || [[ "$IDLE_TIMEOUT_MINUTES" -lt 1 ]]; then
+-    echo "{\"error\": \"--idle-timeout-minutes must be a positive integer\"}"
+-    exit 1
+-  fi
+-  export BRAINSTORM_IDLE_TIMEOUT_MS=$(( IDLE_TIMEOUT_MINUTES * 60 * 1000 ))
+-fi
+-
+-is_windows_like_shell() {
+-  case "${OSTYPE:-}" in
+-    msys*|cygwin*|mingw*) return 0 ;;
+-  esac
+-  if [[ -n "${MSYSTEM:-}" ]]; then
+-    return 0
+-  fi
+-  local uname_s
+-  uname_s="$(uname -s 2>/dev/null || true)"
+-  case "$uname_s" in
+-    MSYS*|MINGW*|CYGWIN*) return 0 ;;
+-  esac
+-  return 1
+-}
+-
+@@ -104 +69,4 @@
+-  if is_windows_like_shell; then
++  case "${OSTYPE:-}" in
++    msys*|cygwin*|mingw*) FOREGROUND="true" ;;
++  esac
++  if [[ -n "${MSYSTEM:-}" ]]; then
+@@ -109,4 +76,0 @@
+-# Session files (server.log, server-info, .last-token) embed the session key —
+-# keep everything this script and the server create owner-only.
+-umask 077
+-
+@@ -118,4 +81,0 @@
+-  # Persist the bound port and key per project so a restart reuses them and an
+-  # already-open browser tab reconnects to the same URL with a valid cookie.
+-  export BRAINSTORM_PORT_FILE="${PROJECT_DIR}/.superpowers/brainstorm/.last-port"
+-  export BRAINSTORM_TOKEN_FILE="${PROJECT_DIR}/.superpowers/brainstorm/.last-token"
+@@ -129 +88,0 @@
+-SERVER_ID_FILE="${STATE_DIR}/server-instance-id"
+@@ -134,10 +92,0 @@
+-SERVER_ID=""
+-if [[ -r /dev/urandom ]]; then
+-  SERVER_ID="$(od -An -N24 -tx1 /dev/urandom 2>/dev/null | tr -d ' \n' || true)"
+-fi
+-if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
+-  SERVER_ID="$(printf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
+-fi
+-printf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+-chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
+-
+@@ -151 +100 @@
+-cd "$SCRIPT_DIR" || exit 1
++cd "$SCRIPT_DIR"
+@@ -161,8 +109,0 @@
+-# Windows/MSYS2: Node.js cannot see POSIX PIDs from the MSYS2 namespace.
+-# Passing a PID node cannot verify causes server to log owner-pid-invalid
+-# and self-terminate at the 60-second lifecycle check. Clear it so the
+-# watchdog is disabled and the idle timeout becomes the only shutdown trigger.
+-if is_windows_like_shell; then
+-  OWNER_PID=""
+-fi
+-
+@@ -171,4 +112,2 @@
+-  env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs "--brainstorm-server-id=$SERVER_ID" &
+-  SERVER_PID=$!
+-  echo "$SERVER_PID" > "$PID_FILE"
+-  wait "$SERVER_PID"
++  echo "$$" > "$PID_FILE"
++  env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs
+@@ -180 +119 @@
+-nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs "--brainstorm-server-id=$SERVER_ID" > "$LOG_FILE" 2>&1 &
++nohup env BRAINSTORM_DIR="$SESSION_DIR" BRAINSTORM_HOST="$BIND_HOST" BRAINSTORM_URL_HOST="$URL_HOST" BRAINSTORM_OWNER_PID="$OWNER_PID" node server.cjs > "$LOG_FILE" 2>&1 &
+@@ -186 +125 @@
+-for _ in {1..50}; do
++for i in {1..50}; do
+diff --git a/brainstorming/scripts/stop-server.sh b/brainstorming/scripts/stop-server.sh
+index 7cacfe9..a6b94e6 100755
+--- a/brainstorming/scripts/stop-server.sh
++++ b/brainstorming/scripts/stop-server.sh
+@@ -18,54 +17,0 @@
+-SERVER_ID_FILE="${STATE_DIR}/server-instance-id"
+-
+-mark_stopped() {
+-  local reason="$1"
+-  rm -f "${STATE_DIR}/server-info"
+-  printf '{"reason":"%s","timestamp":%s}\n' "$reason" "$(date +%s)" > "${STATE_DIR}/server-stopped"
+-}
+-
+-read_expected_server_id() {
+-  [[ -f "$SERVER_ID_FILE" ]] || return 1
+-  local id
+-  id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
+-  [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
+-  printf '%s\n' "$id"
+-}
+-
+-command_line_for_pid() {
+-  local pid="$1"
+-  if [[ -r "/proc/$pid/cmdline" ]]; then
+-    tr '\0' '\n' < "/proc/$pid/cmdline" 2>/dev/null || true
+-    return 0
+-  fi
+-  ps -ww -p "$pid" -o command= 2>/dev/null || ps -f -p "$pid" 2>/dev/null | sed '1d' || true
+-}
+-
+-command_has_server_id() {
+-  local pid="$1"
+-  local expected="$2"
+-  local expected_arg="--brainstorm-server-id=$expected"
+-  if [[ -r "/proc/$pid/cmdline" ]]; then
+-    local arg
+-    while IFS= read -r -d '' arg || [[ -n "$arg" ]]; do
+-      [[ "$arg" == "$expected_arg" ]] && return 0
+-    done < "/proc/$pid/cmdline"
+-    return 1
+-  fi
+-  local command_line
+-  command_line="$(command_line_for_pid "$pid")"
+-  [[ -n "$command_line" ]] || return 1
+-  case " $command_line " in
+-    *" $expected_arg "*) return 0 ;;
+-    *) return 1 ;;
+-  esac
+-}
+-
+-# Confirm a PID has this session's per-start instance id, not just a familiar
+-# process name. Ambiguous or legacy metadata fails closed as stale_pid.
+-is_brainstorm_server() {
+-  kill -0 "$1" 2>/dev/null || return 1
+-  local expected_id
+-  expected_id="$(read_expected_server_id)" || return 1
+-  command_has_server_id "$1" "$expected_id" || return 1
+-  return 0
+-}
+@@ -76,9 +21,0 @@
+-  # Refuse to signal a PID we can't prove is our server. A stale pid file may
+-  # point at an unrelated process after a reboot/PID wraparound.
+-  if ! is_brainstorm_server "$pid"; then
+-    rm -f "$PID_FILE" "$SERVER_ID_FILE"
+-    mark_stopped "stale_pid"
+-    echo '{"status": "stale_pid"}'
+-    exit 0
+-  fi
+-
+@@ -89 +26 @@
+-  for _ in {1..20}; do
++  for i in {1..20}; do
+@@ -109,2 +46 @@
+-  rm -f "$PID_FILE" "$SERVER_ID_FILE" "${STATE_DIR}/server.log"
+-  mark_stopped "stop-server.sh"
++  rm -f "$PID_FILE" "${STATE_DIR}/server.log"
+diff --git a/brainstorming/spec-document-reviewer-prompt.md a/brainstorming/spec-document-reviewer-prompt.md
+deleted file mode 100644
+index 6099312..0000000
+--- a/brainstorming/spec-document-reviewer-prompt.md
++++ /dev/null
+@@ -1,49 +0,0 @@
+-# Spec Document Reviewer Prompt Template
+-
+-Use this template when dispatching a spec document reviewer subagent.
+-
+-**Purpose:** Verify the spec is complete, consistent, and ready for implementation planning.
+-
+-**Dispatch after:** Spec document is written to docs/superpowers/specs/
+-
+-```
+-Subagent (general-purpose):
+-  description: "Review spec document"
+-  prompt: |
+-    You are a spec document reviewer. Verify this spec is complete and ready for planning.
+-
+-    **Spec to review:** [SPEC_FILE_PATH]
+-
+-    ## What to Check
+-
+-    | Category | What to Look For |
+-    |----------|------------------|
+-    | Completeness | TODOs, placeholders, "TBD", incomplete sections |
+-    | Consistency | Internal contradictions, conflicting requirements |
+-    | Clarity | Requirements ambiguous enough to cause someone to build the wrong thing |
+-    | Scope | Focused enough for a single plan — not covering multiple independent subsystems |
+-    | YAGNI | Unrequested features, over-engineering |
+-
+-    ## Calibration
+-
+-    **Only flag issues that would cause real problems during implementation planning.**
+-    A missing section, a contradiction, or a requirement so ambiguous it could be
+-    interpreted two different ways — those are issues. Minor wording improvements,
+-    stylistic preferences, and "sections less detailed than others" are not.
+-
+-    Approve unless there are serious gaps that would lead to a flawed plan.
+-
+-    ## Output Format
+-
+-    ## Spec Review
+-
+-    **Status:** Approved | Issues Found
+-
+-    **Issues (if any):**
+-    - [Section X]: [specific issue] - [why it matters for planning]
+-
+-    **Recommendations (advisory, do not block approval):**
+-    - [suggestions for improvement]
+-```
+-
+-**Reviewer returns:** Status, Issues (if any), Recommendations
+diff --git a/brainstorming/visual-companion.md b/brainstorming/visual-companion.md
+index 7b89f6b..2113863 100644
+--- a/brainstorming/visual-companion.md
++++ b/brainstorming/visual-companion.md
+@@ -31 +31 @@
+-**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the server serves it as-is (just injects the helper script). Otherwise, the server automatically wraps your content in the frame template — adding the header, CSS theme, connection status, and all interactive infrastructure. **Write content fragments by default.** Only write full documents when you need complete control over the page.
++**Content fragments vs full documents:** If your HTML file starts with `<!DOCTYPE` or `<html`, the server serves it as-is (just injects the helper script). Otherwise, the server automatically wraps your content in the frame template — adding the header, CSS theme, selection indicator, and all interactive infrastructure. **Write content fragments by default.** Only write full documents when you need complete control over the page.
+@@ -36,3 +36,2 @@
+-# Start AFTER the user approves the companion. --open auto-opens their browser on
+-# the first screen; --project-dir persists mockups and enables same-port restart.
+-scripts/start-server.sh --project-dir /path/to/project --open
++# Start server with persistence (mockups saved to project)
++scripts/start-server.sh --project-dir /path/to/project
+@@ -40,2 +39 @@
+-# Returns: {"type":"server-started","port":52341,
+-#           "url":"http://localhost:52341/?key=ab12…",
++# Returns: {"type":"server-started","port":52341,"url":"http://localhost:52341",
+@@ -46,9 +44 @@
+-Save `screen_dir` and `state_dir` from the response. With `--open`, the browser opens itself when you push the first screen — you don't need to ask the user to open it, but still share the URL as a fallback (headless/remote setups won't auto-open).
+-
+-**The URL contains a session key (`?key=…`).** The server rejects any request
+-without it, so always give the user the **complete** URL from the `url` field —
+-never strip the query string, and never hand out a bare `http://host:port`. The
+-key gates HTTP and WebSocket access so a stray browser tab or another machine on
+-the network can't read the screens or inject events. After the first load the
+-browser remembers the key via a cookie, so reloads and `/files/*` assets work
+-without repeating it.
++Save `screen_dir` and `state_dir` from the response. Tell user to open the URL.
+@@ -62 +52 @@
+-**Claude Code:**
++**Claude Code (macOS / Linux):**
+@@ -64,2 +54,2 @@
+-# Default mode works — the script backgrounds the server itself.
+-scripts/start-server.sh --project-dir /path/to/project --open
++# Default mode works — the script backgrounds the server itself
++scripts/start-server.sh --project-dir /path/to/project
+@@ -68 +58,8 @@
+-On Windows, the script auto-detects and switches to foreground mode (which blocks the tool call). Use `run_in_background: true` on the Bash tool call so the server survives across conversation turns, then read `$STATE_DIR/server-info` on the next turn to get the URL and port.
++**Claude Code (Windows):**
++```bash
++# Windows auto-detects and uses foreground mode, which blocks the tool call.
++# Use run_in_background: true on the Bash tool call so the server survives
++# across conversation turns.
++scripts/start-server.sh --project-dir /path/to/project
++```
++When calling this via the Bash tool, set `run_in_background: true`. Then read `$STATE_DIR/server-info` on the next turn to get the URL and port.
+@@ -74 +71 @@
+-scripts/start-server.sh --project-dir /path/to/project --open
++scripts/start-server.sh --project-dir /path/to/project
+@@ -77 +74 @@
+-**Copilot CLI:**
++**Gemini CLI:**
+@@ -79,4 +76,3 @@
+-# Use --foreground and start the server via the bash tool with mode: "async"
+-# so the process survives across turns. Capture the returned shellId for
+-# read_bash / stop_bash if you need to interact with it later.
+-scripts/start-server.sh --project-dir /path/to/project --open --foreground
++# Use --foreground and set is_background: true on your shell tool call
++# so the process survives across turns
++scripts/start-server.sh --project-dir /path/to/project --foreground
+@@ -101 +97 @@
+-   - **Required: confirm the server is alive before referring to the URL or pushing a screen.** Check that `$STATE_DIR/server-info` exists and `$STATE_DIR/server-stopped` does not. If it has shut down, restart it with `start-server.sh` using the **same `--project-dir`** — it reuses the same port, so the user's open tab reconnects on its own (it shows a "paused" overlay while the server is down) and you don't need to send a new URL. The server auto-exits after 4 hours idle (configurable with `--idle-timeout-minutes`).
++   - Before each write, check that `$STATE_DIR/server-info` exists. If it doesn't (or `$STATE_DIR/server-stopped` exists), the server has shut down — restart it with `start-server.sh` before continuing. The server auto-exits after 30 minutes of inactivity.
+@@ -104 +100 @@
+-   - Use your file-creation tool — **never use cat/heredoc** (dumps noise into terminal)
++   - Use Write tool — **never use cat/heredoc** (dumps noise into terminal)
+@@ -134 +130 @@
+-Write just the content that goes inside the page. The server wraps it in the frame template automatically (header, theme CSS, connection status, and all interactive infrastructure).
++Write just the content that goes inside the page. The server wraps it in the frame template automatically (header, theme CSS, selection indicator, and all interactive infrastructure).
+@@ -180 +176 @@
+-**Multi-select:** Add `data-multiselect` to the container to let users select multiple options. Each click toggles the item's selected styling.
++**Multi-select:** Add `data-multiselect` to the container to let users select multiple options. Each click toggles the item. The indicator bar shows the count.
