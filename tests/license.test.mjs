@@ -140,7 +140,7 @@ test("Impeccable carries its upstream NOTICE and separately pinned MIT attributi
   }
 });
 
-test("modified Impeccable source files carry adaptation notices and data formats have a separate notice", async () => {
+test("modified Impeccable source files carry adaptation notices and data provenance is recorded", async () => {
   const base = new URL("plugins/agentic-engineering-skills/skills/impeccable/", root);
   const refs = "degraded/asset-producer.md degraded/documenter.md degraded/finish-reviewer.md degraded/manual-edit-applier.md product.md adapt.md adapt.native.md android.md animate.md audit.md audit.native.md bolder.md clarify.md colorize.md craft-floor.md critique.md delight.md distill.md doctor.md document.md extract.md harden.md hooks.md init.md ios.md layout.md live-setup.md live.md new-work.md onboard.md operate.md optimize.md overdrive.md polish.md quieter.md routing.md typeset.md visualize.md".split(" ");
   const scripts = ["impeccable", "impeccable.cmd", "live-browser-dom.js", "live-browser-ignores.js", "live-browser-session.js", "live-browser.js"];
@@ -152,4 +152,29 @@ test("modified Impeccable source files carry adaptation notices and data formats
   for (const path of ["scripts/VERSION", "scripts/command-metadata.json", "scripts/data/font-index.json.deflate", "skill/scripts/data/font-index.json"]) {
     assert.ok(notice.includes(path), `adaptation notice omits ${path}`);
   }
+});
+
+test("Impeccable records the init adaptation inline and pins VERSION to release 4.8.0 bytes", async () => {
+  const base = new URL("plugins/agentic-engineering-skills/skills/impeccable/", root);
+  const commands = JSON.parse(await readFile(new URL("scripts/command-metadata.json", base), "utf8"));
+  assert.match(commands.init.$comment ?? "", /adapted.*pbakaus\/impeccable.*init.*description/i);
+  assert.match(commands.init.$comment, /omits.*DESIGN\.md.*existing code/i);
+  assert.equal(typeof commands.init.description, "string");
+  assert.equal(commands.init.argumentHint, "");
+
+  const version = await readFile(new URL("scripts/VERSION", base));
+  assert.equal(sha256(version), "447836d46f39c5900faf74ad6a6554b8e1fafeca1f78de0416d5f05c6e09a080");
+  assert.deepEqual(version, Buffer.from("0.1.18\n"));
+  const notice = await readFile(new URL("plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE", root), "utf8");
+  assert.match(notice, /Except where noted below/);
+  assert.match(notice, /skill-v4\.8\.0/);
+  assert.match(notice, /414603bf14c7a344edb466bb1f85690c77ce8b7d/);
+  assert.match(notice, /VERSION[^\n]*byte.identical/i);
+  assert.match(notice, /command-metadata\.json[^\n]*\$comment/i);
+  const metadata = JSON.parse(await readFile(new URL("manifests/supplemental-licenses.json", root), "utf8"));
+  assert.deepEqual(metadata.adaptationNotice.formatLimitedFiles, []);
+  assert.equal(metadata.adaptationNotice.versionSource.revision, "414603bf14c7a344edb466bb1f85690c77ce8b7d");
+  assert.equal(metadata.adaptationNotice.versionSource.sha256, sha256(version));
+  const provenance = await readFile(new URL("docs/provenance.md", root), "utf8");
+  assert.match(provenance, /skill-v4\.8\.0[^\n]*414603bf14c7a344edb466bb1f85690c77ce8b7d/);
 });

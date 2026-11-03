@@ -282,7 +282,7 @@
       "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
       "upstreamPath": "skill/",
       "sha256": "8023233e074b16c314ec18354955beb425a49ae79450ef641045b19ca0dfa04b",
-      "localSha256": "836a247644ed0f1dd8f9bd3e3c4f353558c27ef680f0a2ed87564f488cb912ef",
+      "localSha256": "4bd8fbe1e0426f520febe2e691c0cfefafbb4be23377bb49e43ca871473f56a1",
       "dependencies": [],
       "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for cross-host distribution. Includes fresh-context subagent routing and portable specialist contracts.",
       "patchPath": "manifests/patches/impeccable.patch",

@@ -4,7 +4,7 @@ Repository-original material is licensed under the root MIT license. Third-party
 
 **Archify is not wholly MIT-licensed.** Its upstream MIT license covers Archify's own code and content only. Bundled brand artwork and fonts retain their separate terms, including CC-BY-NC-SA-4.0 for Vue artwork, CC-BY-SA terms for Jenkins and Rust artwork, and SIL Open Font License 1.1 for JetBrains Mono. These restrictions remain applicable to the bundled assets; see the [pinned Archify third-party notice](plugins/agentic-engineering-skills/licenses/tt-a1i-archify-THIRD_PARTY_NOTICES) for recorded sources, terms, and trademark limits.
 
-A supplementary modification notice at `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE` identifies modified data files whose formats cannot carry comments and documents the compressed font-index representation.
+A supplementary modification notice at `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE` records the adapted command metadata, the byte-identical upstream release VERSION and the compressed font-index representation.
 
 Impeccable's retained upstream NOTICE attributes `reference/ios.md` and `reference/android.md` to [ehmo/platform-design-skills](https://github.com/ehmo/platform-design-skills), under MIT. Retain `plugins/agentic-engineering-skills/licenses/ehmo-platform-design-skills-LICENSE` when redistributing those references. The license text was verified at commit `dc2be825d8b439caea78e9eaa8fb3ac23b0ff3e9`; the revision of the underlying reference content is not established. See `manifests/supplemental-licenses.json`.
 

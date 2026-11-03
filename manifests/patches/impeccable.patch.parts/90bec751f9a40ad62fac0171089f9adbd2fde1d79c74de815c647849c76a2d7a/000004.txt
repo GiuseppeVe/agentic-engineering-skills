@@ -1,4 +1,9 @@
- return false;
+CEL_DOMAINS,
++  'mona sans': GITHUB_DOMAINS,
++};
++
++function isBrandFontOnOwnDomain(font) {
++  if (typeof location === 'undefined') return false;
 +  const allowed = BRAND_FONT_DOMAINS[font];
 +  if (!allowed) return false;
 +  const host = location.hostname.toLowerCase();
