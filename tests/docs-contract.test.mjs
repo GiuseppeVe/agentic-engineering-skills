@@ -345,6 +345,63 @@ test('selective installation has one lock-derived row per skill', () => {
   }
 });
 
+test('selective installation includes mandatory skill prerequisites', () => {
+  const required = [
+    ['brainstorming', 'writing-plans'],
+    ['grill-me', 'grilling'],
+    ['retro', 'writing-for-agents'],
+    ['improve-codebase-architecture', 'codebase-design'],
+  ];
+  for (const [skill, prerequisite] of required) {
+    const entry = lock.find(({ name }) => name === skill);
+    assert.ok(entry?.dependencies.includes(prerequisite), `${skill} must include ${prerequisite}`);
+  }
+});
+
+test('selective installation explains conditional skill prerequisites', () => {
+  const source = read('docs/selective-install.md');
+  const lines = section(source, 'Conditional prerequisites').split('\n');
+  const lineFor = (name) => {
+    const line = lines.find((candidate) => candidate.startsWith(`- \`${name}\``));
+    assert.ok(line, `missing conditional prerequisites for ${name}`);
+    return line;
+  };
+
+  const wayfinder = lineFor('wayfinder');
+  assert.match(wayfinder, /chart/i);
+  assert.match(wayfinder, /Grilling ticket/i);
+  assert.match(wayfinder, /unsure.*discussion/i);
+  assert.match(wayfinder, /`grilling`/);
+  assert.match(wayfinder, /`domain-modeling`/);
+
+  const graphifyStart = lineFor('graphify-start');
+  assert.match(graphifyStart, /no project-specific.*protocol/i);
+  assert.match(graphifyStart, /`graphify`/);
+
+  const architecture = lineFor('improve-codebase-architecture');
+  assert.match(architecture, /`grilling`.*candidate.*select/i);
+  assert.match(architecture, /`domain-modeling`.*terminology.*decisions/i);
+
+  const sequential = lineFor('sequential-task-orchestrator');
+  assert.match(sequential, /implementation skill.*bounded worker mode/i);
+  assert.match(sequential, /`codex-implement`.*Codex/i);
+  assert.match(sequential, /`claude-implement`.*Claude Code/i);
+  assert.match(sequential, /`coordinating-implementation-programs`/);
+  assert.doesNotMatch(source, /bundled worker reference/i);
+
+  for (const [skill, conditional] of [
+    ['wayfinder', 'grilling'],
+    ['wayfinder', 'domain-modeling'],
+    ['graphify-start', 'graphify'],
+    ['improve-codebase-architecture', 'grilling'],
+    ['improve-codebase-architecture', 'domain-modeling'],
+  ]) {
+    const entry = lock.find(({ name }) => name === skill);
+    assert.ok(entry, `missing skill ${skill}`);
+    assert.ok(!entry.dependencies.includes(conditional), `${skill} must not require ${conditional} unconditionally`);
+  }
+});
+
 test('selective legal sets exactly join third-party notices', () => {
   const selective = new Map(tableRows(read('docs/selective-install.md')).map((row) => {
     const [name, , legal] = cells(row);

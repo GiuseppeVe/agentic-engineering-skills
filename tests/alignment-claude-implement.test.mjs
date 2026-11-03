@@ -108,7 +108,7 @@ test("Claude Implement contracts match current Alfe workflow and stay portable",
   assert.match(isolation, /never from a later integration or packet head/);
   assert.match(isolation, /Packet worktrees must be siblings/);
   assert.match(review, /Any failed test or material finding blocks further integration/);
-  for (const scenario of ["Shared interface escape", "Worker notes sent to clean reviewer", "Green tests, violated invariant", "Worktree topology and frozen base", "Capacity, disjointness, and serial fallback", "Opus test-author allowed-files escape", "Serial integration, combined tests, and shared-contract conflict", "Fresh contexts and host routing"]) {
+  for (const scenario of ["Shared interface escape", "Worker notes sent to clean reviewer", "Green tests, violated invariant", "Worktree topology and frozen base", "Capacity, disjointness, and serial fallback", "Test-author allowed-files escape", "Serial integration, combined tests, and shared-contract conflict", "Fresh contexts and host routing", "Bounded worker in the shared run worktree"]) {
     assert.ok(forwardTests.includes(scenario), `forward validation must cover: ${scenario}`);
   }
   assert.match(forwardTests, /Remote-base subcase[\s\S]*?Remote-base expected outcome[\s\S]*?Remote-base fail criterion/);
@@ -118,5 +118,69 @@ test("Claude Implement contracts match current Alfe workflow and stay portable",
     const contents = await readSkill(relative);
     assert.doesNotMatch(contents, /alfe_AI_app|[A-Z]:\\Users\\|\/Users\/[^/]+\//i,
       `${relative}: plugin skill must not depend on a project-specific absolute path`);
+  }
+});
+
+test("bounded dispatch uses the parent's shared worktree and leaves review to the parent", async () => {
+  const skill = await readSkill("SKILL.md");
+  assert.match(skill, /^description:.*bounded worker/m, "bounded dispatch must be discoverable");
+  const bounded = skill.match(/^## Bounded worker mode\r?\n([\s\S]*?)(?=^## Controller mode\r?$)/m)?.[1];
+  assert.ok(bounded, "bounded mode must precede and exit before the controller mode");
+  assert.match(bounded, /explicitly dispatched as a bounded worker/i);
+  assert.match(bounded, /\[the worker (?:role|contract)\]\(agents\/worker\.md\)/i);
+  assert.match(bounded, /one (?:assigned |supplied )?packet/i);
+  assert.match(bounded, /shared worktree and (?:run )?branch/i);
+  assert.match(bounded, /do not create (?:an? )?(?:own |another |new )?worktree/i);
+  assert.match(bounded, /do not (?:invoke|run|start).*controller/i);
+  assert.match(bounded, /parent.*review and integration/i);
+  assert.match(bounded, /return.*remaining sections.*controller mode/i);
+  assert.match(bounded, /other invocations.*controller mode/i);
+  assert.match(bounded, /(?:checks|tests).*(?:evidence|results)/i);
+  assert.match(bounded, /commit/i);
+  assert.match(bounded, /(?:authorization|permission)/i);
+  assert.match(bounded, /BLOCKED/);
+});
+
+test("controller dispatch retains planning, isolation and independent approval", async () => {
+  const skill = await readSkill("SKILL.md");
+  const controller = skill.match(/^## Controller mode\r?\n([\s\S]*)$/m)?.[1];
+  assert.ok(controller, "ordinary dispatch must retain the full controller path");
+  for (const requirement of [
+    /references\/implementation-philosophy\.md/,
+    /references\/packet-contract\.md/,
+    /references\/work-isolation\.md/,
+    /new agent invocation\/context/,
+    /fresh clean reviewer/,
+    /Only the controller may modify the integration branch/,
+  ]) {
+    assert.match(controller, requirement);
+  }
+});
+
+test("worker and test-author roles agree with model routing", async () => {
+  const [author, worker, routing, roleMap, isolation, distribution, forwardTests] = await Promise.all([
+    readSkill("agents/sol-test-author.md"),
+    readSkill("agents/worker.md"),
+    readSkill("references/model-routing.md"),
+    readSkill("references/agent-roles.md"),
+    readSkill("references/work-isolation.md"),
+    readSkill("references/distribution.md"),
+    readSkill("tests/forward-tests.md"),
+  ]);
+  assert.match(author, /^model: claude-sonnet-5-5$/m);
+  assert.match(author, /^effort: medium$/m);
+  assert.match(worker, /^model: claude-sonnet-5-5$/m);
+  assert.match(worker, /^effort: high$/m);
+  assert.ok(routing.includes("| Bounded packet worker | `claude-sonnet-5-5` | `high` |"));
+  assert.match(routing, /^\| Test author \| `claude-sonnet-5-5` \| `medium` \|$/m);
+  assert.ok(roleMap.includes("| Test author |"), "role map uses a neutral label");
+  for (const [name, source] of [
+    ["test-author attachment", author],
+    ["role map", roleMap],
+    ["work isolation", isolation],
+    ["distribution", distribution],
+    ["forward tests", forwardTests],
+  ]) {
+    assert.doesNotMatch(source, /Opus[- ]test[- ]author/i, name + " must not mislabel the test author");
   }
 });

@@ -9,7 +9,7 @@ Read this reference before delegating work or assigning review authority.
 | Opus test strategist | `agents/sol-test-strategist.md` | Read-only test/evidence design. |
 | Opus planner/synthesizer | `agents/planner.md` | Sole authoritative packet decisions. |
 | worker | [`agents/worker.md`](../agents/worker.md) | One bounded implementation packet. |
-| Opus test author | `agents/sol-test-author.md` | One bounded test packet. |
+| Test author | `agents/sol-test-author.md` | One bounded test packet. |
 | Opus semantic tester | `agents/spec-aware-tester.md` | Semantic evidence and rework findings. |
 | Opus audit reviewer | `agents/sol-audit-reviewer.md` | Read-only pre-final targeted findings. |
 | Opus clean reviewer | `agents/clean-room-reviewer.md` | Fresh sole final gate. |

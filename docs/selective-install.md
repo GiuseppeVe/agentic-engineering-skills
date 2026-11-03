@@ -6,13 +6,13 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | --- | --- | --- | --- |
 | `archify` | None | `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-LICENSE`; `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-THIRD_PARTY_NOTICES` | Design: checked standalone diagrams and explainers |
 | `ask-matt` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Understand: route to a fitting skill or flow |
-| `brainstorming` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
+| `brainstorming` | `writing-plans` | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
 | `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
 | `deslopping-cleanup` | None | `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
 | `codebase-design` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: module boundaries |
 | `domain-modeling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: domain vocabulary |
-| `grill-me` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
+| `grill-me` | `grilling` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Understand: design challenge |
 | `grilling` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Review: plan pressure-test |
 | `graphify` | None | `plugins/agentic-engineering-skills/licenses/Graphify-Labs-graphify-LICENSE`; `plugins/agentic-engineering-skills/licenses/Graphify-Labs-graphify-LICENSE-MIT`; `plugins/agentic-engineering-skills/licenses/Graphify-Labs-graphify-NOTICE` | Understand: persistent codebase knowledge graph |
 | `graphify-start` | None | `LICENSE` | Understand: route codebase questions through project Graphify protocol |
@@ -23,13 +23,13 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
 | `coordinating-implementation-programs` | `sequential-task-orchestrator` | `LICENSE` | Implement: coordinate approved plans and dependencies |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE`; `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-NOTICE` | Design: frontend craft and critique |
-| `improve-codebase-architecture` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
+| `improve-codebase-architecture` | `codebase-design` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
 | `marketing-screenshots` | None | `LICENSE` | Design: capture and inspect real product UI for marketing assets |
 | `master-orchestrator` | None | `LICENSE` | Understand: coordinate a dynamic non-implementation graph, filtered reports, decisions and design contracts |
 | `mdx-to-html` | None | `LICENSE` | Verify: create a standalone MDX review artifact |
-| `sequential-task-orchestrator` | `test-driven-development` | `LICENSE` | Implement: strictly ordered execution with its bundled worker reference and per-task review |
-| `retro` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Review: reflect on a coding session |
+| `sequential-task-orchestrator` | `test-driven-development` | `LICENSE` | Implement: strictly ordered execution and per-task review |
+| `retro` | `writing-for-agents` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Review: reflect on a coding session |
 | `setup-goal` | None | `LICENSE` | Plan: outcome runbook and approved native Goal setup |
 | `setup-harness-evaluation` | None | `LICENSE` | Verify: independent harness runs for manual evaluation |
 | `setup-workflow-comparison` | None | `LICENSE` | Verify: independent workflow variants for manual evaluation |
@@ -40,6 +40,17 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `wayfinder` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Plan: large-work map |
 | `writing-for-agents` | None | `LICENSE` | Design: agent-facing document writing |
 | `writing-plans` | None | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Plan: executable tasks |
+
+## Conditional prerequisites
+
+The lock records unconditional skill dependencies only. For these branches, also install:
+
+- `wayfinder`: install `grilling` and `domain-modeling` when charting a map, resolving a Grilling ticket, or unsure which discussion skills apply.
+- `graphify-start`: if no project-specific Graphify protocol exists, install `graphify` for the default route.
+- `improve-codebase-architecture`: install `grilling` when a candidate is selected; install `domain-modeling` when no terminology source exists or decisions crystallise.
+- `sequential-task-orchestrator`: use an implementation skill with bounded worker mode, such as `codex-implement` on Codex or `claude-implement` on Claude Code. This also applies when invoked through `coordinating-implementation-programs`.
+
+## Additional installation notes
 
 For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE` and `plugins/agentic-engineering-skills/licenses/ehmo-platform-design-skills-LICENSE` for the MIT-derived iOS and Android references; their attribution is preserved in the upstream NOTICE.
 

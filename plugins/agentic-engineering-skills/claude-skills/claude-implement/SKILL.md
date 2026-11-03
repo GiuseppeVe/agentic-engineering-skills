@@ -1,9 +1,15 @@
 ---
 name: claude-implement
-description: Use when the user explicitly requests Opus for a substantial implementation task, complex development plan, or independent implementation review.
+description: Use when the user explicitly requests Opus for a substantial implementation task, complex development plan, or independent implementation review. Also use when explicitly dispatched as a bounded worker for one packet.
 ---
 
 # Claude Implement
+
+## Bounded worker mode
+
+When explicitly dispatched as a bounded worker, read [the worker contract](agents/worker.md) and the assigned packet. Work in the exact shared worktree and branch supplied by the parent; do not create another worktree. Implement one assigned packet within its allowed files and existing contract, run its required checks and return the worker contract's evidence to the parent. Commit only with the required authorization on the supplied branch; when a required commit is prohibited or cannot be verified, return `BLOCKED` with the available evidence. Do not invoke the controller, planner, tester or clean-review workflow; the parent coordinates review and integration. Respect the hard boundary rule below and all higher-priority user, repository, and runtime instructions. After completing this mode, return to the parent; the remaining sections apply only to controller mode. For all other invocations, use controller mode.
+
+## Controller mode
 
 Use Opus 5.5 as the primary reasoning authority for complex implementation work. Rely on its judgment for decomposition, architecture, integration, testing strategy, and independent review; delegate only bounded implementation subtasks when that improves execution.
 

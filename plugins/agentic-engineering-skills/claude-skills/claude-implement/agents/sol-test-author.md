@@ -5,7 +5,7 @@ model: claude-sonnet-5-5
 effort: medium
 ---
 
-# Opus test author
+# Test author
 
 Write tests for exactly one bounded test packet in its declared packet branch and packet worktree. Read the unabridged original specification, original plan, and acceptance criteria before writing tests.
 
