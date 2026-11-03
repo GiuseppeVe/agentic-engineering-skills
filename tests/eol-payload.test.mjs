@@ -127,3 +127,50 @@ test("chunked provenance patches survive autocrlf checkouts byte-for-byte", asyn
     assert.deepEqual(await loadPatchBytes(join(clone, "manifests", "patches", "impeccable.patch"), clone), expected, `patch bytes with autocrlf=${autocrlf}`);
   }
 });
+
+test("documentation and root license check out as LF regardless of autocrlf", async (t) => {
+  const tempRoot = await mkdtemp(join(tmpdir(), "documentation-eol-"));
+  t.after(() => rm(tempRoot, { recursive: true, force: true }));
+
+  const gitEnv = {
+    ...process.env,
+    GIT_CONFIG_GLOBAL: join(tempRoot, "no-global-config"),
+    GIT_CONFIG_NOSYSTEM: "1",
+    GIT_ATTR_NOSYSTEM: "1",
+  };
+  const fixtureGit = (cwd, ...args) => git(cwd, "-c", `core.attributesfile=${join(tempRoot, "no-global-attributes")}`, ...args, { env: gitEnv });
+  const repo = join(tempRoot, "repo");
+  await mkdir(repo);
+  await fixtureGit(repo, "init", "-q");
+  await fixtureGit(repo, "config", "user.name", "EOL test");
+  await fixtureGit(repo, "config", "user.email", "eol-test@example.invalid");
+  await fixtureGit(repo, "config", "core.autocrlf", "false");
+  await writeFile(join(repo, ".gitattributes"), await readFile(fileURLToPath(new URL("../.gitattributes", import.meta.url))));
+
+  const files = new Map([
+    ["README.md", Buffer.from("# Readme\n\nExample content.\n")],
+    ["docs/selective-install.md", Buffer.from("# Install\n\nExample instructions.\n")],
+    ["docs/reference/guide.md", Buffer.from("# Guide\n\nExample reference.\n")],
+    ["THIRD_PARTY_NOTICES.md", Buffer.from("# Third-party notices\n\nExample attribution.\n")],
+    ["LICENSE", Buffer.from("Example license\nSecond line.\n")],
+  ]);
+  for (const [path, bytes] of files) {
+    const destination = join(repo, path);
+    await mkdir(dirname(destination), { recursive: true });
+    await writeFile(destination, bytes);
+  }
+  await fixtureGit(repo, "add", ".gitattributes", ...files.keys());
+  await fixtureGit(repo, "commit", "-qm", "fixture");
+
+  for (const autocrlf of ["true", "false"]) {
+    const clone = join(tempRoot, `clone-${autocrlf}`);
+    await fixtureGit(tempRoot, "clone", "-q", "--no-checkout", repo, clone);
+    await fixtureGit(clone, "config", "core.autocrlf", autocrlf);
+    await fixtureGit(clone, "checkout", "-q", "HEAD");
+    for (const [path, bytes] of files) {
+      await t.test(`${path} with core.autocrlf=${autocrlf}`, async () => {
+        assert.deepEqual(await readFile(join(clone, path)), bytes);
+      });
+    }
+  }
+});
