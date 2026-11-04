@@ -26,7 +26,7 @@ test("package exposes the minimal Node 22 command surface", async () => {
   const packageJson = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
 
   assert.equal(packageJson.name, "agentic-engineering-skills");
-  assert.equal(packageJson.version, "1.1.0");
+  assert.equal(packageJson.version, "1.1.1");
   assert.equal(packageJson.private, true);
   assert.equal(packageJson.type, "module");
   assert.deepEqual(packageJson.engines, { node: ">=22" });
