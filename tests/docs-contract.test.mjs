@@ -63,7 +63,6 @@ test('README has required exact section sequence and manifest-derived install co
     'The quality loop',
     'Hooks I use',
     'Supporting skills',
-    'Example: choosing a route',
     'Workflow at a glance',
     'Install',
     'Why version 1.1',
@@ -144,7 +143,7 @@ test('README keeps the hero-led opening and experience-shaped framing', () => {
 test('README documents conditional workflow routing and example', () => {
   const source = read('README.md');
   const routing = section(source, 'How I use the workflow');
-  const example = section(source, 'Example: choosing a route');
+  const example = section(source, 'Supporting skills');
 
   for (const [situation, path] of [
     ['Research, analysis, audit, or design program', 'Master Orchestrator'],
@@ -193,7 +192,7 @@ test('README explains philosophy, quality signals, and supporting skills', () =>
   assert.match(quality, /`Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness/i);
   assert.match(quality, /TDD fix cycle before acceptance/i);
 
-  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Cleaning Repo with Knip', 'Improve Codebase Architecture']) {
+  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Improve Codebase Architecture']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
   assert.match(supporting, /post-merge reminder/i);
@@ -210,10 +209,11 @@ test('graph workflow documentation explains both available orchestration routes'
   assert.match(graph, /map of decisions and a separate map of shared contracts/i);
   assert.match(graph, /master itself does not implement code/i);
   assert.match(graph, /Graphify.*semantic codebase graph[\s\S]*separate tool/i);
+  assert.match(graph, /When Graphify is useful[\s\S]*100,000 lines of code[\s\S]*heuristic/i);
 
   const available = graph.slice(graph.indexOf('### Research'), graph.indexOf('### Implementation'));
   const preview = graph.slice(graph.indexOf('### Implementation'));
-  assert.match(available, /available/i);
+  assert.match(available, /research, audits, design, and migration planning/i);
   assert.match(preview, /coordinating-implementation-programs\/SKILL\.md/);
   assert.match(preview, /sequential-task-orchestrator/);
   assert.match(preview, /visible subordinate thread/i);
