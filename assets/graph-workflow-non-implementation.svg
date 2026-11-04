@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+  <title id="title">Non-implementation graph workflow</title>
+  <desc id="desc">Available workflow. The user starts a new chat and explicitly invokes master-orchestrator with an objective and constraints. One master maintains the task graph and state, dispatches ready nodes to scoped investigation and separate authorship, requests independent review when needed, evaluates filtered reports, and updates dependencies. New questions can return work to the graph. Outputs are decisions, specifications, plans, or an implementation handoff. Additional sessions require host support and authorization.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#9b4b42"/></marker>
+    <marker id="feedback" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#587a62"/></marker>
+    <style>
+      text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: #241f1c; }
+      .box { fill: #fffaf3; stroke: #cdbfaf; stroke-width: 1.5; }
+      .master { fill: #f2e5d9; stroke: #9b4b42; stroke-width: 1.8; }
+      .output { fill: #e5eee7; stroke: #587a62; stroke-width: 1.5; }
+      .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; fill: #9b4b42; }
+      .label { font-size: 21px; font-weight: 700; }
+      .detail { font-size: 16px; fill: #63584e; }
+      .small { font-size: 14px; fill: #63584e; }
+      .edge { fill: none; stroke: #9b4b42; stroke-width: 2; marker-end: url(#arrow); }
+      .loop { fill: none; stroke: #587a62; stroke-width: 2; stroke-dasharray: 7 5; marker-end: url(#feedback); }
+    </style>
+  </defs>
+  <rect width="1200" height="850" rx="12" fill="#f4efe8"/>
+  <text x="48" y="42" class="eyebrow">GRAPH WORKFLOW · AVAILABLE</text>
+  <text x="48" y="84" font-size="33" font-weight="700">One master. A graph that evolves with the work.</text>
+  <text x="48" y="114" class="detail">Research, analysis, audit, design, and migration planning</text>
+
+  <rect class="box" x="48" y="150" width="316" height="116" rx="9"/>
+  <text class="eyebrow" x="68" y="176">USER · NEW CHAT</text>
+  <text class="label" x="68" y="207">Invoke master-orchestrator</text>
+  <text class="detail" x="68" y="236">Objective, scope, constraints</text>
+  <path class="edge" d="M364 208H426"/>
+
+  <rect class="master" x="426" y="150" width="348" height="116" rx="9"/>
+  <text class="eyebrow" x="446" y="176">MASTER · COORDINATE</text>
+  <text class="label" x="446" y="207">Build and update the graph</text>
+  <text class="detail" x="446" y="236">Ready nodes, dependencies, criteria</text>
+
+  <rect class="box" x="838" y="150" width="314" height="116" rx="9"/>
+  <text class="eyebrow" x="858" y="176">RUN STATE</text>
+  <text class="label" x="858" y="207">Decisions and ownership</text>
+  <text class="detail" x="858" y="236">Identity, claims, results, blockers</text>
+  <path d="M774 208H838" fill="none" stroke="#cdbfaf" stroke-width="2"/>
+
+  <rect x="48" y="338" width="1104" height="230" rx="10" fill="#eee7dd"/>
+  <text x="68" y="366" class="eyebrow">EXAMPLE NODES · DEPENDENCIES CAN CHANGE</text>
+  <path class="edge" d="M600 266V318H630V374H192V386"/>
+  <path class="edge" d="M630 374H489V386"/>
+  <text x="642" y="316" class="small">Dispatch ready, authorized nodes</text>
+
+  <rect class="box" x="72" y="386" width="240" height="112" rx="8"/>
+  <text class="label" x="90" y="418">Investigate</text>
+  <text class="detail" x="90" y="448">Sources and uncertainty</text>
+  <text class="small" x="90" y="475">Scoped research delegate</text>
+
+  <rect class="box" x="369" y="386" width="240" height="112" rx="8"/>
+  <text class="label" x="387" y="418">Analyze</text>
+  <text class="detail" x="387" y="448">Questions and alternatives</text>
+  <text class="small" x="387" y="475">Compatible work in parallel</text>
+
+  <rect class="box" x="666" y="386" width="214" height="112" rx="8"/>
+  <text class="label" x="684" y="418">Author</text>
+  <text class="detail" x="684" y="448">Build the deliverable</text>
+  <text class="small" x="684" y="475">Different from investigator</text>
+
+  <rect class="box" x="934" y="386" width="194" height="112" rx="8"/>
+  <text class="label" x="952" y="418">Review</text>
+  <text class="detail" x="952" y="448">Independent checks</text>
+  <text class="small" x="952" y="475">When needed</text>
+
+  <path class="edge" d="M312 436H343V520H642V455H666"/>
+  <path class="edge" d="M609 422H666"/>
+  <path class="edge" d="M880 436H934"/>
+  <text x="72" y="548" class="small">Filtered reports: provenance, evidence references, uncertainties, and limits.</text>
+
+  <path class="edge" d="M773 498V574H600V590"/>
+  <text x="790" y="563" class="small">No separate review needed</text>
+  <path class="edge" d="M1031 498V603H774"/>
+  <rect class="master" x="426" y="590" width="348" height="98" rx="9"/>
+  <text class="label" x="446" y="626">Master evaluates the result</text>
+  <text class="detail" x="446" y="656">Resolve, revisit, or add a node</text>
+  <path class="loop" d="M426 638H25V292H402V208H426"/>
+  <rect x="44" y="593" width="320" height="74" rx="6" fill="#f4efe8"/>
+  <text x="64" y="620" class="detail">New evidence or a human decision</text>
+  <text x="64" y="644" class="small">Updates only the affected dependencies</text>
+
+  <path class="edge" d="M600 688V730"/>
+  <rect class="output" x="426" y="730" width="726" height="78" rx="9"/>
+  <text class="label" x="446" y="762">Decisions · specifications · plans · implementation handoff</text>
+  <text class="small" x="446" y="788">Deliver authorized results with verified evidence, unresolved items, and next steps.</text>
+  <text x="48" y="749" class="eyebrow">LARGE DESIGN PROGRAMS</text>
+  <text x="48" y="775" class="detail">Decision map + contract map</text>
+  <text x="48" y="800" class="small">Shared owners, amendments, conflicts</text>
+
+  <text x="48" y="833" font-size="12" fill="#776c63">Sessions and durable state require host support and authorization. This master does not implement code.</text>
+</svg>

@@ -6,6 +6,7 @@ import test from "node:test";
 const root = new URL("../", import.meta.url);
 const lock = JSON.parse(await readFile(new URL("manifests/skills.lock.json", root), "utf8"));
 const sha256 = value => createHash("sha256").update(value).digest("hex");
+const legalPathPattern = /(?:^|\/)(?:LICENSE(?:-[A-Z0-9]+(?:[.-][A-Z0-9]+)*)?|NOTICE|THIRD_PARTY_NOTICES)(?:\.[A-Za-z0-9-]+)?$/i;
 const canonicalMit = `MIT License
 
 Copyright (c) 2026 GiuseppeVe
@@ -39,12 +40,19 @@ test("every third-party entry joins exact pinned legal files", async () => {
     assert.ok(Array.isArray(entry.licenseFiles) && entry.licenseFiles.length > 0, `${entry.name}: missing licenseFiles`);
     for (const legal of entry.licenseFiles) {
       assert.match(legal.path, /^plugins\/agentic-engineering-skills\/licenses\//);
-      assert.match(legal.upstreamPath, /(?:^|\/)(?:LICENSE|NOTICE)(?:\.[A-Za-z0-9-]+)?$/i);
+      assert.match(legal.upstreamPath, legalPathPattern);
       assert.match(legal.sha256, /^[a-f0-9]{64}$/);
       const content = await readFile(new URL(legal.path, root));
       assert.equal(sha256(content), legal.sha256, `${entry.name}: ${legal.path} hash mismatch`);
     }
   }
+});
+
+test("legal filenames accept LICENSE-MIT but reject nested paths", () => {
+  assert.match("LICENSE-MIT", legalPathPattern);
+  assert.match("path/to/LICENSE-APACHE-2.0", legalPathPattern);
+  assert.doesNotMatch("LICENSE-MIT/extra", legalPathPattern);
+  assert.doesNotMatch("not-a-license.txt", legalPathPattern);
 });
 
 test("Apache-2.0 license and NOTICE match pinned claude-mem blobs", () => {
@@ -69,6 +77,8 @@ test("third-party notice rows exactly join lock entries to legal files", async (
     ["https://github.com/ruvnet/ruflo", "ruvnet"],
     ["https://github.com/pbakaus/impeccable", "Paulo Bakaus"],
     ["https://github.com/nextlevelbuilder/ui-ux-pro-max-skill", "Next Level Builder"],
+    ["https://github.com/tt-a1i/archify", "tt-a1i; Cocoon AI"],
+    ["https://github.com/Graphify-Labs/graphify", "Safi Shamsi and Graphify contributors"],
   ]);
   for (const entry of lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded)) {
     const row = rows.get(entry.name);
@@ -78,9 +88,93 @@ test("third-party notice rows exactly join lock entries to legal files", async (
     assert.equal(row[2], `\`${entry.revision}\``);
     assert.equal(row[3], entry.sourceType);
     assert.equal(row[4], holders.get(entry.repository));
-    assert.equal(row[5], ["learn-codebase", "impeccable"].includes(entry.name) ? "Apache-2.0" : "MIT");
+    const expectedLicense = entry.name === "archify"
+      ? "MIT for Archify code; separately licensed assets per notice"
+      : entry.name === "graphify"
+        ? "Apache-2.0; MIT for portions retained under prior license"
+        : ["learn-codebase", "impeccable"].includes(entry.name) ? "Apache-2.0" : "MIT";
+    assert.equal(row[5], expectedLicense);
     assert.equal(row[6], entry.licenseFiles.map(({ path }) => `\`${path}\``).join("<br>"));
     assert.ok(row[7].trim(), `${entry.name}: modification notice missing`);
   }
   assert.equal(rows.size, lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded).length);
+});
+
+test("Archify notice preserves non-commercial, share-alike, and font terms", async () => {
+  const archify = lock.skills.find(({ name }) => name === "archify");
+  const legal = archify.licenseFiles.find(({ upstreamPath }) => upstreamPath === "THIRD_PARTY_NOTICES.md");
+  assert.ok(legal, "Archify third-party notice is retained in the lock");
+  const notice = await readFile(new URL(legal.path, root), "utf8");
+  assert.match(notice, /CC-BY-NC-SA-4\.0/);
+  assert.match(notice, /CC-BY-SA-3\.0/);
+  assert.match(notice, /CC-BY-SA-4\.0/);
+  assert.match(notice, /SIL Open Font License 1\.1/);
+  assert.match(notice, /non-commercial and share-alike conditions remain applicable/i);
+
+  const thirdParty = await readFile(new URL("THIRD_PARTY_NOTICES.md", root), "utf8");
+  const row = thirdParty.split("\n").find(line => line.startsWith("| `archify` |"));
+  assert.match(row, /MIT for Archify code; separately licensed assets per notice/);
+  assert.match(thirdParty, /Archify is not wholly MIT-licensed/i);
+
+  const readme = await readFile(new URL("README.md", root), "utf8");
+  assert.match(readme, /Archify's MIT license covers its code, while bundled artwork includes CC-BY-NC-SA-4\.0/);
+  assert.match(readme, /pinned Archify asset notice/);
+});
+
+test("Impeccable carries its upstream NOTICE and separately pinned MIT attribution", async () => {
+  const entry = lock.skills.find(({ name }) => name === "impeccable");
+  assert.ok(entry.licenseFiles.some(file => file.upstreamPath === "NOTICE.md" && file.sha256 === "c60a093c2845fd9fb82f9c6f742ece31f379f8190b535309d32d66c45ccffdcb"), "upstream NOTICE absent from lock");
+  const metadata = JSON.parse(await readFile(new URL("manifests/supplemental-licenses.json", root), "utf8"));
+  const source = metadata.entries.find(item => item.skill === "impeccable");
+  assert.equal(source.repository, "https://github.com/ehmo/platform-design-skills");
+  assert.equal(source.licenseReferenceRevision, "dc2be825d8b439caea78e9eaa8fb3ac23b0ff3e9");
+  assert.deepEqual(source.appliesTo, ["reference/ios.md", "reference/android.md"]);
+  assert.equal(source.sha256, "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685");
+  assert.equal(sha256(await readFile(new URL(source.path, root))), source.sha256);
+  const upstream = await readFile(new URL("plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-NOTICE", root), "utf8");
+  assert.match(upstream, /ehmo\/platform-design-skills/);
+  assert.match(upstream, /skill\/reference\/ios\.md/);
+  assert.match(upstream, /skill\/reference\/android\.md/);
+  for (const doc of ["THIRD_PARTY_NOTICES.md", "docs/selective-install.md"]) {
+    assert.ok((await readFile(new URL(doc, root), "utf8")).includes(source.path), `${doc} omits supplemental MIT license`);
+  }
+});
+
+test("modified Impeccable source files carry adaptation notices and data provenance is recorded", async () => {
+  const base = new URL("plugins/agentic-engineering-skills/skills/impeccable/", root);
+  const refs = "degraded/asset-producer.md degraded/documenter.md degraded/finish-reviewer.md degraded/manual-edit-applier.md product.md adapt.md adapt.native.md android.md animate.md audit.md audit.native.md bolder.md clarify.md colorize.md craft-floor.md critique.md delight.md distill.md doctor.md document.md extract.md harden.md hooks.md init.md ios.md layout.md live-setup.md live.md new-work.md onboard.md operate.md optimize.md overdrive.md polish.md quieter.md routing.md typeset.md visualize.md".split(" ");
+  const scripts = ["impeccable", "impeccable.cmd", "live-browser-dom.js", "live-browser-ignores.js", "live-browser-session.js", "live-browser.js"];
+  for (const file of [...refs.map(name => `reference/${name}`), ...scripts.map(name => `scripts/${name}`)]) {
+    const text = await readFile(new URL(file, base), "utf8");
+    assert.match(text.slice(0, 250), /Adapted from pbakaus\/impeccable \(Apache-2\.0\); modified for cross-host plugin distribution\./, `${file} lacks its file-level modification notice`);
+  }
+  const notice = await readFile(new URL("plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE", root), "utf8");
+  for (const path of ["scripts/VERSION", "scripts/command-metadata.json", "scripts/data/font-index.json.deflate", "skill/scripts/data/font-index.json"]) {
+    assert.ok(notice.includes(path), `adaptation notice omits ${path}`);
+  }
+});
+
+test("Impeccable records the init adaptation inline and pins VERSION to release 4.8.0 bytes", async () => {
+  const base = new URL("plugins/agentic-engineering-skills/skills/impeccable/", root);
+  const commands = JSON.parse(await readFile(new URL("scripts/command-metadata.json", base), "utf8"));
+  assert.match(commands.init.$comment ?? "", /adapted.*pbakaus\/impeccable.*init.*description/i);
+  assert.match(commands.init.$comment, /omits.*DESIGN\.md.*existing code/i);
+  assert.equal(typeof commands.init.description, "string");
+  assert.equal(commands.init.argumentHint, "");
+
+  const version = await readFile(new URL("scripts/VERSION", base));
+  assert.equal(sha256(version), "447836d46f39c5900faf74ad6a6554b8e1fafeca1f78de0416d5f05c6e09a080");
+  assert.deepEqual(version, Buffer.from("0.1.18\n"));
+  const notice = await readFile(new URL("plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE", root), "utf8");
+  assert.match(notice, /Except where noted below/);
+  assert.match(notice, /skill-v4\.8\.0/);
+  assert.match(notice, /414603bf14c7a344edb466bb1f85690c77ce8b7d/);
+  assert.match(notice, /VERSION[^\n]*byte.identical/i);
+  assert.match(notice, /command-metadata\.json[^\n]*\$comment/i);
+  const metadata = JSON.parse(await readFile(new URL("manifests/supplemental-licenses.json", root), "utf8"));
+  assert.deepEqual(metadata.adaptationNotice.formatLimitedFiles, []);
+  assert.equal(metadata.adaptationNotice.versionSource.revision, "414603bf14c7a344edb466bb1f85690c77ce8b7d");
+  assert.equal(metadata.adaptationNotice.versionSource.sha256, sha256(version));
+  const provenance = await readFile(new URL("docs/provenance.md", root), "utf8");
+  assert.match(provenance, /skill-v4\.8\.0[^\n]*414603bf14c7a344edb466bb1f85690c77ce8b7d/);
 });

@@ -4,6 +4,8 @@ Use this reference whenever explorers, analysts, writers or reviewers run as
 subagents or external agents. The controller orchestrates and verifies; it does
 not hand its evidence gate to a delegate.
 
+When using subagents, start each with a fresh context window. Provide the objective, relevant references, constraints, and expected output explicitly.
+
 ## Roles
 
 - **Analyst/explorer:** read-only; answers a bounded question on a closed list of

@@ -1,7 +1,7 @@
 {
   "name": "agentic-engineering-skills",
-  "version": "0.1.0",
-  "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
+  "version": "1.1.0",
+  "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
   "author": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -13,16 +13,14 @@
     "agent-skills",
     "codex",
     "claude-code",
-    "workflow",
-    "frontend-handoff",
-    "fidelity"
+    "workflow"
   ],
   "skills": "./skills/",
   "interface": {
-    "defaultPrompt": "Use the installed engineering skills to understand, plan, import frontend handoffs, implement, verify, review, and clean up the requested work.",
+    "defaultPrompt": "Use the engineering skills to understand the task, plan and implement changes, verify the result, and follow the project PR workflow.",
     "displayName": "Agentic Engineering Skills",
-    "shortDescription": "A verified engineering and handoff workflow",
-    "longDescription": "Install a reproducible discovery-to-cleanup workflow for Codex and Claude Code, including fidelity-first frontend handoff imports.",
+    "shortDescription": "A verified engineering and PR workflow",
+    "longDescription": "Install a reproducible discovery-to-cleanup engineering workflow with planning, bounded implementation, independent review, and PR reminders. Claude Implement is distributed only to Claude Code.",
     "developerName": "GiuseppeVe",
     "category": "Productivity",
     "capabilities": [

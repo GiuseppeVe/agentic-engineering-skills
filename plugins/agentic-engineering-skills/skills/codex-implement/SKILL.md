@@ -1,11 +1,21 @@
 ---
 name: codex-implement
 description: Use when executing a substantial implementation plan with separate planning, bounded implementation packets, semantic test verification, and independent final approval; especially when workers might expand scope, passing tests may hide invariant violations, or model-specific role routing is required.
+disable-model-invocation: true
 ---
 
 # Codex Clean Review
 
 Use Sol/xhigh for judgement and Sol/high for bounded edits. Approval needs a fresh independent review; green tests alone never prove compliance.
+
+## Bounded worker mode
+
+When explicitly dispatched as a bounded worker, read [the worker role](agents/terra-worker.md), the assigned packet and its scope. Implement only that packet, run its required checks and return evidence to the parent. Do not invoke this skill's controller, planner, tester or clean-review workflow; the parent coordinates review and integration. Respect higher-priority runtime and repository instructions.
+
+Repository instructions define local worktree and verification requirements;
+follow them within the assigned packet. The original specification, plan, and
+explicit approval boundaries remain authoritative. A passing check or available
+tool does not grant permission to expand scope, integrate, publish, or merge.
 
 ## Model setup
 
@@ -60,7 +70,7 @@ Planner emits every packet with: `id`, objective, scope, dependencies, allowed f
 - **Dependent:** wait for declared prerequisite evidence.
 - **Architecture-sensitive or integration:** retain with planner. Do not delegate architectural decisions to worker.
 
-Worker scope is binding. A required shared interface, contract, or non-allowed file means `BLOCKED`, never an edit. Controller either creates a new planner-approved packet or changes the plan with required approval.
+Worker scope is binding. A shared interface or contract may be changed only when the change is explicitly specified in the approved packet or plan and every affected file is in `Allowed files`. Never delegate architecture or plan decisions to a worker. If completion requires an excluded file, scope expansion, an unspecified shared-interface or contract change, or a new or unresolved design, architecture, or plan decision, return `BLOCKED`. Controller either creates a new planner-approved packet or changes the plan with required approval.
 
 ## Test and review loop
 
@@ -77,7 +87,7 @@ Approval requires: required tests pass; every requirement maps to code/test evid
 
 | Red flag | Required action |
 |---|---|
-| Worker wants a shared-interface change | Block packet; planner re-scopes or revises plan. |
+| Shared-interface or contract change unspecified in the approved packet or plan, or affecting files outside `Allowed files` | Block packet; planner re-scopes or revises plan. |
 | Reviewer receives worker/tester notes | Rebuild clean-room input without them. |
 | Tests pass but an invariant conflicts | Request rework or block; cite invariant. |
 | Reviewer lacks original spec or plan | Stop before approval. |

@@ -1,10 +1,20 @@
 diff --git a/grill-me/SKILL.md b/grill-me/SKILL.md
-index 9470cfc..5d823b2 100644
+index 9470cfc..8507188 100644
 --- a/grill-me/SKILL.md
 +++ b/grill-me/SKILL.md
-@@ -4 +4 @@
--disable-model-invocation: true
-+disable-model-invocation: false
-@@ -6,0 +7,2 @@
-+> Adaptation: Derived from mattpocock/skills; enables Codex model invocation for plugin validation and discovery.
+@@ -7 +7,3 @@
+-Run a `/grilling` session.
++> Adaptation: Derived from mattpocock/skills; preserves explicit invocation for Codex and Claude Code.
 +
++Use [grilling](../grilling/SKILL.md) to run the interview.
+diff --git b/grill-me/agents/openai.yaml b/grill-me/agents/openai.yaml
+new file mode 100644
+index 0000000..a0b5015
+--- /dev/null
++++ b/grill-me/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: Grill Me
++  short_description: Sharpen a plan through interview
++policy:
++  allow_implicit_invocation: false

@@ -1,0 +1,53 @@
+{
+  "description": "Caveman startup context and PR workflow reminders.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-merge.mjs\"",
+            "timeout": 15,
+            "statusMessage": "Checking merged PR"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|mcp__.*(create_pull_request|pull_request.*create|create_pr)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-pr.mjs\"",
+            "timeout": 15,
+            "statusMessage": "Checking opened PR"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/skills/caveman/scripts/context-hook.mjs\" SessionStart",
+            "timeout": 10,
+            "statusMessage": "Loading Caveman context"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/skills/caveman/scripts/context-hook.mjs\" SubagentStart",
+            "timeout": 10,
+            "statusMessage": "Loading Caveman context"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+# Progetto: <nome progetto>
+
+Sei un worker su un **singolo task minimo**. Non stai costruendo tutto il
+progetto: stai scrivendo **un file**. Qualcun altro scrive gli altri.
+
+## Regola numero uno
+
+**Scrivi esattamente i file elencati nella sezione "FILE CHE SCRIVI" del task.
+Nemmeno uno in più.**
+
+Se scrivi un file non elencato, il task è considerato fallito e il tuo lavoro
+viene buttato per intero — anche la parte corretta.
+
+In particolare **non** creare né modificare: <elenco file/config critici del
+progetto: package.json, tsconfig, build config, questo stesso AGENTS.md, ...>
+né alcun file sotto <cartelle sorgente> che non sia nella tua lista.
+
+Non lanciare build/packaging (<comandi specifici del progetto>).
+
+## Regola numero due: non inventare dati
+
+Se il task ti chiede un valore che dovresti ricavare e **non riesci a
+ricavarlo**, non stimarlo, non dedurlo "per plausibilità". Scrivi `TODO` nel
+codice e segnalalo nei DUBBI del report.
+
+Un dato inventato è peggio di un dato mancante: sembra giusto e passa la review.
+
+## Contesto
+
+<Riferimenti alla spec del progetto, se esiste, e quando il worker deve
+leggerla invece di fidarsi solo del brief.>
+
+## Vincoli tecnici
+
+<Elenco specifico del progetto: linguaggio/strict mode, dipendenze vietate,
+API vietate, convenzioni di commento, ecc.>
+
+## Report finale
+
+Chiudi sempre l'output con questo blocco, esatto:
+
+```
+=== REPORT ===
+FILE SCRITTI: <elenco, uno per riga>
+COSA HO VERIFICATO: <comandi eseguiti e loro esito>
+DATI NON RICAVATI: <elenco, o "nessuno">
+DUBBI: <elenco, o "nessuno">
+=== FINE ===
+```

@@ -1,0 +1,11 @@
+# Impeccable adaptation notice
+
+Except where noted below, the bundled Impeccable skill and the modified files under `skills/impeccable/` are adapted from pbakaus/impeccable at commit `6496f49a1ea0503ca130d7dd55508dd0d22aa86b`, under Apache-2.0. Changes support portable cross-host plugin packaging, routing and workflow behavior.
+
+`scripts/VERSION` is byte-identical to `skill/scripts/VERSION` from the official `skill-v4.8.0` tag, dereferenced commit `414603bf14c7a344edb466bb1f85690c77ce8b7d`; it pins engine version `0.1.18`.
+
+`scripts/command-metadata.json` adapts the `init` description by omitting the offer to create DESIGN.md when code exists, and records that change inline in its `$comment` property. Both paths are relative to `skills/impeccable/`.
+
+`scripts/live-server.mjs`, `scripts/live/browser-script-parts.mjs`, and `scripts/detector/detect-antipatterns-browser.js` were adapted to pass project detector exclusions through live mode and apply rule, value and page waivers in the browser.
+
+`scripts/data/font-index.json.deflate` is a gzip-compressed representation of the upstream `skill/scripts/data/font-index.json`: decompression reproduces the original bytes. The compressed representation is redistributed without modifying that data.

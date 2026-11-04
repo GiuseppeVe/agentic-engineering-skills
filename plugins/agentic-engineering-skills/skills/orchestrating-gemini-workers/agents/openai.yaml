@@ -1,0 +1,5 @@
+interface:
+  display_name: orchestrating-gemini-workers
+  short_description: Use orchestrating-gemini-workers workflow
+policy:
+  allow_implicit_invocation: true

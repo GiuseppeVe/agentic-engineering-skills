@@ -8,12 +8,16 @@ Tests must verify real behavior, not mock behavior. Mocks are a means to isolate
 
 **Core principle:** Test what the code does, not what the mocks do.
 
-**Following strict TDD prevents these anti-patterns.**
+TDD helps expose these anti-patterns; review what each assertion actually
+proves. Call counts, arguments, or ordering observed through a boundary
+double can verify the real production code's contract. Checking only mock
+existence or directly invoking a double to confirm its canned output is
+tautological.
 
 ## The Iron Laws
 
 ```
-1. NEVER test mock behavior
+1. NEVER assert only mock existence or canned behavior
 2. NEVER add test-only methods to production classes
 3. NEVER mock without understanding dependencies
 ```
@@ -45,7 +49,7 @@ test('renders sidebar', () => {
 });
 
 // OR if sidebar must be mocked for isolation:
-// Don't assert on the mock - test Page's behavior with sidebar present
+// Test Page's behavior with sidebar present, not mock existence
 ```
 
 ### Gate Function
@@ -225,7 +229,12 @@ BEFORE creating mock responses:
   If uncertain: Include all documented fields
 ```
 
-## Anti-Pattern 5: Integration Tests as Afterthought
+## Anti-Pattern 5: Required Behavioral Tests as Afterthought
+
+This applies to behavior changes needing regression coverage. For prose,
+trivial edits, generated code, or configuration, follow the main skill's
+scope and applicable task instructions: complete appropriate validation
+without adding low-value tests solely to satisfy process.
 
 **The violation:**
 ```
@@ -236,8 +245,8 @@ BEFORE creating mock responses:
 
 **Why this is wrong:**
 - Testing is part of implementation, not optional follow-up
-- TDD would have caught this
-- Can't claim complete without tests
+- A verified test-first cycle makes missing behavioral coverage visible
+- Changed behavior is incomplete without its required regression evidence
 
 **The fix:**
 ```
@@ -260,7 +269,7 @@ TDD cycle:
 
 **Consider:** Integration tests with real components often simpler than complex mocks
 
-## TDD Prevents These Anti-Patterns
+## TDD Helps Expose These Anti-Patterns
 
 **Why TDD helps:**
 1. **Write test first** → Forces you to think about what you're actually testing
@@ -268,7 +277,9 @@ TDD cycle:
 3. **Minimal implementation** → No test-only methods creep in
 4. **Real dependencies** → You see what the test actually needs before mocking
 
-**If you're testing mock behavior, you violated TDD** - you added mocks without watching test fail against real code first.
+A test can follow RED-GREEN order and still prove only mock setup. Keep
+production behavior in the test and verify that realistic defects make
+its assertions fail.
 
 ## Quick Reference
 
@@ -286,7 +297,7 @@ TDD cycle:
 - Assertion checks for `*-mock` test IDs
 - Methods only called in test files
 - Mock setup is >50% of test
-- Test fails when you remove mock
+- Test checks only mock existence or canned output without exercising production behavior
 - Can't explain why mock is needed
 - Mocking "just to be safe"
 
