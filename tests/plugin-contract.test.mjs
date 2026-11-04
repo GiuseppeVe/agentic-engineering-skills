@@ -8,7 +8,7 @@ import { expectedSkillsByHost } from "./expected-inventory.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = path.join(root, "plugins", "agentic-engineering-skills");
 const expectedName = "agentic-engineering-skills";
-const expectedVersion = "1.1.0";
+const expectedVersion = "1.1.1";
 const strictSemver = /^\d+\.\d+\.\d+$/;
 const expectedVendorSkills = [];
 

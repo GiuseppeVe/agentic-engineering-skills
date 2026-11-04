@@ -14,6 +14,47 @@ I start from evidence instead of an implementation guess, then turn decisions in
 
 Vendor files remain byte-exact, adaptations stay auditable, and repository-original files use this repository's MIT license. Third-party assets keep their own terms even when bundled in an MIT-licensed skill. [Workflow philosophy](docs/philosophy.md) records lifecycle gates, handoff evidence, optional-tool fallbacks, and human authority boundaries.
 
+## How to set up a new project
+
+Before using the workflow in a new repository, give agents a small, reliable entry point to the project's knowledge. Add an `AGENTS.md` at the repository root. Keep it extremely short: include only cross-cutting instructions that matter broadly, and point to the project documents agents should consult for each kind of task. Links tell agents where to look; linked documents are not automatically loaded into context.
+
+A possible starting layout:
+
+```text
+AGENTS.md                      # Short instructions and map for agents
+README.md                      # Project overview and entry point for people
+docs/
+  development/
+    CODING_STANDARDS.md        # Shared engineering conventions
+    BACKEND.md                 # Backend-specific guidance, if applicable
+    FRONTEND.md                # Frontend-specific guidance, if applicable
+  architecture/
+    OVERVIEW.md                # System boundaries and major components
+    adr/                       # Important decisions and their status
+  operations/
+    LOCAL_SETUP.md             # Prerequisites, setup and local execution
+    DEVELOPMENT_OPERATIONS.md  # Verification and development procedures
+  work/
+    specs/                     # Approved requirements and designs
+    plans/                     # Implementation plans and progress
+    reports/                   # Verification results and historical evidence
+```
+
+Create `AGENTS.md` in the root of your project and use it as the short entry point to your documentation. For example, if the guides above exist in your project, the contents of `AGENTS.md` could be:
+
+```markdown
+# Project instructions
+
+- Project overview: read `README.md`.
+- Shared conventions and verification: read `docs/development/CODING_STANDARDS.md`.
+- Service boundaries and decisions: read `docs/architecture/OVERVIEW.md` and the relevant ADRs `docs/architecture/adr/`.
+- Local setup: read `docs/operations/LOCAL_SETUP.md`.
+```
+
+Use only the files your project needs and adapt their names and structure. Keep each rule or decision in one authoritative place, and link to it from the short entry point. Do not create empty documents merely to match this example.
+
+For a file-by-file explanation, how to decide what belongs where, and host-specific setup, see [project context and instructions](docs/workflow.md#project-context-and-instructions).
+
 ## Graph workflows
 
 A graph workflow starts with a **new chat and an explicit orchestration skill**. Give the master the objective, scope, expected result, constraints, and existing instructions. It sets up the run from that context: nodes, dependencies, responsibilities, and completion criteria evolve as the work reveals new questions. You keep the conversation with the master while it coordinates focused subagents and, when supported and authorized, separate sessions or subthreads.

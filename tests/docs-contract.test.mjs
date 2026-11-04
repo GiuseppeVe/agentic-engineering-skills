@@ -58,6 +58,7 @@ test('README has required exact section sequence and manifest-derived install co
   assert.deepEqual(sections, [
     'What this repository shares',
     'My working philosophy',
+    'How to set up a new project',
     'Graph workflows',
     'How I use the workflow',
     'The quality loop',
