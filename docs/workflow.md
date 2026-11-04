@@ -22,11 +22,11 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 ## Implement
 
-Repository instructions determine worktree isolation and merge approval. The post-merge hook reminds the agent to verify the merge and inspect ownership before workspace cleanup. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `sequential-task-orchestrator` executes strictly ordered plans through one implementer and one review cycle per task; `claude-implement` supplies the same bounded-packet and clean-review workflow in Claude Code. The orchestrator uses `test-driven-development` for plan fidelity, requirement coverage, missing cases, and implementation correctness. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
+Repository instructions determine worktree isolation and merge approval. The post-merge hook reminds the agent to verify the merge, apply the documented Graphify refresh where applicable, and inspect ownership before workspace cleanup. `test-driven-development` drives red-green-refactor. `codex-implement` executes substantial written plans in Codex; `sequential-task-orchestrator` executes strictly ordered plans through one implementer and one review cycle per task; `claude-implement` supplies the same bounded-packet and clean-review workflow in Claude Code. The orchestrator uses `test-driven-development` for plan fidelity, requirement coverage, missing cases, and implementation correctness. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
 
 ## Verify
 
-`test-driven-development` requires observed failing tests before implementation and passing tests afterward. `mdx-to-html` creates standalone review pages from explicit MDX inputs. `setup-harness-evaluation` and `setup-workflow-comparison` collect independent run evidence for the user’s manual evaluation.
+For new behavior and bug fixes, `test-driven-development` requires an observed behavioral failure before implementation and passing tests afterward. For refactoring or behavior already implemented, follow its coverage and recovery guidance. `mdx-to-html` creates standalone review pages from explicit MDX inputs. `setup-harness-evaluation` and `setup-workflow-comparison` collect independent run evidence for the user’s manual evaluation.
 
 ## Review
 
@@ -61,7 +61,7 @@ flowchart TD
   A -->|No| L[Retain local evidence]
 ```
 
-Optional integrations strengthen these stages but never become hidden dependencies. If orchestration, worktrees, GitHub CLI, browser tooling, Graphviz, or Knip is unavailable, use the documented manual fallback in the [workflow philosophy](philosophy.md) and report what actually ran.
+Optional integrations strengthen these stages but never become hidden dependencies. If orchestration, worktrees, GitHub CLI, browser tooling, Graphviz, or Knip is unavailable, use a documented manual fallback in the [workflow philosophy](philosophy.md) only where the selected workflow permits it, and report what actually ran. A workflow requiring visible subordinate threads is `BLOCKED` if the host cannot create them.
 
 ## Implementation role routing
 

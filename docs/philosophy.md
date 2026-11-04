@@ -57,9 +57,11 @@ flowchart TD
 
 Core work must remain possible without a particular host, provider credential, or integration. Never claim that an unavailable capability ran.
 
+Fallbacks apply only when the selected workflow permits them. If a workflow requires visible subordinate threads and the host cannot create them, report `BLOCKED`; a different authorized route may be chosen separately.
+
 | Optional capability | Prerequisite | Benefit | Manual fallback |
 | --- | --- | --- | --- |
-| Swarm orchestration | Compatible multi-agent runtime | Parallel bounded roles | Run the same roles sequentially and record each result |
+| Swarm orchestration | Compatible multi-agent runtime | Parallel bounded roles | Where the selected workflow permits it, run the same roles sequentially and record each result |
 | Git worktrees | Git worktree support | Checkout isolation | Use a dedicated branch in a separate clone |
 | GitHub CLI | Authenticated `gh` installation | PR and check automation | Use the GitHub web interface or provide local review evidence |
 | Browser capability | Supported browser integration | Rendered-surface verification | Inspect generated files and links locally |
