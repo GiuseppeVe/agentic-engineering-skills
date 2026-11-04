@@ -8070,12 +8070,13 @@ index 0000000..352148d
 +};
 diff --git b/impeccable/scripts/detector/detect-antipatterns-browser.js b/impeccable/scripts/detector/detect-antipatterns-browser.js
 new file mode 100644
-index 0000000..b2091c6
+index 0000000..bd787ac
 --- /dev/null
 +++ b/impeccable/scripts/detector/detect-antipatterns-browser.js
-@@ -0,0 +1,5138 @@
+@@ -0,0 +1,5173 @@
 +/**
 + * Anti-Pattern Browser Detector for Impeccable
++ * Adapted from pbakaus/impeccable (Apache-2.0); honor live detector exclusions.
 + * Copyright (c) 2026 Paul Bakaus
 + * SPDX-License-Identifier: Apache-2.0
 + *
@@ -12525,7 +12526,36 @@ index 0000000..b2091c6
 +    console.groupEnd();
 +  };
 +
++  function browserFindingAllowed(finding) {
++    const config = EXTENSION_MODE ? window.__IMPECCABLE_CONFIG__ || {} : {};
++    const rule = String(finding.type || finding.id || '').trim().toLowerCase();
++    if ((config.disabledRules || []).some(item => String(item).trim().toLowerCase() === rule)) return false;
++    if (!['overused-font', 'bounce-easing', 'design-system-font', 'design-system-color', 'design-system-radius'].includes(rule)) return true;
++    let value = finding.ignoreValue || finding.value || '';
++    const detail = String(finding.detail || finding.snippet || '');
++    if (!value && rule === 'overused-font') value = detail.match(/Primary font:\s*([^()\n;]+)/i)?.[1] || '';
++    if (!value && rule === 'bounce-easing') value = detail.match(/\banimate-bounce\b|cubic-bezier\([^)]+\)|(?:animation(?:-name)?\s*:\s*)([^;\n]+)/i)?.[0]?.replace(/^animation(?:-name)?\s*:\s*/i, '') || '';
++    const normalize = input => String(input || '').trim().replace(/^["']|["']$/g, '').replace(/\+/g, ' ').replace(/\s+/g, ' ').toLowerCase();
++    value = normalize(value);
++    if (!value) return true;
++    const colorKey = input => {
++      let color = parseAnyColor(input);
++      if (!color && /^hsla?\(/i.test(input) && window.CSS?.supports('color', input)) {
++        const context = document.createElement('canvas').getContext('2d');
++        if (context) { context.fillStyle = input; color = parseAnyColor(context.fillStyle); }
++      }
++      return color ? [Math.round(color.r), Math.round(color.g), Math.round(color.b), Math.round((color.a ?? 1) * 255)].join(',') : '';
++    };
++    return !(config.disabledValues || []).some(entry => {
++      if (!entry || normalize(entry.rule) !== rule) return false;
++      const other = normalize(entry.value);
++      if (!other || other === '*') return false;
++      return other === value || (rule === 'design-system-color' && colorKey(other) && colorKey(other) === colorKey(value));
++    });
++  }
++
 +  function addBrowserFindings(groupMap, el, findings) {
++    findings = (findings || []).filter(browserFindingAllowed);
 +    if (!findings || findings.length === 0) return;
 +    const existing = groupMap.get(el);
 +    if (existing) existing.push(...findings);
@@ -12729,6 +12759,9 @@ index 0000000..b2091c6
 +
 +  function collectBrowserFindings() {
 +    const groupMap = new Map();
++    if (EXTENSION_MODE && window.__IMPECCABLE_CONFIG__?.skipScan === true) {
++      return { groupMap, allFindings: [], pageLevelFindings: [] };
++    }
 +    const _disabled = EXTENSION_MODE ? (window.__IMPECCABLE_CONFIG__?.disabledRules || []) : [];
 +    const _ruleOk = (id) => !_disabled.length || !_disabled.includes(id);
 +    const designSystem = browserDesignSystemConfig();
@@ -12753,7 +12786,7 @@ index 0000000..b2091c6
 +      const findings = [
 +        ...checkElementBordersDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
 +        ...checkElementColorsDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
-+        ...checkElementMotionDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
++        ...checkElementMotionDOM(el).map(f => ({ ...f, type: f.id, detail: f.snippet })),
 +        ...checkElementGlowDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
 +        ...checkElementAIPaletteDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
 +        ...checkElementIconTileDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
@@ -12840,11 +12873,12 @@ index 0000000..b2091c6
 +    return {
 +      groupMap,
 +      allFindings: browserFindingsFromMap(groupMap),
-+      pageLevelFindings,
++      pageLevelFindings: pageLevelFindings.filter(browserFindingAllowed),
 +    };
 +  }
 +
 +  function shouldRunVisualContrast(options = {}) {
++    if (EXTENSION_MODE && window.__IMPECCABLE_CONFIG__?.skipScan === true) return false;
 +    return options.visualContrast === true || window.__IMPECCABLE_CONFIG__?.visualContrast === true;
 +  }
 +
@@ -12904,6 +12938,7 @@ index 0000000..b2091c6
 +    }
 +    if (!el) return false;
 +    const findingType = result.finding.type || result.finding.id || 'low-contrast';
++    if (!browserFindingAllowed({ ...result.finding, type: findingType })) return false;
 +    const existing = groupMap.get(el) || [];
 +    if (existing.some(f => (f.type || f.id) === findingType)) return false;
 +    addBrowserFindings(groupMap, el, [{
@@ -19227,56 +19262,4 @@ index 0000000..3d9a126
 +  getHue,
 +  colorToHex,
 +};
-diff --git b/impeccable/scripts/detector/shared/constants.mjs b/impeccable/scripts/detector/shared/constants.mjs
-new file mode 100644
-index 0000000..917cbf5
---- /dev/null
-+++ b/impeccable/scripts/detector/shared/constants.mjs
-@@ -0,0 +1,101 @@
-+// ─── Section 1: Constants ───────────────────────────────────────────────────
-+
-+const SAFE_TAGS = new Set([
-+  'blockquote', 'nav', 'a', 'input', 'textarea', 'select',
-+  'pre', 'code', 'span', 'th', 'td', 'tr', 'li', 'label',
-+  'button', 'hr', 'html', 'head', 'body', 'script', 'style',
-+  'link', 'meta', 'title', 'br', 'img', 'svg', 'path', 'circle',
-+  'rect', 'line', 'polyline', 'polygon', 'g', 'defs', 'use',
-+]);
-+
-+// Per-check safe-tags override for the border (side-tab / border-accent)
-+// rule. We intentionally re-allow <label> here because card-shaped clickable
-+// labels (e.g. .checklist-item wrapping a checkbox + content) are one of the
-+// canonical side-tab anti-pattern shapes and must be detected. The rule's
-+// other preconditions (non-neutral color, width >= 2px on a single side,
-+// radius > 0 or width >= 3, element size >= 20x20 in the browser path)
-+// already filter out plain inline form labels so this does not introduce
-+// false positives. See modern-color-borders.html for the test matrix.
-+const BORDER_SAFE_TAGS = new Set(
-+  [...SAFE_TAGS].filter(t => t !== 'label')
-+);
-+
-+const OVERUSED_FONTS = new Set([
-+  // Older monoculture (still ubiquitous):
-+  'inter', 'roboto', 'open sans', 'lato', 'montserrat', 'arial', 'helvetica',
-+  // Newer monoculture (the Anthropic-skill / Vercel / GitHub default wave):
-+  'fraunces', 'instrument sans', 'instrument serif',
-+  'geist', 'geist sans', 'geist mono',
-+  'mona sans',
-+  'plus jakarta sans', 'space grotesk', 'recoleta',
-+]);
-+
-+// Brand-associated fonts: don't flag these as "overused" on the brand's own domains.
-+// Keys are font names, values are arrays of hostname suffixes where the font is allowed.
-+const GOOGLE_DOMAINS = [
-+  'google.com', 'youtube.com', 'android.com', 'chromium.org',
-+  'chrome.com', 'web.dev', 'gstatic.com', 'firebase.google.com',
-+];
-+const VERCEL_DOMAINS = ['vercel.com', 'nextjs.org', 'v0.app'];
-+const GITHUB_DOMAINS = ['github.com', 'githubnext.com'];
-+const BRAND_FONT_DOMAINS = {
-+  'roboto': GOOGLE_DOMAINS,
-+  'google sans': GOOGLE_DOMAINS,
-+  'product sans': GOOGLE_DOMAINS,
-+  'geist': VERCEL_DOMAINS,
-+  'geist sans': VERCEL_DOMAINS,
-+  'geist mono': VER
+diff --git b/impeccable/scripts/detector/shared/const

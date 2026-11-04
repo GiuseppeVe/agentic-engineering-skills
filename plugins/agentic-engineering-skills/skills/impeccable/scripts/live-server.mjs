@@ -20,7 +20,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
+// Adapted from pbakaus/impeccable (Apache-2.0); supply project detector waivers to live mode.
 import { parseDesignMd } from './lib/design-parser.mjs';
+import { readDetectionConfig } from './lib/impeccable-config.mjs';
+import { resolveFiles } from './live-inject.mjs';
 import { resolveContextDir } from './context.mjs';
 import {
   assembleLiveBrowserScript,
@@ -39,6 +42,7 @@ import {
   readLiveServerInfo,
   removeLiveServerInfo,
   resolveDesignSidecarPath,
+  resolveLiveConfigPath,
   writeLiveServerInfo,
 } from './lib/impeccable-paths.mjs';
 import { countByPage as countPendingByPage } from './live/manual-edits-buffer.mjs';
@@ -408,11 +412,25 @@ function createRequestHandler({ detectScript, liveScriptParts }) {
         res.end('Error reading live browser scripts: ' + err.message);
         return;
       }
+      const projectIgnores = readDetectionConfig(process.cwd());
+      try {
+        const configPath = resolveLiveConfigPath({ cwd: process.cwd(), scriptsDir: __dirname });
+        const liveConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        if (Array.isArray(liveConfig.files)) {
+          projectIgnores.pageFiles = resolveFiles(process.cwd(), liveConfig);
+          projectIgnores.roots = liveConfig.files.filter(file => typeof file === 'string').map(file => {
+            const segments = file.replace(/\\/g, '/').split('/');
+            const firstGlob = segments.findIndex(segment => /[*?\[{]/.test(segment));
+            return segments.slice(0, firstGlob < 0 ? -1 : firstGlob).join('/');
+          });
+        }
+      } catch { /* Without resolvable page paths, retain only conservative URL-based matching. */ }
       const body = assembleLiveBrowserScript({
         token: state.token,
         port: state.port,
         vocabulary: LIVE_COMMANDS,
         parts,
+        projectIgnores,
       });
       res.writeHead(200, {
         'Content-Type': 'application/javascript',

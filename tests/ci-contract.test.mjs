@@ -50,6 +50,7 @@ test("CI setup and executable gates are unique and ordered", async () => {
   ];
   assert.deepEqual(runs.filter(command => gates.includes(command)), gates);
   for (const gate of gates) assert.equal(runs.filter(command => command === gate).length, 1, `${gate} must run exactly once`);
+  assert.equal(steps.find(step => step.run?.trim() === 'npm test')?.env?.IMPECCABLE_TEST_BROWSER, '/usr/bin/google-chrome', 'CI must run the live detector browser regression');
   assert.ok(runs.every(command => !command.includes("scripts/validate_plugin.py")), "custom Codex validator must not be a CI gate");
   assert.equal(runs.filter(command => command.includes("verify:installed-native -- --host codex")).length, 1);
   assert.equal(runs.filter(command => command.includes("verify:installed-native -- --host claude")).length, 1);

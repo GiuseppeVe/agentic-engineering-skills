@@ -50,6 +50,7 @@ const fixtureServerUrl = ["http:/", "127.0.0.1:" + ["$", "{server.address().port
 const controlledTestLoopbackArtifacts = new Map([
   ["tests/impeccable-agent-discovery.test.mjs", [fixtureServerUrl, fixtureServerUrl + "/v1"]],
   ["tests/impeccable-agent-mcp.test.mjs", [fixtureServerUrl]],
+  ["tests/live-detection-config.test.mjs", [["http:/", "127.0.0.1:" + ["$", "{port}"].join("") + "/live.js"].join("/")]],
 ]);
 
 const controlledIpv6LoopbackArtifacts = new Map();

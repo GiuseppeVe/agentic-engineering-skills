@@ -1,5 +1,6 @@
 /**
  * Anti-Pattern Browser Detector for Impeccable
+ * Adapted from pbakaus/impeccable (Apache-2.0); honor live detector exclusions.
  * Copyright (c) 2026 Paul Bakaus
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -4449,7 +4450,36 @@ if (IS_BROWSER) {
     console.groupEnd();
   };
 
+  function browserFindingAllowed(finding) {
+    const config = EXTENSION_MODE ? window.__IMPECCABLE_CONFIG__ || {} : {};
+    const rule = String(finding.type || finding.id || '').trim().toLowerCase();
+    if ((config.disabledRules || []).some(item => String(item).trim().toLowerCase() === rule)) return false;
+    if (!['overused-font', 'bounce-easing', 'design-system-font', 'design-system-color', 'design-system-radius'].includes(rule)) return true;
+    let value = finding.ignoreValue || finding.value || '';
+    const detail = String(finding.detail || finding.snippet || '');
+    if (!value && rule === 'overused-font') value = detail.match(/Primary font:\s*([^()\n;]+)/i)?.[1] || '';
+    if (!value && rule === 'bounce-easing') value = detail.match(/\banimate-bounce\b|cubic-bezier\([^)]+\)|(?:animation(?:-name)?\s*:\s*)([^;\n]+)/i)?.[0]?.replace(/^animation(?:-name)?\s*:\s*/i, '') || '';
+    const normalize = input => String(input || '').trim().replace(/^["']|["']$/g, '').replace(/\+/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+    value = normalize(value);
+    if (!value) return true;
+    const colorKey = input => {
+      let color = parseAnyColor(input);
+      if (!color && /^hsla?\(/i.test(input) && window.CSS?.supports('color', input)) {
+        const context = document.createElement('canvas').getContext('2d');
+        if (context) { context.fillStyle = input; color = parseAnyColor(context.fillStyle); }
+      }
+      return color ? [Math.round(color.r), Math.round(color.g), Math.round(color.b), Math.round((color.a ?? 1) * 255)].join(',') : '';
+    };
+    return !(config.disabledValues || []).some(entry => {
+      if (!entry || normalize(entry.rule) !== rule) return false;
+      const other = normalize(entry.value);
+      if (!other || other === '*') return false;
+      return other === value || (rule === 'design-system-color' && colorKey(other) && colorKey(other) === colorKey(value));
+    });
+  }
+
   function addBrowserFindings(groupMap, el, findings) {
+    findings = (findings || []).filter(browserFindingAllowed);
     if (!findings || findings.length === 0) return;
     const existing = groupMap.get(el);
     if (existing) existing.push(...findings);
@@ -4653,6 +4683,9 @@ if (IS_BROWSER) {
 
   function collectBrowserFindings() {
     const groupMap = new Map();
+    if (EXTENSION_MODE && window.__IMPECCABLE_CONFIG__?.skipScan === true) {
+      return { groupMap, allFindings: [], pageLevelFindings: [] };
+    }
     const _disabled = EXTENSION_MODE ? (window.__IMPECCABLE_CONFIG__?.disabledRules || []) : [];
     const _ruleOk = (id) => !_disabled.length || !_disabled.includes(id);
     const designSystem = browserDesignSystemConfig();
@@ -4677,7 +4710,7 @@ if (IS_BROWSER) {
       const findings = [
         ...checkElementBordersDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
         ...checkElementColorsDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
-        ...checkElementMotionDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
+        ...checkElementMotionDOM(el).map(f => ({ ...f, type: f.id, detail: f.snippet })),
         ...checkElementGlowDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
         ...checkElementAIPaletteDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
         ...checkElementIconTileDOM(el).map(f => ({ type: f.id, detail: f.snippet })),
@@ -4764,11 +4797,12 @@ if (IS_BROWSER) {
     return {
       groupMap,
       allFindings: browserFindingsFromMap(groupMap),
-      pageLevelFindings,
+      pageLevelFindings: pageLevelFindings.filter(browserFindingAllowed),
     };
   }
 
   function shouldRunVisualContrast(options = {}) {
+    if (EXTENSION_MODE && window.__IMPECCABLE_CONFIG__?.skipScan === true) return false;
     return options.visualContrast === true || window.__IMPECCABLE_CONFIG__?.visualContrast === true;
   }
 
@@ -4828,6 +4862,7 @@ if (IS_BROWSER) {
     }
     if (!el) return false;
     const findingType = result.finding.type || result.finding.id || 'low-contrast';
+    if (!browserFindingAllowed({ ...result.finding, type: findingType })) return false;
     const existing = groupMap.get(el) || [];
     if (existing.some(f => (f.type || f.id) === findingType)) return false;
     addBrowserFindings(groupMap, el, [{
