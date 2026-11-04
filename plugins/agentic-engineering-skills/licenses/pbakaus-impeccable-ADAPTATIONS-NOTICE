@@ -6,4 +6,6 @@ Except where noted below, the bundled Impeccable skill and the modified files un
 
 `scripts/command-metadata.json` adapts the `init` description by omitting the offer to create DESIGN.md when code exists, and records that change inline in its `$comment` property. Both paths are relative to `skills/impeccable/`.
 
+`scripts/live-server.mjs`, `scripts/live/browser-script-parts.mjs`, and `scripts/detector/detect-antipatterns-browser.js` were adapted to pass project detector exclusions through live mode and apply rule, value and page waivers in the browser.
+
 `scripts/data/font-index.json.deflate` is a gzip-compressed representation of the upstream `skill/scripts/data/font-index.json`: decompression reproduces the original bytes. The compressed representation is redistributed without modifying that data.

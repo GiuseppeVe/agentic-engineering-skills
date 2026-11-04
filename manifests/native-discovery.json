@@ -1,11 +1,11 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-03",
+  "capturedAt": "2026-11-04",
   "environment": {
     "isolation": "Separate short-lived native host profiles and allowlisted child environments; the local marketplace ran from a temporary snapshot verified against the original marketplace and payload. User configuration paths were isolated and only inert fixture credentials were passed to child processes.",
     "commandNotation": "Native commands ran from the verified temporary local marketplace snapshot using Node.js v24.16.0.",
-    "payloadRefresh": "Both installed full file inventories and file bytes match the original source; the four Claude Impeccable agent files were also checked individually. No model was invoked; hooks were not executed."
+    "payloadRefresh": "Both hosts installed the updated plugin in separate temporary profiles; installed host trees and full payload hashes matched the source. No model was invoked and hooks were not executed."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -130,8 +130,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:6498bd69aab8819e997f6412c4403684300ea0e6d8cd0905bd6eca380cd587eb",
-        "fullTreeHash": "sha256:c4b05820530a346e2fea8c43f3dbdd0c2d1220d1e37799762193bfde5fcf1f7c",
+        "treeHash": "sha256:b70820cc9b03bbeca51691505043b4df01a83516457da6f1378e62899c8f2339",
+        "fullTreeHash": "sha256:ef1aac4893a4255daad2b859f806b21c11b0448358ddcac3fcedc0c55067f084",
         "fileCount": 537
       },
       "commands": [
@@ -240,8 +240,8 @@
           "claude-skills",
           "skills"
         ],
-        "treeHash": "sha256:5a796615ec0fc6554b718821286c8f67be22003e5dad68d7b70e38035a52e503",
-        "fullTreeHash": "sha256:c4b05820530a346e2fea8c43f3dbdd0c2d1220d1e37799762193bfde5fcf1f7c",
+        "treeHash": "sha256:aebf94ff778792a697de08ac04653f3bbb941c99766318e516058eb81bc30bd4",
+        "fullTreeHash": "sha256:ef1aac4893a4255daad2b859f806b21c11b0448358ddcac3fcedc0c55067f084",
         "fileCount": 537
       },
       "installedAgents": [

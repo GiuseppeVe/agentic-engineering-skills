@@ -1,9 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+// Adapted from pbakaus/impeccable (Apache-2.0); pass project detector waivers to live mode.
+
 export const LIVE_BROWSER_SCRIPT_PARTS = Object.freeze([
   Object.freeze({ name: 'session-state', file: 'live-browser-session.js' }),
   Object.freeze({ name: 'dom-helpers', file: 'live-browser-dom.js' }),
+  Object.freeze({ name: 'detector-ignores', file: 'live-browser-ignores.js' }),
   Object.freeze({ name: 'browser-ui', file: 'live-browser.js' }),
 ]);
 
@@ -32,13 +35,14 @@ export function readLiveBrowserScriptParts(parts, readFile = (filePath) => fs.re
   }));
 }
 
-export function assembleLiveBrowserScript({ token, port, vocabulary, parts }) {
+export function assembleLiveBrowserScript({ token, port, vocabulary, parts, projectIgnores = {} }) {
   const prelude =
     `window.__IMPECCABLE_TOKEN__ = '${token}';\n` +
     `window.__IMPECCABLE_PORT__ = ${port};\n` +
     // Canonical command vocabulary (values + labels + icons). live-browser.js
     // builds its action picker from this instead of an inline copy.
-    `window.__IMPECCABLE_VOCAB__ = ${JSON.stringify(vocabulary)};\n`;
+    `window.__IMPECCABLE_VOCAB__ = ${JSON.stringify(vocabulary)};\n` +
+    `window.__IMPECCABLE_PROJECT_IGNORES__ = ${JSON.stringify(projectIgnores).replace(/</g, '\\u003c')};\n`;
 
   const body = parts.map((part) => {
     const file = part.file || path.basename(part.path || '');
