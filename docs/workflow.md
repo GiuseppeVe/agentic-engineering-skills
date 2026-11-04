@@ -6,6 +6,38 @@ Seven phases form a composable path. Not every skill runs on every task; choose 
 
 This guide is the relevant-stage backlink and conditional routing surface for every included public skill. Each skill appears under the phase where it can contribute; its presence is an option, not a mandate. Select it only when task scope, risk, and the philosophy's evidence gates justify that route.
 
+## Project context and instructions
+
+A workflow skill describes a reusable process; project instructions and documentation provide the local facts, constraints and decisions that process needs. Review existing documentation first, then introduce only what is missing. Arrange links by the work that requires them, so agents can select relevant material without reading the entire documentation tree for every task.
+
+### Entry points
+
+- `AGENTS.md`: Keep the repository-wide entry point short. State genuinely cross-cutting working rules, then describe which documents to consult for each relevant task. Include operational boundaries or verification pointers when these are important across the project. Avoid duplicating full policies.
+- `README.md`: Explain the product, prerequisites and starting points for people and agents; link to authoritative guides instead of repeating them.
+- For Codex, check the [AGENTS.md discovery and precedence rules](https://learn.chatgpt.com/docs/agent-configuration/agents-md) and verify what was loaded in a fresh session. Recent Claude Code versions can read `AGENTS.md` directly, depending on configuration and the presence of `CLAUDE.md`; where needed, a `CLAUDE.md` can import it with `@AGENTS.md`. Consult [Claude Code's instruction-loading documentation](https://code.claude.com/docs/en/memory#agents-md) and verify your session. Do not assume the two hosts discover files identically.
+
+### Development guidance
+
+- `CODING_STANDARDS.md`: Record shared coding conventions, repository workflow and relevant verification expectations. Keep one canonical location for each rule and link to tools or procedures for details.
+- `BACKEND.md` and `FRONTEND.md`: Describe area-specific boundaries, entry points, conventions and checks when those areas exist. Split or combine guides according to project size.
+
+### Architecture and decisions
+
+- `OVERVIEW.md`: Map key components, responsibilities and dependencies. Explain where to find the code and more detailed decisions without duplicating implementation details.
+- `adr/`: Record significant architectural decisions, their context, consequences and status. Supersede or update decisions explicitly when they change; identify which accepted decisions still constrain work.
+
+### Operations and current work
+
+- `LOCAL_SETUP.md`: Describe prerequisites and reproducible steps to start the project locally. Note environment limitations and which instructions were actually verified.
+- `DEVELOPMENT_OPERATIONS.md`: Record available tests, checks and development procedures, including prerequisites and how to interpret results. Keep commands current with the repository.
+- `specs/`: Capture the intended behavior, scope and acceptance criteria of significant changes.
+- `plans/`: Translate approved work into implementation steps, dependencies and verification; distinguish planned work from shipped behavior.
+- `reports/`: Record what was actually checked, the relevant revision or environment, results and limitations. Historical evidence does not by itself establish current behavior.
+
+### Keep the map useful
+
+Add or refine instructions when a recurring project-specific need is observed. Remove obsolete pointers, resolve contradictions, and keep linked documents current with code and configuration. Validate that links resolve and that the relevant host sees the intended entry point. For representative tasks, check whether agents find and use the right documents; revise instructions that add overhead without helping.
+
 ## Understand
 
 `learn-codebase` builds broad project context. `graphify-start` routes codebase questions through the project Graphify protocol when present, then `graphify` can build and query a persistent knowledge graph. `ask-matt` routes a situation to an available skill or flow. `brainstorming` clarifies intent before creative changes. `grill-me` and `grilling` pressure-test uncertain proposals. `caveman` keeps collaboration compact.
