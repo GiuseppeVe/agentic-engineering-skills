@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Harness Evaluation"
+  short_description: "Run harness experiments for your manual evaluation"
+  default_prompt: "Use $setup-harness-evaluation to prepare and launch independent experiments with the specified harness, then collect outcomes and evidence for my evaluation."
+policy:
+  allow_implicit_invocation: false

@@ -1,6 +1,6 @@
 {
   "name": "agentic-engineering-skills",
-  "description": "Composable engineering skills and agent profiles, including fidelity-first frontend handoff imports.",
+  "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
   "owner": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "agentic-engineering-skills",
-      "description": "A reproducible AI-engineering workflow skill pack with fidelity-first frontend handoff imports.",
-      "version": "0.1.0",
+      "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
+      "version": "1.1.0",
       "source": "./plugins/agentic-engineering-skills"
     }
   ]

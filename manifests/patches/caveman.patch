@@ -1,5 +1,1171 @@
-diff --git a/skills/caveman/SKILL.md b/plugins/agentic-engineering-skills/skills/caveman/SKILL.md
---- a/skills/caveman/SKILL.md
-+++ b/plugins/agentic-engineering-skills/skills/caveman/SKILL.md
-@@
-+Adaptation record: the upstream Caveman skill is merged with current local communication rules and packaged for Codex and Claude Code discovery.
+diff --git a/caveman/README.md a/caveman/README.md
+deleted file mode 100644
+index 92a055c..0000000
+--- a/caveman/README.md
++++ /dev/null
+@@ -1,52 +0,0 @@
+-# caveman
+-
+-Talk like smart caveman. Same brain, fewer tokens.
+-
+-## What it does
+-
+-Compress model responses to caveman-style prose by dropping articles, filler,
+-pleasantries, and hedging. Instruction preserves technical detail, code blocks,
+-error strings, and symbols. Result depends on model and workload; no aggregate
+-reduction or quality-equivalence claim is published, and mode persists until
+-changed or stopped.
+-
+-Six intensity levels:
+-
+-| Level | What change |
+-|-------|-------------|
+-| `lite` | Drop filler/hedging. Sentences stay full. Professional but tight. |
+-| `full` | Default. Drop articles, fragments OK, short synonyms. |
+-| `ultra` | Bare fragments. Abbreviations (DB, auth, fn). Arrows for causality. |
+-| `wenyan-lite` | Classical Chinese register, light compression. |
+-| `wenyan-full` | Maximum 文言文 compression. |
+-| `wenyan-ultra` | Extreme classical compression. |
+-
+-Auto-clarity rule: caveman drops to normal prose for security warnings, irreversible-action confirmations, multi-step sequences where fragment ambiguity risks misread, and when user repeats a question. Resumes after the clear part.
+-
+-## How to invoke
+-
+-```
+-/caveman              # full mode (default)
+-/caveman lite         # lighter compression
+-/caveman ultra        # extreme compression
+-/caveman wenyan       # classical Chinese
+-stop caveman          # back to normal prose
+-```
+-
+-## Example output
+-
+-Question: "Why does my React component re-render?"
+-
+-Normal prose:
+-> Your component re-renders because you create a new object reference each render. Wrapping it in `useMemo` will fix the issue.
+-
+-Caveman (full):
+-> New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`.
+-
+-Caveman (ultra):
+-> Inline obj prop → new ref → re-render. `useMemo`.
+-
+-## See also
+-
+-- [`SKILL.md`](./SKILL.md): full LLM-facing instructions
+-- [Caveman README](../../README.md): repo overview, install, benchmarks
+diff --git a/caveman/SKILL.md b/caveman/SKILL.md
+index ea8bf27..555896a 100644
+--- a/caveman/SKILL.md
++++ b/caveman/SKILL.md
+@@ -4,3 +4,4 @@
+-  Ultra-compressed communication mode that cuts output tokens while keeping
+-  technical accuracy. Levels: lite, full, ultra and the wenyan variants. Use for
+-  /caveman, "caveman mode", "talk like caveman", "be brief" or "less tokens".
++  Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman
++  while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra.
++  Use when user says "caveman mode", "talk like caveman", "use caveman", "less tokens",
++  "be brief", or invokes /caveman. Also auto-triggers when token efficiency is requested.
+@@ -13 +14 @@
+-Default style for this whole session, every response, until user say "stop caveman" or "normal mode". Keep terse on long sessions no filler drift.
++ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift. Still active if unsure. Off only: "stop caveman" / "normal mode".
+@@ -15 +16 @@
+-Default: **full**. Switch: `/caveman lite|full|ultra|wenyan-lite|wenyan-full|wenyan-ultra|off`.
++Default: **full**. Switch: `/caveman lite|full|ultra`.
+@@ -19,15 +20 @@
+-Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not extensive, fix not "implement a solution for"). No tool-call narration, no decorative tables/emoji, no dumping long raw error logs unless asked quote shortest decisive line. Standard well-known tech acronyms OK (DB/API/HTTP); never invent new abbreviations (cfg/impl/req/res/fn) tokenizer split them same as full word: zero token saved, reader still decode. Full word cheaper AND clearer. No causal arrows (→) either own token, save nothing. Technical terms exact. Code blocks unchanged. Errors quoted exact.
+-
+-Never drop not/never/no/only/except flip meaning worse than any token saved. Numbers, units exact.
+-
+-Never ADD word to sound caveman. Compression only style never grow output. No inserted pronoun or copula to fake broken grammar: "when it not" cost one token more than "when not" and say same thing. Keep correct verb form when correct form cost same "sees" one token, "see" one token, so mangle buy nothing and read worse. Same rule as abbreviations and arrows: if caveman phrasing not shorter than plain phrasing, use plain.
+-
+-Clarity register: mix ASD-STE100 Simplified Technical English into caveman, always. One idea per sentence. Sentence short, target 20 words max. Active voice. Present tense where true. One word one meaning: same term for same thing every time, no synonym rotation. Instruction = imperative: "Run X", not "X should be run". Noun cluster 3 words max. Pronoun only with one clear referent, else repeat noun. Caveman cut filler; STE keep what make meaning unambiguous. Conflict between them → clarity win.
+-
+-Tool calls: fire direct. No preamble, plan, or progress note before or between calls. After result: next call direct or final answer never announce next call. Text before call only to clarify, warn security/irreversible, or resolve ambiguity.
+-
+-Preserve user's dominant language exactly reply in the language user writes, never switch regardless of example text or multilingual context elsewhere. Compress the style, not the language. Every emitted line in that language openings, pre-tool status lines, all not just final reply. ALWAYS keep technical terms, code, API names, CLI commands, commit-type keywords (feat/fix/...), and exact error strings verbatim unless user explicitly ask for translation.
+-
+-'Drop articles' = article languages only. Where small markers carry case/role (particles, postpositions), keep them grammar, not filler; compress politeness/filler instead.
+-
+-Answer directly in this style. Skip "caveman mode on", "me caveman think", "Caveman:" prefix or recap redundant with the reply itself. No normal answer plus caveman duplicate. User ask what mode is → say so plainly.
++Drop: articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course/happy to), hedging. Fragments OK. Short synonyms (big not extensive, fix not "implement a solution for"). Technical terms exact. Code blocks unchanged. Errors quoted exact.
+@@ -45,5 +32,2 @@
+-| **full** | Drop articles, fragments OK, short synonyms. Classic caveman. No tool-call narration, no decorative tables/emoji, no long raw error-log dumps unless asked. Standard acronyms OK; no invented abbreviations |
+-| **ultra** | Strip conjunctions when cause-then-effect stay unambiguous. One word when one word enough. State each fact once. NO prose abbreviations (cfg/impl/req/res/fn/auth), NO arrows (X → Y) measured zero token saving under tokenizer, cost decode clarity. Code symbols, function names, API names, error strings: never touch |
+-| **wenyan-lite** | Semi-classical. Drop filler/hedging but keep grammar structure, classical register |
+-| **wenyan-full** | Maximum classical terseness. Fully 文言文. 80-90% character reduction chars, not tokens. Classical sentence patterns, verbs precede objects, subjects often omitted, classical particles (之/乃/為/其) |
+-| **wenyan-ultra** | Extreme abbreviation while keeping classical Chinese feel. Maximum compression, ultra terse |
++| **full** | Drop articles, fragments OK, short synonyms. Classic caveman |
++| **ultra** | Abbreviate prose words (DB/auth/config/req/res/fn/impl), strip conjunctions, arrows for causality (X → Y), one word when one word enough. Code symbols, function names, API names, error strings: never abbreviate |
+@@ -51 +35 @@
+-Example "Why React component re-render?"
++Example — "Why React component re-render?"
+@@ -54,4 +38 @@
+-- ultra: "Inline obj prop, new ref, re-render. `useMemo`."
+-- wenyan-lite: "組件頻重繪，以每繪新生對象參照故。以 useMemo 包之。"
+-- wenyan-full: "每繪新生對象參照，故重繪；以 useMemo 包之則免。"
+-- wenyan-ultra: "新參照則重繪。useMemo 包之。"
++- ultra: "Inline obj prop → new ref → re-render. `useMemo`."
+@@ -59 +40 @@
+-Example "Explain database connection pooling."
++Example — "Explain database connection pooling."
+@@ -62,5 +43 @@
+-- ultra: "Pool reuse open DB connections. No per-request handshake."
+-- wenyan-full: "池蓄已開之連，不逐請而新開，省握手之費。"
+-- wenyan-ultra: "池蓄連，免逐請新開，省握手。"
+-
+-Classical chars = wenyan modes only. Never swap a word to a classical char to shrink at non-wenyan levels.
++- ultra: "Pool = reuse DB conn. Skip handshake → fast under load."
+@@ -74 +51 @@
+-- Compression itself creates technical ambiguity (e.g., `"migrate table drop column backup first"` order unclear without articles/conjunctions)
++- Compression itself creates technical ambiguity (e.g., `"migrate table drop column backup first"` — order unclear without articles/conjunctions)
+@@ -79,3 +56 @@
+-Example shows FORMAT only write warning in session language, not example's.
+-
+-Example destructive op:
++Example — destructive op:
+@@ -90 +65,5 @@
+-Persisted outside chat: write normal prose code, comments, commits, docs, issue/PR/MR/defect/ticket/bug-report text, memory files, third-party messages (/caveman-compress exempt). "Open a defect" or "file a bug" mean the same as "open issue": body go to other humans, so body normal English. "stop caveman" or "normal mode": revert. Level persist until changed or session end.
+\ No newline at end of file
++Code/commits/PRs: write normal. "stop caveman" or "normal mode": revert. Level persist until changed or session end.
++
++## Additional functions
++
++For commit-message requests, read [commit](references/commit.md); for explicit file compression, [compress](references/compress.md); for help, statistics or delegation, [utilities](references/utilities.md).
+diff --git b/caveman/references/commit.md b/caveman/references/commit.md
+new file mode 100644
+index 0000000..2133e02
+--- /dev/null
++++ b/caveman/references/commit.md
+@@ -0,0 +1,56 @@
++Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.
++
++## Rules
++
++**Subject line:**
++- `<type>(<scope>): <imperative summary>` — `<scope>` optional
++- Types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `chore`, `build`, `ci`, `style`, `revert`
++- Imperative mood: "add", "fix", "remove" — not "added", "adds", "adding"
++- ≤50 chars when possible, hard cap 72
++- No trailing period
++- Match project convention for capitalization after the colon
++
++**Body (only if needed):**
++- Skip entirely when subject is self-explanatory
++- Add body only for: non-obvious *why*, breaking changes, migration notes, linked issues
++- Wrap at 72 chars
++- Bullets `-` not `*`
++- Reference issues/PRs at end: `Closes #42`, `Refs #17`
++
++**What NEVER goes in:**
++- "This commit does X", "I", "we", "now", "currently" — the diff says what
++- "As requested by..." — use Co-authored-by trailer
++- "Generated with Codex" or any AI attribution
++- Emoji (unless project convention requires)
++- Restating the file name when scope already says it
++
++## Examples
++
++Diff: new endpoint for user profile with body explaining the why
++- ❌ "feat: add a new endpoint to get user profile information from the database"
++- ✅
++  ```
++  feat(api): add GET /users/:id/profile
++
++  Mobile client needs profile data without the full user payload
++  to reduce LTE bandwidth on cold-launch screens.
++
++  Closes #128
++  ```
++
++Diff: breaking API change
++- ✅
++  ```
++  feat(api)!: rename /v1/orders to /v1/checkout
++
++  BREAKING CHANGE: clients on /v1/orders must migrate to /v1/checkout
++  before 2026-06-01. Old route returns 410 after that date.
++  ```
++
++## Auto-Clarity
++
++Always include body for: breaking changes, security fixes, data migrations, anything reverting a prior commit. Never compress these into subject-only — future debuggers need the context.
++
++## Boundaries
++
++Only generates the commit message. Does not run `git commit`, does not stage files, does not amend. Output the message as a code block ready to paste. "stop caveman-commit" or "normal mode": revert to verbose commit style.
+\ No newline at end of file
+diff --git b/caveman/references/compress.md b/caveman/references/compress.md
+new file mode 100644
+index 0000000..60f513d
+--- /dev/null
++++ b/caveman/references/compress.md
+@@ -0,0 +1,102 @@
++# Caveman Compress
++
++## Purpose
++
++Compress natural language files (AGENTS.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`.
++
++## Trigger
++
++When the user explicitly asks the unified caveman skill to compress a memory file.
++
++## Process
++
++1. The compression scripts live in `scripts/` inside the caveman skill directory.
++
++2. From the caveman skill directory, run:
++
++python3 -m scripts.compress <absolute_filepath>
++
++3. The CLI will:
++- detect file type (no tokens)
++- send the file content to Claude for compression, using the Anthropic API when configured and installed, otherwise `claude --print`
++- validate output (no tokens)
++- if errors: request targeted fixes from Claude (no recompression)
++- retry up to 2 times
++- if still failing after 2 retries: report error to user, leave original file untouched
++
++4. Return result to user
++
++## Compression Rules
++
++### Remove
++- Articles: a, an, the
++- Filler: just, really, basically, actually, simply, essentially, generally
++- Pleasantries: "sure", "certainly", "of course", "happy to", "I'd recommend"
++- Hedging: "it might be worth", "you could consider", "it would be good to"
++- Redundant phrasing: "in order to" → "to", "make sure to" → "ensure", "the reason is because" → "because"
++- Connective fluff: "however", "furthermore", "additionally", "in addition"
++
++### Preserve EXACTLY (never modify)
++- Code blocks (fenced ``` and indented)
++- Inline code (`backtick content`)
++- URLs and links (full URLs, markdown links)
++- File paths (`/src/components/...`, `./config.yaml`)
++- Commands (`npm install`, `git commit`, `docker build`)
++- Technical terms (library names, API names, protocols, algorithms)
++- Proper nouns (project names, people, companies)
++- Dates, version numbers, numeric values
++- Environment variables (`$HOME`, `NODE_ENV`)
++
++### Preserve Structure
++- All markdown headings (keep exact heading text, compress body below)
++- Bullet point hierarchy (keep nesting level)
++- Numbered lists (keep numbering)
++- Tables (compress cell text, keep structure)
++- Frontmatter/YAML headers in markdown files
++
++### Compress
++- Use short synonyms: "big" not "extensive", "fix" not "implement a solution for", "use" not "utilize"
++- Fragments OK: "Run tests before commit" not "You should always run tests before committing"
++- Drop "you should", "make sure to", "remember to" — just state the action
++- Merge redundant bullets that say the same thing differently
++- Keep one example where multiple examples show the same pattern
++
++CRITICAL RULE:
++Anything inside ``` ... ``` must be copied EXACTLY.
++Do not:
++- remove comments
++- remove spacing
++- reorder lines
++- shorten commands
++- simplify anything
++
++Inline code (`...`) must be preserved EXACTLY.
++Do not modify anything inside backticks.
++
++If file contains code blocks:
++- Treat code blocks as read-only regions
++- Only compress text outside them
++- Do not merge sections around code
++
++## Pattern
++
++Original:
++> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it helps catch bugs early and prevents broken builds from being deployed to production.
++
++Compressed:
++> Run tests before push to main. Catch bugs early, prevent broken prod deploys.
++
++Original:
++> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.
++
++Compressed:
++> Microservices architecture. API gateway route all requests to services. Auth service manage user sessions + JWT tokens.
++
++## Boundaries
++
++- ONLY compress natural language files (.md, .txt, .typ, .typst, .tex, extensionless)
++- NEVER modify: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh
++- If file has mixed content (prose + code), compress ONLY the prose sections
++- If unsure whether something is code or prose, leave it unchanged
++- Original file is backed up as FILE.original.md before overwriting
++- Never compress FILE.original.md (skip it)
+diff --git b/caveman/references/levels.md b/caveman/references/levels.md
+new file mode 100644
+index 0000000..018ded3
+--- /dev/null
++++ b/caveman/references/levels.md
+@@ -0,0 +1,18 @@
++# Levels
++
++
++| Level | What change |
++|-------|------------|
++| **lite** | No filler/hedging. Keep articles + full sentences. Professional but tight |
++| **full** | Drop articles, fragments OK, short synonyms. Classic caveman |
++| **ultra** | Abbreviate prose words (DB/auth/config/req/res/fn/impl), strip conjunctions, arrows for causality (X → Y), one word when one word enough. Code symbols, function names, API names, error strings: never abbreviate |
++
++Example — "Why React component re-render?"
++- lite: "Your component re-renders because you create a new object reference each render. Wrap it in `useMemo`."
++- full: "New object ref each render. Inline object prop = new ref = re-render. Wrap in `useMemo`."
++- ultra: "Inline obj prop → new ref → re-render. `useMemo`."
++
++Example — "Explain database connection pooling."
++- lite: "Connection pooling reuses open connections instead of creating new ones per request. Avoids repeated handshake overhead."
++- full: "Pool reuse open DB connections. No new connection per request. Skip handshake overhead."
++- ultra: "Pool = reuse DB conn. Skip handshake → fast under load."
+diff --git b/caveman/references/utilities.md b/caveman/references/utilities.md
+new file mode 100644
+index 0000000..b0c5472
+--- /dev/null
++++ b/caveman/references/utilities.md
+@@ -0,0 +1,6 @@
++# Caveman utilities
++
++- Help: explain the unified skill, available levels and commands using the relevant references.
++- Stats: report only measured usage or savings from a working runtime tool or hook. The previous stats and mode-tracker hook scripts are missing; do not invent numbers. Report unavailable if no reliable measurement exists.
++- Subagents: apply the core communication rules to their output. Use the runtime's available agent types and obey existing delegation and review instructions. Old cavecrew agent presets are not installed; do not assume they exist.
++- Old separate slash commands are no longer independently registered. Interpret equivalent natural-language requests or use the unified caveman skill.
+diff --git b/caveman/scripts/compress/__init__.py b/caveman/scripts/compress/__init__.py
+new file mode 100644
+index 0000000..16b8c53
+--- /dev/null
++++ b/caveman/scripts/compress/__init__.py
+@@ -0,0 +1,9 @@
++"""Caveman compress scripts.
++
++This package provides tools to compress natural language markdown files
++into caveman format to save input tokens.
++"""
++
++__all__ = ["cli", "compress", "detect", "validate"]
++
++__version__ = "1.0.0"
+diff --git b/caveman/scripts/compress/__main__.py b/caveman/scripts/compress/__main__.py
+new file mode 100644
+index 0000000..4e28416
+--- /dev/null
++++ b/caveman/scripts/compress/__main__.py
+@@ -0,0 +1,3 @@
++from .cli import main
++
++main()
+diff --git b/caveman/scripts/compress/benchmark.py b/caveman/scripts/compress/benchmark.py
+new file mode 100644
+index 0000000..f9e2ee0
+--- /dev/null
++++ b/caveman/scripts/compress/benchmark.py
+@@ -0,0 +1,80 @@
++#!/usr/bin/env python3
++from pathlib import Path
++import sys
++
++# Support both direct execution and module import
++try:
++    from .validate import validate
++except ImportError:
++    sys.path.insert(0, str(Path(__file__).parent))
++    from validate import validate
++
++try:
++    import tiktoken
++    _enc = tiktoken.get_encoding("o200k_base")
++except ImportError:
++    _enc = None
++
++
++def count_tokens(text):
++    if _enc is None:
++        return len(text.split())  # fallback: word count
++    return len(_enc.encode(text))
++
++
++def benchmark_pair(orig_path: Path, comp_path: Path):
++    orig_text = orig_path.read_text()
++    comp_text = comp_path.read_text()
++
++    orig_tokens = count_tokens(orig_text)
++    comp_tokens = count_tokens(comp_text)
++    saved = 100 * (orig_tokens - comp_tokens) / orig_tokens if orig_tokens > 0 else 0.0
++    result = validate(orig_path, comp_path)
++
++    return (comp_path.name, orig_tokens, comp_tokens, saved, result.is_valid)
++
++
++def print_table(rows):
++    print("\n| File | Original | Compressed | Saved % | Valid |")
++    print("|------|----------|------------|---------|-------|")
++    for r in rows:
++        print(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]:.1f}% | {'✅' if r[4] else '❌'} |")
++
++
++def main():
++    # Direct file pair: python3 benchmark.py original.md compressed.md
++    if len(sys.argv) == 3:
++        orig = Path(sys.argv[1]).resolve()
++        comp = Path(sys.argv[2]).resolve()
++        if not orig.exists():
++            print(f"❌ Not found: {orig}")
++            sys.exit(1)
++        if not comp.exists():
++            print(f"❌ Not found: {comp}")
++            sys.exit(1)
++        print_table([benchmark_pair(orig, comp)])
++        return
++
++    # Glob mode: repo_root/tests/caveman-compress/
++    # __file__ lives at <repo_root>/skills/caveman-compress/scripts/benchmark.py
++    # Walk up four dirs: scripts → caveman-compress → skills → repo_root.
++    tests_dir = Path(__file__).resolve().parents[3] / "tests" / "caveman-compress"
++    if not tests_dir.exists():
++        print(f"❌ Tests dir not found: {tests_dir}")
++        sys.exit(1)
++
++    rows = []
++    for orig in sorted(tests_dir.glob("*.original.md")):
++        comp = orig.with_name(orig.stem.removesuffix(".original") + ".md")
++        if comp.exists():
++            rows.append(benchmark_pair(orig, comp))
++
++    if not rows:
++        print("No compressed file pairs found.")
++        return
++
++    print_table(rows)
++
++
++if __name__ == "__main__":
++    main()
+diff --git b/caveman/scripts/compress/cli.py b/caveman/scripts/compress/cli.py
+new file mode 100644
+index 0000000..c314f87
+--- /dev/null
++++ b/caveman/scripts/compress/cli.py
+@@ -0,0 +1,85 @@
++#!/usr/bin/env python3
++"""
++Caveman Compress CLI
++
++Usage:
++    caveman <filepath>
++"""
++
++import sys
++
++# Force UTF-8 on stdout/stderr before any code can print. Windows consoles
++# default to cp1252 and crash on the ❌ glyphs in error/validation branches,
++# masking the real error and leaving the user with a half-compressed file.
++for _stream in (sys.stdout, sys.stderr):
++    reconfigure = getattr(_stream, "reconfigure", None)
++    if callable(reconfigure):
++        try:
++            reconfigure(encoding="utf-8", errors="replace")
++        except Exception:
++            pass
++
++from pathlib import Path
++
++from .compress import compress_file
++from .detect import detect_file_type, should_compress
++
++
++def print_usage():
++    print("Usage: caveman <filepath>")
++
++
++def main():
++    if len(sys.argv) != 2:
++        print_usage()
++        sys.exit(1)
++
++    filepath = Path(sys.argv[1])
++
++    # Check file exists
++    if not filepath.exists():
++        print(f"❌ File not found: {filepath}")
++        sys.exit(1)
++
++    if not filepath.is_file():
++        print(f"❌ Not a file: {filepath}")
++        sys.exit(1)
++
++    filepath = filepath.resolve()
++
++    # Detect file type
++    file_type = detect_file_type(filepath)
++
++    print(f"Detected: {file_type}")
++
++    # Check if compressible
++    if not should_compress(filepath):
++        print("Skipping: file is not natural language (code/config)")
++        sys.exit(0)
++
++    print("Starting caveman compression...\n")
++
++    try:
++        success = compress_file(filepath)
++
++        if success:
++            print("\nCompression completed successfully")
++            backup_path = filepath.with_name(filepath.stem + ".original.md")
++            print(f"Compressed: {filepath}")
++            print(f"Original:   {backup_path}")
++            sys.exit(0)
++        else:
++            print("\n❌ Compression failed after retries")
++            sys.exit(2)
++
++    except KeyboardInterrupt:
++        print("\nInterrupted by user")
++        sys.exit(130)
++
++    except Exception as e:
++        print(f"\n❌ Error: {e}")
++        sys.exit(1)
++
++
++if __name__ == "__main__":
++    main()
+diff --git b/caveman/scripts/compress/compress.py b/caveman/scripts/compress/compress.py
+new file mode 100644
+index 0000000..7adc4fb
+--- /dev/null
++++ b/caveman/scripts/compress/compress.py
+@@ -0,0 +1,254 @@
++#!/usr/bin/env python3
++"""
++Caveman Memory Compression Orchestrator
++
++Usage:
++    python scripts/compress.py <filepath>
++"""
++
++import os
++import re
++import subprocess
++from pathlib import Path
++from typing import List
++
++OUTER_FENCE_REGEX = re.compile(
++    r"\A\s*(`{3,}|~{3,})[^\n]*\n(.*)\n\1\s*\Z", re.DOTALL
++)
++
++# Filenames and paths that almost certainly hold secrets or PII. Compressing
++# them ships raw bytes to the Anthropic API — a third-party data boundary that
++# developers on sensitive codebases cannot cross. detect.py already skips .env
++# by extension, but credentials.md / secrets.txt / ~/.aws/credentials would
++# slip through the natural-language filter. This is a hard refuse before read.
++SENSITIVE_BASENAME_REGEX = re.compile(
++    r"(?ix)^("
++    r"\.env(\..+)?"
++    r"|\.netrc"
++    r"|credentials(\..+)?"
++    r"|secrets?(\..+)?"
++    r"|passwords?(\..+)?"
++    r"|id_(rsa|dsa|ecdsa|ed25519)(\.pub)?"
++    r"|authorized_keys"
++    r"|known_hosts"
++    r"|.*\.(pem|key|p12|pfx|crt|cer|jks|keystore|asc|gpg)"
++    r")$"
++)
++
++SENSITIVE_PATH_COMPONENTS = frozenset({".ssh", ".aws", ".gnupg", ".kube", ".docker"})
++
++SENSITIVE_NAME_TOKENS = (
++    "secret", "credential", "password", "passwd",
++    "apikey", "accesskey", "token", "privatekey",
++)
++
++
++def is_sensitive_path(filepath: Path) -> bool:
++    """Heuristic denylist for files that must never be shipped to a third-party API."""
++    name = filepath.name
++    if SENSITIVE_BASENAME_REGEX.match(name):
++        return True
++    lowered_parts = {p.lower() for p in filepath.parts}
++    if lowered_parts & SENSITIVE_PATH_COMPONENTS:
++        return True
++    # Normalize separators so "api-key" and "api_key" both match "apikey".
++    lower = re.sub(r"[_\-\s.]", "", name.lower())
++    return any(tok in lower for tok in SENSITIVE_NAME_TOKENS)
++
++
++def strip_llm_wrapper(text: str) -> str:
++    """Strip outer ```markdown ... ``` fence when it wraps the entire output."""
++    m = OUTER_FENCE_REGEX.match(text)
++    if m:
++        return m.group(2)
++    return text
++
++from .detect import should_compress
++from .validate import validate
++
++MAX_RETRIES = 2
++
++
++# ---------- Claude Calls ----------
++
++
++def call_claude(prompt: str) -> str:
++    api_key = os.environ.get("ANTHROPIC_API_KEY")
++    if api_key:
++        try:
++            import anthropic
++
++            client = anthropic.Anthropic(api_key=api_key)
++            msg = client.messages.create(
++                model=os.environ.get("CAVEMAN_MODEL", "claude-sonnet-4-5"),
++                max_tokens=8192,
++                messages=[{"role": "user", "content": prompt}],
++            )
++            return strip_llm_wrapper(msg.content[0].text.strip())
++        except ImportError:
++            pass  # anthropic not installed, fall back to CLI
++    # Fallback: use claude CLI (handles desktop auth)
++    try:
++        result = subprocess.run(
++            ["claude", "--print"],
++            input=prompt,
++            text=True,
++            capture_output=True,
++            check=True,
++        )
++        return strip_llm_wrapper(result.stdout.strip())
++    except subprocess.CalledProcessError as e:
++        raise RuntimeError(f"Claude call failed:\n{e.stderr}")
++
++
++def build_compress_prompt(original: str) -> str:
++    return f"""
++Compress this markdown into caveman format.
++
++STRICT RULES:
++- Do NOT modify anything inside ``` code blocks
++- Do NOT modify anything inside inline backticks
++- Preserve ALL URLs exactly
++- Preserve ALL headings exactly
++- Preserve file paths and commands
++- Return ONLY the compressed markdown body — do NOT wrap the entire output in a ```markdown fence or any other fence. Inner code blocks from the original stay as-is; do not add a new outer fence around the whole file.
++
++Only compress natural language.
++
++TEXT:
++{original}
++"""
++
++
++def build_fix_prompt(original: str, compressed: str, errors: List[str]) -> str:
++    errors_str = "\n".join(f"- {e}" for e in errors)
++    return f"""You are fixing a caveman-compressed markdown file. Specific validation errors were found.
++
++CRITICAL RULES:
++- DO NOT recompress or rephrase the file
++- ONLY fix the listed errors — leave everything else exactly as-is
++- The ORIGINAL is provided as reference only (to restore missing content)
++- Preserve caveman style in all untouched sections
++
++ERRORS TO FIX:
++{errors_str}
++
++HOW TO FIX:
++- Missing URL: find it in ORIGINAL, restore it exactly where it belongs in COMPRESSED
++- Code block mismatch: find the exact code block in ORIGINAL, restore it in COMPRESSED
++- Heading mismatch: restore the exact heading text from ORIGINAL into COMPRESSED
++- Do not touch any section not mentioned in the errors
++
++ORIGINAL (reference only):
++{original}
++
++COMPRESSED (fix this):
++{compressed}
++
++Return ONLY the fixed compressed file. No explanation.
++"""
++
++
++# ---------- Core Logic ----------
++
++
++def compress_file(filepath: Path) -> bool:
++    # Resolve and validate path
++    filepath = filepath.resolve()
++    MAX_FILE_SIZE = 500_000  # 500KB
++    if not filepath.exists():
++        raise FileNotFoundError(f"File not found: {filepath}")
++    if filepath.stat().st_size > MAX_FILE_SIZE:
++        raise ValueError(f"File too large to compress safely (max 500KB): {filepath}")
++
++    # Refuse files that look like they contain secrets or PII. Compressing ships
++    # the raw bytes to the Anthropic API — a third-party boundary — so we fail
++    # loudly rather than silently exfiltrate credentials or keys. Override is
++    # intentional: the user must rename the file if the heuristic is wrong.
++    if is_sensitive_path(filepath):
++        raise ValueError(
++            f"Refusing to compress {filepath}: filename looks sensitive "
++            "(credentials, keys, secrets, or known private paths). "
++            "Compression sends file contents to the Anthropic API. "
++            "Rename the file if this is a false positive."
++        )
++
++    print(f"Processing: {filepath}")
++
++    if not should_compress(filepath):
++        print("Skipping (not natural language)")
++        return False
++
++    original_text = filepath.read_text(errors="ignore")
++    backup_path = filepath.with_name(filepath.stem + ".original.md")
++
++    if not original_text.strip():
++        print("❌ Refusing to compress: file is empty or whitespace-only.")
++        return False
++
++    # Check if backup already exists to prevent accidental overwriting
++    if backup_path.exists():
++        print(f"⚠️ Backup file already exists: {backup_path}")
++        print("The original backup may contain important content.")
++        print("Aborting to prevent data loss. Please remove or rename the backup file if you want to proceed.")
++        return False
++
++    # Step 1: Compress
++    print("Compressing with Claude...")
++    compressed = call_claude(build_compress_prompt(original_text))
++
++    if compressed is None or not compressed.strip():
++        print("❌ Compression aborted: Claude returned an empty response.")
++        print("   Original file is untouched (no backup created).")
++        return False
++
++    if compressed.strip() == original_text.strip():
++        print("❌ Compression aborted: output is identical to input.")
++        print("   Likely causes: Claude refused, returned the prompt verbatim, or the file is")
++        print("   already in caveman form. Original file is untouched (no backup created).")
++        return False
++
++    # Save original as backup, then verify the backup readback before
++    # touching the input file. If the filesystem dropped bytes (encoding,
++    # antivirus, disk full), unlink the bad backup and abort instead of
++    # leaving the user with a corrupt backup + compressed primary.
++    backup_path.write_text(original_text)
++    backup_readback = backup_path.read_text(errors="ignore")
++    if backup_readback != original_text:
++        print(f"❌ Backup write verification failed: {backup_path}")
++        print("   In-memory original differs from on-disk backup. Aborting before touching the input file.")
++        try:
++            backup_path.unlink()
++        except OSError:
++            pass
++        return False
++    filepath.write_text(compressed)
++
++    # Step 2: Validate + Retry
++    for attempt in range(MAX_RETRIES):
++        print(f"\nValidation attempt {attempt + 1}")
++
++        result = validate(backup_path, filepath)
++
++        if result.is_valid:
++            print("Validation passed")
++            break
++
++        print("❌ Validation failed:")
++        for err in result.errors:
++            print(f"   - {err}")
++
++        if attempt == MAX_RETRIES - 1:
++            # Restore original on failure
++            filepath.write_text(original_text)
++            backup_path.unlink(missing_ok=True)
++            print("❌ Failed after retries — original restored")
++            return False
++
++        print("Fixing with Claude...")
++        compressed = call_claude(
++            build_fix_prompt(original_text, compressed, result.errors)
++        )
++        filepath.write_text(compressed)
++
++    return True
+diff --git b/caveman/scripts/compress/detect.py b/caveman/scripts/compress/detect.py
+new file mode 100644
+index 0000000..8d5f6d7
+--- /dev/null
++++ b/caveman/scripts/compress/detect.py
+@@ -0,0 +1,121 @@
++#!/usr/bin/env python3
++"""Detect whether a file is natural language (compressible) or code/config (skip)."""
++
++import json
++import re
++from pathlib import Path
++
++# Extensions that are natural language and compressible
++COMPRESSIBLE_EXTENSIONS = {".md", ".txt", ".markdown", ".rst", ".typ", ".typst", ".tex"}
++
++# Extensions that are code/config and should be skipped
++SKIP_EXTENSIONS = {
++    ".py", ".js", ".ts", ".tsx", ".jsx", ".json", ".yaml", ".yml",
++    ".toml", ".env", ".lock", ".css", ".scss", ".html", ".xml",
++    ".sql", ".sh", ".bash", ".zsh", ".go", ".rs", ".java", ".c",
++    ".cpp", ".h", ".hpp", ".rb", ".php", ".swift", ".kt", ".lua",
++    ".dockerfile", ".makefile", ".csv", ".ini", ".cfg",
++}
++
++# Patterns that indicate a line is code
++CODE_PATTERNS = [
++    re.compile(r"^\s*(import |from .+ import |require\(|const |let |var )"),
++    re.compile(r"^\s*(def |class |function |async function |export )"),
++    re.compile(r"^\s*(if\s*\(|for\s*\(|while\s*\(|switch\s*\(|try\s*\{)"),
++    re.compile(r"^\s*[\}\]\);]+\s*$"),  # closing braces/brackets
++    re.compile(r"^\s*@\w+"),  # decorators/annotations
++    re.compile(r'^\s*"[^"]+"\s*:\s*'),  # JSON-like key-value
++    re.compile(r"^\s*\w+\s*=\s*[{\[\(\"']"),  # assignment with literal
++]
++
++
++def _is_code_line(line: str) -> bool:
++    """Check if a line looks like code."""
++    return any(p.match(line) for p in CODE_PATTERNS)
++
++
++def _is_json_content(text: str) -> bool:
++    """Check if content is valid JSON."""
++    try:
++        json.loads(text)
++        return True
++    except (json.JSONDecodeError, ValueError):
++        return False
++
++
++def _is_yaml_content(lines: list[str]) -> bool:
++    """Heuristic: check if content looks like YAML."""
++    yaml_indicators = 0
++    for line in lines[:30]:
++        stripped = line.strip()
++        if stripped.startswith("---"):
++            yaml_indicators += 1
++        elif re.match(r"^\w[\w\s]*:\s", stripped):
++            yaml_indicators += 1
++        elif stripped.startswith("- ") and ":" in stripped:
++            yaml_indicators += 1
++    # If most non-empty lines look like YAML
++    non_empty = sum(1 for l in lines[:30] if l.strip())
++    return non_empty > 0 and yaml_indicators / non_empty > 0.6
++
++
++def detect_file_type(filepath: Path) -> str:
++    """Classify a file as 'natural_language', 'code', 'config', or 'unknown'.
++
++    Returns:
++        One of: 'natural_language', 'code', 'config', 'unknown'
++    """
++    ext = filepath.suffix.lower()
++
++    # Extension-based classification
++    if ext in COMPRESSIBLE_EXTENSIONS:
++        return "natural_language"
++    if ext in SKIP_EXTENSIONS:
++        return "code" if ext not in {".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".env"} else "config"
++
++    # Extensionless files (like CLAUDE.md, TODO) — check content
++    if not ext:
++        try:
++            text = filepath.read_text(errors="ignore")
++        except (OSError, PermissionError):
++            return "unknown"
++
++        lines = text.splitlines()[:50]
++
++        if _is_json_content(text[:10000]):
++            return "config"
++        if _is_yaml_content(lines):
++            return "config"
++
++        code_lines = sum(1 for l in lines if l.strip() and _is_code_line(l))
++        non_empty = sum(1 for l in lines if l.strip())
++        if non_empty > 0 and code_lines / non_empty > 0.4:
++            return "code"
++
++        return "natural_language"
++
++    return "unknown"
++
++
++def should_compress(filepath: Path) -> bool:
++    """Return True if the file is natural language and should be compressed."""
++    if not filepath.is_file():
++        return False
++    # Skip backup files
++    if filepath.name.endswith(".original.md"):
++        return False
++    return detect_file_type(filepath) == "natural_language"
++
++
++if __name__ == "__main__":
++    import sys
++
++    if len(sys.argv) < 2:
++        print("Usage: python detect.py <file1> [file2] ...")
++        sys.exit(1)
++
++    for path_str in sys.argv[1:]:
++        p = Path(path_str).resolve()
++        file_type = detect_file_type(p)
++        compress = should_compress(p)
++        print(f"  {p.name:30s} type={file_type:20s} compress={compress}")
+diff --git b/caveman/scripts/compress/validate.py b/caveman/scripts/compress/validate.py
+new file mode 100644
+index 0000000..dc07307
+--- /dev/null
++++ b/caveman/scripts/compress/validate.py
+@@ -0,0 +1,213 @@
++#!/usr/bin/env python3
++import re
++from collections import Counter
++from pathlib import Path
++
++URL_REGEX = re.compile(r"https?://[^\s)]+")
++FENCE_OPEN_REGEX = re.compile(r"^(\s{0,3})(`{3,}|~{3,})(.*)$")
++HEADING_REGEX = re.compile(r"^(#{1,6})\s+(.*)", re.MULTILINE)
++BULLET_REGEX = re.compile(r"^\s*[-*+]\s+", re.MULTILINE)
++
++# crude but effective path detection
++# Requires either a path prefix (./ ../ / or drive letter) or a slash/backslash within the match
++PATH_REGEX = re.compile(r"(?:\./|\.\./|/|[A-Za-z]:\\)[\w\-/\\\.]+|[\w\-\.]+[/\\][\w\-/\\\.]+")
++
++
++class ValidationResult:
++    def __init__(self):
++        self.is_valid = True
++        self.errors = []
++        self.warnings = []
++
++    def add_error(self, msg):
++        self.is_valid = False
++        self.errors.append(msg)
++
++    def add_warning(self, msg):
++        self.warnings.append(msg)
++
++
++def read_file(path: Path) -> str:
++    return path.read_text(errors="ignore")
++
++
++# ---------- Extractors ----------
++
++
++def extract_headings(text):
++    return [(level, title.strip()) for level, title in HEADING_REGEX.findall(text)]
++
++
++def extract_code_blocks(text):
++    """Line-based fenced code block extractor.
++
++    Handles ``` and ~~~ fences with variable length (CommonMark: closing
++    fence must use same char and be at least as long as opening). Supports
++    nested fences (e.g. an outer 4-backtick block wrapping inner 3-backtick
++    content).
++    """
++    blocks = []
++    lines = text.split("\n")
++    i = 0
++    n = len(lines)
++    while i < n:
++        m = FENCE_OPEN_REGEX.match(lines[i])
++        if not m:
++            i += 1
++            continue
++        fence_char = m.group(2)[0]
++        fence_len = len(m.group(2))
++        open_line = lines[i]
++        block_lines = [open_line]
++        i += 1
++        closed = False
++        while i < n:
++            close_m = FENCE_OPEN_REGEX.match(lines[i])
++            if (
++                close_m
++                and close_m.group(2)[0] == fence_char
++                and len(close_m.group(2)) >= fence_len
++                and close_m.group(3).strip() == ""
++            ):
++                block_lines.append(lines[i])
++                closed = True
++                i += 1
++                break
++            block_lines.append(lines[i])
++            i += 1
++        if closed:
++            blocks.append("\n".join(block_lines))
++        # Unclosed fences are silently skipped — they indicate malformed markdown
++        # and including them would cause false-positive validation failures.
++    return blocks
++
++
++def extract_urls(text):
++    return set(URL_REGEX.findall(text))
++
++
++def extract_paths(text):
++    return set(PATH_REGEX.findall(text))
++
++
++def count_bullets(text):
++    return len(BULLET_REGEX.findall(text))
++
++
++def extract_inline_codes(text):
++    text_without_fences = re.sub(r"^```[\s\S]*?^```", "", text, flags=re.MULTILINE)
++    text_without_fences = re.sub(r"^~~~[\s\S]*?^~~~", "", text_without_fences, flags=re.MULTILINE)
++    return re.findall(r"`([^`]+)`", text_without_fences)
++
++
++# ---------- Validators ----------
++
++
++def validate_headings(orig, comp, result):
++    h1 = extract_headings(orig)
++    h2 = extract_headings(comp)
++
++    if len(h1) != len(h2):
++        result.add_error(f"Heading count mismatch: {len(h1)} vs {len(h2)}")
++
++    if h1 != h2:
++        result.add_warning("Heading text/order changed")
++
++
++def validate_code_blocks(orig, comp, result):
++    c1 = extract_code_blocks(orig)
++    c2 = extract_code_blocks(comp)
++
++    if c1 != c2:
++        result.add_error("Code blocks not preserved exactly")
++
++
++def validate_urls(orig, comp, result):
++    u1 = extract_urls(orig)
++    u2 = extract_urls(comp)
++
++    if u1 != u2:
++        result.add_error(f"URL mismatch: lost={u1 - u2}, added={u2 - u1}")
++
++
++def validate_paths(orig, comp, result):
++    p1 = extract_paths(orig)
++    p2 = extract_paths(comp)
++
++    if p1 != p2:
++        result.add_warning(f"Path mismatch: lost={p1 - p2}, added={p2 - p1}")
++
++
++def validate_bullets(orig, comp, result):
++    b1 = count_bullets(orig)
++    b2 = count_bullets(comp)
++
++    if b1 == 0:
++        return
++
++    diff = abs(b1 - b2) / b1
++
++    if diff > 0.15:
++        result.add_warning(f"Bullet count changed too much: {b1} -> {b2}")
++
++
++def validate_inline_codes(orig, comp, result):
++    c1 = Counter(extract_inline_codes(orig))
++    c2 = Counter(extract_inline_codes(comp))
++
++    if c1 != c2:
++        lost = set(c1.keys()) - set(c2.keys())
++        added = set(c2.keys()) - set(c1.keys())
++        for code, count in c1.items():
++            if code in c2 and c2[code] < count:
++                lost.add(f"{code} (lost {count - c2[code]} of {count} occurrences)")
++        if lost:
++            result.add_error(f"Inline code lost: {lost}")
++        if added:
++            result.add_warning(f"Inline code added: {added}")
++
++
++# ---------- Main ----------
++
++
++def validate(original_path: Path, compressed_path: Path) -> ValidationResult:
++    result = ValidationResult()
++
++    orig = read_file(original_path)
++    comp = read_file(compressed_path)
++
++    validate_headings(orig, comp, result)
++    validate_code_blocks(orig, comp, result)
++    validate_urls(orig, comp, result)
++    validate_paths(orig, comp, result)
++    validate_bullets(orig, comp, result)
++    validate_inline_codes(orig, comp, result)
++
++    return result
++
++
++# ---------- CLI ----------
++
++if __name__ == "__main__":
++    import sys
++
++    if len(sys.argv) != 3:
++        print("Usage: python validate.py <original> <compressed>")
++        sys.exit(1)
++
++    orig = Path(sys.argv[1]).resolve()
++    comp = Path(sys.argv[2]).resolve()
++
++    res = validate(orig, comp)
++
++    print(f"\nValid: {res.is_valid}")
++
++    if res.errors:
++        print("\nErrors:")
++        for e in res.errors:
++            print(f"  - {e}")
++
++    if res.warnings:
++        print("\nWarnings:")
++        for w in res.warnings:
++            print(f"  - {w}")
+diff --git b/caveman/scripts/context-hook.mjs b/caveman/scripts/context-hook.mjs
+new file mode 100644
+index 0000000..6945a5c
+--- /dev/null
++++ b/caveman/scripts/context-hook.mjs
+@@ -0,0 +1,15 @@
++import { readFileSync } from "node:fs";
++import { dirname, join } from "node:path";
++import { fileURLToPath } from "node:url";
++
++const event = process.argv[2];
++if (!["SessionStart", "SubagentStart"].includes(event)) process.exit(0);
++try {
++  const path = join(dirname(fileURLToPath(import.meta.url)), "..", "SKILL.md");
++  const body = readFileSync(path, "utf8").replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "").trim();
++  const context = `Caveman instructions (skill file: ${path}):\n${body}`;
++  process.stdout.write(JSON.stringify({hookSpecificOutput: {hookEventName: event, additionalContext: context}}));
++} catch (error) {
++  process.stderr.write(`Caveman hook: ${error.message}\n`);
++  process.exitCode = 1;
++}

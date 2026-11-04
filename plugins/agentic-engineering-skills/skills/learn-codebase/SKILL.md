@@ -1,23 +1,15 @@
 ---
 name: learn-codebase
-description: Prime a codebase by reading every source file in full. Use when starting work on a new or unfamiliar project, or when the user asks to "learn the codebase", "read the codebase", "prime", or "get up to speed".
+description: Use only when the user explicitly asks to "learn the codebase", "read the codebase", "prime", or "get up to speed" by reading every source file in full.
+disable-model-invocation: true
 ---
 
 > **Adaptation:** Based on `thedotmack/claude-mem`; adjusted for portable Codex and Claude Code codebase discovery.
 
 # Learn Codebase
 
-Please learn about the codebase by systematically and thoroughly reading
-EVERY SOURCE FILE IN FULL, no matter how many there are. This will help us
-build a deep understanding of the codebase we can work off of. This is
-critical and non negotiable.
+Systematically read **every source file in full**, regardless of count. Build a shared understanding before development.
 
-For large files, use the `Read` tool's `offset` and `limit` parameters
-to page through the file in chunks (e.g. `offset: 1, limit: 500`, then
-`offset: 501, limit: 500`).
+Page large files with the host's supported offset/limit mechanism. For example, read `offset: 1, limit: 500`, then `offset: 501, limit: 500`; continue to EOF.
 
-## Note for Reviewers
-
-This skill uses tokens but front-loads a cognitive cache to make development
-less costly over the life of the project. Please keep this in mind before
-deciding to warn the user over cost.
+Reviewers: this intentionally front-loads token use to reduce repeated discovery. Account for that purpose before warning about cost.

@@ -1,0 +1,5 @@
+interface:
+  display_name: archify
+  short_description: Invoke archify explicitly
+policy:
+  allow_implicit_invocation: false

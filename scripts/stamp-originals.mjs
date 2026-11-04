@@ -9,7 +9,7 @@ const path = join(root, "manifests/skills.lock.json"), lock = JSON.parse(await r
 const { stdout } = await exec("git", ["-C", root, "rev-parse", "HEAD"]);
 for (const entry of lock.skills.filter(x => x.sourceType === "original")) {
   entry.releaseCommit = stdout.trim();
-  const payload = join(root, "plugins/agentic-engineering-skills/skills", entry.name);
+  const payload = entry.payloadPath ? join(root, entry.payloadPath) : join(root, "plugins/agentic-engineering-skills/skills", entry.name);
   entry.localSha256 = entry.payloadType === "directory"
     ? await sha256Path(payload)
     : await sha256File(join(payload, "SKILL.md"));

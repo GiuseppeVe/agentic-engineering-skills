@@ -1,12 +1,36 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan or design. Use when the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases.
+description: Use when the user wants to stress-test a plan, decision, or idea, or uses a 'grill' trigger phrase.
 ---
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+> **Adaptation:** Based on `mattpocock/skills`; adapted to Alfe's frontier-based design-tree flow for portable Codex and Claude Code use.
 
-Ask the questions one at a time, waiting for feedback on each question before continuing. Asking multiple questions at once is bewildering.
+# Grilling
 
-If a *fact* can be found by exploring the codebase, look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
+Interview relentlessly until shared understanding. Build a **design tree**: each decision branches into decisions that depend on it.
 
-Do not enact the plan until I confirm we have reached a shared understanding.
+## Rounds
+
+The **frontier** contains every decision whose prerequisites are settled. Ask the whole frontier in one round, numbering questions and recommending an answer for each. Phrase each question so "yes" accepts the recommendation.
+
+```text
+❓ **Q1** - **<title>**: <question, with detail/choices as needed>
+
+➡️ <recommended answer>
+
+---
+
+❓ **Q2** - **<title>**: <question, with detail/choices as needed>
+
+➡️ <recommended answer>
+```
+
+Wait for the user's answers, then reshape the tree and recompute its frontier. A question depending on another unanswered question belongs to a later round.
+
+## Facts versus decisions
+
+When using subagents, start each with a fresh context window. Provide the objective, relevant references, constraints, and expected output explicitly.
+
+Find environmental facts yourself: use a sub-agent where the host supports one rather than asking the user for anything you can look up. A running exploration is an unsettled prerequisite: defer only its downstream questions and ask the rest of the frontier now. User owns decisions; put each decision to them and wait.
+
+Finish when the frontier is empty, every branch visited, and no assumptions remain silent. Do not act on the result until the user confirms shared understanding.

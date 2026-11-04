@@ -1,0 +1,5 @@
+interface:
+  display_name: ui-ux-pro-max
+  short_description: Invoke ui-ux-pro-max explicitly
+policy:
+  allow_implicit_invocation: false

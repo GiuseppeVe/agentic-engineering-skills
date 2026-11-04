@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "skill": "impeccable",
+      "component": "platform-design-reference-content",
+      "repository": "https://github.com/ehmo/platform-design-skills",
+      "licenseReferenceRevision": "dc2be825d8b439caea78e9eaa8fb3ac23b0ff3e9",
+      "revisionMeaning": "Verification point for the license text only; the revision of the source content is not established.",
+      "appliesTo": [
+        "reference/ios.md",
+        "reference/android.md"
+      ],
+      "path": "plugins/agentic-engineering-skills/licenses/ehmo-platform-design-skills-LICENSE",
+      "sha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685"
+    }
+  ],
+  "adaptationNotice": {
+    "skill": "impeccable",
+    "path": "plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-ADAPTATIONS-NOTICE",
+    "formatLimitedFiles": [],
+    "compressedUpstreamFile": "skill/scripts/data/font-index.json",
+    "packagedRepresentation": "scripts/data/font-index.json.deflate",
+    "versionSource": {
+      "repository": "https://github.com/pbakaus/impeccable",
+      "tag": "skill-v4.8.0",
+      "revision": "414603bf14c7a344edb466bb1f85690c77ce8b7d",
+      "path": "skill/scripts/VERSION",
+      "sha256": "447836d46f39c5900faf74ad6a6554b8e1fafeca1f78de0416d5f05c6e09a080"
+    }
+  }
+}

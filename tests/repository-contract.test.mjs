@@ -16,9 +16,9 @@ function trackedFiles() {
     .filter(Boolean);
 }
 
-test("requested inventory contains exactly 29 unique sorted skills", () => {
-  assert.equal(expectedSkills.length, 29);
-  assert.equal(new Set(expectedSkills).size, 29);
+test("requested inventory contains exactly 36 unique sorted skills", () => {
+  assert.equal(expectedSkills.length, 36);
+  assert.equal(new Set(expectedSkills).size, 36);
   assert.deepEqual(expectedSkills, [...expectedSkills].sort());
 });
 
@@ -26,7 +26,7 @@ test("package exposes the minimal Node 22 command surface", async () => {
   const packageJson = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
 
   assert.equal(packageJson.name, "agentic-engineering-skills");
-  assert.equal(packageJson.version, "0.1.0");
+  assert.equal(packageJson.version, "1.1.0");
   assert.equal(packageJson.private, true);
   assert.equal(packageJson.type, "module");
   assert.deepEqual(packageJson.engines, { node: ">=22" });

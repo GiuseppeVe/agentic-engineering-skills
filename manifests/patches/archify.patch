@@ -1,0 +1,444 @@
+diff --git a/archify/SKILL.md b/archify/SKILL.md
+index fe0448d..419ee82 100644
+--- a/archify/SKILL.md
++++ b/archify/SKILL.md
+@@ -3 +3 @@
+-description: "Create validated architecture, workflow, sequence, data-flow, lifecycle/state, ERD, class, tree, timeline, and waterfall diagrams as explorable standalone HTML with dark/light themes, motion and image/SVG/WebM export. Accept requirements or Mermaid; inspect repository evidence for code-backed diagrams. Use when visualizing systems, API calls, pipelines, schemas, histories, timings, or everyday steps, parts, relationships and states. Also turn an answer into a one-page explainer, with the conclusion first, structured panels, native diagrams and charts, when the user asks for a page, an explainer or an answer to share (做成一页, 用页面讲), or proactively when the user's rules opt in with an [archify explainer: ...] line. Not for dashboards."
++description: "Invoke explicitly to create checked standalone HTML diagrams or one-page explainers from requirements, Mermaid, or repository evidence. Supports architecture, workflow, sequence, dataflow, lifecycle, ERD, class, tree, timeline and waterfall; not dashboards."
+@@ -4,0 +5 @@
++disable-model-invocation: true
+@@ -9,0 +11,2 @@
++> **Adaptation:** Based on pinned `tt-a1i/archify`; this package adds explicit-invocation host metadata and preserves upstream asset terms in the bundled third-party notice.
++
+@@ -38 +41 @@
+-3. Once the requested scope and, for a real codebase, [source evidence](references/repository-authoring.md) are covered, write the complete candidate directly without planning coordinates in prose. Choose Architecture abstraction and connected placement using Authoring defaults before coordinates: show the main user journey and necessary branches, preserve control roles and behavior-changing conditions, and leave enough room for actual relationship labels. No node, relationship, source, view, card, or boundary count is a target or ceiling. Use automatic routes first; add explicit routing only for necessary branch, return, supplied geometry, or measured repair. Set `meta.quality_profile` to `"showcase"` unless the user requests dense `standard`. For ERD, use a table-first layout: show every physical column in `entities[].attributes`, keep its SQL type and source comment, state every key role a column carries (`key` takes a role or a list, so a junction column is `["pk", "fk"]`, and every `fk` column also needs `references` like `"orders.id"`), and never move columns into cards as a substitute for the table. Classify tables into functional domains before placement, give each domain a concise `tag`, and place its members in one solid rectangle of grid cells — a single row, a single column, or a filled rectangular block, not an L or diagonal. A tagged table always needs `row`/`col`, because absolute coordinates have no grid cells and a domain whose tables do not fill one rectangle cannot be drawn as a band: the renderer reports `erd/domain-not-drawn` instead of publishing a diagram that cannot name the domain. A multi-domain schema reads best as one domain per column — each `tag` a vertical run — because the reader scales a wide canvas up to the reader width and shrinks a tall one until the page fits, so the wide arrangement is the one that stays complete and legible inside a laptop viewport. A schema-first ERD over roughly 8 tables or 50 fields is itself a dense map: author its first complete-field pass at `standard` and upgrade only once the layout still reads.
++3. Once the requested scope and, for a real codebase, [source evidence](references/repository-authoring.md) are covered, write the complete candidate directly without planning coordinates in prose. Choose Architecture abstraction and connected placement using Authoring defaults before coordinates: show the main user journey and necessary branches, preserve control roles and behavior-changing conditions, and leave enough room for actual relationship labels. No node, relationship, source, view, card, or boundary count is a target or ceiling. Use automatic routes first; add explicit routing only for necessary branch, return, supplied geometry, or measured repair. Set `meta.quality_profile` to `"showcase"` unless the user requests dense `standard`. For ERD, read and follow [ERD authoring](references/authoring-contract.md#erd) before choosing fields, quality, or placement.
+diff --git b/archify/agents/openai.yaml b/archify/agents/openai.yaml
+new file mode 100644
+index 0000000..3ca6aad
+--- /dev/null
++++ b/archify/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: archify
++  short_description: Invoke archify explicitly
++policy:
++  allow_implicit_invocation: false
+diff --git a/archify/bin/archify.mjs b/archify/bin/archify.mjs
+old mode 100755
+new mode 100644
+diff --git a/archify/package-lock.json a/archify/package-lock.json
+deleted file mode 100644
+index e6187b9..0000000
+--- a/archify/package-lock.json
++++ /dev/null
+@@ -1,101 +0,0 @@
+-{
+-  "name": "archify",
+-  "version": "3.2.0",
+-  "lockfileVersion": 3,
+-  "requires": true,
+-  "packages": {
+-    "": {
+-      "name": "archify",
+-      "version": "3.2.0",
+-      "license": "MIT",
+-      "bin": {
+-        "archify": "bin/archify.mjs"
+-      },
+-      "devDependencies": {
+-        "ajv": "^8.17.1",
+-        "simple-icons": "16.28.0"
+-      },
+-      "engines": {
+-        "node": ">=18"
+-      }
+-    },
+-    "node_modules/ajv": {
+-      "version": "8.20.0",
+-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
+-      "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "fast-deep-equal": "^3.1.3",
+-        "fast-uri": "^3.0.1",
+-        "json-schema-traverse": "^1.0.0",
+-        "require-from-string": "^2.0.2"
+-      },
+-      "funding": {
+-        "type": "github",
+-        "url": "https://github.com/sponsors/epoberezkin"
+-      }
+-    },
+-    "node_modules/fast-deep-equal": {
+-      "version": "3.1.3",
+-      "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+-      "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/fast-uri": {
+-      "version": "3.1.7",
+-      "resolved": "https://registry.npmjs.org/fast-uri/-/fast-uri-3.1.7.tgz",
+-      "integrity": "sha512-dOvZVzjdZdz7phd9v6jCbwxrBW3fK6n8Rc0CtdmM4bumzMnxywBYhuph6J819RRw/ku+rLbelwfMunktuzVVHg==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/fastify"
+-        },
+-        {
+-          "type": "opencollective",
+-          "url": "https://opencollective.com/fastify"
+-        }
+-      ],
+-      "license": "BSD-3-Clause"
+-    },
+-    "node_modules/json-schema-traverse": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+-      "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+-    "node_modules/require-from-string": {
+-      "version": "2.0.2",
+-      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+-      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+-    },
+-    "node_modules/simple-icons": {
+-      "version": "16.28.0",
+-      "resolved": "https://registry.npmjs.org/simple-icons/-/simple-icons-16.28.0.tgz",
+-      "integrity": "sha512-sQPR5AtK/ijRjou7zw7mlLp08oB6FH7i0lOy5XJ2zp9mJs/yejgiOn7KvQoe2q4YJIx6VmgUSW5AOefebPt5kg==",
+-      "dev": true,
+-      "funding": [
+-        {
+-          "type": "opencollective",
+-          "url": "https://opencollective.com/simple-icons"
+-        },
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/simple-icons"
+-        }
+-      ],
+-      "license": "CC0-1.0",
+-      "engines": {
+-        "node": ">=0.12.18"
+-      }
+-    }
+-  }
+-}
+diff --git a/archify/package.json b/archify/package.json
+index adf6de4..d9ee61a 100644
+--- a/archify/package.json
++++ b/archify/package.json
+@@ -14,21 +13,0 @@
+-  "scripts": {
+-    "generate:viewer": "node ../scripts/generate-viewer.mjs",
+-    "check:viewer": "node ../scripts/generate-viewer.mjs --check",
+-    "generate:brand-marks": "node scripts/generate-brand-marks.mjs",
+-    "check:brand-marks": "node scripts/generate-brand-marks.mjs --check",
+-    "generate:validators": "node scripts/generate-validators.mjs",
+-    "check:validators": "node scripts/generate-validators.mjs --check",
+-    "check:release-identity": "node ../scripts/check-release-identity.mjs",
+-    "build:gallery": "node ../scripts/build-gallery.mjs ../docs",
+-    "build:guide": "node ../scripts/build-guide.mjs ../docs/guide.html",
+-    "build:start": "node ../scripts/build-start.mjs ../docs/start.html",
+-    "build:readme-showcase": "node ../scripts/build-readme-showcase.mjs",
+-    "test:webm": "npm --prefix .. run test:webm",
+-    "test:browser": "npm --prefix .. run test:browser",
+-    "test": "npm --prefix .. test",
+-    "render:examples": "node scripts/render-examples.mjs ../examples"
+-  },
+-  "devDependencies": {
+-    "ajv": "^8.17.1",
+-    "simple-icons": "16.28.0"
+-  },
+diff --git a/archify/references/authoring-contract.md b/archify/references/authoring-contract.md
+index 1e821f2..7bbf687 100644
+--- a/archify/references/authoring-contract.md
++++ b/archify/references/authoring-contract.md
+@@ -345,4 +345,5 @@
+-traded away for repeated showcase route repairs. Include every physical column in
+-`attributes`, keep the source SQL type, and preserve the
+-field's Chinese comment in the type string as `SQL_TYPE｜中文备注` because the
+-schema has no separate comment property. The default viewer shows these rows at
++traded away for repeated showcase route repairs. Upgrade to showcase only once
++the complete-field layout still reads. Include every physical column in
++`entities[].attributes`, keep its source SQL type and every source comment.
++Preserve a field's Chinese comment in the type string as `SQL_TYPE｜中文备注`
++because the schema has no separate comment property. The default viewer shows these rows at
+@@ -354 +355 @@
+-names, comments, module paths, and foreign-key meaning. Put the domain name in
++names, comments, module paths, and foreign-key meaning. Put a concise domain name in
+@@ -380 +381,2 @@
+-`references`. A column is often more than one at once — a junction table's
++`references`. Every `fk` column needs `references`, such as `"orders.id"`.
++A column is often more than one at once — a junction table's
+@@ -599 +601 @@
+-  "url": "http://git.internal:3000/Platform/Services/service",
++  "url": "https://forge.example.com/Platform/Services/service",
+diff --git a/archify/scripts/generate-brand-marks.mjs a/archify/scripts/generate-brand-marks.mjs
+deleted file mode 100644
+index 73490ba..0000000
+--- a/archify/scripts/generate-brand-marks.mjs
++++ /dev/null
+@@ -1,141 +0,0 @@
+-#!/usr/bin/env node
+-
+-import fs from 'node:fs';
+-import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
+-import * as simpleIcons from 'simple-icons';
+-
+-const here = path.dirname(fileURLToPath(import.meta.url));
+-const root = path.resolve(here, '..');
+-const catalogPath = path.join(root, 'brand-marks', 'catalog.json');
+-const outputPath = path.join(root, 'renderers', 'shared', 'generated-brand-marks.mjs');
+-const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+-const simpleIconsVersion = JSON.parse(fs.readFileSync(
+-  path.join(root, 'node_modules', 'simple-icons', 'package.json'),
+-  'utf8',
+-)).version;
+-const simpleBySlug = new Map(Object.values(simpleIcons)
+-  .filter((icon) => icon && typeof icon === 'object' && icon.slug && icon.path)
+-  .map((icon) => [icon.slug, icon]));
+-
+-function normalizedList(value) {
+-  return [...new Set((Array.isArray(value) ? value : [])
+-    .map((item) => String(item).trim())
+-    .filter(Boolean))];
+-}
+-
+-function lookupForms(value) {
+-  const raw = String(value ?? '').trim().toLocaleLowerCase('en-US');
+-  if (!raw) return [];
+-  return [...new Set([
+-    raw,
+-    raw.replace(/[\s_]+/g, '-'),
+-    raw.replace(/[\s_.-]+/g, ''),
+-  ])];
+-}
+-
+-function fail(message) {
+-  console.error(`brand catalog: ${message}`);
+-  process.exit(1);
+-}
+-
+-if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.marks) || catalog.marks.length === 0) {
+-  fail('catalog.json must contain a non-empty schemaVersion 1 marks array');
+-}
+-
+-const ids = new Set();
+-const lookupKeys = new Map();
+-const domains = new Map();
+-const generated = catalog.marks.map((entry, index) => {
+-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.id || '')) fail(`marks[${index}] has an invalid id`);
+-  if (ids.has(entry.id)) fail(`duplicate id ${entry.id}`);
+-  ids.add(entry.id);
+-
+-  const aliases = normalizedList(entry.aliases);
+-  const entryDomains = normalizedList(entry.domains).map((domain) => domain.toLowerCase());
+-  for (const key of [entry.id, ...aliases]) {
+-    for (const form of lookupForms(key)) {
+-      if (lookupKeys.has(form) && lookupKeys.get(form) !== entry.id) {
+-        fail(`lookup key ${JSON.stringify(key)} is shared by ${lookupKeys.get(form)} and ${entry.id}`);
+-      }
+-      lookupKeys.set(form, entry.id);
+-    }
+-  }
+-  for (const domain of entryDomains) {
+-    if (domains.has(domain) && domains.get(domain) !== entry.id) {
+-      fail(`domain ${domain} is shared by ${domains.get(domain)} and ${entry.id}`);
+-    }
+-    domains.set(domain, entry.id);
+-  }
+-
+-  let mark;
+-  if (entry.simpleIcon) {
+-    const icon = simpleBySlug.get(entry.simpleIcon);
+-    if (!icon) fail(`${entry.id} references missing Simple Icons slug ${entry.simpleIcon}`);
+-    mark = {
+-      id: entry.id,
+-      title: entry.title || icon.title,
+-      category: entry.category,
+-      aliases,
+-      domains: entryDomains,
+-      viewBox: 24,
+-      hex: icon.hex,
+-      path: icon.path,
+-      provenance: {
+-        provider: 'Simple Icons',
+-        providerVersion: simpleIconsVersion,
+-        source: icon.source,
+-        ...(icon.guidelines ? { guidelines: icon.guidelines } : {}),
+-        ...(icon.license ? { license: icon.license } : {}),
+-      },
+-    };
+-  } else if (entry.custom) {
+-    const custom = entry.custom;
+-    if (!entry.title || !custom.path || !custom.source || !/^[0-9A-F]{6}$/i.test(custom.hex || '')) {
+-      fail(`${entry.id} custom mark requires title, path, source, and six-digit hex`);
+-    }
+-    mark = {
+-      id: entry.id,
+-      title: entry.title,
+-      category: entry.category,
+-      aliases,
+-      domains: entryDomains,
+-      viewBox: custom.viewBox || 24,
+-      hex: custom.hex.toUpperCase(),
+-      path: custom.path,
+-      provenance: {
+-        provider: 'Official brand asset',
+-        source: custom.source,
+-        ...(custom.guidelines ? { guidelines: custom.guidelines } : {}),
+-      },
+-    };
+-  } else {
+-    fail(`${entry.id} must provide simpleIcon or custom`);
+-  }
+-  if (!mark.category || !mark.title) fail(`${entry.id} is missing category or title`);
+-  for (const form of lookupForms(mark.title)) {
+-    if (lookupKeys.has(form) && lookupKeys.get(form) !== entry.id) {
+-      fail(`title ${JSON.stringify(mark.title)} is shared by ${lookupKeys.get(form)} and ${entry.id}`);
+-    }
+-    lookupKeys.set(form, entry.id);
+-  }
+-  return mark;
+-}).sort((left, right) => left.id.localeCompare(right.id));
+-
+-const banner = `// Generated by scripts/generate-brand-marks.mjs from brand-marks/catalog.json.\n// Simple Icons ${simpleIconsVersion}. Do not edit by hand.\n`;
+-const source = `${banner}export const BRAND_MARKS = Object.freeze(${JSON.stringify(generated, null, 2)});\n`;
+-
+-if (process.argv.includes('--check')) {
+-  const current = fs.existsSync(outputPath)
+-    ? fs.readFileSync(outputPath, 'utf8').replace(/\r\n?/g, '\n')
+-    : '';
+-  if (current !== source) {
+-    console.error('generated brand marks are stale — run npm run generate:brand-marks');
+-    process.exit(1);
+-  }
+-} else {
+-  const temporary = `${outputPath}.${process.pid}.tmp`;
+-  fs.writeFileSync(temporary, source);
+-  fs.renameSync(temporary, outputPath);
+-  console.log(`generated ${path.relative(root, outputPath)} (${generated.length} marks)`);
+-}
+diff --git a/archify/scripts/generate-validators.mjs a/archify/scripts/generate-validators.mjs
+deleted file mode 100644
+index 72a0120..0000000
+--- a/archify/scripts/generate-validators.mjs
++++ /dev/null
+@@ -1,105 +0,0 @@
+-#!/usr/bin/env node
+-
+-import fs from 'node:fs';
+-import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
+-import Ajv2020 from 'ajv/dist/2020.js';
+-import standaloneCode from 'ajv/dist/standalone/index.js';
+-
+-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+-const root = path.resolve(__dirname, '..');
+-const schemasDir = path.join(root, 'schemas');
+-const output = path.join(root, 'renderers/shared/generated-validators.mjs');
+-const diagramTypes = ['workflow', 'sequence', 'dataflow', 'lifecycle', 'architecture', 'erd', 'tree', 'class', 'timeline', 'waterfall', 'explainer'];
+-
+-const ajv = new Ajv2020({
+-  allErrors: true,
+-  strict: true,
+-  code: { source: true, esm: true },
+-});
+-ajv.addSchema(JSON.parse(fs.readFileSync(path.join(schemasDir, 'common.schema.json'), 'utf8')));
+-
+-const schemaIds = {};
+-for (const type of diagramTypes) {
+-  const schema = JSON.parse(fs.readFileSync(path.join(schemasDir, `${type}.schema.json`), 'utf8'));
+-  ajv.addSchema(schema);
+-  schemaIds[type] = schema.$id;
+-}
+-
+-const banner = '// Generated by scripts/generate-validators.mjs. Do not edit by hand.\n';
+-const ajvUcs2Import = 'require("ajv/dist/runtime/ucs2length").default';
+-const inlineUcs2Length = `function ucs2length(str) {
+-  const len = str.length;
+-  let length = 0;
+-  let pos = 0;
+-  while (pos < len) {
+-    length += 1;
+-    const value = str.charCodeAt(pos++);
+-    if (value >= 0xd800 && value <= 0xdbff && pos < len
+-      && (str.charCodeAt(pos) & 0xfc00) === 0xdc00) pos += 1;
+-  }
+-  return length;
+-}`;
+-let validatorCode = standaloneCode(ajv, schemaIds);
+-if (!validatorCode.includes(ajvUcs2Import)) {
+-  throw new Error('AJV standalone output no longer contains the expected ucs2length helper');
+-}
+-validatorCode = validatorCode.replaceAll(ajvUcs2Import, inlineUcs2Length);
+-if (validatorCode.includes('require(')) {
+-  throw new Error('AJV standalone output contains an unexpected runtime dependency');
+-}
+-for (const type of diagramTypes) {
+-  const exportPattern = new RegExp(`export const ${type} = (validate\\d+);`);
+-  const match = validatorCode.match(exportPattern);
+-  if (!match) throw new Error(`AJV standalone output no longer exports the ${type} validator as expected`);
+-  validatorCode = validatorCode.replace(exportPattern, `const ${type}Schema = ${match[1]};`);
+-}
+-
+-// A diagram type that is a reserved word (`class`) cannot name a function, so
+-// it is defined under a safe local name and exported under the type itself.
+-const RESERVED_TYPE_NAMES = new Set(['class']);
+-const portableOutputWrappers = diagramTypes.map((type) => {
+-  const name = RESERVED_TYPE_NAMES.has(type) ? `${type}Diagram` : type;
+-  const exported = name === type ? '' : `\nexport { ${name} as ${type} };`;
+-  return `${name === type ? 'export ' : ''}function ${name}(data, context = undefined) {
+-  if (!${type}Schema(data, context)) {
+-    ${name}.errors = ${type}Schema.errors;
+-    return false;
+-  }
+-  const output = data?.meta?.output;
+-  if (typeof output === 'string') {
+-    try {
+-      validatePortablePath(output, { profile: 'output' });
+-    } catch (error) {
+-      ${name}.errors = [{
+-        instancePath: \`${'${context?.instancePath || \'\'}'}/meta/output\`,
+-        schemaPath: 'common.schema.json#/$defs/portableOutputPath',
+-        keyword: 'portablePath',
+-        params: { reason: error?.reason || 'invalid' },
+-        message: 'must satisfy the portable output path contract',
+-      }];
+-      return false;
+-    }
+-  }
+-  ${name}.errors = null;
+-  return true;
+-}
+-${name}.evaluated = ${type}Schema.evaluated;${exported}`;
+-}).join('\n');
+-
+-const generated = `${banner}import { validatePortablePath } from './portable-path.mjs';\n${validatorCode}\n${portableOutputWrappers}\n`;
+-
+-if (process.argv.includes('--check')) {
+-  const current = fs.existsSync(output)
+-    ? fs.readFileSync(output, 'utf8').replace(/\r\n?/g, '\n')
+-    : '';
+-  if (current !== generated) {
+-    console.error('generated validators are stale — run npm run generate:validators');
+-    process.exit(1);
+-  }
+-} else {
+-  const temporary = `${output}.${process.pid}.tmp`;
+-  fs.writeFileSync(temporary, generated);
+-  fs.renameSync(temporary, output);
+-  console.log(`generated ${path.relative(root, output)}`);
+-}

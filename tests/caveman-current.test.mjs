@@ -11,10 +11,10 @@ test("Caveman exposes current communication rules", async () => {
   const source = await readFile(skillPath, "utf8");
 
   assert.match(source, /Cuts token usage ~75%/);
-  assert.match(source, /Preserve user's dominant language\./);
-  assert.match(source, /No self-reference\./);
-  assert.match(source, /No causal arrows \(→\) either/);
-  assert.match(source, /never invent new abbreviations/);
-  assert.match(source, /Clarity register: mix ASD-STE100 Simplified Technical English into caveman/);
-  assert.match(source, /One idea per sentence\./);
+  assert.match(source, /ACTIVE EVERY RESPONSE/);
+  assert.match(source, /\/caveman lite\|full\|ultra/);
+  assert.match(source, /references\/commit\.md/);
+  assert.match(source, /references\/compress\.md/);
+  assert.match(source, /references\/utilities\.md/);
+  assert.doesNotMatch(source, /wenyan|文言文/i);
 });

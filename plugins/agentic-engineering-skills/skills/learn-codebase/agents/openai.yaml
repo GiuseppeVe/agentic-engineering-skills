@@ -1,0 +1,5 @@
+interface:
+  display_name: Learn Codebase
+  short_description: Read a codebase on explicit request
+policy:
+  allow_implicit_invocation: false
