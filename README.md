@@ -20,7 +20,11 @@ A graph workflow starts with a **new chat and an explicit orchestration skill**.
 
 These are task and decision graphs. Graphify's semantic codebase graph can supply evidence to a delegated investigation; it is a separate tool and is not required to run the master.
 
-### Research, analysis, and design — available
+### When Graphify is useful
+
+Consider Graphify when a large codebase makes an agent spend substantial time and tokens finding files and their relationships. As a rough guideline, maintaining a codebase graph is often inefficient below 100,000 lines of code; above that scale, evaluate whether faster discovery outweighs the cost of building and updating it. This is a heuristic, not a hard threshold.
+
+### Research, analysis, and design
 
 In a fresh Codex chat, explicitly invoke `$master-orchestrator`. In Claude Code, select the installed `master-orchestrator` skill explicitly. The [skill](plugins/agentic-engineering-skills/skills/master-orchestrator/SKILL.md) covers non-implementation work: repository study, research, audits, design, and migration planning.
 
@@ -84,9 +88,7 @@ Both scripts need Node.js 22 or newer. The post-merge reminder requires an authe
 
 ## Supporting skills
 
-I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Cleaning Repo with Knip` keeps the repository lean through verified cleanup, reviewable branches, and a durable false-positive record instead of blind deletion. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. The post-merge reminder routes verified merge and workspace cleanup through the receiving project's approval and ownership rules.
-
-## Example: choosing a route
+I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. The post-merge reminder routes verified merge and workspace cleanup through the receiving project's approval and ownership rules.
 
 ### Deslopping Cleanup
 

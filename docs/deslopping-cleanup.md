@@ -27,14 +27,12 @@ read-only observation) and need no external skill.
 | `requesting-code-review` | No | Independent source/diff review using the available host or reviewer role. |
 | `verification-before-completion` | No | Authorized repository checks with explicit revision, results and limits. |
 
-The included researcher/reviewer/controller role contracts can support native
-delegation; they do not automatically register agents. Follow the current
-repository's routing and permissions for multi-agent investigation.
+Use the host's available native agents for research, review and coordination.
+Follow the current repository's routing and permissions for delegation.
 
-The Knip runbook mentions a parser helper, agent types and a dispatch subskill
-that are not shipped in its directory. The coordinator requires checking actual
-availability before using any helper path or agent type. Manual triage is an
-available fallback; no implicit helper installation or invented execution.
+The Knip runbook includes its parser helper and uses available roles when
+delegation is authorized. Manual triage is an available fallback; no implicit
+helper installation or invented execution.
 Knip itself is external software even though the runbook is included.
 
 ## License review
@@ -49,7 +47,7 @@ upstream state, not pinned payloads distributed by this repository.
 | [Knip](https://github.com/webpro-nl/knip/blob/main/LICENSE) | ISC | Name/reference only; no Knip code. |
 | [Dependency Cruiser](https://github.com/sverweij/dependency-cruiser/blob/main/LICENSE) | MIT | Name/reference only; no runtime or skill payload. |
 | [Desloppify](https://github.com/peteromallet/desloppify/blob/main/LICENSE) | OSNL v0.2, 2026-03-24 | Name/reference only; no upstream guide or program. |
-| [Graphify](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE) | Apache-2.0; [NOTICE](https://github.com/Graphify-Labs/graphify/blob/v8/NOTICE) identifies earlier portions retained under MIT in [LICENSE-MIT](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE-MIT) | Name/reference only; no Graphify payload. |
+| [Graphify](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE) | Apache-2.0; [NOTICE](https://github.com/Graphify-Labs/graphify/blob/v8/NOTICE) identifies earlier portions retained under MIT in [LICENSE-MIT](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE-MIT) | Adapted skill and notices included; runtime external. |
 | [Superpowers](https://github.com/obra/superpowers/blob/main/LICENSE): dispatch and review/verification skills | MIT | Names only; the optional named skills are not added to this pack. Existing retained Superpowers material keeps its own notices. |
 | `swarm-advanced` | No specific upstream payload selected or license asserted | Optional catalog name only; verify the actual installed source separately. |
 
