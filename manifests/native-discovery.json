@@ -1,11 +1,11 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-04",
+  "capturedAt": "2026-11-05",
   "environment": {
-    "isolation": "Separate short-lived native host profiles and allowlisted child environments; the local marketplace ran from a temporary snapshot verified against the original marketplace and payload. User configuration paths were isolated and only inert fixture credentials were passed to child processes.",
-    "commandNotation": "Native commands ran from the verified temporary local marketplace snapshot using Node.js v24.16.0.",
-    "payloadRefresh": "Both hosts installed the updated plugin in separate temporary profiles; installed host trees and full payload hashes matched the source. No model was invoked and hooks were not executed."
+    "isolation": "Separate temporary native host profiles and allowlisted environments; source, marketplace snapshot and installed payload trees were compared. No credentials or model requests were used.",
+    "commandNotation": "Native commands ran from an isolated local marketplace snapshot on Windows.",
+    "payloadRefresh": "Both hosts installed the local plugin in separate profiles; configured inventories and payload hashes matched the source."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -130,8 +130,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:b70820cc9b03bbeca51691505043b4df01a83516457da6f1378e62899c8f2339",
-        "fullTreeHash": "sha256:ef1aac4893a4255daad2b859f806b21c11b0448358ddcac3fcedc0c55067f084",
+        "treeHash": "sha256:290cb5fc8a32530cb4ac72b85226717ce1285d27c324c0d055d459ca88d54e7d",
+        "fullTreeHash": "sha256:ab0102d37e1cf7b3db2235a9dade4c8d68cadd4c45b929996f54cab9554e4aa1",
         "fileCount": 537
       },
       "commands": [
@@ -240,8 +240,8 @@
           "claude-skills",
           "skills"
         ],
-        "treeHash": "sha256:aebf94ff778792a697de08ac04653f3bbb941c99766318e516058eb81bc30bd4",
-        "fullTreeHash": "sha256:ef1aac4893a4255daad2b859f806b21c11b0448358ddcac3fcedc0c55067f084",
+        "treeHash": "sha256:7cd697e7064614b66eb7bad47d5456ce04d713862d244f25d07fc5bda1231313",
+        "fullTreeHash": "sha256:ab0102d37e1cf7b3db2235a9dade4c8d68cadd4c45b929996f54cab9554e4aa1",
         "fileCount": 537
       },
       "installedAgents": [
