@@ -1,4 +1,4 @@
-ants.mjs b/impeccable/scripts/detector/shared/constants.mjs
+ared/constants.mjs b/impeccable/scripts/detector/shared/constants.mjs
 new file mode 100644
 index 0000000..917cbf5
 --- /dev/null
