@@ -20,7 +20,7 @@ async function filesUnder(directory) {
   return result;
 }
 
-test("Impeccable package aligns with the source-project host v4.8 skill and its local references", async () => {
+test("Impeccable package aligns with host v4.8 skill and its local references", async () => {
   const skill = await readFile(path.join(skillRoot, "SKILL.md"), "utf8");
   const newWork = await readFile(path.join(skillRoot, "reference/new-work.md"), "utf8");
   const files = new Set((await filesUnder(skillRoot)).map((file) => path.relative(skillRoot, file).replaceAll("\\", "/")));
@@ -44,7 +44,7 @@ test("Impeccable package aligns with the source-project host v4.8 skill and its 
     "reference/android.md",
     "reference/ios.md",
   ]) {
-    assert.ok(files.has(reference), `missing source-project v4.8 reference: ${reference}`);
+    assert.ok(files.has(reference), `missing the source project v4.8 reference: ${reference}`);
   }
   assert.match(skill, /scripts\/impeccable\.cmd/);
   assert.match(skill, /On a Windows shell without `sh`, call `<skill-base-dir>\/scripts\/impeccable\.cmd` instead/);

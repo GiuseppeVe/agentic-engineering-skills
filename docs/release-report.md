@@ -15,13 +15,13 @@ The seven optional generic role contracts and their profile manifests have been 
 
 ## Historical unified Caveman candidate: 2026-11-03
 
-That candidate contained 36 skills: 35 for Codex and 36 for Claude Code. `caveman` follows the owner-supplied unified source-project version; `setup-matt-pocock-skills` was removed along with active routes to it. The separate legacy skills named in the cleanup request were already absent. Existing third-party skill attribution remained in place. Generic profiles were subsequently removed.
+That candidate contained 36 skills: 35 for Codex and 36 for Claude Code. `caveman` follows the owner-supplied unified version; `setup-matt-pocock-skills` was removed along with active routes to it. The separate legacy skills named in the cleanup request were already absent. Existing third-party skill attribution remained in place. Generic profiles were subsequently removed.
 
 Fresh isolated native installations and payload comparisons passed for Codex (`sha256:e6457b41007ed11334bda49d5c36ca7c3382e69b7ebcfcd4c1c797f216736db9`) and Claude Code (`sha256:ab5b08666c0304e6a97da80da8b42cdf35ec50d711ba3eec5f954756ac5560f3`). This evidence covers installation, inventory and bytes, not invocation or live hook behavior.
 
 ## Implementation program coordinator: 2026-11-03
 
-The prior candidate contained 37 skills: 36 exposed to Codex and 37 to Claude Code. The added `coordinating-implementation-programs` is the byte-identical owner-supplied source-project snapshot. A run requires a host capable of visible subordinate threads and remains subject to host instructions and user authorization.
+The prior candidate contained 37 skills: 36 exposed to Codex and 37 to Claude Code. The added `coordinating-implementation-programs` is the byte-identical owner-supplied snapshot. A run requires a host capable of visible subordinate threads and remains subject to host instructions and user authorization.
 
 Fresh isolated native plugin installs and payload comparisons passed on both hosts. Codex discovered 36 skills with payload hash `sha256:e053c863a50a70752438df729e3e4372fc57791bb12dc839f2a7112bd3cd0fd9`; Claude Code discovered 37 with `sha256:21b128a948ae0b2384705d310c04199b12f2440a24a7e199ab06d7e7055a76b5`. These checks establish installed bytes and discovery, not skill execution, live orchestration, or hook behavior.
 
@@ -92,11 +92,11 @@ publication was performed.
 ## Project skill-set alignment: 2026-11-02
 
 This earlier candidate contained 36 skills: 35 exposed to Codex and 36 to Claude
-Code, with `claude-implement` in the Claude-only skill root. This matches the union of the source-project project
+Code, with `claude-implement` in the Claude-only skill root. This matches the union of the source project
 Codex and Claude Code skill directories. Eight obsolete plugin skills were
 removed together with their manifest entries and stale routing. The retained
 role contracts preserve their separate Cavecrew attribution and license.
-Sequential orchestration now routes to the current host-specific source-project workflow:
+Sequential orchestration now routes to the current host-specific workflow:
 native Codex subagents or separate Codex/Claude CLI processes in Claude Code.
 
 Fresh isolated Windows installs used Codex CLI 0.163.0, Claude Code 2.1.296
@@ -141,7 +141,7 @@ This earlier candidate contained 44 skill directories, including an independent
   This proves installation fidelity, not live host discovery or hook execution.
 - Pinned upstream and license checks passed; 22 patches reconstructed their
   target payloads using the generator's canonical line-ending rules.
-- No changes were made to source-project, its installed agents or the normal user profiles.
+- No changes were made to the source project, its installed agents or the normal user profiles.
   No release, push or merge has been performed.
 
 ## Skill synchronization packaging: 2026-11-02

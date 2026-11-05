@@ -32,9 +32,9 @@ test("master orchestrator packages both explicit host contracts and complete has
   await readFile(new URL("references/coordinating-design.md", payload));
 });
 
-test("master orchestrator snapshot provenance does not claim an source-project commit", async () => {
+test("master orchestrator snapshot provenance does not expose source location or claim a commit", async () => {
   const source = (await readJson("manifests/skill-sources.json")).skills.find(entry => entry.name === "master-orchestrator");
-  assert.equal(source.origin.repository, "private-source");
+  assert.equal("repository" in source.origin, false);
   assert.equal(source.origin.state, "untracked-local-snapshot");
   assert.equal("revision" in source.origin, false);
   assert.deepEqual(source.origin.paths, [".agents/skills/master-orchestrator/", ".claude/skills/master-orchestrator/"]);

@@ -40,7 +40,7 @@
       "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
       "upstreamPath": "skills/caveman/",
       "localPath": "caveman/",
-      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied source-project snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
+      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
       "patchPath": "manifests/patches/caveman.patch",
       "localRoot": "projectSkills"
     },
@@ -67,7 +67,7 @@
       "upstreamPath": "skills/engineering/codebase-design/",
       "localRoot": "projectSkills",
       "localPath": "codebase-design/",
-      "changeNotice": "Added source-project-aligned design guidance and host metadata to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Added host-aligned design guidance and host metadata to the pinned upstream skill. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/codebase-design.patch"
     },
     {
@@ -84,7 +84,6 @@
       "localPath": "coordinating-implementation-programs/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
         "state": "untracked-local-snapshot",
         "path": ".agents/skills/coordinating-implementation-programs/SKILL.md",
         "sha256": "55dd6947be8649bdce97e7d7feec946ea89d8f97e70867f6b45e78bbba36494b"
@@ -105,7 +104,7 @@
       "upstreamPath": "skills/engineering/domain-modeling/",
       "localRoot": "projectSkills",
       "localPath": "domain-modeling/",
-      "changeNotice": "Added source-project-aligned glossary and ADR guidance and host metadata to the pinned upstream skill.",
+      "changeNotice": "Added host-aligned glossary and ADR guidance and host metadata to the pinned upstream skill.",
       "patchPath": "manifests/patches/domain-modeling.patch"
     },
     {
@@ -126,9 +125,7 @@
       "localPath": "graphify-start/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/graphify-start/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -150,7 +147,7 @@
       "upstreamPath": "skills/productivity/grilling/",
       "localRoot": "projectSkills",
       "localPath": "grilling/",
-      "changeNotice": "Added host metadata and source-project-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Added host metadata and host-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/grilling.patch"
     },
     {
@@ -211,9 +208,7 @@
       "localPath": "marketing-screenshots/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/marketing-screenshots/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -223,7 +218,6 @@
       "localPath": "master-orchestrator/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
         "state": "untracked-local-snapshot",
         "paths": [
           ".agents/skills/master-orchestrator/",
@@ -249,9 +243,7 @@
       "localPath": "mdx-to-html/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/mdx-to-html/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -261,9 +253,7 @@
       "localPath": "orchestrating-gemini-workers/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/orchestrating-gemini-workers/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -291,9 +281,7 @@
       "localPath": "setup-goal/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/setup-goal/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -303,9 +291,7 @@
       "localPath": "setup-harness-evaluation/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/setup-harness-evaluation/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -315,9 +301,7 @@
       "localPath": "setup-workflow-comparison/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/setup-workflow-comparison/"
+        "state": "owner-supplied"
       }
     },
     {
@@ -378,9 +362,7 @@
       "localPath": "writing-for-agents/",
       "license": "MIT",
       "origin": {
-        "repository": "private-source",
-        "revision": "private-revision-redacted",
-        "path": ".agents/skills/writing-for-agents/"
+        "state": "owner-supplied"
       }
     },
     {

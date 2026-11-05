@@ -409,23 +409,19 @@ test("adapted and original local imports retain provenance contracts", async () 
   }
 });
 
-test("source-project-original imports retain historical source, explicit activation metadata, and a verifiable release commit", async () => {
+test("Owner-supplied imports retain explicit activation metadata and a verifiable release commit", async () => {
   const expected = [
-    { name: "setup-goal", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-goal/" },
-    { name: "setup-harness-evaluation", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-harness-evaluation/" },
-    { name: "setup-workflow-comparison", revision: "private-revision-redacted", sourcePath: ".agents/skills/setup-workflow-comparison/" },
-    { name: "writing-for-agents", revision: "private-revision-redacted", sourcePath: ".agents/skills/writing-for-agents/" },
+    { name: "setup-goal" },
+    { name: "setup-harness-evaluation" },
+    { name: "setup-workflow-comparison" },
+    { name: "writing-for-agents" },
   ];
   const sources = JSON.parse(await readFile(new URL("../manifests/skill-sources.json", import.meta.url), "utf8"));
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
   for (const origin of expected) {
     const source = sources.skills.find(({ name }) => name === origin.name);
     const entry = lock.skills.find(({ name }) => name === origin.name);
-    assert.deepEqual(source.origin, {
-      repository: "private-source",
-      revision: origin.revision,
-      path: origin.sourcePath,
-    });
+    assert.deepEqual(source.origin, { state: "owner-supplied" });
     assert.equal(source.sourceType, "original");
     assert.equal(source.localRoot, "projectSkills");
     assert.equal(source.localPath, origin.name + "/");
@@ -447,9 +443,8 @@ test("source-project-original imports retain historical source, explicit activat
   assert.match(goalFallback, /native Goal is disabled\/unavailable, explain the prerequisite and preserve the ready runbook/i);
 });
 
-test("source-project staged skill imports retain source commit, host activation metadata, and documented omissions", async () => {
+test("Owner-supplied skill imports retain host activation metadata and documented omissions", async () => {
   const names = ["marketing-screenshots", "mdx-to-html", "orchestrating-gemini-workers"];
-  const revision = "private-revision-redacted";
   const sources = JSON.parse(await readFile(new URL("../manifests/skill-sources.json", import.meta.url), "utf8"));
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
   for (const name of names) {
@@ -458,11 +453,7 @@ test("source-project staged skill imports retain source commit, host activation 
     assert.equal(source.sourceType, "original");
     assert.equal(source.localRoot, "projectSkills");
     assert.equal(source.localPath, name + "/");
-    assert.deepEqual(source.origin, {
-      repository: "private-source",
-      revision,
-      path: ".agents/skills/" + name + "/",
-    });
+    assert.deepEqual(source.origin, { state: "owner-supplied" });
     assert.equal(source.license, "MIT");
     assert.equal(entry.sourceType, "original");
     assert.match(entry.releaseCommit, /^[a-f0-9]{40}$/);
@@ -488,9 +479,9 @@ test("source-project staged skill imports retain source commit, host activation 
   assert.doesNotMatch(gemini, /^disable-model-invocation:/m);
   assert.match(geminiAgent, /allow_implicit_invocation:\s*true/);
   assert.doesNotMatch(gemini, /\[example log\]\(example-log\.md\)/i);
-  assert.match(gemini, /historical source-project `example-log\.md` is intentionally omitted/i);
+  assert.match(gemini, /historical source `example-log\.md` is intentionally omitted/i);
   assert.match(gemini, /If `dsh`.*stop before dispatch and report the missing prerequisite/i);
-  assert.match(await readFile(new URL("../docs/provenance.md", import.meta.url), "utf8"), /upstream provenance undocumented in source-project/i);
+  assert.match(await readFile(new URL("../docs/provenance.md", import.meta.url), "utf8"), /earlier upstream provenance undocumented/i);
 });
 
 test("all skill frontmatter is closed and adaptation notices stay in Markdown body", async () => {

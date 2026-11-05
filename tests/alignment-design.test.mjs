@@ -80,7 +80,7 @@ test("manual-only activation mode remains distinct from ordinary design skills",
   }
 });
 
-test("OpenAI skill metadata preserves source-project activation policy", async () => {
+test("OpenAI skill metadata preserves the source project activation policy", async () => {
   const expected = {
     "codebase-design": {
       interface: {
@@ -113,6 +113,6 @@ test("OpenAI skill metadata preserves source-project activation policy", async (
 
   for (const [name, metadata] of Object.entries(expected)) {
     const source = await support(name, "agents/openai.yaml");
-    assert.deepEqual(YAML.parse(source), metadata, `${name} metadata must match source-project`);
+    assert.deepEqual(YAML.parse(source), metadata, `${name} metadata must match the source project`);
   }
 });

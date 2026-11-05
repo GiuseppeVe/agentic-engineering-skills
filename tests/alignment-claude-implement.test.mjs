@@ -20,7 +20,7 @@ async function readSkill(relativePath) {
   return readFile(path.join(skillRoot, relativePath), "utf8");
 }
 
-test("Claude Implement carries current source-project references and role attachments", async () => {
+test("Claude Implement carries current host references and role attachments", async () => {
   const expectedFiles = [
     "SKILL.md",
     "agents/clean-room-reviewer.md",
@@ -69,7 +69,7 @@ test("Claude Implement carries current source-project references and role attach
   }
 });
 
-test("Claude Implement contracts match current source-project workflow and stay portable", async () => {
+test("Claude Implement contracts match current host workflow and stay portable", async () => {
   const [skill, roleMap, routing, packet, isolation, review, worker, forwardTests] = await Promise.all([
     readSkill("SKILL.md"),
     readSkill("references/agent-roles.md"),
@@ -116,7 +116,7 @@ test("Claude Implement contracts match current source-project workflow and stay 
   const files = await listFiles(skillRoot);
   for (const relative of files.filter((file) => file.endsWith(".md"))) {
     const contents = await readSkill(relative);
-    assert.doesNotMatch(contents, /source-project|[A-Z]:\\Users\\|\/Users\/[^/]+\//i,
+    assert.doesNotMatch(contents, /[A-Z]:\\Users\\|\/Users\/[^/]+\//i,
       `${relative}: plugin skill must not depend on a project-specific absolute path`);
   }
 });

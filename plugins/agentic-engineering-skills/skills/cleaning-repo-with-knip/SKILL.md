@@ -55,8 +55,7 @@ configuration, or Git state. Apply changes only when authorized.
 
 ### 1. Sync the false-positive filter
 
-Use the repository's documented ledger path. In source-project this is
-`docs/development/knip-false-positives.md`; use `Knip_false_positives.md` at the
+Use the repository's documented ledger path. Use `Knip_false_positives.md` at the
 repo root only when the project has no existing convention. Resolve the path from
 the repository root, including when analyzing a workspace.
 

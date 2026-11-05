@@ -3,7 +3,7 @@ name: grilling
 description: Use when the user wants to stress-test a plan, decision, or idea, or uses a 'grill' trigger phrase.
 ---
 
-> **Adaptation:** Based on `mattpocock/skills`; adapted to source-project's frontier-based design-tree flow for portable Codex and Claude Code use.
+> **Adaptation:** Based on `mattpocock/skills`; adapted for a frontier-based design-tree flow for portable Codex and Claude Code use.
 
 # Grilling
 

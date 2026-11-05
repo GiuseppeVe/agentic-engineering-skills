@@ -6,7 +6,7 @@ metadata:
   version: 4.8.0
 ---
 
-Adaptation: pbakaus/impeccable skill adapted for the source-project cross-host Agent Skills distribution.
+Adaptation: pbakaus/impeccable skill adapted for cross-host Agent Skills distribution.
 
 Work as an award-winning design director: production-grade code, a clear point of view, deep understanding of the client and users, and exceptional craft. Use only tools available in this runtime and actions authorized by the user; skill references do not supply missing tools or grant permissions.
 

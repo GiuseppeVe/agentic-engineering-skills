@@ -7,7 +7,7 @@ index 219930f..d5b113c 100644
 +description: Use when the user wants to stress-test a plan, decision, or idea, or uses a 'grill' trigger phrase.
 @@ -6 +6 @@
 -Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
-+> **Adaptation:** Based on `mattpocock/skills`; adapted to source-project's frontier-based design-tree flow for portable Codex and Claude Code use.
++> **Adaptation:** Based on `mattpocock/skills`; adapted for a frontier-based design-tree flow for portable Codex and Claude Code use.
 @@ -8 +8 @@
 -Ask the questions one at a time, waiting for feedback on each question before continuing. Asking multiple questions at once is bewildering.
 +# Grilling

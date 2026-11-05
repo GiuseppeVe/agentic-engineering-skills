@@ -73,7 +73,7 @@ These hooks are reminders, not enforcement. They only see successful calls repre
 
 For PR deduplication, hooks use session and PR SHA-256 digests as names under a plugin-specific directory in the operating system's temporary directory. Marker files are empty, directory permissions are private where the platform supports POSIX modes, and a marker older than 14 days is treated as expired and recreated when that same session/PR pair is seen again. This is lazy expiration, not a background cleanup: unused expired markers remain until the operating system removes its temporary files. Raw session IDs and PR URLs are not written to that state. This is temporary runtime state, separate per session, not repository data.
 
-Installing this plugin alongside an existing local source-project post-merge hook or Claude `pr-skills` mod can produce duplicate reminders for the same action. This plugin does not change or disable local source-project setup. Review the host's active project/user hooks and mods if duplicate context appears.
+Installing this plugin alongside an existing local post-merge hook or Claude `pr-skills` mod can produce duplicate reminders for the same action. This plugin does not change or disable local setup. Review the host's active project/user hooks and mods if duplicate context appears.
 
 ## Local verification
 

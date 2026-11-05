@@ -1,4 +1,4 @@
-2+;etGvjx?2_Eq8b3z_{HjG5;EjXMMePt_bQA20YbqGKsa8YnBO
+?2_Eq8b3z_{HjG5;EjXMMePt_bQA20YbqGKsa8YnBO
 z^Uza(%hi=?V|^H>E7G%u5iKoZwJ~(0k|8h}C6oq`yhg-!*kHf8YW)1Bv$hfqPr3x4
 zZB-9;L~)H?+TgH|#;yunoN1+iOhG+(v^!jq$-2;IABm?sfz0$a0S~ers1`cQm?={L
 z1^*Dxg+y3SK=6jcv+YHEUxycdhI-+!>khrN?%~>4PX!#VX^zDQI#dQEz4t)8`yQ&^
@@ -19262,4 +19262,4 @@ index 0000000..3d9a126
 +  getHue,
 +  colorToHex,
 +};
-diff --git b/impeccable/scripts/detector/shared/const
+diff --git b/impeccable/scripts/detector/shared/constants.mjs

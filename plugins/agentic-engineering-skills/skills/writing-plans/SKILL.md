@@ -5,7 +5,7 @@ description: Use when a spec or requirements need a multi-step implementation pl
 
 # Writing Plans
 
-> **Adaptation:** Based on `obra/superpowers`; updated with the source-project writing-plans workflow for portable Codex and Claude Code skill-pack use.
+> **Adaptation:** Based on `obra/superpowers`; updated with a portable writing-plans workflow for portable Codex and Claude Code skill-pack use.
 
 Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, code, tests, commands, docs, risks, and acceptance evidence. DRY, YAGNI, TDD, frequent commits.
 
@@ -13,7 +13,7 @@ Announce: "I'm using the writing-plans skill to create the implementation plan."
 
 ## Artifact and scope
 
-- Respect system and host constraints. Within those constraints, follow explicit user instructions over repository defaults. Otherwise use the repository's canonical plan location (for example, `docs/work/plans/` in source-project). Use `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.mdx` only when neither provides a location.
+- Respect system and host constraints. Within those constraints, follow explicit user instructions over repository defaults. Otherwise use the repository's canonical plan location (for example, `docs/work/plans/`). Use `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.mdx` only when neither provides a location.
 - For multiple review artifacts, use `docs/superpowers/plans/YYYY-MM-DD-<feature-name>/plan.mdx` as the fallback, with optional `canvas.mdx` for visual review and `prototype.mdx` for interaction notes.
 - Use local MDX first. A hosted Plan MCP surface is required only if the user requests it or already uses it.
 - Plans stand alone without chat, previous drafts, or spec discussions. Adapt existing or pasted plans into clean proposals, not revision memos.

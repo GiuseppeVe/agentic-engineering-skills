@@ -7,7 +7,7 @@ description: Use when a coding task can be split into small, independently-speci
 
 Controller specifies/reviews; sandboxed headless worker writes one small, independently specified unit. Worker sees no conversation: brief must contain all needed context. Use for repetitive file tasks with independently derived, checkable acceptance criteria and fast objective checks. Architecture/exploration decisions, unclear criteria or context that cannot fit a self-contained brief stay with controller.
 
-The historical source-project `example-log.md` is intentionally omitted: its task IDs, model names, and run outcomes are project-specific evidence, not portable validation for new tasks. No run results are claimed here.
+The historical source `example-log.md` is intentionally omitted: its task IDs, model names, and run outcomes are project-specific evidence, not portable validation for new tasks. No run results are claimed here.
 
 ## Setup and launch
 

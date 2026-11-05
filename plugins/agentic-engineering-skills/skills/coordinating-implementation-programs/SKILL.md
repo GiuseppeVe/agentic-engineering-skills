@@ -86,9 +86,9 @@ handoff. Risolvi i conflitti di contenuto nel thread competente.
 ## 4. Verifica readiness, autorizza e chiudi
 
 Il thread-piano segue il ciclo PR canonico della repository, comprese review
-indipendente, ottimizzazioni, riverifiche e attività post-merge. In source-project
-la fonte è `docs/development/CODING_STANDARDS.md`, sezione «PR review e merge»,
-risolta nella repository del run. Mantieni procedure e comandi in quella fonte.
+indipendente, ottimizzazioni, riverifiche e attività post-merge. Consulta la
+fonte canonica delle procedure di review e merge della repository del run.
+Mantieni procedure e comandi in quella fonte.
 
 Ricevi PR, base, head finale, prove di readiness e blocchi. L’accettazione
 dei task, un reminder o un checker positivo non sostituiscono tali prove.

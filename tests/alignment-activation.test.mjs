@@ -28,7 +28,7 @@ test("learn-codebase and UI UX Pro Max require explicit user invocation", async 
   assert.match(ui, /Use only when the user explicitly invokes `ui-ux-pro-max`/);
 });
 
-test("Codex invocation policy matches source-project for all four aligned skills", async () => {
+test("Codex invocation policy matches the source project for all four aligned skills", async () => {
   async function codexPolicy(name) {
     const yamlPath = path.join(skillRoot, name, "agents", "openai.yaml");
     return parse(await readFile(yamlPath, "utf8"))?.policy ?? {};
@@ -40,7 +40,7 @@ test("Codex invocation policy matches source-project for all four aligned skills
   assert.equal((await codexPolicy("grilling")).allow_implicit_invocation ?? true, true);
 });
 
-test("grilling follows source-project's frontier rounds and waits for confirmation", async () => {
+test("grilling follows the source project’s frontier rounds and waits for confirmation", async () => {
   const grilling = await skill("grilling");
 
   assert.match(grilling, /frontier/);

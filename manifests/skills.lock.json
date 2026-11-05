@@ -73,7 +73,7 @@
       "sha256": "a6e68ff071f1da42ea28b29ceacea8850bf8f91946d73964872e24263bfcb98e",
       "localSha256": "269cb13c093a4a4ff5321f7b94fe20db908743be126f47b7fe1ddf1a22332bde",
       "dependencies": [],
-      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied source-project snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
+      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
       "patchPath": "manifests/patches/caveman.patch",
       "licenseFiles": [
         {
@@ -96,7 +96,7 @@
     {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
-      "localSha256": "bed90675999d9277c4cb7999cca66e564800636bc8b48deae126af6bf64cc7db",
+      "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -111,7 +111,7 @@
       "sha256": "6af47ce35b6d06ce5a06201ab222c29d77fdd0211168526f30035a24e6873c7b",
       "localSha256": "2056c568ba93b0ab91c14d629389ced4866b6df531a404ff1792eefe697159ff",
       "dependencies": [],
-      "changeNotice": "Added source-project-aligned design guidance and host metadata to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Added host-aligned design guidance and host metadata to the pinned upstream skill. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/codebase-design.patch",
       "licenseFiles": [
         {
@@ -133,7 +133,7 @@
     {
       "name": "coordinating-implementation-programs",
       "sourceType": "original",
-      "localSha256": "d0fa7bfd217cf314eb26eea11076bc7cc78c2bb09698ad8e2c5398de5d19e8d8",
+      "localSha256": "475d0e2b1bda14f722efeee075e42ee649b1c2403f8d1110adc5003088ea37d3",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -159,7 +159,7 @@
       "sha256": "9c70797062c1017367293905782a5a3a6b8f3ea85148abc172996a8de3f60071",
       "localSha256": "136eefe8c3529e8c61797c265287d28a67a9048a6b013d2770799addb6b7427f",
       "dependencies": [],
-      "changeNotice": "Added source-project-aligned glossary and ADR guidance and host metadata to the pinned upstream skill.",
+      "changeNotice": "Added host-aligned glossary and ADR guidance and host metadata to the pinned upstream skill.",
       "patchPath": "manifests/patches/domain-modeling.patch",
       "licenseFiles": [
         {
@@ -201,7 +201,7 @@
     {
       "name": "graphify-start",
       "sourceType": "original",
-      "localSha256": "87a530cb801ebc8f6ffacb535a81629048a86138a929149d35619c5c0779dc8f",
+      "localSha256": "f8f52e5161e8aa69ad21399eab001a8a14c145683925bf54c9772c05f03da217",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -235,9 +235,9 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/productivity/grilling/",
       "sha256": "1468bb9078a95a6672a687cd37b97cbc25be2584ec327400b94613e69a1f5956",
-      "localSha256": "a7038ae25896ac3c640d4675d3fca07c700884601b6589ba9ced0de5618f7a17",
+      "localSha256": "86dba73d74d8710990d07879f2fac8935ac562e35b62ea33ac9c3951ffe09088",
       "dependencies": [],
-      "changeNotice": "Added host metadata and source-project-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Added host metadata and host-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/grilling.patch",
       "licenseFiles": [
         {
@@ -282,7 +282,7 @@
       "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
       "upstreamPath": "skill/",
       "sha256": "8023233e074b16c314ec18354955beb425a49ae79450ef641045b19ca0dfa04b",
-      "localSha256": "7c24627a2145b3a63207b6457c2505716482118126f9adac4099471a12a8e6d9",
+      "localSha256": "2cf52ffd1fe49cf7a670b746ce14b2a7a675a036e7bbb1a72998d8bb09e19a94",
       "dependencies": [],
       "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for cross-host distribution. Includes fresh-context subagent routing and portable specialist contracts.",
       "patchPath": "manifests/patches/impeccable.patch",
@@ -374,7 +374,7 @@
     {
       "name": "orchestrating-gemini-workers",
       "sourceType": "original",
-      "localSha256": "d24af4d1f89bf61909064f488d0b4df389f2ca31e2d237b2edcfba8b78b34433",
+      "localSha256": "b7a4ce55358fbd1bb9eb51636babe298b97132563dff0755b9627fef4938be63",
       "releaseCommit": "historical-commit-redacted",
       "license": "MIT",
       "payloadType": "directory",
@@ -540,7 +540,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "77daf884925b680898c0ea8c93ad0d3985da9cad7f533de46df22cfd8134ab15",
+      "localSha256": "22104f4723c312af91e667f16c4bf20963363a34e397804c4ae1440f712fd2f3",
       "dependencies": [],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/writing-plans.patch",
