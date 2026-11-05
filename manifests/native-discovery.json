@@ -1,11 +1,11 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-04",
+  "capturedAt": "2026-11-05",
   "environment": {
-    "isolation": "Separate short-lived native host profiles and allowlisted child environments; the local marketplace ran from a temporary snapshot whose configured and full payload hashes were verified against the source. User configuration paths were isolated and only inert fixture credentials were passed to child processes.",
-    "commandNotation": "Native commands ran from the verified temporary local marketplace snapshot using Node.js v24.16.0.",
-    "payloadRefresh": "Both hosts installed the v1.1.1 plugin in separate temporary profiles; configured host trees, discovered skill inventories and full payload hashes matched the source. No model was invoked and hooks were not executed."
+    "isolation": "Separate temporary host profiles and allowlisted child environments. Local marketplace snapshot, source, and installed payload trees were compared. No credentials or model requests were used. HTTP proxy variables pointed at an unavailable local endpoint.",
+    "commandNotation": "Native commands ran from a temporary local marketplace snapshot on Windows.",
+    "payloadRefresh": "Both hosts installed the local plugin in isolated profiles. Configured inventories and payload hashes matched the source."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -130,8 +130,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:03a1b10a69c5adab06e6e0473c7ddd9c8fd9e6ecc6aec980873d1fc4db1673f7",
-        "fullTreeHash": "sha256:a376af20e82090c87311fe72317e47696e699b4c62adf83a694d98938f6dee7e",
+        "treeHash": "sha256:e050acc10c2408a5fefda04ab46cd1d53af8325e6cf85f20f6e3fd0006d2d0a4",
+        "fullTreeHash": "sha256:1f042dabd8075cbb41539b54262bbaf920085f40c835bf2be99934f800bae135",
         "fileCount": 537
       },
       "commands": [
@@ -240,8 +240,8 @@
           "claude-skills",
           "skills"
         ],
-        "treeHash": "sha256:69e120c8fd49b7651d1c7837181229bb290e86472f4049b6f065bb765ab5e9a9",
-        "fullTreeHash": "sha256:a376af20e82090c87311fe72317e47696e699b4c62adf83a694d98938f6dee7e",
+        "treeHash": "sha256:f502212c1c8a856ef425b2685bd3c8fd842f7a7c74202f6180ec4d03ecd6cd04",
+        "fullTreeHash": "sha256:1f042dabd8075cbb41539b54262bbaf920085f40c835bf2be99934f800bae135",
         "fileCount": 537
       },
       "installedAgents": [
