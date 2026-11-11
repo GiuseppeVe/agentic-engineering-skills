@@ -19,16 +19,15 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `handoff` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Plan: save a concise resumable handoff |
 | `orchestrating-gemini-workers` | None | `LICENSE` | Implement: independent bounded file-writing with sandboxed Gemini workers |
 | `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
-| `claude-implement` | None | `LICENSE` | Implement: Claude Code only; copy from `claude-skills/claude-implement/` |
-| `codex-implement` | None | `LICENSE` | Implement: Codex bounded packets and clean-room review |
-| `coordinating-implementation-programs` | `sequential-task-orchestrator` | `LICENSE` | Implement: coordinate approved plans and dependencies |
+| `task-implement` | None | `LICENSE` | Implement: one assigned plan task with bounded implementation subtasks and task-scoped verification |
+| `coordinating-implementation-plans` | `plan-orchestrator` | `LICENSE` | Implement: coordinate approved plans and dependencies |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE`; `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-NOTICE` | Design: frontend craft and critique |
 | `improve-codebase-architecture` | `codebase-design` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE` | Design: architecture audit |
 | `learn-codebase` | None | `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE`; `plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE` | Understand: repository priming |
 | `marketing-screenshots` | None | `LICENSE` | Design: capture and inspect real product UI for marketing assets |
 | `master-orchestrator` | None | `LICENSE` | Understand: coordinate a dynamic non-implementation graph, filtered reports, decisions and design contracts |
 | `mdx-to-html` | None | `LICENSE` | Verify: create a standalone MDX review artifact |
-| `sequential-task-orchestrator` | `test-driven-development` | `LICENSE` | Implement: strictly ordered execution and per-task review |
+| `plan-orchestrator` | `task-implement`; `test-driven-development` | `LICENSE` | Implement: strictly ordered execution, separate per-task implementation and review threads |
 | `retro` | `writing-for-agents` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Review: reflect on a coding session |
 | `setup-goal` | None | `LICENSE` | Plan: outcome runbook and approved native Goal setup |
 | `setup-harness-evaluation` | None | `LICENSE` | Verify: independent harness runs for manual evaluation |
@@ -48,7 +47,7 @@ The lock records unconditional skill dependencies only. For these branches, also
 - `wayfinder`: install `grilling` and `domain-modeling` when charting a map, resolving a Grilling ticket, or unsure which discussion skills apply.
 - `graphify-start`: if no project-specific Graphify protocol exists, install `graphify` for the default route.
 - `improve-codebase-architecture`: install `grilling` when a candidate is selected; install `domain-modeling` when no terminology source exists or decisions crystallise.
-- `sequential-task-orchestrator`: use an implementation skill with bounded worker mode, such as `codex-implement` on Codex or `claude-implement` on Claude Code. This also applies when invoked through `coordinating-implementation-programs`.
+- `plan-orchestrator`: also install `task-implement` for task-scoped implementation and `test-driven-development` for the separate review thread. This also applies when invoked through `coordinating-implementation-plans`.
 
 ## Additional installation notes
 
@@ -58,8 +57,8 @@ For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus
 
 `deslopping-cleanup` documents optional external specialist routes, not lock-declared dependencies. Its directory includes a portable skill-local copy of the repository MIT `LICENSE`; retain that copy when selectively redistributing the skill. See [dependencies and publication review](deslopping-cleanup.md) for route availability and fallbacks.
 
-Implementation role attachments do not register native agents or create CLI session profiles. For `codex-implement`, configure minimal `$CODEX_HOME/<name>.config.toml` layers for `planner`, `spec-aware-tester`, `clean-room-reviewer` (Sol/xhigh) and `worker` (Sol/high). For `claude-implement`, launch each role and retry in a fresh generic session with its explicit model and effort, complete role attachment and permitted inputs. Tester and reviewer sessions restrict built-in tools and disable unlisted MCP servers. Named global agent profiles are not required. Consult each implementation skill for its routing and verification requirements.
+`task-implement` carries model guidance for both hosts. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. Confirm the selected models and effort against the current host's available routing controls.
 
-The shared `skills/` directory contains 35 skills. Claude Code additionally scans `claude-skills/` declared in its manifest; that directory contains only `claude-implement`. Codex does not declare or scan it.
+Both hosts discover the same 35 skills from the shared `skills/` directory; no host-specific skill root is needed.
 
 After copying, preserve flat layout `<skills-root>/<name>/SKILL.md`. Re-run host discovery. For provenance meaning see [provenance](provenance.md); for modification rules see [customization](customization.md).

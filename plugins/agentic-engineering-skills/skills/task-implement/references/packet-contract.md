@@ -12,8 +12,10 @@ Classify packets as:
 
 - `INDEPENDENT`: bounded work that may be delegated in its own branch or worktree.
 - `DEPENDENT`: starts only after prerequisite evidence is integrated.
-- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by Opus or the controller.
+- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by the task orchestrator.
 
 Scope is binding. Any excluded file, non-owned interface, ownership overlap, unresolved shared contract, architectural decision, or required scope expansion returns `BLOCKED`. worker never expands scope or resolves such decisions independently.
 
 Return `DONE` only with a verifiable packet commit SHA in the declared packet branch; without it, return `BLOCKED`.
+
+For each delegated worker, include this contract and its packet in the brief. The worker changes only allowed files, validates its work, and reports status, changes, tests, assumptions, deviations, integration risks, files changed, packet branch/worktree, and commit SHA. The worker never integrates or approves integration.

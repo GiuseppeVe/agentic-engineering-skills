@@ -183,11 +183,11 @@ index b1613eb..f2508d0 100644
 +After saving, report the `.mdx` path. If the user already authorized execution, choose an available mode consistent with their instructions and continue. Otherwise, present appropriate choices and wait for authorization:
 @@ -164 +144,2 @@
 -**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-+1. **Host-specific implementation (default when available)** — `codex-implement` in Codex or `claude-implement` in Claude Code: bounded packets, semantic testing, clean-room review. Use `sequential-task-orchestrator` for strict ordered execution, per-task review, and resumable state.
++1. **Task implementation** — use `task-implement` for exactly one assigned task. For a multi-task plan that requires strict sequencing and a separate review thread for each task, use `plan-orchestrator`.
 +2. **Inline Execution** — small or tightly coupled work with explicit checkpoints; fallback when executors are unavailable.
 @@ -166 +147 @@
 -**Which approach?"**
-+**Model choice:** If explicitly available, offer a model suited to the work, such as Sol for architecture-sensitive or high-value reasoning and independent review. This is a model choice within the selected execution mode, not a separate execution skill.
++**Model choice:** Follow the model and effort guidance in `task-implement` for the selected host. Review is routed separately by `plan-orchestrator` when that workflow is selected.
 @@ -168,3 +149 @@
 -**If Subagent-Driven chosen:**
 -- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development

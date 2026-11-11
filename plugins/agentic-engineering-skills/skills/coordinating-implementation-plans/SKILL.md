@@ -1,13 +1,13 @@
 ---
-name: coordinating-implementation-programs
+name: coordinating-implementation-plans
 description: "Coordina una mappa approvata di piani di implementazione, avviando thread in parallelo e gestendo dipendenze, integrazione e chiusura."
 ---
 
-# Coordinare una mappa di implementazione
+# Coordinare una mappa di piani di implementazione
 
 Coordina il programma approvato; sei l’unico autore della sua mappa dei
 contratti. Delega esecuzione e review ai thread-piano. Per un piano isolato
-usa direttamente `sequential-task-orchestrator`.
+usa direttamente la skill `plan-orchestrator` con il comando nativo di invocazione dell’host.
 
 ## 1. Fonti, dipendenze e parallelismo
 
@@ -38,9 +38,10 @@ di autorizzarla. Un’eccezione concessa non autorizza richieste successive.
 
 ## 2. Assegna un thread a ogni piano
 
-Crea **un thread-piano visibile all’utente** con
-`sequential-task-orchestrator`. Questo crea a sua volta **thread distinti
-di implementazione e review per task**, secondo la propria skill, e possiede
+Crea **un thread-piano visibile all’utente** che invoca la skill
+`plan-orchestrator` con il comando nativo dell’host e riceve i path del piano,
+della spec e la mappa dei contratti. Questo crea a sua volta **thread distinti
+di implementazione e review per task**, secondo le rispettive skill, e possiede
 ledger, intero ciclo PR, merge autorizzato e cleanup del run.
 
 Questi ruoli richiedono thread, **non subagents né processi CLI sostitutivi**.
@@ -52,7 +53,7 @@ Fornisci un brief con:
 
 - workflow; piano, spec e mappa leggibili, con revisione/SHA;
 - task o prefisso, risultati attesi, dipendenze e punti di stop;
-- `sequential-task-orchestrator`, progetto, branch, base SHA e vincoli di worktree;
+- `plan-orchestrator`, progetto, branch, base SHA e vincoli di worktree;
 - `pr_base`; `integration_target` solo per integrazione per-task esplicitamente prevista;
 - autorizzazioni, limiti, fallimenti noti della base e report richiesto.
 
@@ -86,9 +87,8 @@ handoff. Risolvi i conflitti di contenuto nel thread competente.
 ## 4. Verifica readiness, autorizza e chiudi
 
 Il thread-piano segue il ciclo PR canonico della repository, comprese review
-indipendente, ottimizzazioni, riverifiche e attività post-merge. Consulta la
-fonte canonica delle procedure di review e merge della repository del run.
-Mantieni procedure e comandi in quella fonte.
+indipendente, ottimizzazioni, riverifiche e attività post-merge. La fonte è `docs/development/CODING_STANDARDS.md`, sezione «PR review e merge»,
+risolta nella repository del run. Mantieni procedure e comandi in quella fonte.
 
 Ricevi PR, base, head finale, prove di readiness e blocchi. L’accettazione
 dei task, un reminder o un checker positivo non sostituiscono tali prove.

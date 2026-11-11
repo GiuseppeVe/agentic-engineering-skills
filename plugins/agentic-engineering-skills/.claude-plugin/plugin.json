@@ -17,6 +17,6 @@
     "fidelity"
   ],
   "skills": [
-    "./claude-skills/"
+    "./skills/"
   ]
 }

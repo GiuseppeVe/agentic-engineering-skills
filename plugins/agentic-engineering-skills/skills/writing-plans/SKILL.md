@@ -37,7 +37,7 @@ Every plan starts with this header, immediately followed by `## Requirements Inv
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** Use the selected available mode: `codex-implement` in Codex, `claude-implement` in Claude Code, `sequential-task-orchestrator` for strict ordered execution, or inline execution with explicit checkpoints. Default to the host-specific implementation skill when available, otherwise inline. Use an explicitly available model if selected. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** Use `task-implement` for one assigned plan task, `plan-orchestrator` for strict ordered execution with a separate review thread per task, or inline execution with explicit checkpoints. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence]
 **Architecture:** [2-3 sentences]
@@ -48,7 +48,7 @@ Every plan starts with this header, immediately followed by `## Requirements Inv
 
 ### Requirements Inventory (mandatory)
 
-Inventory is the single source of obligations and executor fidelity coverage (`codex-implement`, `claude-implement`, or `sequential-task-orchestrator` when selected; inline execution uses the same checklist). Every obligation from the spec, prose, task bodies, or code comments must have a `REQ-NNN` entry. Prose may explain requirements, not introduce unlisted ones. An incomplete inventory is a plan failure.
+Inventory is the single source of obligations and executor fidelity coverage (`task-implement`, `plan-orchestrator`, or inline execution). Every obligation from the spec, prose, task bodies, or code comments must have a `REQ-NNN` entry. Prose may explain requirements, not introduce unlisted ones. An incomplete inventory is a plan failure.
 
 One line per atomic, checkable obligation:
 
@@ -141,10 +141,10 @@ Fix issues inline; no separate re-review required. Preserve required content eve
 
 After saving, report the `.mdx` path. If the user already authorized execution, choose an available mode consistent with their instructions and continue. Otherwise, present appropriate choices and wait for authorization:
 
-1. **Host-specific implementation (default when available)** — `codex-implement` in Codex or `claude-implement` in Claude Code: bounded packets, semantic testing, clean-room review. Use `sequential-task-orchestrator` for strict ordered execution, per-task review, and resumable state.
+1. **Task implementation** — use `task-implement` for exactly one assigned task. For a multi-task plan that requires strict sequencing and a separate review thread for each task, use `plan-orchestrator`.
 2. **Inline Execution** — small or tightly coupled work with explicit checkpoints; fallback when executors are unavailable.
 
-**Model choice:** If explicitly available, offer a model suited to the work, such as Sol for architecture-sensitive or high-value reasoning and independent review. This is a model choice within the selected execution mode, not a separate execution skill.
+**Model choice:** Follow the model and effort guidance in `task-implement` for the selected host. Review is routed separately by `plan-orchestrator` when that workflow is selected.
 
 Routing: use `dispatching-parallel-agents` for small independent workstreams when available; for large distributed work, use available agent-coordination tools. The generic term “swarm” means multi-agent coordination. Keep architecture-sensitive work with controller or an explicitly available suitable model. Check runtime availability; do not invoke missing skills/models.
 

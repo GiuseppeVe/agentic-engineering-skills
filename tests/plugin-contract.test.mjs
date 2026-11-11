@@ -38,7 +38,7 @@ test("Claude manifest declares same plugin identity", async () => {
   assert.equal(manifest.name, expectedName);
   assert.equal(manifest.version, expectedVersion);
   assert.match(manifest.version, strictSemver);
-  assert.deepEqual(manifest.skills, ["./claude-skills/"]);
+  assert.deepEqual(manifest.skills, ["./skills/"]);
 });
 
 test("both marketplaces resolve to shared plugin directory", async () => {
@@ -81,11 +81,11 @@ test("plugin metadata advertises supported engineering and PR workflows", async 
   assert.match(codex.interface.defaultPrompt, /project PR workflow/i);
 });
 
-test("host manifest discovery exposes Claude Implement only to Claude Code", async () => {
+test("both host manifests expose the same shared skills without duplicates", async () => {
   for (const host of ["codex", "claude"]) {
     const manifest = await json(`plugins/agentic-engineering-skills/.${host === "codex" ? "codex" : "claude"}-plugin/plugin.json`);
     const declared = Array.isArray(manifest.skills) ? manifest.skills : [manifest.skills];
-    const roots = host === "claude" ? ["./skills/", ...declared] : declared;
+    const roots = declared;
     const discovered = [];
     for (const relativeRoot of roots) {
       const rootPath = path.resolve(pluginRoot, relativeRoot);
@@ -98,7 +98,7 @@ test("host manifest discovery exposes Claude Implement only to Claude Code", asy
     }
     assert.equal(new Set(discovered).size, discovered.length, `${host}: duplicate skill discovery`);
     assert.deepEqual(discovered.sort(), expectedSkillsByHost[host]);
-    assert.equal(discovered.includes("claude-implement"), host === "claude");
+    assert.equal(discovered.includes("task-implement"), true);
   }
 });
 
@@ -132,20 +132,19 @@ async function skillEntrypoints(directory, prefix = "") {
 }
 
 test("recursive host discovery cannot expose supporting documents as extra skills", async () => {
-  for (const directory of ["skills", "claude-skills"]) {
-    const entrypoints = await skillEntrypoints(path.join(pluginRoot, directory));
-    const topLevel = (await readdir(path.join(pluginRoot, directory), { withFileTypes: true }))
-      .filter(entry => entry.isDirectory()).map(entry => `${entry.name}/SKILL.md`).sort();
-    assert.deepEqual(entrypoints, topLevel,
-      `${directory}: nested SKILL.md files become independent skills in native discovery`);
-  }
+  const entrypoints = await skillEntrypoints(path.join(pluginRoot, "skills"));
+  const topLevel = (await readdir(path.join(pluginRoot, "skills"), { withFileTypes: true }))
+    .filter(entry => entry.isDirectory()).map(entry => `${entry.name}/SKILL.md`).sort();
+  assert.deepEqual(entrypoints, topLevel,
+    "nested SKILL.md files become independent skills in native discovery");
 });
 
 
-test("retired generic profiles are not shipped and specialist attachments remain available", async () => {
+test("retired generic profiles and Claude-only skills are not shipped", async () => {
   for (const relativePath of ["agent-profiles", "manifests/agent-profiles.json"]) {
     await assert.rejects(access(path.join(pluginRoot, relativePath)), { code: "ENOENT" });
   }
-  await access(path.join(pluginRoot, "skills/codex-implement/agents/planner.md"));
-  await access(path.join(pluginRoot, "claude-skills/claude-implement/agents/planner.md"));
+  await access(path.join(pluginRoot, "skills/task-implement/SKILL.md"));
+  await access(path.join(pluginRoot, "skills/task-implement/references/packet-contract.md"));
+  await assert.rejects(access(path.join(pluginRoot, "claude-skills")), { code: "ENOENT" });
 });

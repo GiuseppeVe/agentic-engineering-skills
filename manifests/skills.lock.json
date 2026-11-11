@@ -84,16 +84,6 @@
       ]
     },
     {
-      "name": "claude-implement",
-      "sourceType": "original",
-      "localSha256": "2a4facc811f511c6f0c82dd104a4894aa2c1067273529bdd13f89512e3b0e31b",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": [],
-      "payloadPath": "plugins/agentic-engineering-skills/claude-skills/claude-implement"
-    },
-    {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
@@ -122,23 +112,14 @@
       ]
     },
     {
-      "name": "codex-implement",
+      "name": "coordinating-implementation-plans",
       "sourceType": "original",
-      "localSha256": "e8229d7957624f0086ca1f06cd5e380c9960c9af6b7eecf844776e77259bc9fd",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": []
-    },
-    {
-      "name": "coordinating-implementation-programs",
-      "sourceType": "original",
-      "localSha256": "475d0e2b1bda14f722efeee075e42ee649b1c2403f8d1110adc5003088ea37d3",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "localSha256": "63924fd702b92059c5e1d05839c5a89d8427f19c66d873244a3c66e4e7a65c5d",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
-        "sequential-task-orchestrator"
+        "plan-orchestrator"
       ]
     },
     {
@@ -381,6 +362,18 @@
       "dependencies": []
     },
     {
+      "name": "plan-orchestrator",
+      "sourceType": "original",
+      "localSha256": "57c219a83c646c0b8703ed325e33f1b10a7638375bac8a9790d3843dd1bf532e",
+      "releaseCommit": "0000000000000000000000000000000000000000",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": [
+        "task-implement",
+        "test-driven-development"
+      ]
+    },
+    {
       "name": "retro",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
@@ -399,17 +392,6 @@
           "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE",
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
         }
-      ]
-    },
-    {
-      "name": "sequential-task-orchestrator",
-      "sourceType": "original",
-      "localSha256": "a75c8a36c7e6f86ffd70c914f503e2bb4beaaf87c9be91c1218cf4e0d64902cd",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": [
-        "test-driven-development"
       ]
     },
     {
@@ -446,6 +428,15 @@
       "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
       "license": "MIT",
       "payloadType": "file",
+      "dependencies": []
+    },
+    {
+      "name": "task-implement",
+      "sourceType": "original",
+      "localSha256": "cc4e5ce0fb34022fc99668cba2c33452f42fc89355a3abd040a8083e8724ef2f",
+      "releaseCommit": "0000000000000000000000000000000000000000",
+      "license": "MIT",
+      "payloadType": "directory",
       "dependencies": []
     },
     {
@@ -540,9 +531,9 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "22104f4723c312af91e667f16c4bf20963363a34e397804c4ae1440f712fd2f3",
+      "localSha256": "952740495940ddaf77e80bc218b24e7409398e169c311d4d625b4e5337bd1bd6",
       "dependencies": [],
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "licenseFiles": [
         {

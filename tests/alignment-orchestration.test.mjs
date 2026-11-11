@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const skillsRoot = path.join(root, "plugins", "agentic-engineering-skills", "skills");
-const orchestratorRoot = path.join(skillsRoot, "sequential-task-orchestrator");
-const implementRoot = path.join(skillsRoot, "codex-implement");
+const orchestratorRoot = path.join(skillsRoot, "plan-orchestrator");
+const implementRoot = path.join(skillsRoot, "task-implement");
 
 async function source(file) {
   return readFile(file, "utf8");

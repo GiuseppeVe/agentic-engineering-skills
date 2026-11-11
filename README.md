@@ -77,9 +77,9 @@ For larger design programs, the master also maintains a map of decisions and a s
 
 ### Implementation programs — available
 
-In a new chat, explicitly invoke [`coordinating-implementation-programs`](plugins/agentic-engineering-skills/skills/coordinating-implementation-programs/SKILL.md) with the approved contracts map, plans, specifications, constraints and authorizations. The master coordinates dependencies and compatible plans in parallel; a dependency is ready only when the required revision is available on its target.
+In a new chat, explicitly invoke [`coordinating-implementation-plans`](plugins/agentic-engineering-skills/skills/coordinating-implementation-plans/SKILL.md) with the approved contracts map, plans, specifications, constraints and authorizations. The master coordinates dependencies and compatible plans in parallel; a dependency is ready only when the required revision is available on its target.
 
-Each plan has a visible subordinate thread using `sequential-task-orchestrator`, which creates separate implementation and review threads for each task in order. The plan thread owns its PR lifecycle and authorized merge and cleanup; the master verifies evidence, maintains the contract map and unblocks dependent work. If the host cannot create the required visible threads, the workflow reports a block. For a single plan, invoke `sequential-task-orchestrator` directly.
+Each plan has a visible subordinate thread using `plan-orchestrator`, which creates a `task-implement` thread followed by a separate review thread for each task in order. The plan thread owns its PR lifecycle and authorized merge and cleanup; the master verifies evidence, maintains the contract map and unblocks dependent work. If the host cannot create the required visible threads, the workflow reports a block. For a single plan, invoke `plan-orchestrator` directly.
 
 ![Implementation graph workflow: the master coordinates parallel plan threads, each with sequential implementation and independent review, then verifies integration and unblocks dependencies](assets/graph-workflow-implementation.svg)
 
@@ -96,10 +96,9 @@ The master selects relevant specialist routes within the authorized scope. These
 | Consequential or disputed design | `Grill-me` | Pressure-test assumptions. |
 | Agreed design | `To Spec` | Create standalone specification. |
 | Multi-step implementation | `Writing Plans` | Create traceable implementation plan. |
-| Implementation program with multiple approved plans | `Coordinating Implementation Programs` | Coordinate compatible plan threads in parallel and track dependencies. |
-| One implementation plan | `Sequential Task Orchestrator` | Run one bounded task at a time with review. |
-| Small implementation | `Codex Implement` | Execute focused change with relevant verification. |
-| Claude Code implementation | `Claude Implement` | Use host-equivalent bounded workflow. |
+| Implementation program with multiple approved plans | `Coordinating Implementation Plans` | Coordinate compatible plan threads in parallel and track dependencies. |
+| One implementation plan | `Plan Orchestrator` | Run one bounded task at a time, with a separate review thread. |
+| One planned task | `Task Implement` | Implement the assigned task, coordinate bounded subtasks, and verify its acceptance criteria. |
 | Repository cleanup across responsibilities | `Deslopping Cleanup` | Investigate candidates, review evidence, and commit verified cleanup batches. |
 
 Explicitly invoke [`setup-goal`](plugins/agentic-engineering-skills/skills/setup-goal/SKILL.md) when you want to prepare a native Goal run. It co-designs the outcome, constraints, and progress metrics, then saves `runbook.md` with those three sections. Review the saved runbook and exact Goal condition before giving final confirmation to start that version. Only then does it activate the host's native Goal; agreeing individual sections does not start execution. If the host has no native Goal capability, the runbook remains ready and activation is reported as blocked.
@@ -184,11 +183,11 @@ implementation is handed off to an appropriate, authorized execution route.
 For a large change spanning multiple modules, I start with `Master Orchestrator`
 to coordinate discovery and design, using `Wayfinder` when useful and available.
 After the agreed design and plan are ready, an authorized handoff can use
-`Sequential Task Orchestrator` for bounded tasks and review cycles.
+`Plan Orchestrator` to dispatch one implementation thread and one review
+thread per task.
 
-For a small, well-understood change, I skip the broad discovery path and use
-`Codex Implement` directly, retaining the relevant TDD, verification, review,
-and owner-approval gates.
+For a well-understood plan task, I use `Task Implement` directly, retaining
+the relevant TDD, verification and owner-approval gates.
 
 ## Workflow at a glance
 
@@ -231,7 +230,7 @@ Enable and trust the plugin hooks separately from skill installation; see [Hooks
 
 Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see the relevant implementation skill for its role and routing requirements.
 
-The plugin exposes 35 skills to Codex and 36 to Claude Code. `claude-implement` lives outside the shared skill directory and is discovered only through the Claude manifest.
+The plugin exposes 35 shared skills to both Codex and Claude Code. `task-implement` selects model and effort for its orchestrator and implementation subagents according to the host.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 

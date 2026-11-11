@@ -4,12 +4,13 @@ These scenarios define expected behavior for the current universal skill. Histor
 
 1. **Setup pending:** With a dirty main checkout and pending shared-worktree creation, dispatch no child and leave the checkout unchanged.
 2. **Pending child:** If a launch is unconfirmed while a later independent task is ready, reserve the slot, investigate safely and keep the later task queued; never duplicate the launch.
-3. **Missing evidence:** If an implementer says done without commit or worktree evidence, follow up in the same subthread and withhold review until verification.
-4. **Finished turn, open session:** After the turn ends and final result, commit, worktree and absence of outstanding mutation are verified, release the slot and start review; do not require the session to exit.
+3. **Missing evidence:** If an implementer says done without base SHA, diff, checks or worktree evidence, follow up in the same subthread and withhold review until verification.
+4. **Finished turn, open session:** After the implementation turn ends and its diff, base SHA, worktree and absence of outstanding mutation are verified, release the slot and start review; do not require the session to exit. The reviewer commits only after findings are fixed or cleared and checks pass.
 5. **Outstanding mutation:** If background work can still modify the shared worktree, retain the slot and do not start a reviewer or integrate.
 6. **Conflicting children:** When two children are pending or active, record both, suspend dispatch, integration and worktree mutation, then reconcile each before continuing.
-7. **Review and integration:** Use a separate review subthread with `test-driven-development`; verify the accepted commit and require existing human authorization before integrating into `main`. Failure leaves later tasks queued.
+7. **Review and integration:** Invoke `test-driven-development` with the host-native skill command in a separate review subthread; it identifies and fixes in-scope problems, then commits the checked task result. Verify the accepted commit and require existing human authorization before integrating into `main`. Open the plan PR only after all plan tasks are accepted. Failure leaves later tasks queued.
 8. **Decisions:** A contracts map is optional. Resolve ordinary choices with the least-expansive interpretation; ask for missing or conflicting criteria only when they change scope.
+9. **Commit boundary:** Implementation changes remain uncommitted until the review thread accepts or fixes them, reruns required checks, and creates the final task commit on the run branch. A task commit does not create a PR.
 
 ## Historical material — previous versions only
 
@@ -17,7 +18,7 @@ The following is retained as historical evidence. Its host-specific instructions
 
 # Pressure Scenarios
 
-These scenarios are the RED baseline for `sequential-task-orchestrator`. They
+These scenarios are the RED baseline for `plan-orchestrator`. They
 must be rerun with the skill loaded before deployment and after every material
 skill revision. Recorded GREEN results below are historical side-chat protocol
 results, not evidence for the revised native-subagent protocol.

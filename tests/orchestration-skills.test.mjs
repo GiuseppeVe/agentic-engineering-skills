@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -7,86 +7,51 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const skillsRoot = path.join(root, "plugins", "agentic-engineering-skills", "skills");
 
-function skillDirectory(name) {
-  return path.join(root, "plugins", "agentic-engineering-skills", name === "claude-implement" ? "claude-skills" : "skills", name);
-}
-
 async function skill(name) {
-  return readFile(path.join(skillDirectory(name), "SKILL.md"), "utf8");
+  return readFile(path.join(skillsRoot, name, "SKILL.md"), "utf8");
 }
 
-test("orchestrator package exposes a universal skill and a resolvable runtime", async () => {
-  const source = await skill("sequential-task-orchestrator");
-  assert.doesNotMatch(source, /\b(?:claude|codex|cli)\b/i);
-  const protocol = await readFile(path.join(skillsRoot, "sequential-task-orchestrator", "references", "runtime-protocol.md"), "utf8");
-  assert.doesNotMatch(protocol, /\b(?:claude|codex|cli)\b/i);
-  assert.match(source, /references\/runtime-protocol\.md/);
-  assert.match(source, /test-driven-development/);
-  assert.match(source, /visible, subordinate subthreads/);
-  assert.match(protocol, /one slot: implementation \*\*or\*\* review/);
+test("task implement exposes one implementation-only task workflow and host model routing", async () => {
+  const source = await skill("task-implement");
+  const body = source.split(/^---\s*$/m).at(2).trimStart();
+  const firstFiveBodyLines = body.split(/\r?\n/).slice(0, 5).join("\n");
+  assert.match(source, /^name: task-implement$/m);
+  assert.match(firstFiveBodyLines, /GPT-6\.1 Sol\/high/);
+  assert.match(firstFiveBodyLines, /GPT-6\.1 Terra\/high/);
+  assert.match(firstFiveBodyLines, /Sonnet 5\.5\/high/);
+  assert.match(firstFiveBodyLines, /Sonnet 5\.5\/medium/);
+  assert.match(source, /Implement exactly one task assigned by a parent orchestrator/);
+  assert.match(source, /scope is implementation only and excludes review of the task's implementation/);
+  assert.match(source, /Never infer permission to commit, push, open a PR, merge, deploy/);
+  assert.match(source, /references\/packet-contract\.md/);
+  assert.doesNotMatch(source, /clean-room reviewer|clean-room approval|review protocol/i);
+  await access(path.join(skillsRoot, "task-implement", "references", "packet-contract.md"));
 });
 
-test("implementation attachments use neutral names and host-specific approved routing", async () => {
-  for (const host of ["codex", "claude"]) {
-    const name = `${host}-implement`;
-    const source = await skill(name);
-    const roleSource = host === "claude"
-      ? await readFile(path.join(skillDirectory(name), "references", "agent-roles.md"), "utf8")
-      : source;
-    const routingSource = host === "claude"
-      ? await readFile(path.join(skillDirectory(name), "references", "model-routing.md"), "utf8")
-      : source;
-    assert.doesNotMatch(source, /sol-(planner|spec-aware-tester|clean-room-reviewer)|gpt-5\.6|--model (?:fable|opus)\b/);
-    for (const role of ["planner", "spec-aware-tester", "clean-room-reviewer"]) {
-      assert.ok(roleSource.includes(`agents/${role}.md`));
-      const attachment = await readFile(path.join(skillDirectory(name), "agents", `${role}.md`), "utf8");
-      assert.match(attachment, new RegExp(`^name: ${role}$`, "m"));
-      if (host === "codex") {
-        assert.match(attachment, new RegExp(`^required_profile: ${role}$`, "m"));
-        assert.match(source, new RegExp(`codex -p ${role} `));
-        assert.match(source, /\$CODEX_HOME\/<name>\.config\.toml/);
-        assert.match(source, /gpt-6\.1-sol/);
-      } else {
-        assert.match(attachment, /^model: claude-opus-5-5$/m);
-        assert.match(attachment, new RegExp(`^effort: ${role === "planner" ? "medium" : "high"}$`, "m"));
-        assert.match(routingSource, new RegExp(`claude -p --model claude-opus-5-5 --effort ${role === "planner" ? "medium" : "high"}`));
-        assert.doesNotMatch(routingSource, /--agent\s+(?:planner|worker|spec-aware-tester|clean-room-reviewer)\b/);
-      }
-    }
-    const workerAttachment = host === "claude" ? "worker.md" : "terra-worker.md";
-    const worker = await readFile(path.join(skillDirectory(name), "agents", workerAttachment), "utf8");
-    assert.match(worker, host === "codex" ? /^required_profile: worker$/m : /^model: claude-sonnet-5-5$/m);
-    if (host === "claude") assert.match(worker, /^effort: high$/m);
-    assert.match(source, /controller\/orchestrator.*separate contexts|Context isolation contract/s);
-    assert.match(source, /original, unabridged/);
-  }
-  const codex = await skill("codex-implement");
-  assert.match(codex, /first retry, second retry in this order/);
-  assert.match(codex, /once more with `worker` \(Sol\/high\) in another fresh context/);
+test("plan orchestrator dispatches implementation and review sequentially and commits after fixes", async () => {
+  const [source, protocol, pressure] = await Promise.all([
+    skill("plan-orchestrator"),
+    readFile(path.join(skillsRoot, "plan-orchestrator", "references", "runtime-protocol.md"), "utf8"),
+    readFile(path.join(skillsRoot, "plan-orchestrator", "tests", "pressure-scenarios.md"), "utf8"),
+  ]);
+  assert.match(source, /^name: plan-orchestrator$/m);
+  assert.match(source, /first five lines of its body after the frontmatter/);
+  assert.match(source, /leaves its changes uncommitted/);
+  assert.match(source, /reviewer identifies and fixes in-scope problems/);
+  assert.match(source, /commits the accepted task result/);
+  assert.match(protocol, /exactly three task inputs/);
+  assert.match(protocol, /Implementation.*leaves changes uncommitted/s);
+  assert.match(protocol, /Review.*explicitly authorize this thread to commit/s);
+  assert.match(pressure, /implementation.*uncommitted/i);
+  assert.match(pressure, /review.*fixes.*commits/i);
+  assert.doesNotMatch(`${source}\n${protocol}`, /\$(?:task-implement|test-driven-development)/);
 });
 
-test("Writing Plans names every supported implementation route", async () => {
-  const source = await skill("writing-plans");
-
-  assert.match(source, /Codex Implement|codex-implement/);
-  assert.match(source, /Sequential Task Orchestrator|sequential-task-orchestrator/);
-  assert.match(source, /Claude Implement|claude-implement/);
-  assert.doesNotMatch(source, /sol-implement/i);
-});
-
-
-test("Writing Plans respects existing execution authorization", async () => {
-  const source = await skill("writing-plans");
-  assert.match(source, /execution is already authorized, continue within that authority/i);
-  assert.match(source, /already authorized execution, choose an available mode[\s\S]*?and continue/i);
-  assert.doesNotMatch(source, /wait for the user.s choice/i);
-});
-
-test("Writing Plans respects user location instructions and routes swarm generically", async () => {
-  const source = await skill("writing-plans");
-
-  assert.match(source, /Respect system and host constraints\. Within those constraints, follow explicit user instructions over repository defaults/);
-  assert.match(source, /only when neither provides a location/);
-  assert.match(source, /generic term .swarm. means multi-agent coordination/i);
-  assert.doesNotMatch(source, /swarm-orchestration/i);
+test("implementation plan coordinator refers to the renamed plan orchestrator", async () => {
+  const source = await skill("coordinating-implementation-plans");
+  assert.match(source, /^name: coordinating-implementation-plans$/m);
+  assert.match(source, /For a plan isolato/);
+  assert.match(source, /plan-orchestrator/);
+  assert.match(source, /Avvia più thread-piano in parallelo/);
+  assert.match(source, /senza collisioni/);
 });

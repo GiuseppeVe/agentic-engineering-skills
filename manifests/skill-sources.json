@@ -45,14 +45,6 @@
       "localRoot": "projectSkills"
     },
     {
-      "name": "claude-implement",
-      "sourceType": "original",
-      "localPath": "claude-skills/claude-implement/",
-      "license": "MIT",
-      "localRoot": "pluginSkills",
-      "payloadPath": "plugins/agentic-engineering-skills/claude-skills/claude-implement"
-    },
-    {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localPath": "cleaning-repo-with-knip/",
@@ -71,22 +63,41 @@
       "patchPath": "manifests/patches/codebase-design.patch"
     },
     {
-      "name": "codex-implement",
+      "name": "task-implement",
       "sourceType": "original",
-      "localPath": "codex-implement/",
+      "localPath": "task-implement/",
       "license": "MIT",
-      "localRoot": "projectSkills"
+      "localRoot": "projectSkills",
+      "origin": {
+        "state": "owner-supplied-unified-host-variants",
+        "paths": [
+          ".agents/skills/task-implement/SKILL.md",
+          ".claude/skills/task-implement/SKILL.md"
+        ],
+        "files": {
+          ".agents/skills/task-implement/SKILL.md": "e0683fbd3055e16d96b2529481f3aff03cf52d9c3c23df2ae848e0e47651ea58",
+          ".agents/skills/task-implement/references/packet-contract.md": "538979c7330ba1d912fc82b067354516914cf93dc18e416139fab071be1ad22f",
+          ".claude/skills/task-implement/SKILL.md": "c2fde6378b5fc0d9a748c620b69110eaad18eceb77bf3820e7ac09647d4f6fe5",
+          ".claude/skills/task-implement/references/packet-contract.md": "538979c7330ba1d912fc82b067354516914cf93dc18e416139fab071be1ad22f"
+        }
+      }
     },
     {
-      "name": "coordinating-implementation-programs",
+      "name": "coordinating-implementation-plans",
       "sourceType": "original",
       "localRoot": "projectSkills",
-      "localPath": "coordinating-implementation-programs/",
+      "localPath": "coordinating-implementation-plans/",
       "license": "MIT",
       "origin": {
         "state": "untracked-local-snapshot",
-        "path": ".agents/skills/coordinating-implementation-programs/SKILL.md",
-        "sha256": "55dd6947be8649bdce97e7d7feec946ea89d8f97e70867f6b45e78bbba36494b"
+        "paths": [
+          ".agents/skills/coordinating-implementation-plans/SKILL.md",
+          ".claude/skills/coordinating-implementation-plans/SKILL.md"
+        ],
+        "files": {
+          ".agents/skills/coordinating-implementation-plans/SKILL.md": "48c2b5075685f23212a8c3defa1d4405db4d22f18124cabc503be6a97f49ffca",
+          ".claude/skills/coordinating-implementation-plans/SKILL.md": "fe84a9653d41e3fcb4136657666a71b2b2d12974aadd126791ac0355e28c68e7"
+        }
       }
     },
     {
@@ -268,11 +279,26 @@
       "patchPath": "manifests/patches/retro.patch"
     },
     {
-      "name": "sequential-task-orchestrator",
+      "name": "plan-orchestrator",
       "sourceType": "original",
-      "localPath": "sequential-task-orchestrator/",
+      "localPath": "plan-orchestrator/",
       "license": "MIT",
-      "localRoot": "projectSkills"
+      "localRoot": "projectSkills",
+      "origin": {
+        "state": "untracked-local-snapshot",
+        "paths": [
+          ".agents/skills/plan-orchestrator/",
+          ".claude/skills/plan-orchestrator/"
+        ],
+        "files": {
+          ".agents/skills/plan-orchestrator/SKILL.md": "6e67914eda007a99d525df0eba2ca8c278d3ac9ee31d8bd68162d752ca53229c",
+          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "1d06a2ca5836e9ed166292417ff7c0935500b87bda3025e91b53f16fd3b3e9f0",
+          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "f64ac240d88e2ec99b06ba5117626d3da1b6c7a07ea1f4093cb78de3ccc0874d",
+          ".claude/skills/plan-orchestrator/SKILL.md": "ae2217877ef557acac2d7a3bf3045fa0d598b4ef1928d11f29c35d129f0c6bd2",
+          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "e28b98495f528f9522a85208713f4ad9ea26f23d23e85b70501e983133cd3f36",
+          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "b71ef38ebe906bd29eeb4e9cd926c559dcc63f317675f384d7a49bcfb6867a5d"
+        }
+      }
     },
     {
       "name": "setup-goal",
@@ -372,7 +398,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "localPath": "writing-plans/SKILL.md",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "localRoot": "projectSkills"
     }
