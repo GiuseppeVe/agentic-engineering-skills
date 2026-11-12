@@ -57,7 +57,7 @@ For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus
 
 `deslopping-cleanup` documents optional external specialist routes, not lock-declared dependencies. Its directory includes a portable skill-local copy of the repository MIT `LICENSE`; retain that copy when selectively redistributing the skill. See [dependencies and publication review](deslopping-cleanup.md) for route availability and fallbacks.
 
-`task-implement` carries model guidance for both hosts. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. When a dedicated architecture-sensitive or integration packet is used, its contract routes Codex to GPT-5.6 Sol/medium and Claude Code to Opus 5.5/medium, or retains the work with the controller. Confirm selected models and effort against current host routing controls.
+`task-implement` carries default model guidance for both hosts when task materials do not specify compatible routing. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. An explicit owner- or plan-selected available model and effort takes precedence. When a dedicated architecture-sensitive or integration packet is used, its contract routes Codex to GPT-5.6 Sol/medium and Claude Code to Opus 5.5/medium, or retains the work with the controller. Confirm and record selected models and effort against current host routing controls.
 
 Both hosts discover the same 35 skills from the shared `skills/` directory; no host-specific skill root is needed.
 

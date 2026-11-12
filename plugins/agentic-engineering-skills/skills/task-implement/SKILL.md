@@ -5,8 +5,7 @@ description: Use when implementing exactly one assigned task from an approved pl
 
 # Task Implement
 
-Codex: orchestrate with GPT-6.1 Sol/high; use GPT-6.1 Terra/high for implementation subagents.
-Claude Code: orchestrate with Sonnet 5.5/high; use Sonnet 5.5/medium for implementation subagents.
+When task materials do not specify compatible routing, Codex uses GPT-6.1 Sol/high for orchestration and GPT-6.1 Terra/high for implementation subagents; Claude Code uses Sonnet 5.5/high for orchestration and Sonnet 5.5/medium for implementation subagents. An explicit owner- or plan-selected available model and effort takes precedence; record effective routing.
 
 ## Purpose
 

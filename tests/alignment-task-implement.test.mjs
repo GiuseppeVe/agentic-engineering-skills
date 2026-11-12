@@ -13,8 +13,10 @@ test("shared Task Implement preserves the approved model split and task boundary
     readFile(path.join(skillRoot, "references", "packet-contract.md"), "utf8"),
   ]);
   assert.match(skill, /^name: task-implement$/m);
-  assert.match(skill, /Codex: orchestrate with GPT-6\.1 Sol\/high; use GPT-6\.1 Terra\/high/);
-  assert.match(skill, /Claude Code: orchestrate with Sonnet 5\.5\/high; use Sonnet 5\.5\/medium/);
+  assert.match(skill, /When task materials do not specify compatible routing/);
+  assert.match(skill, /Codex uses GPT-6\.1 Sol\/high for orchestration and GPT-6\.1 Terra\/high/);
+  assert.match(skill, /Claude Code uses Sonnet 5\.5\/high for orchestration and Sonnet 5\.5\/medium/);
+  assert.match(skill, /explicit owner- or plan-selected available model and effort takes precedence/);
   assert.match(skill, /Implement exactly one task assigned by a parent orchestrator/);
   assert.match(skill, /scope is implementation only and excludes review of the task's implementation/);
   assert.match(skill, /The parent provides only: the instruction for the assigned task, its implementation plan, the governing specification, and this skill/);
