@@ -1,5 +1,5 @@
 diff --git a/writing-plans/SKILL.md b/writing-plans/SKILL.md
-index b1613eb..f2508d0 100644
+index b1613eb..120b3c6 100644
 --- a/writing-plans/SKILL.md
 +++ b/writing-plans/SKILL.md
 @@ -3 +3 @@
@@ -10,7 +10,7 @@ index b1613eb..f2508d0 100644
 +> **Adaptation:** Based on `obra/superpowers`; updated with a portable writing-plans workflow for portable Codex and Claude Code skill-pack use.
 @@ -10 +10 @@
 -Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
-+Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, code, tests, commands, docs, risks, and acceptance evidence. DRY, YAGNI, TDD, frequent commits.
++Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, code, tests, commands, docs, risks, and acceptance evidence. DRY, YAGNI, TDD.
 @@ -12 +12 @@
 -Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 +Announce: "I'm using the writing-plans skill to create the implementation plan."
@@ -55,7 +55,7 @@ index b1613eb..f2508d0 100644
 +```markdown
 +# [Feature Name] Implementation Plan
 +
-+> **For agentic workers:** Use the selected available mode: `codex-implement` in Codex, `claude-implement` in Claude Code, `sequential-task-orchestrator` for strict ordered execution, or inline execution with explicit checkpoints. Default to the host-specific implementation skill when available, otherwise inline. Use an explicitly available model if selected. Steps use checkbox (`- [ ]`) syntax for tracking.
++> **For agentic workers:** Use `task-implement` for one assigned plan task, `plan-orchestrator` for dependency-aware multi-task execution with a separate review thread per task, or inline execution with explicit checkpoints. Steps use checkbox (`- [ ]`) syntax for tracking.
 @@ -38,6 +42,3 @@
 -A task is the smallest unit that carries its own test cycle and is worth a
 -fresh reviewer's gate. When drawing task boundaries: fold setup,
@@ -80,59 +80,72 @@ index b1613eb..f2508d0 100644
 +### Requirements Inventory (mandatory)
 @@ -54 +51 @@
 -## Plan Document Header
-+Inventory is the single source of obligations and executor fidelity coverage (`codex-implement`, `claude-implement`, or `sequential-task-orchestrator` when selected; inline execution uses the same checklist). Every obligation from the spec, prose, task bodies, or code comments must have a `REQ-NNN` entry. Prose may explain requirements, not introduce unlisted ones. An incomplete inventory is a plan failure.
++Inventory is the single source of obligations and executor fidelity coverage (`task-implement`, `plan-orchestrator`, or inline execution). Every obligation from the spec, prose, task bodies, or code comments must have a `REQ-NNN` entry. Prose may explain requirements, not introduce unlisted ones. An incomplete inventory is a plan failure.
 @@ -56 +53 @@
 -**Every plan MUST start with this header:**
 +One line per atomic, checkable obligation:
 @@ -59 +56,2 @@
 -# [Feature Name] Implementation Plan
-+- **REQ-NNN** [type] — <obligation>. _Acceptance:_ <objective oracle>. _Satisfied by:_ Task N
++- **REQ-NNN** [type] — <obligation>. _Evidence:_ <level>. _Acceptance:_ <objective oracle>. _Satisfied by:_ Task N
 +```
-@@ -61 +59,5 @@
+@@ -61 +59,7 @@
 -> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 +- IDs stay stable: never reuse or renumber assigned IDs.
 +- Types: `behavior` (runtime behavior), `test` (test added/kept), `contract` (cross-task wiring), `constraint` (cross-cutting rule, such as UTC timestamps).
 +- Split compound claims, such as validation and enqueueing, into separate requirements.
-+- `Acceptance:` is mandatory: test name, command + expected output, or grep-able artifact. "Works" / "is handled" is a placeholder. Sharpen vague requirements or drop them.
++- `Evidence:` preserves the spec's required level: `artifact` (static), `fixture` (simulated), `integration`, or `real-runtime` (operational). Select the level required by the obligation, not the easiest available proof. Fixture or simulation cannot satisfy real-runtime; isolated installation cannot satisfy activation in the real target. Weaker evidence leaves the requirement open.
++- `Acceptance:` is mandatory: test name, command + expected output, or grep-able artifact. Match the oracle to the required behavior and environment: operational requirements need evidence from the real target, not file presence or a fixture. "Works" / "is handled" is a placeholder. Sharpen vague requirements or drop them.
 +- Every requirement names at least one task in `Satisfied by:`. Every task has a nonempty `**Satisfies:**` listing matching real IDs. Check both directions.
-@@ -63 +65 @@
++- For a required action outside current authority, retain an explicit task and gate naming the required authority and subsequent acceptance oracle. A deferred requirement names its responsible later task in `Satisfied by:` and remains globally open until its required evidence exists; neither a gate nor deferral makes it N/A or satisfied.
+@@ -63 +67 @@
 -**Goal:** [One sentence describing what this builds]
 +#### Cross-Task Contracts (mandatory subsection)
-@@ -65 +67 @@
+@@ -65 +69 @@
 -**Architecture:** [2-3 sentences about approach]
 +List every dependency spanning tasks as `[contract]`: imports/consumers, config producers/readers, migrations/dependents, stubs/later replacements. Name both endpoints and required wiring. If none, write `_None._` after checking.
-@@ -67 +69,3 @@
+@@ -67 +71,3 @@
 -**Tech Stack:** [Key technologies/libraries]
 +```markdown
-+- **REQ-007** [contract] — `SubscriptionStore.getSecret` is passed into `DeliveryWorker.secretResolver`. _Acceptance:_ integration test registers a subscription, ingests a matching event, and verifies delivered `X-Signature` against HMAC independently computed with the stored secret. _Satisfied by:_ Task 10 (wiring), Task 11 (test).
++- **REQ-007** [contract] — `SubscriptionStore.getSecret` is passed into `DeliveryWorker.secretResolver`. _Evidence:_ integration. _Acceptance:_ integration test registers a subscription, ingests a matching event, and verifies delivered `X-Signature` against HMAC independently computed with the stored secret. _Satisfied by:_ Task 10 (wiring), Task 11 (test).
 +```
-@@ -69 +73 @@
+@@ -69 +75 @@
 -## Global Constraints
 +### File Structure
-@@ -71,4 +75 @@
+@@ -71,4 +77 @@
 -[The spec's project-wide requirements — version floors, dependency limits,
 -naming and copy rules, platform requirements — one line each, with exact
 -values copied verbatim from the spec. Every task's requirements implicitly
 -include this section.]
 +Map every created/modified file and its responsibility before tasks. Use clear interfaces and focused files; co-locate files that change together, split by responsibility rather than technical layer. Follow existing conventions. Do not unilaterally restructure large-file codebases; a split of an unwieldy file being changed may be planned with rationale. Each task produces coherent, self-contained changes.
-@@ -76,2 +77 @@
+@@ -76,2 +79,3 @@
 ----
 -```
 +### Task structure
-@@ -79 +79 @@
--## Task Structure
++
 +Each step is one 2-5 minute action. Use this shape; replace sample paths/code with complete task-specific content:
-@@ -83,0 +84,2 @@
+@@ -79 +83 @@
+-## Task Structure
++Commit boundary and owner follow the selected execution mode and explicit authority; a plan does not grant commit or PR permission. For `plan-orchestrator`, the implementer hands off an uncommitted diff and the reviewer commits the accepted task only when authorized. Inline execution commits only when explicitly assigned and authorized.
+@@ -83,0 +88,2 @@
 +**Satisfies:** REQ-003, REQ-007
 +
-@@ -89,6 +90,0 @@
+@@ -89,6 +94,0 @@
 -**Interfaces:**
 -- Consumes: [what this task uses from earlier tasks — exact signatures]
 -- Produces: [what later tasks rely on — exact function names, parameter
 -  and return types. A task's implementer sees only their own task; this
 -  block is how they learn the names and types neighboring tasks use.]
 -
-@@ -128,23 +124 @@
+@@ -120 +120 @@
+-- [ ] **Step 5: Commit**
++- [ ] **Step 5: Verify handoff**
+@@ -122,4 +122 @@
+-```bash
+-git add tests/path/test.py src/path/file.py
+-git commit -m "feat: add specific feature"
+-```
++Review the diff and report changed files, checks and results, and acceptance evidence for this task.
+@@ -128,23 +125 @@
 -## No Placeholders
 -
 -Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
@@ -157,43 +170,43 @@ index b1613eb..f2508d0 100644
 -
 -**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
 +## Completeness and self-review
-@@ -152 +126 @@
+@@ -152 +127 @@
 -**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 +Exact paths, complete code for every code-changing step, exact commands and expected output are required. Repeat needed code rather than "Similar to Task N"; engineers may read tasks out of order. All referenced types/functions/methods must be defined in a task or identified existing code. Placeholders (`TBD`, `TODO`, "implement later", "fill in details"), vague validation/error-handling/edge-case directions, and "write tests for the above" without test code fail the plan.
-@@ -154 +128 @@
+@@ -154 +129 @@
 -If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 +Review yourself, not by subagent dispatch; use the spec with fresh eyes:
-@@ -156 +130,7 @@
+@@ -156 +131,7 @@
 -## Execution Handoff
 +1. Map every spec requirement to a `REQ`; add gaps.
 +2. Scan architecture, context, tasks, comments for MUST/SHALL/REQUIRED/"has to"/"ensure that"/"always"/"never". Capture each obligation, especially cross-cutting constraints, in the inventory.
 +3. Check every task's external assumptions for a contract naming both endpoints; verify `_None._` claims.
 +4. Verify bidirectional `Satisfied by:` / `Satisfies:` links, with no orphan requirements or tasks.
-+5. Replace non-objective acceptance oracles.
++5. Check each evidence level against the spec and each oracle against its required behavior and environment; retain gated and deferred work with authority, later owner task, and open status until proven.
 +6. Fix placeholders and missing concrete code/commands.
 +7. Check later types, signatures, and property names match earlier definitions.
-@@ -158 +138 @@
+@@ -158 +139 @@
 -After saving the plan, offer execution choice:
 +Fix issues inline; no separate re-review required. Preserve required content even under deadline pressure.
-@@ -160 +140 @@
+@@ -160 +141 @@
 -**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
 +## Execution handoff
-@@ -162 +142 @@
+@@ -162 +143 @@
 -**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
 +After saving, report the `.mdx` path. If the user already authorized execution, choose an available mode consistent with their instructions and continue. Otherwise, present appropriate choices and wait for authorization:
-@@ -164 +144,2 @@
+@@ -164 +145,2 @@
 -**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-+1. **Task implementation** — use `task-implement` for exactly one assigned task. For a multi-task plan that requires strict sequencing and a separate review thread for each task, use `plan-orchestrator`.
++1. **Task implementation** — use `task-implement` for exactly one assigned task. For a multi-task plan that requires dependency-aware dispatch and a separate review thread for each task, use `plan-orchestrator`.
 +2. **Inline Execution** — small or tightly coupled work with explicit checkpoints; fallback when executors are unavailable.
-@@ -166 +147 @@
+@@ -166 +148 @@
 -**Which approach?"**
 +**Model choice:** Follow the model and effort guidance in `task-implement` for the selected host. Review is routed separately by `plan-orchestrator` when that workflow is selected.
-@@ -168,3 +149 @@
+@@ -168,3 +150 @@
 -**If Subagent-Driven chosen:**
 -- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
 -- Fresh subagent per task + two-stage review
 +Routing: use `dispatching-parallel-agents` for small independent workstreams when available; for large distributed work, use available agent-coordination tools. The generic term “swarm” means multi-agent coordination. Keep architecture-sensitive work with controller or an explicitly available suitable model. Check runtime availability; do not invoke missing skills/models.
-@@ -172,3 +151 @@
+@@ -172,3 +152 @@
 -**If Inline Execution chosen:**
 -- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
 -- Batch execution with checkpoints for review

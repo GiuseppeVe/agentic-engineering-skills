@@ -11,7 +11,7 @@ test("task implementation packets define scope, ownership, contracts and evidenc
     readFile(path.join(pluginRoot, "skills/task-implement/SKILL.md"), "utf8"),
     readFile(path.join(pluginRoot, "skills/task-implement/references/packet-contract.md"), "utf8"),
   ]);
-  assert.match(skill, /Break the task into the smallest coherent implementation packets/);
+  assert.match(skill, /Break the assigned task into the smallest coherent implementation packets/);
   assert.match(skill, /clear file ownership, interfaces, constraints, and acceptance criteria/);
   assert.match(skill, /Sequence dependent packets/);
   assert.match(skill, /Parallelize only disjoint work with no unresolved shared dependency/);
@@ -30,6 +30,8 @@ test("task implement keeps implementation authority and final review with the pa
   assert.match(source, /does not orchestrate other plan tasks/);
   assert.match(source, /excludes review of the task's implementation/);
   assert.match(source, /Never infer permission to commit, push, open a PR, merge, deploy/);
-  assert.match(source, /changes are summarized for the parent/);
+  assert.match(source, /Report facts and evidence for the parent/);
+  assert.match(source, /Use `process` for historical development evidence/);
+  assert.match(source, /Use `final_state` for evidence that supports acceptance/);
   assert.doesNotMatch(source, /clean-room reviewer|fresh independent reviewer|approval gate/i);
 });

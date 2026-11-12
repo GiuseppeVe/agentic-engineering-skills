@@ -27,7 +27,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `marketing-screenshots` | None | `LICENSE` | Design: capture and inspect real product UI for marketing assets |
 | `master-orchestrator` | None | `LICENSE` | Understand: coordinate a dynamic non-implementation graph, filtered reports, decisions and design contracts |
 | `mdx-to-html` | None | `LICENSE` | Verify: create a standalone MDX review artifact |
-| `plan-orchestrator` | `task-implement`; `test-driven-development` | `LICENSE` | Implement: strictly ordered execution, separate per-task implementation and review threads |
+| `plan-orchestrator` | `task-implement`; `test-driven-development` | `LICENSE` | Implement: dependency-aware execution, separate per-task implementation and review threads |
 | `retro` | `writing-for-agents` | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Review: reflect on a coding session |
 | `setup-goal` | None | `LICENSE` | Plan: outcome runbook and approved native Goal setup |
 | `setup-harness-evaluation` | None | `LICENSE` | Verify: independent harness runs for manual evaluation |
@@ -47,7 +47,7 @@ The lock records unconditional skill dependencies only. For these branches, also
 - `wayfinder`: install `grilling` and `domain-modeling` when charting a map, resolving a Grilling ticket, or unsure which discussion skills apply.
 - `graphify-start`: if no project-specific Graphify protocol exists, install `graphify` for the default route.
 - `improve-codebase-architecture`: install `grilling` when a candidate is selected; install `domain-modeling` when no terminology source exists or decisions crystallise.
-- `plan-orchestrator`: also install `task-implement` for task-scoped implementation and `test-driven-development` for the separate review thread. This also applies when invoked through `coordinating-implementation-plans`.
+- `plan-orchestrator`: also install `task-implement` and `test-driven-development` for separate per-task implementation and review threads. This also applies when invoked through `coordinating-implementation-plans`.
 
 ## Additional installation notes
 
@@ -57,7 +57,7 @@ For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus
 
 `deslopping-cleanup` documents optional external specialist routes, not lock-declared dependencies. Its directory includes a portable skill-local copy of the repository MIT `LICENSE`; retain that copy when selectively redistributing the skill. See [dependencies and publication review](deslopping-cleanup.md) for route availability and fallbacks.
 
-`task-implement` carries model guidance for both hosts. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. Confirm the selected models and effort against the current host's available routing controls.
+`task-implement` carries model guidance for both hosts. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. When a dedicated architecture-sensitive or integration packet is used, its contract routes Codex to GPT-5.6 Sol/medium and Claude Code to Opus 5.5/medium, or retains the work with the controller. Confirm selected models and effort against current host routing controls.
 
 Both hosts discover the same 35 skills from the shared `skills/` directory; no host-specific skill root is needed.
 

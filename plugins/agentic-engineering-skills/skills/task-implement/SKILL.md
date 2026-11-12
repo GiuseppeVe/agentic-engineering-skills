@@ -21,7 +21,7 @@ If the task materials are missing or contradict one another on scope, contracts,
 ## Single-task orchestration
 
 1. Inspect the assigned task's relevant files and current repository/worktree state. Keep the parent-provided task boundary fixed.
-2. Break the task into the smallest coherent implementation packets needed for parallel subagents. Delegate only when separate work can proceed with clear file ownership, interfaces, constraints, and acceptance criteria. Read [the packet contract](references/packet-contract.md).
+2. Break the assigned task into the smallest coherent implementation packets needed for parallel subagents. Delegate only when separate work can proceed with clear file ownership, interfaces, constraints, and acceptance criteria; otherwise implement directly. Read [packet-contract](references/packet-contract.md).
 3. Keep decisions about the assigned task's architecture and integration with this orchestrator. Do not delegate or perform adjacent plan tasks.
 4. Give each subagent only the assigned-task instruction and the relevant excerpts of the plan, specification, files, and checks. Require its change summary, commands and outcomes, assumptions, deviations, and remaining work.
 5. Sequence dependent packets. Parallelize only disjoint work with no unresolved shared dependency.
@@ -32,10 +32,16 @@ If the task materials are missing or contradict one another on scope, contracts,
 
 Use focused tests before implementation when they can capture the required behavior. After each meaningful change, run the smallest relevant checks, then the required project gates for this task. Tests must verify specified behavior and invariants, not merely mirror the implementation.
 
-Treat a failed check, missing prerequisite, or unverified requirement as incomplete. Report the exact command, revision, outcome, and any environmental limitation. Do not claim a requirement is satisfied without code or test evidence, or an explicit reason it does not apply.
+Treat a failed check, missing prerequisite, or unverified criterion required of the current task as incomplete. Report the exact command, revision, outcome, and any environmental limitation. Mark a criterion not applicable only with an explicit basis in the specification or plan.
 
 Preserve unrelated user changes. Follow repository rules for worktrees, branch names, staging, and cleanup. Perform only the external actions explicitly authorized by the user.
 
 ## Completion
 
-Finish when every acceptance criterion for the assigned task is implemented or explicitly reported as blocked or not applicable, required checks have evidence, and the integrated task changes are summarized for the parent with their revision and remaining limitations. Report separately whether work is local, committed, published, or integrated.
+Return the result when the turn ends; ending a turn does not imply success. Report facts and evidence for the parent, which decides acceptance. Use this result contract for implementation and TDD review:
+
+- `outcome: complete | partial | blocked`: `complete` requires every criterion still required of the current task satisfied or explicitly not applicable and all required checks passed; use `partial` or `blocked` for an open or unverified criterion still required of this task, failed check, or missing prerequisite. Unverified items may accompany `complete` only when they are outside the current task's required criteria.
+- `satisfied_requirements`: each criterion and its evidence, including any not-applicable criterion and its explicit spec/plan basis. `open_requirements`: each remaining requirement with reason and, when deferred, `deferred_to` and the plan basis. A globally required REQ explicitly assigned by the plan to a named later task remains globally unsatisfied but does not block the current task's outcome. Workers and reviewers cannot invent or reassign deferrals; without that plan basis, an open criterion required of this task makes the outcome `partial` or `blocked`. Identify other unverified items separately.
+- `checks`: command, outcome, evidence class, revision or reproducible state, and environmental limitation where relevant. Use `process` for historical development evidence such as observed RED, recording the pre-fix revision/state, expected behavioral failure and observation time. Use `final_state` for evidence that supports acceptance, including GREEN/regression tests, lint, typecheck and review checks; rerun it after the last relevant fix and bind it to the final reviewed commit or exact uncommitted diff. Include assumptions, deviations, blockers, changed files, and revision; distinguish local, committed, published, and integrated work.
+
+For an uncommitted result, identify base SHA, branch, worktree, and diff. A reviewer verifies the task criteria; the plan orchestrator decides acceptance.

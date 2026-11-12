@@ -446,7 +446,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/test-driven-development/",
       "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
-      "localSha256": "1089c5837f1ea5570e3927b45aa267cac087e3ea587244bce75224c53a999b32",
+      "localSha256": "3c870f5c2beb274a42ce5b693db4326a3f259b027a17f118224725d72f107626",
       "dependencies": [],
       "licenseFiles": [
         {
@@ -531,7 +531,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "952740495940ddaf77e80bc218b24e7409398e169c311d4d625b4e5337bd1bd6",
+      "localSha256": "6d5d326a8f6927e460fa71f9874b7436b65504312476b62ce543ec1171288d42",
       "dependencies": [],
       "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",

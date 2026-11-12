@@ -75,10 +75,10 @@
           ".claude/skills/task-implement/SKILL.md"
         ],
         "files": {
-          ".agents/skills/task-implement/SKILL.md": "e0683fbd3055e16d96b2529481f3aff03cf52d9c3c23df2ae848e0e47651ea58",
-          ".agents/skills/task-implement/references/packet-contract.md": "538979c7330ba1d912fc82b067354516914cf93dc18e416139fab071be1ad22f",
-          ".claude/skills/task-implement/SKILL.md": "c2fde6378b5fc0d9a748c620b69110eaad18eceb77bf3820e7ac09647d4f6fe5",
-          ".claude/skills/task-implement/references/packet-contract.md": "538979c7330ba1d912fc82b067354516914cf93dc18e416139fab071be1ad22f"
+          ".agents/skills/task-implement/SKILL.md": "c064d6a2464c1872aaca24e6dbf9f210b8bb488316880f76842922b66b4f76f7",
+          ".agents/skills/task-implement/references/packet-contract.md": "7f2a55b7cd119db15b5621c3d04310dd72ac39c0d78c7fafdd72c6a9f4433f51",
+          ".claude/skills/task-implement/SKILL.md": "e964608731cb9fdaab24c807b59cbdb0f9c49c8b7e3658ddb9574f51464e09fd",
+          ".claude/skills/task-implement/references/packet-contract.md": "3d758ea311f3128eb7bde176f2f1c01f898e54ae4191e2f4d15c7d596f4e8b0d"
         }
       }
     },
@@ -291,12 +291,12 @@
           ".claude/skills/plan-orchestrator/"
         ],
         "files": {
-          ".agents/skills/plan-orchestrator/SKILL.md": "6e67914eda007a99d525df0eba2ca8c278d3ac9ee31d8bd68162d752ca53229c",
-          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "1d06a2ca5836e9ed166292417ff7c0935500b87bda3025e91b53f16fd3b3e9f0",
-          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "f64ac240d88e2ec99b06ba5117626d3da1b6c7a07ea1f4093cb78de3ccc0874d",
-          ".claude/skills/plan-orchestrator/SKILL.md": "ae2217877ef557acac2d7a3bf3045fa0d598b4ef1928d11f29c35d129f0c6bd2",
-          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "e28b98495f528f9522a85208713f4ad9ea26f23d23e85b70501e983133cd3f36",
-          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "b71ef38ebe906bd29eeb4e9cd926c559dcc63f317675f384d7a49bcfb6867a5d"
+          ".agents/skills/plan-orchestrator/SKILL.md": "64d5b015712863eeb45622ccc38d37e2002aca33edad51b2feb17db1fcc283be",
+          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "8885518199f72c4b5c60b8396c54bb0bbd81d9a78e9847ed3d253a8fa119b6c6",
+          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "aa2d9748a731b378f89808c8838a824ec389b6e9ff3c8f417b21caa3a9b49bc0",
+          ".claude/skills/plan-orchestrator/SKILL.md": "066e30a16cfbb0f82cd8e62f2452924d9d0aab282048a8a44c3d0e2c26ef3fd1",
+          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "093f780a2320fabe5c4e801975d7c1e9bf3aac50007a7ed03db760b79f8ef32b",
+          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "fb6c9d403fcb951371067a1337d71b6a88fa7517793323ab60655090a8302a94"
         }
       }
     },
