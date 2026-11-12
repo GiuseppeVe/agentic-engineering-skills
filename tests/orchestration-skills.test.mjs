@@ -37,6 +37,9 @@ test("plan orchestrator dispatches dependency-ready implementation and review wi
   assert.match(source, /^name: plan-orchestrator$/m);
   assert.match(source, /first five lines of its body after the frontmatter/);
   assert.match(source, /leaves its changes uncommitted/);
+  assert.match(source, /code your implementing through your subthreads must work/);
+  assert.match(source, /verify wether it works or not/);
+  assert.match(source, /distinct clean-room review subthread/);
   assert.match(source, /Independent ready tasks may proceed concurrently only in isolated workspaces/);
   assert.match(source, /commits only when task-commit authority exists/);
   assert.match(protocol, /exactly three task inputs/);

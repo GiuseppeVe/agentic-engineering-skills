@@ -291,10 +291,10 @@
           ".claude/skills/plan-orchestrator/"
         ],
         "files": {
-          ".agents/skills/plan-orchestrator/SKILL.md": "64d5b015712863eeb45622ccc38d37e2002aca33edad51b2feb17db1fcc283be",
+          ".agents/skills/plan-orchestrator/SKILL.md": "e64fa6b1ce3778b6930517746c211cdfc18bc41ebb17cc9d90a3d3b7ba1dc08c",
           ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "8885518199f72c4b5c60b8396c54bb0bbd81d9a78e9847ed3d253a8fa119b6c6",
           ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "aa2d9748a731b378f89808c8838a824ec389b6e9ff3c8f417b21caa3a9b49bc0",
-          ".claude/skills/plan-orchestrator/SKILL.md": "066e30a16cfbb0f82cd8e62f2452924d9d0aab282048a8a44c3d0e2c26ef3fd1",
+          ".claude/skills/plan-orchestrator/SKILL.md": "6aeb5c443dd7ef44037e07f5c6f209eaf5961ba56656a50e94b4c4e8331bf51a",
           ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "093f780a2320fabe5c4e801975d7c1e9bf3aac50007a7ed03db760b79f8ef32b",
           ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "fb6c9d403fcb951371067a1337d71b6a88fa7517793323ab60655090a8302a94"
         }
