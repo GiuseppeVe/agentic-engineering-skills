@@ -531,7 +531,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "6d5d326a8f6927e460fa71f9874b7436b65504312476b62ce543ec1171288d42",
+      "localSha256": "6a7562677835a5b926cfd40e903aa73fdd6d8246fbc2dc35a4215d2e96edcf9f",
       "dependencies": [],
       "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",
