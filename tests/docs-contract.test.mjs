@@ -154,10 +154,10 @@ test('README documents conditional workflow routing and example', () => {
     ['Consequential or disputed design', 'Grill-me'],
     ['Agreed design', 'To Spec'],
     ['Multi-step implementation', 'Writing Plans'],
-    ['Implementation program with multiple approved plans', 'Coordinating Implementation Programs'],
-    ['One implementation plan', 'Sequential Task Orchestrator'],
-    ['Small implementation', 'Codex Implement'],
-    ['Claude Code implementation', 'Claude Implement'],
+    ['Implementation program with multiple approved plans', 'Coordinating Implementation Plans'],
+    ['One implementation plan', 'Plan Orchestrator'],
+    ['Small implementation', 'Task Implement'],
+    ['Claude Code implementation', 'Task Implement'],
   ]) {
     assert.ok(routing.includes(`| ${situation} | \`${path}\` |`), `missing routing row: ${situation}`);
   }
@@ -169,8 +169,8 @@ test('README documents conditional workflow routing and example', () => {
   assert.match(routing, /no native Goal capability[\s\S]*activation is reported as blocked/);
   assert.doesNotMatch(source, /long-task-run|Long Task Run/i);
   assert.match(example, /diagram below shows the shared lifecycle of delivery responsibilities/i);
-  assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Sequential Task Orchestrator/i);
-  assert.match(example, /small, well-understood change[\s\S]*Codex Implement[\s\S]*owner-approval gates/i);
+  assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Plan Orchestrator/i);
+  assert.match(example, /small, well-understood change[\s\S]*Task Implement[\s\S]*owner-approval gates/i);
 });
 
 test('README explains philosophy, quality signals, and supporting skills', () => {
@@ -215,8 +215,8 @@ test('graph workflow documentation explains both available orchestration routes'
   const available = graph.slice(graph.indexOf('### Research'), graph.indexOf('### Implementation'));
   const preview = graph.slice(graph.indexOf('### Implementation'));
   assert.match(available, /research, audits, design, and migration planning/i);
-  assert.match(preview, /coordinating-implementation-programs\/SKILL\.md/);
-  assert.match(preview, /sequential-task-orchestrator/);
+  assert.match(preview, /coordinating-implementation-plans\/SKILL\.md/);
+  assert.match(preview, /plan-orchestrator/);
   assert.match(preview, /visible subordinate thread/i);
   assert.match(preview, /host cannot create the required visible threads/i);
 
@@ -307,13 +307,13 @@ test('workflow guide covers every public skill', () => {
   for (const name of names) assert.match(workflow, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
 });
 
-test('compatibility names exactly two verified hosts', () => {
+test('compatibility names exactly two supported hosts and marks native verification pending', () => {
   const source = read('docs/compatibility.md');
   const rows = tableRows(source);
   assert.equal(rows.length, 2);
   assert.deepEqual(rows.map(cells).map(([host, status]) => ({ host, status })), [
-    { host: 'Codex', status: 'Verified' },
-    { host: 'Claude Code', status: 'Verified' },
+    { host: 'Codex', status: 'Pending native re-verification' },
+    { host: 'Claude Code', status: 'Pending native re-verification' },
   ]);
   assert.match(source, /`codex plugin list --available --json`/);
   assert.match(source, /`claude plugin list`/);
@@ -383,11 +383,10 @@ test('selective installation explains conditional skill prerequisites', () => {
   assert.match(architecture, /`grilling`.*candidate.*select/i);
   assert.match(architecture, /`domain-modeling`.*terminology.*decisions/i);
 
-  const sequential = lineFor('sequential-task-orchestrator');
-  assert.match(sequential, /implementation skill.*bounded worker mode/i);
-  assert.match(sequential, /`codex-implement`.*Codex/i);
-  assert.match(sequential, /`claude-implement`.*Claude Code/i);
-  assert.match(sequential, /`coordinating-implementation-programs`/);
+  const orchestrator = lineFor('plan-orchestrator');
+  assert.match(orchestrator, /`task-implement`.*`test-driven-development`/i);
+  assert.match(orchestrator, /separate per-task implementation and review threads/i);
+  assert.match(orchestrator, /`coordinating-implementation-plans`/);
   assert.doesNotMatch(source, /bundled worker reference/i);
 
   for (const [skill, conditional] of [

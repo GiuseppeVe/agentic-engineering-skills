@@ -12,8 +12,10 @@ Classify packets as:
 
 - `INDEPENDENT`: bounded work that may be delegated in its own branch or worktree.
 - `DEPENDENT`: starts only after prerequisite evidence is integrated.
-- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by Opus or the controller.
+- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by GPT-5.6 Sol with medium effort on Codex, Opus 5.5 with medium effort on Claude Code, or the controller.
 
 Scope is binding. Any excluded file, non-owned interface, ownership overlap, unresolved shared contract, architectural decision, or required scope expansion returns `BLOCKED`. worker never expands scope or resolves such decisions independently.
 
-Return `DONE` only with a verifiable packet commit SHA in the declared packet branch; without it, return `BLOCKED`.
+Return the semantic result described in [task-implement](../SKILL.md#completion). For an uncommitted shared-worktree packet, supply base SHA, branch, worktree, diff, and verification evidence. When the parent explicitly requires and authorizes a packet commit, supply its verifiable SHA instead. A missing commit alone does not block an uncommitted workflow.
+
+For each delegated worker, include this contract and its packet in the brief. The worker changes only allowed files, validates its work, and reports the result contract and integration risks. The worker never integrates or approves integration.

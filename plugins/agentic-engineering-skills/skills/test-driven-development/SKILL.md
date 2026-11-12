@@ -65,4 +65,6 @@ Report this as regression verification, not a claim that the original implementa
 
 ## Completion evidence
 
-Report relevant contracts, observed RED failures, GREEN commands/results, affected checks, and remaining gaps. Tests should detect realistic wrong branches, missing side effects, boundary violations, and error outcomes. Distinguish passed, failed, and not run; never label missing verification complete.
+Report relevant contracts, observed RED failures, GREEN commands/results, affected checks, and remaining gaps. Classify observed RED as `process` evidence and identify its pre-fix revision or reproducible state, command, expected behavioral failure and observation time. Classify GREEN and affected acceptance checks as `final_state` evidence, rerun them after the last relevant fix, and bind them to the final reviewed commit or exact uncommitted diff. Do not rerun RED on the fixed commit merely to make its revision current. Tests should detect realistic wrong branches, missing side effects, boundary violations, and error outcomes. Distinguish passed, failed, and not run; never label missing verification complete.
+
+When reviewing a plan task, verify its criteria and requirements against the specification, plan, diff, and evidence; fix findings within the authorized task scope. Return findings and the [shared result contract](../task-implement/SKILL.md#completion), including the final commit SHA when authorized and created. The plan orchestrator decides acceptance; a review thread ending does not establish completion.

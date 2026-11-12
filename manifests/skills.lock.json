@@ -84,20 +84,10 @@
       ]
     },
     {
-      "name": "claude-implement",
-      "sourceType": "original",
-      "localSha256": "2a4facc811f511c6f0c82dd104a4894aa2c1067273529bdd13f89512e3b0e31b",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": [],
-      "payloadPath": "plugins/agentic-engineering-skills/claude-skills/claude-implement"
-    },
-    {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -122,30 +112,21 @@
       ]
     },
     {
-      "name": "codex-implement",
+      "name": "coordinating-implementation-plans",
       "sourceType": "original",
-      "localSha256": "e8229d7957624f0086ca1f06cd5e380c9960c9af6b7eecf844776e77259bc9fd",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": []
-    },
-    {
-      "name": "coordinating-implementation-programs",
-      "sourceType": "original",
-      "localSha256": "475d0e2b1bda14f722efeee075e42ee649b1c2403f8d1110adc5003088ea37d3",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "localSha256": "63924fd702b92059c5e1d05839c5a89d8427f19c66d873244a3c66e4e7a65c5d",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
-        "sequential-task-orchestrator"
+        "plan-orchestrator"
       ]
     },
     {
       "name": "deslopping-cleanup",
       "sourceType": "original",
       "localSha256": "a751a5eb74377dfe3be83a880eb6b6d166b1ec14fce6cf227c14e40747475ed4",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -202,7 +183,7 @@
       "name": "graphify-start",
       "sourceType": "original",
       "localSha256": "f8f52e5161e8aa69ad21399eab001a8a14c145683925bf54c9772c05f03da217",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -270,7 +251,7 @@
       "name": "how-to-use-codex",
       "sourceType": "original",
       "localSha256": "28c20485d8cc22dc4c447d16bbf57e0c92e7629a2748b5b25647421695978b58",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "file",
       "dependencies": []
@@ -348,7 +329,7 @@
       "name": "marketing-screenshots",
       "sourceType": "original",
       "localSha256": "0bdc354c9ad4db2d6bcd5f5695f857beb0dbda841fddbe50f5d607893fe37f46",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -356,8 +337,8 @@
     {
       "name": "master-orchestrator",
       "sourceType": "original",
-      "localSha256": "3f18d910d72f83c81e2aa018db461e80ac82d28e2c1f329a7883ba24342f308d",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "localSha256": "b6ae09968003d48ae490d2db8725270d190db5a878dc3a7dc00c7b8b85162e3d",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -366,7 +347,7 @@
       "name": "mdx-to-html",
       "sourceType": "original",
       "localSha256": "122c491403b0af0e9d0bd75929748fa3e522fefd599869c7fa6a5a1abce61dd9",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -375,10 +356,22 @@
       "name": "orchestrating-gemini-workers",
       "sourceType": "original",
       "localSha256": "b7a4ce55358fbd1bb9eb51636babe298b97132563dff0755b9627fef4938be63",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
+    },
+    {
+      "name": "plan-orchestrator",
+      "sourceType": "original",
+      "localSha256": "4d646d8a4b89aaa07840c6129c35ab54f7a511872c3781212ad2b87232581bb6",
+      "releaseCommit": "3afc54cc8d37c4fc4fc2054a3ac381443e943c66",
+      "license": "MIT",
+      "payloadType": "directory",
+      "dependencies": [
+        "task-implement",
+        "test-driven-development"
+      ]
     },
     {
       "name": "retro",
@@ -402,21 +395,10 @@
       ]
     },
     {
-      "name": "sequential-task-orchestrator",
-      "sourceType": "original",
-      "localSha256": "a75c8a36c7e6f86ffd70c914f503e2bb4beaaf87c9be91c1218cf4e0d64902cd",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": [
-        "test-driven-development"
-      ]
-    },
-    {
       "name": "setup-goal",
       "sourceType": "original",
       "localSha256": "3c5a58ebbf6bae50513103b03635d13f39bc7c519c977e6a8e38239643024db5",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -425,7 +407,7 @@
       "name": "setup-harness-evaluation",
       "sourceType": "original",
       "localSha256": "92790d23645ecd4516bd91644d41b294933999c948e77ff296917ec3b4f2c5b1",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -434,7 +416,7 @@
       "name": "setup-workflow-comparison",
       "sourceType": "original",
       "localSha256": "1905cce8610938a481a9c4fec92feae519d3eb126ffd9a81bddaa5f413f9be6d",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -443,9 +425,18 @@
       "name": "simplify",
       "sourceType": "original",
       "localSha256": "9ecf57ab4bb1943947099307a107dda7021694022888f6bc0b817f75f70e589c",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "file",
+      "dependencies": []
+    },
+    {
+      "name": "task-implement",
+      "sourceType": "original",
+      "localSha256": "2fb2b3fcbb6e644350a36814813631b126f92cac06c3eca2cd4506b758efc856",
+      "releaseCommit": "cbc7fb308b0b7a56f72a96a03cf13ea6f408dad9",
+      "license": "MIT",
+      "payloadType": "directory",
       "dependencies": []
     },
     {
@@ -455,7 +446,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/test-driven-development/",
       "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
-      "localSha256": "1089c5837f1ea5570e3927b45aa267cac087e3ea587244bce75224c53a999b32",
+      "localSha256": "3c870f5c2beb274a42ce5b693db4326a3f259b027a17f118224725d72f107626",
       "dependencies": [],
       "licenseFiles": [
         {
@@ -528,7 +519,7 @@
       "name": "writing-for-agents",
       "sourceType": "original",
       "localSha256": "0071124a923559493bc8924a90fb87bceb048d31ad2ce785fa4281d7c506bfa7",
-      "releaseCommit": "8df2aed1312b59c353f85c0d7fc4b0fd7affdf1a",
+      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -540,9 +531,9 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "22104f4723c312af91e667f16c4bf20963363a34e397804c4ae1440f712fd2f3",
+      "localSha256": "6a7562677835a5b926cfd40e903aa73fdd6d8246fbc2dc35a4215d2e96edcf9f",
       "dependencies": [],
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
+      "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "licenseFiles": [
         {

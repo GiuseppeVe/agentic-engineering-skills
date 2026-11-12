@@ -396,7 +396,7 @@ test("adapted and original local imports retain provenance contracts", async () 
     assert.ok((await stat(patchUrl)).size > 0);
     assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
   }
-  for (const name of ["claude-implement", "codex-implement", "cleaning-repo-with-knip", "how-to-use-codex", "sequential-task-orchestrator", "simplify"]) {
+  for (const name of ["task-implement", "cleaning-repo-with-knip", "how-to-use-codex", "plan-orchestrator", "coordinating-implementation-plans", "simplify"]) {
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "original");
     assert.equal("revision" in entry, false);
@@ -501,9 +501,9 @@ test("all skill frontmatter is closed and adaptation notices stay in Markdown bo
   }
 });
 
-test("host-only payload paths stay under the matching plugin skill directory", async () => {
+test("task-implement is shared rather than a host-only payload", async () => {
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
-  const entry = lock.skills.find(({ name }) => name === "claude-implement");
-  assert.equal(entry.payloadPath, "plugins/agentic-engineering-skills/claude-skills/claude-implement");
-  assert.equal(await sha256Path(fileURLToPath(new URL(`../${entry.payloadPath}/`, import.meta.url))), entry.localSha256);
+  const entry = lock.skills.find(({ name }) => name === "task-implement");
+  assert.equal(entry.payloadPath, undefined);
+  assert.equal(await sha256Path(fileURLToPath(new URL("../plugins/agentic-engineering-skills/skills/task-implement/", import.meta.url))), entry.localSha256);
  });

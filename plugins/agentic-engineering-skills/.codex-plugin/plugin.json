@@ -20,7 +20,7 @@
     "defaultPrompt": "Use the engineering skills to understand the task, plan and implement changes, verify the result, and follow the project PR workflow.",
     "displayName": "Agentic Engineering Skills",
     "shortDescription": "A verified engineering and PR workflow",
-    "longDescription": "Install a reproducible discovery-to-cleanup engineering workflow with planning, bounded implementation, independent review, and PR reminders. Claude Implement is distributed only to Claude Code.",
+    "longDescription": "Install a reproducible discovery-to-cleanup engineering workflow with planning, bounded implementation, independent review, and PR reminders.",
     "developerName": "GiuseppeVe",
     "category": "Productivity",
     "capabilities": [

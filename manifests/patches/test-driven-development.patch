@@ -26,7 +26,7 @@ index 0000000..abf0390
 +OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 +SOFTWARE.
 diff --git a/test-driven-development/SKILL.md b/test-driven-development/SKILL.md
-index 60d2609..7b00f4a 100644
+index 60d2609..65555a4 100644
 --- a/test-driven-development/SKILL.md
 +++ b/test-driven-development/SKILL.md
 @@ -3 +3 @@
@@ -135,7 +135,7 @@ index 60d2609..7b00f4a 100644
 +    return 'saved';
 +  });
 +  expect(result).toBe('saved');
-@@ -91,114 +47,0 @@
+@@ -91,239 +47,0 @@
 -Clear name, tests real behavior, one thing
 -</Good>
 -
@@ -250,38 +250,27 @@ index 60d2609..7b00f4a 100644
 -| **Minimal** | One thing. "and" in name? Split it. | `test('validates email and domain and whitespace')` |
 -| **Clear** | Name describes behavior | `test('test1')` |
 -| **Shows intent** | Demonstrates desired API | Obscures what code should do |
-@@ -206 +49 @@
+-
 -## Why Order Matters
-+Also cover exhaustion separately. Assert outcomes and contract-relevant side effects, not mock existence or private structure. Keep test-only utilities outside production APIs.
-@@ -208 +51 @@
+-
 -**"I'll write tests after to verify it works"**
-+## Recovery when implementation already exists
-@@ -210,5 +53 @@
+-
 -Tests written after code pass immediately. Passing immediately proves nothing:
 -- Might test wrong thing
 -- Might test implementation, not behavior
 -- Might miss edge cases you forgot
 -- You never saw it catch the bug
-+Preserve existing and user work. Establish requirements independently; add the missing behavioral tests. In an isolated copy or narrowly reversible change, reproduce pre-fix behavior or disable only the relevant change; observe expected failures, restore, and rerun green. Never delete unrelated work or apply a blanket reset to recover process order.
-@@ -216 +55 @@
+-
 -Test-first forces you to see the test fail, proving it actually tests something.
-+Report this as regression verification, not a claim that the original implementation followed test-first order. Resume verified RED before further behavior changes. If safe reproduction is unavailable, report the missing evidence.
-@@ -218 +57 @@
+-
 -**"I already manually tested all the edge cases"**
-+## Common mistakes
-@@ -220,5 +59,6 @@
+-
 -Manual testing is ad-hoc. You think you tested everything but:
 -- No record of what you tested
 -- Can't re-run when code changes
 -- Easy to forget cases under pressure
 -- "It worked when I tried it" ≠ comprehensive
-+| Temptation | Required response |
-+|---|---|
-+| Tests afterward or manual checks prove TDD | Establish regression sensitivity; report actual sequence. |
-+| Any failing command counts as RED | Reach the intended behavioral assertion. |
-+| Assert the imported constant or mock output | Use independently specified observable behavior. |
-+| Test every method for coverage | Cover meaningful contracts and boundary cases; reuse existing coverage. |
-@@ -226,144 +66 @@
+-
 -Automated tests are systematic. They run the same way every time.
 -
 -**"Deleting X hours of work is wasteful"**
@@ -386,7 +375,7 @@ index 60d2609..7b00f4a 100644
 -## Verification Checklist
 -
 -Before marking work complete:
--
+@@ -331,8 +49 @@
 -- [ ] Every new function/method has a test
 -- [ ] Watched each test fail before implementing
 -- [ ] Each test failed for expected reason (feature missing, not typo)
@@ -395,24 +384,36 @@ index 60d2609..7b00f4a 100644
 -- [ ] Output pristine (no errors, warnings)
 -- [ ] Tests use real code (mocks only if unavoidable)
 -- [ ] Edge cases and errors covered
--
++Also cover exhaustion separately. Assert outcomes and contract-relevant side effects, not mock existence or private structure. Keep test-only utilities outside production APIs.
+@@ -340 +51 @@
 -Can't check all boxes? You skipped TDD. Start over.
--
++## Recovery when implementation already exists
+@@ -342 +53 @@
 -## When Stuck
--
++Preserve existing and user work. Establish requirements independently; add the missing behavioral tests. In an isolated copy or narrowly reversible change, reproduce pre-fix behavior or disable only the relevant change; observe expected failures, restore, and rerun green. Never delete unrelated work or apply a blanket reset to recover process order.
+@@ -344,6 +55 @@
 -| Problem | Solution |
 -|---------|----------|
 -| Don't know how to test | Write wished-for API. Write assertion first. Ask your human partner. |
 -| Test too complicated | Design too complicated. Simplify interface. |
 -| Must mock everything | Code too coupled. Use dependency injection. |
 -| Test setup huge | Extract helpers. Still complex? Simplify design. |
--
++Report this as regression verification, not a claim that the original implementation followed test-first order. Resume verified RED before further behavior changes. If safe reproduction is unavailable, report the missing evidence.
+@@ -351 +57 @@
 -## Debugging Integration
--
++## Common mistakes
+@@ -353 +59,6 @@
 -Bug found? Write failing test reproducing it. Follow TDD cycle. Test proves fix and prevents regression.
--
++| Temptation | Required response |
++|---|---|
++| Tests afterward or manual checks prove TDD | Establish regression sensitivity; report actual sequence. |
++| Any failing command counts as RED | Reach the intended behavioral assertion. |
++| Assert the imported constant or mock output | Use independently specified observable behavior. |
++| Test every method for coverage | Cover meaningful contracts and boundary cases; reuse existing coverage. |
+@@ -355 +66 @@
 -Never fix bugs without a test.
--
++## Completion evidence
+@@ -357,13 +68 @@
 -## Testing Anti-Patterns
 -
 -When adding mocks or test utilities, read [testing-anti-patterns.md](testing-anti-patterns.md) to avoid common pitfalls:
@@ -426,10 +427,10 @@ index 60d2609..7b00f4a 100644
 -Production code → test exists and failed first
 -Otherwise → not TDD
 -```
-+## Completion evidence
-@@ -371 +68 @@
++Report relevant contracts, observed RED failures, GREEN commands/results, affected checks, and remaining gaps. Classify observed RED as `process` evidence and identify its pre-fix revision or reproducible state, command, expected behavioral failure and observation time. Classify GREEN and affected acceptance checks as `final_state` evidence, rerun them after the last relevant fix, and bind them to the final reviewed commit or exact uncommitted diff. Do not rerun RED on the fixed commit merely to make its revision current. Tests should detect realistic wrong branches, missing side effects, boundary violations, and error outcomes. Distinguish passed, failed, and not run; never label missing verification complete.
+@@ -371 +70 @@
 -No exceptions without your human partner's permission.
-+Report relevant contracts, observed RED failures, GREEN commands/results, affected checks, and remaining gaps. Tests should detect realistic wrong branches, missing side effects, boundary violations, and error outcomes. Distinguish passed, failed, and not run; never label missing verification complete.
++When reviewing a plan task, verify its criteria and requirements against the specification, plan, diff, and evidence; fix findings within the authorized task scope. Return findings and the [shared result contract](../task-implement/SKILL.md#completion), including the final commit SHA when authorized and created. The plan orchestrator decides acceptance; a review thread ending does not establish completion.
 diff --git a/test-driven-development/testing-anti-patterns.md b/test-driven-development/testing-anti-patterns.md
 index e77ab6b..a1a52c1 100644
 --- a/test-driven-development/testing-anti-patterns.md

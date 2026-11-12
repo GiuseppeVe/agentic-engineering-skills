@@ -1,17 +1,17 @@
 # Compatibility
 
-Only hosts below are verified. Other Agent Skills hosts are unverified manual-adaptation targets; no compatibility claim is made for them.
+Codex and Claude Code are the supported hosts. Native verification is pending for this updated payload. Other Agent Skills hosts remain unverified manual-adaptation targets.
 
 | Host | Status | Payload |
 | --- | --- | --- |
-| `Codex` | Verified | `.codex-plugin/plugin.json` and 35 shared skills under `skills/` |
-| `Claude Code` | Verified | `.claude-plugin/plugin.json`, 35 shared skills plus Claude-only `claude-skills/claude-implement/` |
+| `Codex` | Pending native re-verification | `.codex-plugin/plugin.json` and 35 shared skills under `skills/` |
+| `Claude Code` | Pending native re-verification | `.claude-plugin/plugin.json` and 35 shared skills under `skills/` |
 
-Both hosts consume the shared `skills/` payload at `plugins/agentic-engineering-skills/`. The Claude manifest additionally declares `claude-skills/`, so Claude Implement is absent from Codex discovery. See [installation](../README.md#install) and [provenance](provenance.md).
+Both hosts consume the same 35-skill payload at `plugins/agentic-engineering-skills/skills/`. The `task-implement` skill states separate model and effort choices for each host. See [installation](../README.md#install) and [provenance](provenance.md).
 
 Claude Code discovers the four `impeccable-*` specialists under the `agentic-engineering-skills:` namespace. Codex does not register plugin-provided agent profiles automatically: if a matching specialist is not already available, Impeccable sends its bundled TOML contract to a fresh generic subagent. Model choice and enforced read-only tools depend on the host's subagent capabilities.
 
-Machine-verifiable native evidence lives in schema-v3 `manifests/native-discovery.json`: host versions, exact isolated install/discovery commands and exit codes, and per-host installed inventories/tree hashes. `npm run verify:pack` checks tracked receipt against lock and source bytes. CI then performs fresh official marketplace installs, locates each installed plugin root from native CLI JSON or isolated host cache, and runs `npm run verify:installed-native` against actual installed bytes. Any host transform, missing `SKILL.md`, extra skill, or byte drift fails CI. Dynamic receipts stay in runner temp; normal host config is untouched. Supporting smoke commands: `codex plugin list --available --json` and `claude plugin list`; then start a fresh corresponding host session. `docs/release-report.md` remains supporting evidence.
+Machine-verifiable native evidence lives in schema-v3 `manifests/native-discovery.json`: host versions, exact isolated install/discovery commands and exit codes, and per-host installed inventories/tree hashes. The receipt still records the previous package and must be regenerated after isolated installs of this updated payload. Until then, native compatibility remains pending. `npm run verify:pack` checks the tracked receipt against the lock and source bytes. CI then performs fresh official marketplace installs, locates each installed plugin root from native CLI JSON or isolated host cache, and runs `npm run verify:installed-native` against actual installed bytes. Any host transform, missing `SKILL.md`, extra skill, or byte drift fails CI. Dynamic receipts stay in runner temp; normal host config is untouched. Supporting smoke commands: `codex plugin list --available --json` and `claude plugin list`; then start a fresh corresponding host session. `docs/release-report.md` remains supporting evidence.
 
 The latest isolated-install versions are recorded in `manifests/native-discovery.json`. Packaging fidelity is separate from model/effort inference and fresh-session role discovery. On Windows, set `USERPROFILE`, `APPDATA`, `LOCALAPPDATA`, `HOME`, `CODEX_HOME`, and `CLAUDE_CONFIG_DIR` together for every isolated host command. Codex 0.141.0 isolates marketplace and plugin state this way. Its model-visible skill catalogue still has a 2% context budget, so large ambient catalogues can truncate one-shot enumeration; use small fresh-session batches when checking named skills.
 

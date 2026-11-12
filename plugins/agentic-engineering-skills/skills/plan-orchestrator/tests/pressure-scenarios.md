@@ -2,14 +2,25 @@
 
 These scenarios define expected behavior for the current universal skill. Historical results below concern earlier versions and do not establish a pass for this version.
 
-1. **Setup pending:** With a dirty main checkout and pending shared-worktree creation, dispatch no child and leave the checkout unchanged.
-2. **Pending child:** If a launch is unconfirmed while a later independent task is ready, reserve the slot, investigate safely and keep the later task queued; never duplicate the launch.
-3. **Missing evidence:** If an implementer says done without commit or worktree evidence, follow up in the same subthread and withhold review until verification.
-4. **Finished turn, open session:** After the turn ends and final result, commit, worktree and absence of outstanding mutation are verified, release the slot and start review; do not require the session to exit.
-5. **Outstanding mutation:** If background work can still modify the shared worktree, retain the slot and do not start a reviewer or integrate.
-6. **Conflicting children:** When two children are pending or active, record both, suspend dispatch, integration and worktree mutation, then reconcile each before continuing.
-7. **Review and integration:** Use a separate review subthread with `test-driven-development`; verify the accepted commit and require existing human authorization before integrating into `main`. Failure leaves later tasks queued.
+1. **Workspace pending:** With a dirty main checkout and pending workspace creation, dispatch no child into that workspace and leave the checkout unchanged; unrelated tasks with already-isolated workspaces remain eligible.
+2. **Independent ready tasks:** If Task A is active and Task B has no dependency on A, dispatch B only when its workspace, mutation scope and integration order are isolated and verified; otherwise keep B waiting. Never duplicate an unresolved launch.
+3. **Missing evidence:** If an implementer reports `complete` without base SHA, diff, checks or worktree evidence, follow up in the same subthread and withhold review until verification.
+4. **Finished turn, open session:** After the implementation turn ends and its diff, base SHA, workspace and absence of outstanding mutation are verified, start review; do not require the session to exit. The reviewer commits only after findings are fixed or cleared, checks pass and commit authority is verified.
+5. **Outstanding mutation:** If background work can still modify a task workspace, do not start that task's reviewer or integrate it; unrelated isolated tasks may continue.
+6. **Conflicting children:** When children conflict over a workspace or scope, suspend affected mutation and integration, then reconcile them before continuing; do not freeze unrelated isolated tasks.
+7. **Review and integration:** Invoke `test-driven-development` with the host-native skill command in a separate review subthread; it identifies and fixes in-scope problems, reruns final-state checks, and commits only with task-commit authority. Verify the accepted commit or exact reviewed diff and require existing human authorization before integrating into `main`. Open the plan PR only after all plan tasks are accepted. Failure blocks dependants, not unrelated isolated tasks.
 8. **Decisions:** A contracts map is optional. Resolve ordinary choices with the least-expansive interpretation; ask for missing or conflicting criteria only when they change scope.
+9. **Commit boundary:** Implementation changes remain uncommitted until the review thread accepts or fixes them and reruns required checks. It creates the final task commit only with authority; otherwise it reports the exact reviewed diff and commit gate. A task commit does not create a PR.
+10. **Partial and proceed:** Implementer reports `partial` with a required gap; the owner says to proceed and the manifest check passes. Preserve partial, keep the task unaccepted and resolve the gap; neither instruction nor manifest proves satisfaction.
+11. **Complete with required unverified:** Reviewer reports `complete`, but a required check or REQ remains unverified. Treat the result as partial and withhold acceptance. An unverified item outside required criteria may be recorded without blocking.
+12. **Deferred gap:** The plan explicitly assigns a spec REQ to named later Task B, and it is not a closure criterion of Task A; A's required criteria have evidence. Verify the plan basis, accept A and allow B to start; keep that REQ open and withhold plan completion until B closes it. An ad hoc reassignment or owner instruction to proceed does not establish that basis.
+13. **Last open REQ:** All tasks are accepted but one required spec/plan REQ remains open. Withhold plan completion and the plan PR until evidence closes it or the spec/plan supplies an explicit basis for `not applicable`.
+14. **Open checkbox:** All REQs have evidence but a required plan checkbox remains open. Withhold plan completion and the plan PR until it is closed.
+15. **Real runtime:** A REQ requires verification in the real runtime, but evidence covers only a fixture or temporary install. Keep the REQ open and withhold task acceptance and plan completion until the required evidence exists.
+16. **Action outside authority:** A required action is outside the available authority. Keep its gate and task open; report the missing authority rather than marking the criterion satisfied or `not applicable`.
+17. **PR unauthorized:** All task and plan criteria are met, but PR creation is not authorized. Open no PR; report local readiness and the omission without calling the plan incomplete on that basis.
+18. **Missing task-commit authority:** The plan is assigned but task commits are not authorized. Dispatch the implementer, keep its result uncommitted, allow review, and create no commit. Stop at the commit gate if the workflow requires one; report the reviewed diff and missing authority without claiming committed integration.
+19. **RED freshness:** A focused test failed behaviorally on the pre-fix revision and passes on the final reviewed state. Keep RED as `process` evidence tied to its pre-fix revision/state and observation time; require GREEN and acceptance checks as `final_state` evidence after the last fix. Do not reject valid RED merely because it predates the final commit.
 
 ## Historical material — previous versions only
 
@@ -17,7 +28,7 @@ The following is retained as historical evidence. Its host-specific instructions
 
 # Pressure Scenarios
 
-These scenarios are the RED baseline for `sequential-task-orchestrator`. They
+These scenarios are the RED baseline for `plan-orchestrator`. They
 must be rerun with the skill loaded before deployment and after every material
 skill revision. Recorded GREEN results below are historical side-chat protocol
 results, not evidence for the revised native-subagent protocol.

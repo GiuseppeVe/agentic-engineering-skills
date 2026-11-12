@@ -14,7 +14,7 @@ const execFileAsync = promisify(execFile);
 const payloadRoot = new URL("../plugins/agentic-engineering-skills/skills/", import.meta.url);
 
 test("native plugin component bytes survive autocrlf checkouts", async (t) => {
-  for (const sampleRoot of ["plugins/agentic-engineering-skills/skills", "plugins/agentic-engineering-skills/claude-skills", "plugins/agentic-engineering-skills/.claude-plugin", "plugins/agentic-engineering-skills/.codex-plugin", "plugins/agentic-engineering-skills/agents", "plugins/agentic-engineering-skills/hooks", "plugins/agentic-engineering-skills/licenses"]) {
+  for (const sampleRoot of ["plugins/agentic-engineering-skills/skills", "plugins/agentic-engineering-skills/.claude-plugin", "plugins/agentic-engineering-skills/.codex-plugin", "plugins/agentic-engineering-skills/agents", "plugins/agentic-engineering-skills/hooks", "plugins/agentic-engineering-skills/licenses"]) {
   const tempRoot = await mkdtemp(join(tmpdir(), "skill-payload-eol-"));
   t.after(() => rm(tempRoot, { recursive: true, force: true }));
 
