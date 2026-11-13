@@ -47,6 +47,8 @@ test("plan orchestrator dispatches dependency-ready implementation and review wi
   assert.match(protocol, /Review:.*Delegate task-commit authority only when already granted/s);
   assert.match(pressure, /implementation.*uncommitted/i);
   assert.match(pressure, /commits only with task-commit authority/i);
+  assert.match(pressure, /Accepted dependency outside the task workspace/);
+  assert.match(pressure, /Clean-room review input/);
   assert.doesNotMatch(`${source}\n${protocol}`, /\$(?:task-implement|test-driven-development)/);
 });
 
@@ -80,7 +82,9 @@ test("review checks spec, plan, diff and evidence before committing", async () =
   const review = await skill("test-driven-development");
   const protocol = await readFile(path.join(skillsRoot, "plan-orchestrator", "references", "runtime-protocol.md"), "utf8");
   assert.match(review, /verify its criteria and requirements against the specification, plan, diff, and evidence/);
-  assert.match(protocol, /Review:.*plan\/spec paths and implementation result/s);
+  assert.match(protocol, /Review:.*original task instruction.*parent- or owner-approved task amendments.*exact diff.*objective command evidence/s);
+  assert.match(protocol, /Exclude the implementer's outcome.*prior verdict/s);
+  assert.match(protocol, /materialize each dependency through its reviewed commit or exact reviewed diff.*dependent task workspace/s);
   assert.match(protocol, /verify the final reviewed diff and, when authorized and required, its task commit/);
   assert.match(protocol, /`final_state` evidence proves acceptance/);
   assert.match(protocol, /Earlier final-state evidence is stale/);

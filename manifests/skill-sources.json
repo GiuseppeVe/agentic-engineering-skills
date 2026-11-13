@@ -75,10 +75,13 @@
           ".claude/skills/task-implement/SKILL.md"
         ],
         "files": {
-          ".agents/skills/task-implement/SKILL.md": "94e9e70f12c4882550993302179185055b506831fbec416039e39af38dafdb22",
-          ".agents/skills/task-implement/references/packet-contract.md": "7f2a55b7cd119db15b5621c3d04310dd72ac39c0d78c7fafdd72c6a9f4433f51",
-          ".claude/skills/task-implement/SKILL.md": "1acb8ce5bc0b846e78d623fce6f275f6fa0d8e261687ec81d2b1421d6cb82223",
-          ".claude/skills/task-implement/references/packet-contract.md": "3d758ea311f3128eb7bde176f2f1c01f898e54ae4191e2f4d15c7d596f4e8b0d"
+          ".agents/skills/task-implement/SKILL.md": "b732ee3bebb532cd3c749fc148ae855103a731a7884ab8d7e743369f5353c0d2",
+          ".agents/skills/task-implement/references/packet-contract.md": "96bf0932ff4e6c4c98d5ff6398fcc0357915549508c0e3566e407062a78d5edd",
+          ".agents/skills/task-implement/tests/alignment-task-implement.md": "7bce2b24d70fee116e70a4bfccad05f7df30e6e8af100fedd70a4e729e18cce5",
+          ".agents/skills/task-implement/tests/bounded-worker.md": "5e78d46acfc271292bf763a48afc61b58c0ac6ba1dc9362c2e50d27d1620f681",
+          ".agents/skills/task-implement/tests/orchestration.md": "f90c444a26bed3329c7348882daeb5cfbb7cc52fe47c72632af2a02f0a9a1da5",
+          ".claude/skills/task-implement/SKILL.md": "00c4569dbe3fccfbf0ee0890814658b11b4d39bd7b8c28a936a2616fbd280684",
+          ".claude/skills/task-implement/references/packet-contract.md": "310b639ec20a25977eb88c83e52ad5c11033bdee5b13093e50fff8aca31de391"
         }
       }
     },
@@ -237,9 +240,9 @@
         "files": {
           ".agents/skills/master-orchestrator/agents/openai.yaml": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
           ".agents/skills/master-orchestrator/references/coordinating-design.md": "8e268a947a927f7c2cc9edd109e423a4a24e28ac9882071aa8dfbdeaa653ae39",
-          ".agents/skills/master-orchestrator/SKILL.md": "1ab6737377144752ff612068625b3f373c5198e5e65abcdeb3a34f905ff1e3d4",
+          ".agents/skills/master-orchestrator/SKILL.md": "71b52bfcfa1855dbe942471dc20f23a629644833d8af76d4724b5346af17ec6e",
           ".claude/skills/master-orchestrator/references/coordinating-design.md": "8e268a947a927f7c2cc9edd109e423a4a24e28ac9882071aa8dfbdeaa653ae39",
-          ".claude/skills/master-orchestrator/SKILL.md": "a24200ddd7242adfd9f44635f3ef2087d839195e61660f940b15f9a9a60cf0d5"
+          ".claude/skills/master-orchestrator/SKILL.md": "6231002c97e98370a4bffa1b91f6e4c867a0c33f5c3d712189908cd3cae1539a"
         },
         "packagingChanges": [
           "Combined Claude explicit-only frontmatter with Codex explicit-only metadata.",
@@ -291,12 +294,12 @@
           ".claude/skills/plan-orchestrator/"
         ],
         "files": {
-          ".agents/skills/plan-orchestrator/SKILL.md": "e64fa6b1ce3778b6930517746c211cdfc18bc41ebb17cc9d90a3d3b7ba1dc08c",
-          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "8885518199f72c4b5c60b8396c54bb0bbd81d9a78e9847ed3d253a8fa119b6c6",
-          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "aa2d9748a731b378f89808c8838a824ec389b6e9ff3c8f417b21caa3a9b49bc0",
-          ".claude/skills/plan-orchestrator/SKILL.md": "6aeb5c443dd7ef44037e07f5c6f209eaf5961ba56656a50e94b4c4e8331bf51a",
-          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "093f780a2320fabe5c4e801975d7c1e9bf3aac50007a7ed03db760b79f8ef32b",
-          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "fb6c9d403fcb951371067a1337d71b6a88fa7517793323ab60655090a8302a94"
+          ".agents/skills/plan-orchestrator/SKILL.md": "f192ae82c606b555118bd8071194c3880d88d9ad6b3f6c2f8d2225ab78f752fc",
+          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "f05c154e105b63eabbe1336cdb08b1f3797f2bda249ee9e966129c78c0f4bcb4",
+          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "4c5b3606084988bc7492e367bc9581643f8296d9ffe5b64d3c5eb72d754c6f9b",
+          ".claude/skills/plan-orchestrator/SKILL.md": "caed1888977e3289e1c8eb64e652677de9e3c384f530eca2b8f4af3c51eabac5",
+          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "841e72afe30de333046a0c5b4d60451268bdb7866d3c701d729d62e11b21ef90",
+          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "67541abf077e362d62b859609c22a96f925821725977fd911f31e495a1fa215d"
         }
       }
     },

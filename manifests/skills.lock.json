@@ -87,7 +87,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
-      "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
+      "releaseCommit": "7fff3da3eea74d67080ea78909fcd2b0d067d362",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -337,7 +337,7 @@
     {
       "name": "master-orchestrator",
       "sourceType": "original",
-      "localSha256": "b6ae09968003d48ae490d2db8725270d190db5a878dc3a7dc00c7b8b85162e3d",
+      "localSha256": "141fdd5cf2ffb55b2fd7b9a1aea1ced036b4b9a8f9a0a619b2f89159a065bb9d",
       "releaseCommit": "5b1c1c540ed00cf7912efbf72850fc1779c0dfa7",
       "license": "MIT",
       "payloadType": "directory",
@@ -364,8 +364,8 @@
     {
       "name": "plan-orchestrator",
       "sourceType": "original",
-      "localSha256": "4d646d8a4b89aaa07840c6129c35ab54f7a511872c3781212ad2b87232581bb6",
-      "releaseCommit": "3afc54cc8d37c4fc4fc2054a3ac381443e943c66",
+      "localSha256": "96430d3803f30961f5be65aeb4f0842080a389da1db9ad0eaa2500429af2e230",
+      "releaseCommit": "7fff3da3eea74d67080ea78909fcd2b0d067d362",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -433,8 +433,8 @@
     {
       "name": "task-implement",
       "sourceType": "original",
-      "localSha256": "2fb2b3fcbb6e644350a36814813631b126f92cac06c3eca2cd4506b758efc856",
-      "releaseCommit": "cbc7fb308b0b7a56f72a96a03cf13ea6f408dad9",
+      "localSha256": "8114f34c66061cd81f025a4cee0b463a193f167affaddcb3c5dbe2eccb8f0be9",
+      "releaseCommit": "7fff3da3eea74d67080ea78909fcd2b0d067d362",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
