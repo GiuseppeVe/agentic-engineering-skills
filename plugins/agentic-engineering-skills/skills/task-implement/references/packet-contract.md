@@ -12,7 +12,7 @@ Classify packets as:
 
 - `INDEPENDENT`: bounded work that may be delegated in its own branch or worktree.
 - `DEPENDENT`: starts only after prerequisite evidence is integrated.
-- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by GPT-5.6 Sol with medium effort on Codex, Opus 5.5 with medium effort on Claude Code, or the controller.
+- `ARCHITECTURE_SENSITIVE` or `INTEGRATION`: retained by GPT-6.1 Sol with high effort on Codex, Sonnet 5.5 with high effort on Claude Code, or the controller.
 
 Scope is binding. Any excluded file, non-owned interface, ownership overlap, unresolved shared contract, architectural decision, or required scope expansion returns `BLOCKED`. worker never expands scope or resolves such decisions independently.
 

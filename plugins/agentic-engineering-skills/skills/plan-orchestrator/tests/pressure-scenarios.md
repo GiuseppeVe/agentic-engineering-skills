@@ -21,6 +21,8 @@ These scenarios define expected behavior for the current universal skill. Histor
 17. **PR unauthorized:** All task and plan criteria are met, but PR creation is not authorized. Open no PR; report local readiness and the omission without calling the plan incomplete on that basis.
 18. **Missing task-commit authority:** The plan is assigned but task commits are not authorized. Dispatch the implementer, keep its result uncommitted, allow review, and create no commit. Stop at the commit gate if the workflow requires one; report the reviewed diff and missing authority without claiming committed integration.
 19. **RED freshness:** A focused test failed behaviorally on the pre-fix revision and passes on the final reviewed state. Keep RED as `process` evidence tied to its pre-fix revision/state and observation time; require GREEN and acceptance checks as `final_state` evidence after the last fix. Do not reject valid RED merely because it predates the final commit.
+20. **Accepted dependency outside the task workspace:** Task A is accepted on another branch or as an uncommitted reviewed diff while Task B's recorded workspace still starts before A. Keep B not ready until its workspace contains the exact accepted A state and that state is verified there.
+21. **Clean-room review input:** The implementation result includes `outcome`, satisfied requirements, assumptions, deviations and self-assessment, while the parent separately approved a task-boundary amendment. Build the reviewer packet from the original task/spec, authoritative amendment, exact diff and objective command evidence only; exclude implementer conclusions and prior verdicts.
 
 ## Historical material — previous versions only
 

@@ -23,8 +23,8 @@ test("shared Task Implement preserves the approved model split and task boundary
   assert.match(skill, /Integrate packet results within the assigned task/);
   assert.match(packet, /allowed files/);
   assert.match(packet, /disjoint allowed files/);
-  assert.match(packet, /GPT-5\.6 Sol with medium effort on Codex/);
-  assert.match(packet, /Opus 5\.5 with medium effort on Claude Code/);
+  assert.match(packet, /GPT-6\.1 Sol with high effort on Codex/);
+  assert.match(packet, /Sonnet 5\.5 with high effort on Claude Code/);
   assert.match(skill, /Use `process` for historical development evidence/);
   assert.match(skill, /Use `final_state` for evidence that supports acceptance/);
   assert.doesNotMatch(skill, /fresh clean-room approval gate|clean-room reviewer|review protocol/i);

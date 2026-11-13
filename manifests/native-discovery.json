@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-12",
+  "capturedAt": "2026-11-13",
   "environment": {
     "isolation": "Separate temporary Codex and Claude Code profiles. Local marketplace source and installed payload trees were compared. No credentials or model requests were used. HTTP proxy variables pointed at an unavailable local endpoint.",
     "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
@@ -129,9 +129,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:7326c3defad9754d18deb641e498fd9754e4307d95992bb4e8e2b278b72afbee",
-        "fullTreeHash": "sha256:e30da35d79226303c0307dcf06bfb3d698364647535d370ce35c9924a88bc9ab",
-        "fileCount": 514
+        "treeHash": "sha256:e1064f0aa6d2bc808435a953b0f2ad489dcab91332e80b1f75045d1456311fc6",
+        "fullTreeHash": "sha256:8900ae7e514e8816a1a51dcb985b14aa26160726ec6b4e5daa9d487554a4152f",
+        "fileCount": 517
       },
       "commands": [
         {
@@ -236,9 +236,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:13964a7f22b3031a5fa3815a6b4f5290e06b1d8937d9fe62b38a0a8a8b056d12",
-        "fullTreeHash": "sha256:e30da35d79226303c0307dcf06bfb3d698364647535d370ce35c9924a88bc9ab",
-        "fileCount": 514
+        "treeHash": "sha256:d516607e0318d82c43804c0f633a9918b4713ef45c034597606e3dc96d56c111",
+        "fullTreeHash": "sha256:8900ae7e514e8816a1a51dcb985b14aa26160726ec6b4e5daa9d487554a4152f",
+        "fileCount": 517
       },
       "installedAgents": [
         {
