@@ -1,23 +1,21 @@
 #!/usr/bin/env node
 // parse-knip.mjs — turn `knip --reporter json` into bucketed claims and
-// pre-filter anything already recorded in Knip_false_positives.md.
+// pre-filter anything already recorded in docs/development/knip-false-positives.md.
 //
 // Usage:
-//   npm exec --yes --package=knip@6.40.0 -- knip --reporter json | node parse-knip.mjs [--fp Knip_false_positives.md]
-//   node parse-knip.mjs --in knip.json --fp Knip_false_positives.md
+//   npm exec --yes --package=knip@6.40.0 -- knip --reporter json | node parse-knip.mjs [--fp docs/development/knip-false-positives.md]
+//   node parse-knip.mjs --in knip.json --fp docs/development/knip-false-positives.md
 //
 // Output (stdout, JSON):
 //   { claims: [ { id, type, target, workspace } ], suppressed: [ ...same shape, +knipRule ],
-//     ambiguousLegacy: [legacyId], unhandled: [raw finding groups],
-//     counts: { byType: {...}, total, suppressed, unhandled } }
+//     counts: { byType: {...}, total, suppressed } }
 //
-// `id` is `<type> :: <workspace> :: <target>` when workspace is known,
-// otherwise `<type> :: <target>`. Ledger headers use the same identity.
+// `id` is the stable identity `<type> :: <target>` — the SAME key used by
+// docs/development/knip-false-positives.md headers, so re-runs match prior false positives.
 // This file is the suppression PRE-FILTER; knip.json is the durable suppression
 // sink. Keep both in sync (see SKILL.md step 1).
 
 import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -31,11 +29,18 @@ function readInput() {
   return readFileSync(0, "utf8");
 }
 
-// --- Parse Knip_false_positives.md into a Set of identity keys + rule map. ---
+// --- Parse docs/development/knip-false-positives.md into a Set of identity keys + rule map. ---
 // Entry header format: `## <type> :: <target>`
 // Followed by `- knip-rule: <rule>` lines.
-export function parseFpText(text) {
+function parseFpFile(path) {
   const rules = new Map(); // id -> knipRule
+  if (!path) return rules;
+  let text;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch {
+    return rules; // no FP file yet -> nothing suppressed
+  }
   let currentId = null;
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
@@ -50,16 +55,6 @@ export function parseFpText(text) {
     if (rule && currentId) rules.set(currentId, rule[1].trim());
   }
   return rules;
-}
-
-function parseFpFile(path) {
-  if (!path) return new Map();
-  try {
-    return parseFpText(readFileSync(path, "utf8"));
-  } catch (error) {
-    if (error.code === "ENOENT") return new Map();
-    throw error;
-  }
 }
 
 // --- Normalize knip's JSON reporter output into flat claims. ---
@@ -80,7 +75,6 @@ const ITEM_TYPES = {
   nsExports: "unused-namespaceExport",
   nsTypes: "unused-namespaceType",
   enumMembers: "unused-enumMember",
-  classMembers: "unused-classMember",
   namespaceMembers: "unused-namespaceMember",
   catalog: "unused-catalogEntry",
   catalogReferences: "unresolved-catalogReference",
@@ -96,18 +90,11 @@ function nameOf(entry) {
   return String(entry);
 }
 
-function isMemberMap(value) {
-  return value !== null && typeof value === "object" && !Array.isArray(value) &&
-    Object.values(value).every(Array.isArray);
-}
-
-export function normalize(knip) {
+function normalize(knip) {
   const claims = [];
   const push = (type, target, workspace) => {
     if (!target) return;
-    const ws = workspace || null;
-    const id = ws === null ? `${type} :: ${target}` : `${type} :: ${ws} :: ${target}`;
-    claims.push({ id, type, target, workspace: ws });
+    claims.push({ id: `${type} :: ${target}`, type, target, workspace: workspace ?? null });
   };
 
   for (const f of knip.files ?? []) push("unused-file", f, null);
@@ -117,24 +104,11 @@ export function normalize(knip) {
     const file = issue.file ?? null;
     for (const [key, type] of Object.entries(ITEM_TYPES)) {
       const list = issue[key];
-      if (key === "enumMembers" || key === "classMembers") {
-        if (!isMemberMap(list)) continue;
-        for (const [parent, members] of Object.entries(list)) {
-          for (const item of members) {
-            const target = `${parent}.${nameOf(item)}`;
-            push(type, file ? `${file}#${target}` : target, ws);
-          }
-        }
-        continue;
-      }
       if (!Array.isArray(list)) continue;
       for (const item of list) {
-        // Knip's JSON reporter emits duplicate exports as groups of symbols.
-        const n = key === "duplicates" && Array.isArray(item)
-          ? item.map(nameOf).join(",") : nameOf(item);
-        if (!n) continue;
-        // File-scoped symbols and member maps include source path in identity.
-        const fileScoped = ["exports", "types", "nsExports", "nsTypes", "namespaceMembers", "duplicates"].includes(key);
+        const n = nameOf(item);
+        // exports/types/enumMembers/duplicates are file-scoped symbols
+        const fileScoped = ["exports", "types", "nsExports", "nsTypes", "enumMembers", "namespaceMembers", "duplicates"].includes(key);
         const target = fileScoped && file ? `${file}#${n}` : n;
         push(type, target, ws);
       }
@@ -143,66 +117,34 @@ export function normalize(knip) {
   return claims;
 }
 
-// Preserve unknown reporter data for human triage instead of silently dropping it.
-// Empty arrays contain no findings; non-array values on recognized finding keys
-// are retained too, because they may represent an unsupported reporter version.
-export function findUnhandled(knip) {
-  const unhandled = [];
-  for (const [category, value] of Object.entries(knip)) {
-    if (category === "files" || category === "issues") continue;
-    if (Array.isArray(value) && value.length === 0) continue;
-    unhandled.push({ source: "report", category, value });
-  }
-  for (const issue of knip.issues ?? []) {
-    for (const [category, value] of Object.entries(issue)) {
-      if (category === "file" || category === "workspace") continue;
-      if (Object.hasOwn(ITEM_TYPES, category) && Array.isArray(value)) continue;
-      if ((category === "enumMembers" || category === "classMembers") && isMemberMap(value)) continue;
-      if (Array.isArray(value) && value.length === 0) continue;
-      unhandled.push({ source: "issue", file: issue.file ?? null, workspace: issue.workspace ?? null, category, value });
-    }
-  }
-  return unhandled;
+// --- Main ---
+const fpRules = parseFpFile(arg("--fp"));
+let knip;
+try {
+  knip = JSON.parse(readInput());
+} catch (e) {
+  process.stderr.write(`parse-knip: could not parse knip JSON: ${e.message}\n`);
+  process.exit(2);
 }
 
-// A missing workspace in a Knip issue does not prove the finding is global:
-// issue.file may still belong to a workspace. Legacy, unscoped entries never
-// suppress automatically; report them so their ownership can be verified.
-export function filterClaims(all, fpRules, unhandled = []) {
-  const claims = [];
-  const suppressed = [];
-  const ambiguousLegacy = new Set();
-  for (const c of all) {
-    const legacyId = `${c.type} :: ${c.target}`;
-    if (c.workspace !== null && fpRules.has(c.id)) {
-      suppressed.push({ ...c, knipRule: fpRules.get(c.id) });
-    } else {
-      claims.push(c);
-      if (fpRules.has(legacyId)) ambiguousLegacy.add(legacyId);
-    }
+const all = normalize(knip);
+const claims = [];
+const suppressed = [];
+for (const c of all) {
+  if (fpRules.has(c.id)) {
+    suppressed.push({ ...c, knipRule: fpRules.get(c.id) });
+  } else {
+    claims.push(c);
   }
-  const byType = {};
-  for (const c of claims) byType[c.type] = (byType[c.type] ?? 0) + 1;
-  return { claims, suppressed, ambiguousLegacy: [...ambiguousLegacy], unhandled, counts: { byType, total: claims.length, suppressed: suppressed.length, unhandled: unhandled.length } };
 }
 
-function main() {
-  const fpRules = parseFpFile(arg("--fp"));
-  let knip;
-  try {
-    knip = JSON.parse(readInput());
-  } catch (e) {
-    process.stderr.write(`parse-knip: could not parse knip JSON: ${e.message}\n`);
-    process.exit(2);
-  }
-  if (!knip || typeof knip !== "object" || Array.isArray(knip) ||
-      !(Array.isArray(knip.files) || Array.isArray(knip.issues)) ||
-      (knip.files !== undefined && !Array.isArray(knip.files)) ||
-      (knip.issues !== undefined && !Array.isArray(knip.issues))) {
-    process.stderr.write("parse-knip: invalid knip JSON report shape\n");
-    process.exit(2);
-  }
-  process.stdout.write(JSON.stringify(filterClaims(normalize(knip), fpRules, findUnhandled(knip)), null, 2) + "\n");
-}
+const byType = {};
+for (const c of claims) byType[c.type] = (byType[c.type] ?? 0) + 1;
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+process.stdout.write(
+  JSON.stringify(
+    { claims, suppressed, counts: { byType, total: claims.length, suppressed: suppressed.length } },
+    null,
+    2
+  ) + "\n"
+);

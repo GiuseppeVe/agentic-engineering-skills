@@ -14,7 +14,7 @@ const hookDirectory = fileURLToPath(new URL('../plugins/agentic-engineering-skil
 const mergedPr = {
   state: 'MERGED',
   url: 'https://github.com/acme/widget/pull/12',
-  mergedAt: '2026-11-02T09:00:00Z',
+  mergedAt: new Date().toISOString(),
   mergeCommit: { oid: 'abcdef1234567890' },
   baseRefName: 'main',
   headRefName: 'feature',
@@ -261,8 +261,7 @@ test('installed hook entrypoints consume stdin JSON and use fake gh found on PAT
   const fakeGhScript = [
     "const args = process.argv.slice(2);",
     "if (args[0] !== 'view') process.exit(2);",
-    "if (args.includes('headRefName')) process.stdout.write('feature/one\\n');",
-    "else process.stdout.write(JSON.stringify({ state:'MERGED', url:'https://github.com/acme/widget/pull/12', mergedAt:'2026-11-02T09:00:00Z', mergeCommit:{oid:'abcdef1234567890'}, baseRefName:'main', headRefName:'feature/one' }));",
+    "process.stdout.write(JSON.stringify({ state:'MERGED', url:'https://github.com/acme/widget/pull/12', mergedAt:new Date().toISOString(), mergeCommit:{oid:'abcdef1234567890'}, baseRefName:'main', headRefName:'feature/one' }));",
   ].join('\n');
 
   try {
@@ -392,3 +391,11 @@ function invokeAsync(script, event, env, cwd) {
     child.stdin.end(JSON.stringify(event));
   });
 }
+
+test('merge reminders ignore stale results, already merged output and queued auto-merge', () => {
+  const input = { hook_event_name: 'PostToolUse', tool_name: 'Bash', tool_input: { command: 'gh pr merge 12' }, tool_response: '' };
+  const lookup = () => mergedPr;
+  assert.equal(postMergeContext(input, { lookup, now: () => Date.parse(mergedPr.mergedAt) + 600001 }), null);
+  assert.equal(postMergeContext({ ...input, tool_response: 'Pull request acme/widget#12 was already merged' }, { lookup }), null);
+  assert.equal(postMergeContext({ ...input, tool_input: { command: 'gh pr merge 12 --auto' } }, { lookup }), null);
+});

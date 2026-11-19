@@ -8,7 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assessPreflight, markerForHead } from '../plugins/agentic-engineering-skills/hooks/pr-workflow-check.mjs';
 const head = 'a'.repeat(40);
-const good = { headBefore: head, headAfter: head, workspaceHead: head, clean: true, state: 'OPEN', checks: [{ name: 'tests', bucket: 'pass' }], review: { head_sha: head, outcome: 'passed', independent: true, required_checks: ['tests'], reviewer: 'independent reviewer', evidence: 'review.txt', evidence_sha256: 'c'.repeat(64) }, evidenceExists: true };
+const reviewUrl = 'https://github.com/acme/widget/pull/12';
+const good = { prUrl: reviewUrl, headBefore: head, headAfter: head, workspaceHead: head, clean: true, state: 'OPEN', checks: [{ name: 'tests', bucket: 'pass' }], review: { pr_url: reviewUrl, head_sha: head, outcome: 'passed', independent: true, required_checks: ['tests'], reviewer: 'independent reviewer', evidence: 'review.txt', evidence_sha256: 'c'.repeat(64) }, evidenceExists: true };
 const comment = (data, authorAssociation = 'OWNER') => ({ authorAssociation, body: `<!-- pr-skills:v1 ${JSON.stringify(data)} -->` });
 const positive = { commit_sha: head, knip: 'passed', simplify: 'no_changes' };
 test('preflight permits only matching head, completed CI, and a documented successful independent review', () => {
@@ -164,7 +165,7 @@ test('CLI verifies real evidence and fails closed for CI, stale heads and failed
     writeFileSync(path.join(dir, 'status'), `const fs=require('fs'); if(JSON.parse(fs.readFileSync('fixture.json')).dirty) process.stdout.write(' M changed.txt\\n');`);
     const evidence = 'Independent review: no unresolved findings.\n';
     writeFileSync(path.join(dir, 'review.txt'), evidence);
-    const review = { head_sha: head, outcome: 'passed', independent: true, required_checks: ['tests'], reviewer: 'codex review', evidence: 'review.txt', evidence_sha256: createHash('sha256').update(evidence).digest('hex') };
+    const review = { pr_url: url, head_sha: head, outcome: 'passed', independent: true, required_checks: ['tests'], reviewer: 'codex review', evidence: 'review.txt', evidence_sha256: createHash('sha256').update(evidence).digest('hex') };
     writeFileSync(path.join(dir, 'review.json'), JSON.stringify(review));
     const env = { ...process.env, GIT_DIR: 'spoofed', PATH: `${bin}${path.delimiter}${process.env.PATH ?? ''}` };
     const invoke = (mode) => {

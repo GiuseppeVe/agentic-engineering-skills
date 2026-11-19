@@ -7,6 +7,7 @@ import { emitHookOutput, isSuccessfulToolEvent, parseHookInput, safeInline, shel
 
 const REPOSITORY = /^(?:github\.com\/)?([\w.-]+\/[\w.-]+)$/i;
 const PR_URL = /^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+)\/pull\/(\d+)$/i;
+const MERGE_WINDOW_MS = 10 * 60 * 1000;
 const MERGE_FLAGS = new Set(['--merge', '--squash', '--rebase', '--delete-branch', '--auto', '--admin', '-m', '-s', '-r', '-d']);
 
 export function parseMergeCommand(command) {
@@ -29,6 +30,7 @@ export function parseMergeCommand(command) {
   if (args.shift()?.toLowerCase() !== 'pr' || args.shift()?.toLowerCase() !== 'merge') return null;
   let id;
   let headLock;
+  let auto = false;
   for (let i = 0; i < args.length; i++) {
     const token = args[i];
     if (token === '--match-head-commit' || token.startsWith('--match-head-commit=')) {
@@ -37,7 +39,10 @@ export function parseMergeCommand(command) {
       headLock = sha.toLowerCase();
       continue;
     }
-    if (MERGE_FLAGS.has(token)) continue;
+    if (MERGE_FLAGS.has(token)) {
+      auto ||= token === '--auto';
+      continue;
+    }
     if (!id && (/^\d+$/.test(token) || PR_URL.test(token))) {
       id = token;
       if (PR_URL.test(token)) {
@@ -50,10 +55,10 @@ export function parseMergeCommand(command) {
     }
     return null;
   }
-  return { id, repository, ...(headLock && { headLock }) };
+  return { id, repository, ...(headLock && { headLock }), ...(auto && { auto }) };
 }
 
-export function postMergeContext(input, { lookup = lookupPullRequest, currentRepository = getCurrentRepository } = {}) {
+export function postMergeContext(input, { lookup = lookupPullRequest, currentRepository = getCurrentRepository, now = Date.now } = {}) {
   if (input?.tool_name !== 'Bash' || !isSuccessfulToolEvent(input)) return null;
   const command = parseMergeCommand(input?.tool_input?.command);
   // The merge may have switched branches before this hook runs.
@@ -63,7 +68,13 @@ export function postMergeContext(input, { lookup = lookupPullRequest, currentRep
     const current = currentRepository();
     if (!current || current.toLowerCase() !== command.repository.toLowerCase()) return null;
   }
+  const response = input.tool_response;
+  const output = typeof response === 'string' ? response : [response?.stdout, response?.stderr, response?.output].filter(value => typeof value === 'string').join('\n');
+  if (/\bwas already merged\b/i.test(output)) return null;
+  if (command.auto && !/\b(?:Merged|(?:Squashed|Rebased) and merged) pull request\b/i.test(output)) return null;
   const pr = lookup(command.id, command.repository);
+  const age = now() - Date.parse(pr?.mergedAt);
+  if (!Number.isFinite(age) || age < 0 || age > MERGE_WINDOW_MS) return null;
   const urlMatch = typeof pr?.url === 'string' ? pr.url.match(PR_URL) : null;
   if (!urlMatch || pr.state !== 'MERGED' || !pr.mergedAt || !/^[\da-f]{7,64}$/i.test(pr.mergeCommit?.oid ?? '') || !pr.baseRefName || !pr.headRefName) return null;
   if (command.headLock && pr.headRefOid?.toLowerCase() !== command.headLock) return null;

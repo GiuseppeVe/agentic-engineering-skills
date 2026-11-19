@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { chmodSync, closeSync, lstatSync, mkdirSync, openSync, unlinkSync } from 'node:fs';
+import { chmodSync, closeSync, lstatSync, mkdirSync, openSync, realpathSync, statSync, unlinkSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
@@ -133,4 +133,41 @@ function createMarker(marker) {
 
 function digest(value) {
   return createHash('sha256').update(value, 'utf8').digest('hex');
+}
+
+export function effectiveToolCwd(input) {
+  const base = input?.cwd;
+  const workdir = input?.tool_input?.workdir ?? input?.tool_input?.cwd;
+  if (workdir != null && (typeof workdir !== 'string' || !workdir.trim())) return null;
+  if (workdir && path.isAbsolute(workdir)) return workdir;
+  if (typeof base !== 'string' || !path.isAbsolute(base)) return null;
+  return workdir ? path.resolve(base, workdir) : base;
+}
+
+export function trustedExecutable(program, cwd, projectRoot) {
+  const workspace = realpathSync(cwd);
+  const excluded = [workspace, ...(projectRoot ? [projectRoot] : [])];
+  for (let directory = workspace; directory !== path.dirname(directory); directory = path.dirname(directory)) {
+    try {
+      lstatSync(path.join(directory, '.git'));
+      excluded.push(directory);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  for (const directory of (process.env.PATH ?? '').split(path.delimiter)) {
+    if (!path.isAbsolute(directory)) continue;
+    const candidate = path.join(directory, process.platform === 'win32' ? `${program}.exe` : program);
+    try {
+      const executable = realpathSync(candidate);
+      const isInWorkspace = [candidate, executable].some(file => excluded.some(root => {
+        const rel = path.relative(root, file);
+        return rel === '' || (rel !== '..' && !rel.startsWith(`..${path.sep}`) && !path.isAbsolute(rel));
+      }));
+      if (!isInWorkspace && statSync(executable).isFile()) return executable;
+    } catch (error) {
+      if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
+    }
+  }
+  throw new Error(`Cannot resolve trusted ${program} executable`);
 }

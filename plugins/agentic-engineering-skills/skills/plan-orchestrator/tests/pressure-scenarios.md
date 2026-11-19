@@ -124,3 +124,10 @@ run branch/worktree first.
 bootstrap. Each required a terminal, recorded shared run worktree, passed that
 same `workspace_ref` to every child, and blocked dispatch while setup was
 pending or definitively failed.
+
+22. **DeepSeek unavailable:** Ask the owner whether to retry, switch providers, or leave the task blocked.
+23. **T3 wait timeout:** Follow the returned next action without treating timeout as completion or cancellation.
+24. **Separate reviewer:** Verify implementation evidence before dispatching the distinct reviewer.
+25. **Failed correction:** Follow the owner-approved fallback after one unsuccessful correction.
+26. **Missing T3 tools:** Report the blocker and wait for the owner's fallback choice.
+27. **Advertised high variant:** Select it and verify it in the child record.

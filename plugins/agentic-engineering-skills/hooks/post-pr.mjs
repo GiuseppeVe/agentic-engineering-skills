@@ -3,7 +3,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { claimPrReminder, emitHookOutput, githubPullUrl, isSuccessfulToolEvent, parseHookInput, safeInline } from './hook-lib.mjs';
+import { claimPrReminder, effectiveToolCwd, trustedExecutable, emitHookOutput, githubPullUrl, isSuccessfulToolEvent, parseHookInput, safeInline } from './hook-lib.mjs';
 
 const DEFAULT_STEPS = [
   { skill: 'cleaning-repo-with-knip', role: 'ottimizza, non solo analizza: applica le correzioni sicure sulle modifiche della PR dopo aver verificato riferimenti, compatibilità e registro delle conservazioni; i finding fuori perimetro restano follow-up' },
@@ -106,7 +106,7 @@ export function postPrContext(input, { lookupBranch = getHeadBranch, steps = loa
   if (!isSuccessfulToolEvent(input) || !isPullRequestCreate(input)) return null;
   const url = githubPullUrl(input?.tool_response);
   if (!url || !PR_URL.test(url)) return null;
-  const branch = safeBranch(lookupBranch(url));
+  const branch = safeBranch(lookupBranch(url, effectiveToolCwd(input) ?? process.cwd()));
   const renderedSteps = normalizeSteps(steps);
   const list = renderedSteps.map((step, index) => `${index + 1}. skill \`${step.skill}\`${step.role ? ` (${safeInline(step.role, 300)})` : ''}`).join('\n');
   const verifier = fileURLToPath(new URL('./pr-workflow-check.mjs', import.meta.url));
@@ -147,9 +147,13 @@ function loadSteps() {
   } catch { return DEFAULT_STEPS; }
 }
 
-function getHeadBranch(url) {
-  const result = spawnSync('gh', ['pr', 'view', url, '--json', 'headRefName', '--jq', '.headRefName'], { encoding: 'utf8', timeout: 10_000, windowsHide: true });
-  return result.error || result.status !== 0 ? undefined : result.stdout.trim() || undefined;
+function getHeadBranch(url, cwd) {
+  try {
+    const result = spawnSync(trustedExecutable('gh', cwd), ['pr', 'view', url, '--json', 'url,headRefName'], { cwd, encoding: 'utf8', timeout: 10_000, windowsHide: true });
+    if (result.error || result.status !== 0) return undefined;
+    const pr = JSON.parse(result.stdout);
+    return pr.url?.toLowerCase() === url.toLowerCase() ? pr.headRefName : undefined;
+  } catch { return undefined; }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

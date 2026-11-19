@@ -31,6 +31,7 @@ Write the review record outside the non-ignored PR worktree files. Its `evidence
 
 ```json
 {
+  "pr_url": "<GitHub PR URL>",
   "head_sha": "<40-character PR head SHA>",
   "outcome": "passed",
   "independent": true,
@@ -84,3 +85,10 @@ node --test tests/plugin-hooks.test.mjs
 ```
 
 Tests validate the hook manifest and exercise each entrypoint with JSON on stdin and a fake `gh` executable on `PATH`. They also run concurrent PR hook processes to verify per-session dedup and temp isolation; they do not contact GitHub or perform a merge. Host trust and fresh-session discovery still need to be checked in the installed Codex or Claude Code environment.
+
+The preflight also accepts a verified follow-up limited to non-normative Markdown
+under `docs/`. Set `outcome` to `verified_non_normative_docs`, `independent` to
+`false`, and include the prior successful independent record as
+`previous_review`. Both evidence hashes must match, and the previous head
+must be an ancestor. Architecture, development, operations, work specs and
+agent instructions require fresh independent review.
