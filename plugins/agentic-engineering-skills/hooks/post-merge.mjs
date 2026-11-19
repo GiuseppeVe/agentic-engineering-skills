@@ -11,7 +11,7 @@ const MERGE_FLAGS = new Set(['--merge', '--squash', '--rebase', '--delete-branch
 
 export function parseMergeCommand(command) {
   const words = shellWords(command);
-  if (!words || words.shift()?.toLowerCase() !== 'gh') return null;
+  if (!words || !/^gh(?:\.exe)?$/i.test(words.shift() ?? "")) return null;
   let repository;
   const args = [];
   for (let i = 0; i < words.length; i++) {
@@ -28,7 +28,15 @@ export function parseMergeCommand(command) {
   }
   if (args.shift()?.toLowerCase() !== 'pr' || args.shift()?.toLowerCase() !== 'merge') return null;
   let id;
-  for (const token of args) {
+  let headLock;
+  for (let i = 0; i < args.length; i++) {
+    const token = args[i];
+    if (token === '--match-head-commit' || token.startsWith('--match-head-commit=')) {
+      const sha = token.includes('=') ? token.slice(token.indexOf('=') + 1) : args[++i];
+      if (headLock || !/^[a-f0-9]{40}$/i.test(sha ?? '')) return null;
+      headLock = sha.toLowerCase();
+      continue;
+    }
     if (MERGE_FLAGS.has(token)) continue;
     if (!id && (/^\d+$/.test(token) || PR_URL.test(token))) {
       id = token;
@@ -42,7 +50,7 @@ export function parseMergeCommand(command) {
     }
     return null;
   }
-  return { id, repository };
+  return { id, repository, ...(headLock && { headLock }) };
 }
 
 export function postMergeContext(input, { lookup = lookupPullRequest, currentRepository = getCurrentRepository } = {}) {
@@ -58,6 +66,7 @@ export function postMergeContext(input, { lookup = lookupPullRequest, currentRep
   const pr = lookup(command.id, command.repository);
   const urlMatch = typeof pr?.url === 'string' ? pr.url.match(PR_URL) : null;
   if (!urlMatch || pr.state !== 'MERGED' || !pr.mergedAt || !/^[\da-f]{7,64}$/i.test(pr.mergeCommit?.oid ?? '') || !pr.baseRefName || !pr.headRefName) return null;
+  if (command.headLock && pr.headRefOid?.toLowerCase() !== command.headLock) return null;
   const selectedNumber = command.id.match(PR_URL)?.[3] ?? command.id;
   if (selectedNumber.replace(/^0+/, '') !== urlMatch[3].replace(/^0+/, '')) return null;
   if (command.repository && `${urlMatch[1]}/${urlMatch[2]}`.toLowerCase() !== command.repository.toLowerCase()) return null;
@@ -68,7 +77,7 @@ function lookupPullRequest(id, repository) {
   const args = ['pr', 'view'];
   if (id) args.push(id);
   if (repository) args.push('--repo', repository);
-  args.push('--json', 'state,url,mergedAt,mergeCommit,baseRefName,headRefName');
+  args.push('--json', 'state,url,mergedAt,mergeCommit,baseRefName,headRefName,headRefOid');
   const result = spawnSync('gh', args, { encoding: 'utf8', timeout: 10_000, windowsHide: true });
   if (result.error || result.status !== 0) return null;
   try { return JSON.parse(result.stdout); } catch { return null; }
