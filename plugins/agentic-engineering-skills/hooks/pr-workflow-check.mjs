@@ -310,7 +310,7 @@ export function runCli(argv) {
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const result = runCli(process.argv.slice(2));
-  const label = result.ready ? (result.mode.startsWith('billing_fallback') ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
+  const label = result.ready ? (result.mode?.startsWith('billing_fallback') ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
   process.stdout.write(`${label}: ${result.ready ? result.head : result.reason}\n`);
   if (!result.ready) process.exitCode = 1;
 }
