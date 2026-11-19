@@ -244,6 +244,7 @@ function readReview(path, prUrl) {
     } catch { docsExceptionVerified = false; }
   }
 
+  let fallbackEvidenceValid = false;
   let fallbackReviewValid = false;
   if (review.billing_fallback) {
     const fb = review.billing_fallback;
@@ -295,10 +296,10 @@ export function runCli(argv) {
     if (!prUnchanged(after)) return blocked('PR head or base changed or PR closed');
     if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
     if (result.ready && !evidenceUnchanged(after)) return blocked('Review evidence or CI policy changed during preflight');
-    if (result.ready && result.mode === 'hosted') {
+    if (result.ready && ['hosted', 'hosted_applicable'].includes(result.mode)) {
       const latestChecks = JSON.parse(command('gh', ['pr', 'checks', url, '--json', 'name,bucket,link'], { allowed: [0, 1, 8] }));
       const latest = assessPreflight({ ...inputs, checks: latestChecks });
-      if (!latest.ready || latest.mode !== 'hosted') return blocked('Hosted CI checks changed during preflight');
+      if (!latest.ready || latest.mode !== result.mode) return blocked('Hosted CI checks changed during preflight');
       const final = view(url, 'headRefOid,headRefName,state,baseRefOid,baseRefName');
       if (!prUnchanged(final)) return blocked('PR head or base changed or PR closed');
       if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
@@ -309,7 +310,7 @@ export function runCli(argv) {
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const result = runCli(process.argv.slice(2));
-  const label = result.ready ? (result.mode === 'billing_fallback' ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
+  const label = result.ready ? (result.mode.startsWith('billing_fallback') ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
   process.stdout.write(`${label}: ${result.ready ? result.head : result.reason}\n`);
   if (!result.ready) process.exitCode = 1;
 }

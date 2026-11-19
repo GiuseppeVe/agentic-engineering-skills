@@ -86,8 +86,8 @@
     {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
-      "localSha256": "2b4fc4e7f949be2f9723f132346cd2ac9b89ee8227ff1bfdf7dcfb1ba1091672",
-      "releaseCommit": "fa26cc9aacd52b0e7367a32ca23b607ef2e7074b",
+      "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
+      "releaseCommit": "d8d742e72bb765ece66a44762bdb2e40a928bf6b",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -250,7 +250,7 @@
     {
       "name": "how-to-use-codex",
       "sourceType": "original",
-      "localSha256": "b3eb41a473139dda598b76ca00d255d3fe10129ddb50a1e9bd0e0f71880fbe5d",
+      "localSha256": "e5c9fae8478714792d239f27b620a30faf63dbc52b3c92aec727678a6847b7b1",
       "releaseCommit": "fa26cc9aacd52b0e7367a32ca23b607ef2e7074b",
       "license": "MIT",
       "payloadType": "file",

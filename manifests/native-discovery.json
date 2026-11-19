@@ -5,7 +5,7 @@
   "environment": {
     "isolation": "Separate temporary Codex and Claude Code profiles. Local marketplace source and installed payload trees were compared. No credentials or model requests were used. HTTP proxy variables pointed at an unavailable local endpoint.",
     "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
-    "payloadRefresh": "Both hosts installed version 1.1.1 from the local marketplace. Configured inventories and payload hashes matched source bytes."
+    "payloadRefresh": "Version 1.1.2 source hashes are pinned here. CI verifies them against fresh isolated Codex and Claude Code installations."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:e1064f0aa6d2bc808435a953b0f2ad489dcab91332e80b1f75045d1456311fc6",
-        "fullTreeHash": "sha256:8900ae7e514e8816a1a51dcb985b14aa26160726ec6b4e5daa9d487554a4152f",
+        "treeHash": "sha256:3d54fd9992ee3f3fc5eee011da91fbe12bc1f614247deef2d87ea9391ff24017",
+        "fullTreeHash": "sha256:fd29ebc629961b8ecfe62e8089ab310311feb1617b1dc68e9b752ac25c9019ba",
         "fileCount": 517
       },
       "commands": [
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:d516607e0318d82c43804c0f633a9918b4713ef45c034597606e3dc96d56c111",
-        "fullTreeHash": "sha256:8900ae7e514e8816a1a51dcb985b14aa26160726ec6b4e5daa9d487554a4152f",
+        "treeHash": "sha256:422b058420d311e03ebcb20d736ee08e020c1d22bc47e5cc386dd48c16c6d2e8",
+        "fullTreeHash": "sha256:fd29ebc629961b8ecfe62e8089ab310311feb1617b1dc68e9b752ac25c9019ba",
         "fileCount": 517
       },
       "installedAgents": [

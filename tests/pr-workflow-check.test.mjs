@@ -177,7 +177,8 @@ test('CLI verifies real evidence and fails closed for CI, stale heads and failed
       assert.notEqual(result.status, null, `${mode} CLI terminated without an exit status (signal=${result.signal})`);
       return result;
     };
-    assert.equal(invoke('preflight').status, 0, 'self-dependent pending check does not deadlock completed CI');
+    const initial = invoke('preflight');
+    assert.equal(initial.status, 0, initial.stdout || initial.stderr);
     const incorrectlyReady = [];
     for (const [description, checksAfter, checksStatusAfter, finalHead] of [
       ['a failed required check', [{ name: 'tests', bucket: 'fail' }, { name: 'pr-skills-check', bucket: 'pending' }]],
