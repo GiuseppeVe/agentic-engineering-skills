@@ -14,51 +14,98 @@ const MARKER = /^<!--\s*pr-skills:v1\s+(\{[^\r\n]*\})\s*-->/;
 const SELF_CHECK = 'pr-skills-check';
 const blocked = (reason) => ({ ready: false, reason });
 
+const nonempty = value => typeof value === 'string' && !!value.trim();
+const strings = values => Array.isArray(values) && values.every(nonempty);
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+function validReviewRecord(review, head, prUrl) {
+  return review?.head_sha === head && typeof review.pr_url === 'string' && URL.test(prUrl ?? '') &&
+    review.pr_url.toLowerCase() === prUrl.toLowerCase() && nonempty(review.reviewer) &&
+    nonempty(review.evidence) && HASH.test(review.evidence_sha256 ?? '');
+}
+
+function independentReview(review, head, prUrl) {
+  return validReviewRecord(review, head, prUrl) && review.outcome === 'passed' && review.independent === true;
+}
+
+function docsReview(review, head, prUrl) {
+  const previous = review?.previous_review;
+  return validReviewRecord(review, head, prUrl) && review.outcome === 'verified_non_normative_docs' && review.independent === false &&
+    SHA.test(previous?.head_sha ?? '') && previous.head_sha !== head && independentReview(previous, previous.head_sha, prUrl);
+}
+
+function validGateRecord(actual, policy) {
+  if (!strings(actual.commands) || !strings(actual.tool_versions) || !strings(actual.services) ||
+      !same(actual.tool_versions, policy.tool_versions) || !same(actual.services, policy.services) || !nonempty(policy.coverage) ||
+      actual.coverage !== policy.coverage || !strings(policy.commands) || !policy.commands.length) return false;
+
+  if (actual.outcome === 'passed') {
+    return actual.exit_code === 0 && actual.equivalent === true && same(actual.commands, policy.commands) && actual.unverified == null &&
+      (policy.runtime_reference_required !== true || validRuntimeReference(actual.runtime_reference));
+  }
+  if (actual.outcome !== 'partial' || actual.equivalent !== false ||
+      actual.exit_code !== (actual.commands.length ? 0 : null) || !Array.isArray(actual.unverified) || !actual.unverified.length ||
+      actual.unverified.some(gap => !gap || !policy.commands.includes(gap.command) || !nonempty(gap.reason) || !nonempty(gap.missing_environment))) return false;
+
+  const gaps = new Set(actual.unverified.map(gap => gap.command));
+  return same(actual.commands, policy.commands.filter(command => actual.commands.includes(command))) &&
+    policy.commands.every(command => actual.commands.includes(command) || gaps.has(command)) &&
+    (policy.runtime_reference_required !== true || validRuntimeReference(actual.runtime_reference) || actual.commands.every(command => gaps.has(command)));
+}
+
+function validRuntimeReference(reference) {
+  return reference && nonempty(reference.runner_image) && /^\d+\.\d+\.\d+$/.test(reference.hosted_node_version ?? '') &&
+    reference.local_node_version === reference.hosted_node_version &&
+    /^https:\/\/github\.com\/actions\/runner-images\/(?:releases\/tag|blob)\/[\w%./-]+$/i.test(reference.reference_url ?? '') &&
+    nonempty(reference.evidence) && HASH.test(reference.evidence_sha256 ?? '');
+}
+
 // Review evidence is a recorded assertion, not proof of the review's quality.
-export function assessPreflight({ headBefore, headAfter, workspaceHead, clean, state, checks, review, evidenceExists, prUrl, fallbackEvidenceValid, fallbackReviewValid, trustedPolicy, billingVerified }) {
+export function assessPreflight({ headBefore, headAfter, workspaceHead, clean, state, checks, review, evidenceExists, docsExceptionVerified, prUrl, fallbackEvidenceValid, fallbackReviewValid, trustedPolicy, billingVerified }) {
   if (!SHA.test(headBefore ?? '') || headBefore !== headAfter || headBefore !== workspaceHead) return blocked('PR or workspace head changed');
   if (state !== 'OPEN' || clean !== true) return blocked('PR is not open or worktree is dirty');
   if (!Array.isArray(checks) || checks.some(c => !c || typeof c.name !== 'string' || typeof c.bucket !== 'string')) return blocked('CI results unavailable');
-  const independentChecks = checks.filter(c => c.name !== SELF_CHECK);
   if (!Array.isArray(review?.required_checks) || !review.required_checks.length || review.required_checks.some(name => typeof name !== 'string' || !name.trim() || name === SELF_CHECK) || new Set(review.required_checks).size !== review.required_checks.length) return blocked('Declared required CI checks are missing');
-  if (!review || review.head_sha !== headBefore || review.outcome !== 'passed' || review.independent !== true ||
-      typeof review.reviewer !== 'string' || !review.reviewer.trim() || typeof review.evidence !== 'string' || !review.evidence.trim() ||
-      !HASH.test(review.evidence_sha256 ?? '') || evidenceExists !== true) return blocked('Independent review evidence missing, stale or unsuccessful');
-  if (trustedPolicy && (!Array.isArray(trustedPolicy.gates) || !trustedPolicy.gates.length ||
+  if (evidenceExists !== true || (!independentReview(review, headBefore, prUrl) &&
+      !(docsReview(review, headBefore, prUrl) && docsExceptionVerified === true))) return blocked('Independent review evidence missing, stale or unsuccessful');
+  const excluded = review.excluded_checks ?? [];
+  if (!Array.isArray(excluded) || (excluded.length && !trustedPolicy) ||
+      excluded.some(check => !check || !nonempty(check.name) || !nonempty(check.reason) || check.name === SELF_CHECK)) return blocked('CI exclusions lack a trusted policy or an explicit reason');
+  const declared = [...review.required_checks, ...excluded.map(check => check.name)];
+  if (new Set(declared).size !== declared.length || (trustedPolicy && (!Array.isArray(trustedPolicy.gates) || !trustedPolicy.gates.length ||
       new Set(trustedPolicy.gates.map(g => g?.name)).size !== trustedPolicy.gates.length ||
-      trustedPolicy.gates.length !== review.required_checks.length || trustedPolicy.gates.some(g => !g || typeof g.name !== 'string' || !review.required_checks.includes(g.name)))) return blocked('Declared checks do not match trusted CI policy');
-  const hostedGreen = independentChecks.length > 0 && independentChecks.every(c => c.bucket === 'pass') && review.required_checks.every(name => independentChecks.some(c => c.name === name));
-  if (hostedGreen) return { ready: true, head: headBefore, mode: 'hosted' };
+      trustedPolicy.gates.length !== declared.length || trustedPolicy.gates.some(g => !g || !declared.includes(g.name))))) return blocked('Declared checks do not match trusted CI policy');
+  const independentChecks = checks.filter(c => c.name !== SELF_CHECK);
+  const applicableChecks = independentChecks.filter(c => !excluded.some(item => item.name === c.name));
+  const applicableGreen = applicableChecks.every(c => c.bucket === 'pass') && review.required_checks.every(name => applicableChecks.some(c => c.name === name));
+  if (applicableGreen) {
+    const hostedGreen = independentChecks.every(c => c.bucket === 'pass') && declared.every(name => independentChecks.some(c => c.name === name));
+    return { ready: true, head: headBefore, mode: hostedGreen ? 'hosted' : 'hosted_applicable' };
+  }
   const fallback = review.billing_fallback;
-  const nonGreen = independentChecks.filter(c => c.bucket !== 'pass').map(c => c.name);
-  const missing = review.required_checks.filter(name => !independentChecks.some(c => c.name === name));
+  const nonGreen = applicableChecks.filter(c => c.bucket !== 'pass').map(c => c.name);
+  const missing = review.required_checks.filter(name => !applicableChecks.some(c => c.name === name));
   if (!fallback || fallback.kind !== 'github_billing' || fallback.head_sha !== headBefore || fallback.pr_url !== prUrl || !URL.test(prUrl ?? '') ||
       fallback.billing_block_confirmed !== true || typeof fallback.confirmed_by !== 'string' || !fallback.confirmed_by.trim() || fallbackEvidenceValid !== true || fallbackReviewValid !== true ||
       !Array.isArray(fallback.billing_blocked_checks) || !fallback.billing_blocked_checks.length || new Set(fallback.billing_blocked_checks).size !== fallback.billing_blocked_checks.length ||
       fallback.billing_blocked_checks.some(name => typeof name !== 'string' || !review.required_checks.includes(name)) ||
-      missing.length || !nonGreen.length || independentChecks.some(c => c.bucket !== 'pass' && c.bucket !== 'fail') ||
-      new Set(independentChecks.map(c => c.name)).size !== independentChecks.length ||
+      missing.length || !nonGreen.length || applicableChecks.some(c => c.bucket !== 'pass' && c.bucket !== 'fail') ||
+      new Set(applicableChecks.map(c => c.name)).size !== applicableChecks.length ||
       [...nonGreen, ...missing].some(name => !fallback.billing_blocked_checks.includes(name)) || fallback.billing_blocked_checks.some(name => !nonGreen.includes(name)) ||
       !Array.isArray(fallback.gates) || fallback.gates.length !== review.required_checks.length ||
       new Set(fallback.gates.map(gate => gate?.name)).size !== review.required_checks.length ||
-      fallback.gates.some(gate => !gate || !review.required_checks.includes(gate.name) || gate.head_sha !== headBefore || gate.outcome !== 'passed' || gate.exit_code !== 0 || gate.equivalent !== true ||
-        !Array.isArray(gate.commands) || !gate.commands.length || gate.commands.some(value => typeof value !== 'string' || !value.trim()) ||
-        !Array.isArray(gate.tool_versions) || !gate.tool_versions.length || gate.tool_versions.some(value => typeof value !== 'string' || !value.trim()) ||
-        !Array.isArray(gate.services) || gate.services.some(value => typeof value !== 'string' || !value.trim()) || typeof gate.coverage !== 'string' || !gate.coverage.trim())) return blocked('CI checks missing or not green; billing fallback evidence incomplete');
-  const gates = trustedPolicy?.gates;
+      fallback.gates.some(gate => !gate || !review.required_checks.includes(gate.name) || gate.head_sha !== headBefore)) return blocked('CI checks missing or not green; billing fallback evidence incomplete');
+  const gates = trustedPolicy?.gates.filter(gate => review.required_checks.includes(gate.name));
   if (billingVerified !== true || !Array.isArray(gates) || !gates.length ||
       gates.length !== review.required_checks.length || new Set(gates.map(g => g?.name)).size !== gates.length ||
-      gates.some(g => !g || !review.required_checks.includes(g.name) ||
-        !Array.isArray(g.commands) || !g.commands.length || g.commands.some(v => typeof v !== 'string' || !v.trim()) ||
-        !Array.isArray(g.tool_versions) || !g.tool_versions.length || g.tool_versions.some(v => typeof v !== 'string' || !v.trim()) ||
-        !Array.isArray(g.services) || g.services.some(v => typeof v !== 'string' || !v.trim()) || typeof g.coverage !== 'string' || !g.coverage.trim() ||
-        !fallback.gates.some(actual => actual.name === g.name && JSON.stringify(actual.commands) === JSON.stringify(g.commands) &&
-          JSON.stringify(actual.tool_versions) === JSON.stringify(g.tool_versions) && JSON.stringify(actual.services) === JSON.stringify(g.services) && actual.coverage === g.coverage &&
-          (g.runtime_reference_required !== true || (actual.runtime_reference && typeof actual.runtime_reference.runner_image === 'string' && !!actual.runtime_reference.runner_image.trim() &&
-            /^\d+\.\d+\.\d+$/.test(actual.runtime_reference.hosted_node_version ?? '') && actual.runtime_reference.local_node_version === actual.runtime_reference.hosted_node_version &&
-            /^https:\/\/github\.com\/actions\/runner-images\/(?:releases\/tag|blob)\/[\w%./-]+$/i.test(actual.runtime_reference.reference_url ?? '') &&
-            typeof actual.runtime_reference.evidence === 'string' && !!actual.runtime_reference.evidence.trim() && HASH.test(actual.runtime_reference.evidence_sha256 ?? '')))))) return blocked('Billing fallback lacks verified GitHub evidence or trusted complete policy');
-  return { ready: true, head: headBefore, mode: 'billing_fallback' };
+      gates.some(gate => !gate || !review.required_checks.includes(gate.name) ||
+        !fallback.gates.some(actual => actual.name === gate.name && validGateRecord(actual, gate)))) return blocked('Billing fallback lacks verified GitHub evidence or valid policy results');
+  const unverified = fallback.gates.flatMap(gate => (gate.unverified ?? []).map(({ command, reason, missing_environment }) =>
+    ({ gate: gate.name, command, reason, missing_environment })));
+  return {
+    ready: true, head: headBefore, ...(unverified.length && { unverified }),
+    mode: unverified.length ? 'billing_fallback_partial' : 'billing_fallback',
+  };
 }
 
 export function markerForHead(head, comments) {
@@ -179,11 +226,24 @@ function validEvidence(recordPath, entry) {
   if (size < 1 || size > 4_000_000) return false;
   return createHash('sha256').update(readFileSync(evidencePath)).digest('hex') === entry.evidence_sha256.toLowerCase();
 }
-function readReview(path) {
+function readReview(path, prUrl) {
   const recordPath = resolve(path);
   if (statSync(recordPath).size > 1_000_000) throw new Error('Review record too large');
   const review = JSON.parse(readFileSync(recordPath, 'utf8'));
   const evidenceExists = validEvidence(recordPath, review);
+  let docsExceptionVerified = false;
+  if (docsReview(review, review.head_sha, prUrl) && SHA.test(review.head_sha ?? '')) {
+    const previous = review.previous_review;
+    try {
+      const changedPaths = command('git', ['diff', '--name-only', '-z', '--no-ext-diff', '--no-renames', previous.head_sha, review.head_sha, '--']).split('\0').filter(Boolean);
+      docsExceptionVerified = validEvidence(recordPath, previous) &&
+        command('git', ['merge-base', previous.head_sha, review.head_sha]).trim() === previous.head_sha &&
+        changedPaths.length > 0 && changedPaths.every(file => /^docs\/.*\.mdx?$/i.test(file) &&
+          !/^docs\/(?:architecture|development|operations|work\/specs)\//i.test(file) &&
+          !/(?:^|\/)(?:AGENTS|CLAUDE)\.md$/i.test(file));
+    } catch { docsExceptionVerified = false; }
+  }
+
   let fallbackEvidenceValid = false;
   let fallbackReviewValid = false;
   if (review.billing_fallback) {
@@ -197,7 +257,7 @@ function readReview(path) {
         createHash('sha256').update(JSON.stringify(fb)).digest('hex') === audit.verified_fallback_sha256.toLowerCase() && validEvidence(recordPath, audit);
     } catch { fallbackEvidenceValid = false; fallbackReviewValid = false; }
   }
-  return { review, evidenceExists, fallbackEvidenceValid, fallbackReviewValid };
+  return { review, evidenceExists, docsExceptionVerified, fallbackEvidenceValid, fallbackReviewValid };
 }
 export function runCli(argv) {
   const [mode, url, reviewPath, ...extra] = argv;
@@ -213,7 +273,7 @@ export function runCli(argv) {
     const workspaceHead = command('git', ['rev-parse', 'HEAD']).trim();
     const clean = command('git', ['status', '--porcelain']).trim() === '';
     const checks = JSON.parse(command('gh', ['pr', 'checks', url, '--json', 'name,bucket,link'], { allowed: [0, 1, 8] }));
-    const review = readReview(reviewPath);
+    const review = readReview(reviewPath, url);
     const trustedPolicy = readTrustedPolicy(url, before);
     const inputs = { headBefore: before.headRefOid, headAfter: before.headRefOid, workspaceHead, clean, state: before.state, checks, prUrl: url, trustedPolicy, ...review };
     let result = assessPreflight(inputs);
@@ -231,15 +291,15 @@ export function runCli(argv) {
     }
     const prUnchanged = current => before.state === 'OPEN' && current.state === 'OPEN' && before.headRefOid === current.headRefOid && before.headRefName === current.headRefName && before.baseRefOid === current.baseRefOid && before.baseRefName === current.baseRefName;
     const workspaceUnchanged = () => command('git', ['rev-parse', 'HEAD']).trim() === workspaceHead && command('git', ['status', '--porcelain']).trim() === '';
-    const evidenceUnchanged = current => JSON.stringify(readReview(reviewPath)) === JSON.stringify(review) && JSON.stringify(readTrustedPolicy(url, current)) === JSON.stringify(trustedPolicy);
+    const evidenceUnchanged = current => JSON.stringify(readReview(reviewPath, url)) === JSON.stringify(review) && JSON.stringify(readTrustedPolicy(url, current)) === JSON.stringify(trustedPolicy);
     const after = view(url, 'headRefOid,headRefName,state,baseRefOid,baseRefName');
     if (!prUnchanged(after)) return blocked('PR head or base changed or PR closed');
     if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
     if (result.ready && !evidenceUnchanged(after)) return blocked('Review evidence or CI policy changed during preflight');
-    if (result.ready && result.mode === 'hosted') {
+    if (result.ready && ['hosted', 'hosted_applicable'].includes(result.mode)) {
       const latestChecks = JSON.parse(command('gh', ['pr', 'checks', url, '--json', 'name,bucket,link'], { allowed: [0, 1, 8] }));
       const latest = assessPreflight({ ...inputs, checks: latestChecks });
-      if (!latest.ready || latest.mode !== 'hosted') return blocked('Hosted CI checks changed during preflight');
+      if (!latest.ready || latest.mode !== result.mode) return blocked('Hosted CI checks changed during preflight');
       const final = view(url, 'headRefOid,headRefName,state,baseRefOid,baseRefName');
       if (!prUnchanged(final)) return blocked('PR head or base changed or PR closed');
       if (!workspaceUnchanged()) return blocked('Workspace changed during preflight');
@@ -250,7 +310,7 @@ export function runCli(argv) {
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const result = runCli(process.argv.slice(2));
-  const label = result.ready ? (result.mode === 'billing_fallback' ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
+  const label = result.ready ? (result.mode?.startsWith('billing_fallback') ? 'READY LOCAL BILLING FALLBACK (hosted CI is not green)' : 'READY') : 'NOT READY';
   process.stdout.write(`${label}: ${result.ready ? result.head : result.reason}\n`);
   if (!result.ready) process.exitCode = 1;
 }

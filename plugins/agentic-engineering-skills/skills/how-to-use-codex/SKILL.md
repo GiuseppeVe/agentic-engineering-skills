@@ -5,6 +5,36 @@ description: Use when a user says "scrivi un prompt per Codex", "genera un promp
 
 # How to Use Codex
 
+## Build the prompt
+
+Classify the task, then include applicable sections in this order:
+
+```text
+<task>
+Goal: [observable outcome].
+Context: [repo/path, domain facts, sources, current behaviour].
+Scope: [included work]. Exclude: [out-of-scope work].
+Requirements: [functional/nonfunctional constraints and acceptance criteria].
+Authority: [permitted local actions; actions needing confirmation].
+Validation: [checks and required evidence].
+Deliverable: [exact final-answer structure and required content].
+</task>
+```
+
+| Task class | Default authority |
+|---|---|
+| `answer/explain/review/diagnose/plan` | Inspect and report only; no changes. |
+| `change/build/fix` | In-scope local edits and non-destructive validation. |
+
+Require confirmation for external writes, destructive actions, purchases, credentials, installs, commit/push, and material scope expansion unless the user explicitly authorized them.
+
+- Keep context that changes decisions: relevant paths, interfaces, expected behaviour, constraints, sources, and examples addressing measured gaps.
+- Turn vague qualities into checks: `fast` → latency budget; `safe` → backup/rollback condition; CSV quality → fields, escaping, encoding, row set.
+- For unknowns, inspect first; ask only when ambiguity materially affects outcome, safety, or scope. Do not invent product decisions.
+- Request evidence appropriate to the task: exact checks, artifact, diff, benchmark, or citations. Avoid process theatre.
+- Specify required output content and what may be omitted; generic "be concise" is insufficient.
+- Expose only relevant tools/sources; omit repeated policy, tool instructions, examples, and optional boilerplate.
+
 ## Goal
 
 Create one paste-ready prompt. Input: task + supplied context. Output: task-specific prompt plus material missing decisions. Use a lean outcome contract: goal, context, hard constraints, authority, proof, success criteria, output shape. State rules once. Do not narrate steps unless they encode real requirements.

@@ -7,6 +7,8 @@ description: Use when implementing exactly one assigned task from an approved pl
 
 When task materials do not specify compatible routing, Codex uses GPT-6.1 Sol/high for orchestration and GPT-6.1 Terra/high for implementation subagents; Claude Code uses Sonnet 5.5/high for orchestration and Sonnet 5.5/medium for implementation subagents. An explicit owner- or plan-selected available model and effort takes precedence; record effective routing.
 
+When the whole task thread is routed to DeepSeek V4.1 Flash through Vibe, read the [DeepSeek Vibe execution profile](references/deepseek-vibe-profile.md). The task scope, verification, and completion contract still apply.
+
 ## Purpose
 
 Implement exactly one task assigned by a parent orchestrator. This thread owns decomposition and integration only inside that task's scope; it does not orchestrate other plan tasks. Its scope is implementation only and excludes review of the task's implementation.
