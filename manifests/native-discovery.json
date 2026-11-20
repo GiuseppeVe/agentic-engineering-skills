@@ -126,8 +126,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:7845b9ffe0c7bdefe25cb215c4fc08cbc02df699b294a1febb4d705e25d75e36",
-        "fullTreeHash": "sha256:584f1338584aa196b35b14644cd539947578e73077ad8f7a262afff8f711cfa0",
+        "treeHash": "sha256:9139b2165aeebf2224ef411823c2f5b5f08596aeae768afb009c22b5055788e4",
+        "fullTreeHash": "sha256:d67ae590a11491c8985e636db5ed4a4a7bfb31387f960e1c2ffd6c3b7ceed70c",
         "fileCount": 518
       },
       "commands": [
@@ -227,8 +227,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:7cf07330d8ad09edfa8f65aa224621e556cedf0c0cd44ef647e37157c61ab5e6",
-        "fullTreeHash": "sha256:584f1338584aa196b35b14644cd539947578e73077ad8f7a262afff8f711cfa0",
+        "treeHash": "sha256:eb65886c265f94e73b0933fd215101a788d5e74a19f9e47160f75594e8d9d68b",
+        "fullTreeHash": "sha256:d67ae590a11491c8985e636db5ed4a4a7bfb31387f960e1c2ffd6c3b7ceed70c",
         "fileCount": 518
       },
       "installedAgents": [
