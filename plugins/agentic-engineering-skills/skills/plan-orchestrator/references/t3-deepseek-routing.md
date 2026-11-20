@@ -24,8 +24,10 @@ follow [Fallback](#fallback).
 
 Create one fresh child per plan task with:
 
-- the exact task instruction plus plan and spec paths in `task`, without parent
-  conversation history;
+- the implementation brief from the [runtime protocol](runtime-protocol.md#subthread-assignments)
+  in `task`: the task's expected outcome, then the exact task instruction, its
+  applicable requirements, and plan and spec paths, without parent conversation
+  history;
 - `target.providerInstanceId` and `target.model` set to the resolved values;
 - `options.variant` set to the resolved variant, using `high` when supported;
 - `role: implementation`;

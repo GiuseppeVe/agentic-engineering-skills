@@ -307,13 +307,13 @@ test('workflow guide covers every public skill', () => {
   for (const name of names) assert.match(workflow, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
 });
 
-test('compatibility names exactly two supported hosts and marks native verification pending', () => {
+test('compatibility names exactly two supported hosts and records verified installed payloads', () => {
   const source = read('docs/compatibility.md');
   const rows = tableRows(source);
   assert.equal(rows.length, 2);
   assert.deepEqual(rows.map(cells).map(([host, status]) => ({ host, status })), [
-    { host: 'Codex', status: 'Pending native re-verification' },
-    { host: 'Claude Code', status: 'Pending native re-verification' },
+    { host: 'Codex', status: 'Installed payload verified' },
+    { host: 'Claude Code', status: 'Installed payload verified' },
   ]);
   assert.match(source, /`codex plugin list --available --json`/);
   assert.match(source, /`claude plugin list`/);
@@ -348,7 +348,7 @@ test('selective installation has one lock-derived row per skill', () => {
 
 test('selective installation includes mandatory skill prerequisites', () => {
   const required = [
-    ['brainstorming', 'writing-plans'],
+    ['brainstorming', 'to-spec'],
     ['grill-me', 'grilling'],
     ['retro', 'writing-for-agents'],
     ['improve-codebase-architecture', 'codebase-design'],

@@ -6,7 +6,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | --- | --- | --- | --- |
 | `archify` | None | `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-LICENSE`; `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-THIRD_PARTY_NOTICES` | Design: checked standalone diagrams and explainers |
 | `ask-matt` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Understand: route to a fitting skill or flow |
-| `brainstorming` | `writing-plans` | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
+| `brainstorming` | `to-spec` | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
 | `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
 | `deslopping-cleanup` | None | `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
@@ -18,7 +18,6 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `graphify-start` | None | `LICENSE` | Understand: route codebase questions through project Graphify protocol |
 | `handoff` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Plan: save a concise resumable handoff |
 | `orchestrating-gemini-workers` | None | `LICENSE` | Implement: independent bounded file-writing with sandboxed Gemini workers |
-| `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
 | `task-implement` | None | `LICENSE` | Implement: one assigned plan task with bounded implementation subtasks and task-scoped verification |
 | `coordinating-implementation-plans` | `plan-orchestrator` | `LICENSE` | Implement: coordinate approved plans and dependencies |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE`; `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-NOTICE` | Design: frontend craft and critique |
@@ -59,6 +58,6 @@ For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus
 
 `task-implement` carries default model guidance for both hosts when task materials do not specify compatible routing. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. An explicit owner- or plan-selected available model and effort takes precedence. When a dedicated architecture-sensitive or integration packet is used, its contract routes Codex to GPT-6.1 Sol/high and Claude Code to Sonnet 5.5/high, or retains the work with the controller. Confirm and record selected models and effort against current host routing controls.
 
-Both hosts discover the same 35 skills from the shared `skills/` directory; no host-specific skill root is needed.
+Both hosts discover the same 34 skills from the shared `skills/` directory; no host-specific skill root is needed.
 
 After copying, preserve flat layout `<skills-root>/<name>/SKILL.md`. Re-run host discovery. For provenance meaning see [provenance](provenance.md); for modification rules see [customization](customization.md).

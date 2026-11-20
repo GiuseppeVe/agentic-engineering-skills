@@ -19,8 +19,9 @@ test("shared Task Implement preserves the approved model split and task boundary
   assert.match(skill, /explicit owner- or plan-selected available model and effort takes precedence/);
   assert.match(skill, /Implement exactly one task assigned by a parent orchestrator/);
   assert.match(skill, /scope is implementation only and excludes review of the task's implementation/);
-  assert.match(skill, /The parent provides only: the instruction for the assigned task, its implementation plan, the governing specification, and this skill/);
+  assert.match(skill, /Start from the assigned task's expected outcome, instruction, plan, and governing\s+specification/);
   assert.match(skill, /Integrate packet results within the assigned task/);
+  assert.match(packet, /objective \(the observable part of the task outcome owned by this packet\)/);
   assert.match(packet, /allowed files/);
   assert.match(packet, /disjoint allowed files/);
   assert.match(packet, /GPT-6\.1 Sol with high effort on Codex/);

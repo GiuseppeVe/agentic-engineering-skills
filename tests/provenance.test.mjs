@@ -396,7 +396,7 @@ test("adapted and original local imports retain provenance contracts", async () 
     assert.ok((await stat(patchUrl)).size > 0);
     assert.doesNotMatch(await readFile(patchUrl, "utf8"), /(?:C:\\\\Users|\\\\wsl\.localhost|\/home\/[^/]+)/);
   }
-  for (const name of ["task-implement", "cleaning-repo-with-knip", "how-to-use-codex", "plan-orchestrator", "coordinating-implementation-plans", "simplify"]) {
+  for (const name of ["task-implement", "cleaning-repo-with-knip", "plan-orchestrator", "coordinating-implementation-plans", "simplify"]) {
     const entry = byName.get(name);
     assert.equal(entry.sourceType, "original");
     assert.equal("revision" in entry, false);
