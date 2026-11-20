@@ -1,6 +1,6 @@
 # Compatibility
 
-Codex and Claude Code are the supported hosts. Native verification is pending for this updated payload. Other Agent Skills hosts remain unverified manual-adaptation targets.
+Codex and Claude Code are the supported hosts. Isolated native installation and byte parity are verified for this payload; fresh-session skill invocation is not. Other Agent Skills hosts remain unverified manual-adaptation targets.
 
 | Host | Status | Payload |
 | --- | --- | --- |

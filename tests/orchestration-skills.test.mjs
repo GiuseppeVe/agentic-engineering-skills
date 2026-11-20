@@ -38,7 +38,7 @@ test("plan orchestrator dispatches dependency-ready implementation and review wi
   assert.match(protocol, /first five lines of the invoked skill\x27s body after its frontmatter/);
   assert.match(source, /receive its uncommitted diff and evidence/);
   assert.match(source, /start the implementation brief with the task's expected\s+outcome/);
-  assert.match(source, /the mapped requirements, fixes in-scope findings, reruns the checks the plan\s+requires plus those affected by its fixes/);
+  assert.match(source, /the mapped requirements, fixes in-scope findings, reruns the final-state checks the\s+plan assigns to this task plus those affected by its fixes/);
   assert.match(source, /Start a separate clean-room/);
   assert.match(protocol, /Independent ready tasks may run concurrently only when their workspaces and mutation scopes are isolated/);
   assert.match(source, /commits only with task-commit authority/);

@@ -22,8 +22,9 @@ expected outcome as amended by any approved amendment, the original task
 instruction, those amendments,
 the plan and spec paths, the exact diff, and objective command evidence.
 Exclude implementer conclusions and prior verdicts. The reviewer verifies
-the mapped requirements, fixes in-scope findings, reruns the checks the plan
-requires plus those affected by its fixes, and commits only with task-commit authority.
+the mapped requirements, fixes in-scope findings, reruns the final-state checks the
+plan assigns to this task plus those affected by its fixes, verifies any RED
+from its recorded evidence, and commits only with task-commit authority.
 
 Follow the runtime protocol for task acceptance, parallel dispatch, integration,
 and any authorized plan PR. Before claiming plan completion, verify the plan's

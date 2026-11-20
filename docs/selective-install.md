@@ -58,6 +58,6 @@ For Impeccable, also retain `plugins/agentic-engineering-skills/licenses/pbakaus
 
 `task-implement` carries default model guidance for both hosts when task materials do not specify compatible routing. Codex orchestration uses GPT-6.1 Sol/high and implementation subagents use GPT-6.1 Terra/high; Claude Code orchestration uses Sonnet 5.5/high and implementation subagents use Sonnet 5.5/medium. An explicit owner- or plan-selected available model and effort takes precedence. When a dedicated architecture-sensitive or integration packet is used, its contract routes Codex to GPT-6.1 Sol/high and Claude Code to Sonnet 5.5/high, or retains the work with the controller. Confirm and record selected models and effort against current host routing controls.
 
-Both hosts discover the same 35 skills from the shared `skills/` directory; no host-specific skill root is needed.
+Both hosts discover the same 34 skills from the shared `skills/` directory; no host-specific skill root is needed.
 
 After copying, preserve flat layout `<skills-root>/<name>/SKILL.md`. Re-run host discovery. For provenance meaning see [provenance](provenance.md); for modification rules see [customization](customization.md).
