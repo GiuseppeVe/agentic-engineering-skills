@@ -16,7 +16,9 @@ Implement exactly one task assigned by a parent orchestrator. This thread owns d
 ## Inputs and scope
 
 Start from the assigned task's expected outcome, instruction, plan, and governing
-specification. Use the mapped requirements to identify the acceptance criteria,
+specification. When an older plan gives no outcome, derive it from the task and
+its mapped requirements; stop and report only if they do not establish a
+verifiable result. Use the mapped requirements to identify the acceptance criteria,
 dependencies, allowed files, constraints, and required evidence. Read only the
 repository context needed for those decisions.
 
@@ -28,8 +30,9 @@ If the task materials are missing or contradict one another on scope, contracts,
 2. Break the assigned task into the smallest coherent implementation packets needed for parallel subagents. Delegate only when separate work can proceed with clear file ownership, interfaces, constraints, and acceptance criteria; otherwise implement directly. Read [packet-contract](references/packet-contract.md).
 3. Keep decisions about the assigned task's architecture and integration with this orchestrator. Do not delegate or perform adjacent plan tasks.
 4. Open each worker brief with the observable part of the task outcome owned by
-   that packet. Pass the relevant requirements, constraints, file ownership,
-   checks, and evidence expected from the worker. Use the shared result contract.
+   that packet. Pass the relevant requirements with their plan and spec section
+   references, constraints, file ownership, checks, and evidence expected from
+   the worker. Use the shared result contract.
 5. Sequence dependent packets. Parallelize only disjoint work with no unresolved shared dependency.
 6. If a packet requires changing an excluded file, a shared interface outside the assigned scope, or an unresolved contract, pause that packet and report the exact dependency to the parent. Resume only when the parent supplies an updated task boundary or decision.
 7. Integrate packet results within the assigned task, resolve conflicts, and verify the integrated task against its acceptance criteria.

@@ -38,13 +38,13 @@ test("plan orchestrator dispatches dependency-ready implementation and review wi
   assert.match(protocol, /first five lines of the invoked skill\x27s body after its frontmatter/);
   assert.match(source, /receive its uncommitted diff and evidence/);
   assert.match(source, /start the implementation brief with the task's expected\s+outcome/);
-  assert.match(source, /the mapped requirements, fixes in-scope findings, reruns affected checks/);
+  assert.match(source, /the mapped requirements, fixes in-scope findings, reruns the checks the plan\s+requires plus those affected by its fixes/);
   assert.match(source, /Start a separate clean-room/);
   assert.match(protocol, /Independent ready tasks may run concurrently only when their workspaces and mutation scopes are isolated/);
   assert.match(source, /commits only with task-commit authority/);
   assert.match(protocol, /exactly three task inputs/);
   assert.match(protocol, /opened by its expected outcome/);
-  assert.match(protocol, /clean-room packet starting with the same expected outcome/);
+  assert.match(protocol, /clean-room packet starting with the task's expected outcome as amended by any parent- or owner-approved amendment/);
   assert.match(protocol, /Implementation.*leaves changes uncommitted/s);
   assert.match(protocol, /Review:.*Delegate task-commit authority only when already granted/s);
   assert.match(pressure, /implementation.*uncommitted/i);
@@ -84,7 +84,7 @@ test("review checks spec, plan, diff and evidence before committing", async () =
   const review = await skill("test-driven-development");
   const protocol = await readFile(path.join(skillsRoot, "plan-orchestrator", "references", "runtime-protocol.md"), "utf8");
   assert.match(review, /verify its criteria and requirements against the specification, plan, diff, and evidence/);
-  assert.match(protocol, /Review:.*original task instruction.*parent- or owner-approved task amendments.*exact diff.*objective command evidence/s);
+  assert.match(protocol, /Review:.*parent- or owner-approved amendment.*original task instruction.*those amendments.*exact diff.*objective command evidence/s);
   assert.match(protocol, /Exclude the implementer's outcome.*prior verdict/s);
   assert.match(protocol, /materialize each dependency through its reviewed commit or exact reviewed diff.*dependent task workspace/s);
   assert.match(protocol, /verify the final reviewed diff and, when authorized and required, its task commit/);
@@ -95,7 +95,7 @@ test("review checks spec, plan, diff and evidence before committing", async () =
 test("plan completion requires all requirements, checkboxes and tasks closed", async () => {
   const protocol = await readFile(path.join(skillsRoot, "plan-orchestrator", "references", "runtime-protocol.md"), "utf8");
   assert.match(protocol, /every required spec\/plan REQ is closed with evidence or a supported `not applicable` decision/);
-  assert.match(protocol, /every required checkbox is closed, and every task is accepted/);
+  assert.match(protocol, /every required checkbox is closed, every task is accepted, and the plan's expected outcome is verified on the integrated result/);
   assert.match(protocol, /open deferred REQ or required checkbox prevents plan completion/);
   assert.match(protocol, /open the plan's PR only if assigned and authorized/);
 });

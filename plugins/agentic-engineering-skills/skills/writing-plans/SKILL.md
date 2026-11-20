@@ -32,16 +32,14 @@ Plain Markdown is valid MDX. Use file maps, annotated code, decision tables, or 
 
 ## Plan structure
 
-Every plan starts with this header, followed by `## Expected Outcome`,
-`## Requirements Inventory`, and `## File Structure` before the tasks.
+Every plan starts with this header, then `## Expected Outcome`, the
+architecture and tech stack lines, `## Requirements Inventory`, and
+`## File Structure` before the tasks.
 
 ```markdown
 # [Feature Name] Implementation Plan
 
 > **For agentic workers:** Use `task-implement` for one assigned plan task, `plan-orchestrator` for dependency-aware multi-task execution with a separate review thread per task, or inline execution with explicit checkpoints. Steps use checkbox (`- [ ]`) syntax for tracking.
-
-**Architecture:** [2-3 sentences]
-**Tech Stack:** [Key technologies/libraries]
 
 ---
 ```
@@ -55,6 +53,13 @@ Every plan starts with this header, followed by `## Expected Outcome`,
 the entry point or system boundary and the acceptance evidence that will show
 the result. Derive the outcome from the approved spec or supplied requirements.
 Use the Requirements Inventory for the binding obligations and evidence.>
+```
+
+After the outcome, state the approach in two lines:
+
+```markdown
+**Architecture:** [2-3 sentences]
+**Tech Stack:** [Key technologies/libraries]
 ```
 
 ### Requirements Inventory (mandatory)
@@ -106,8 +111,9 @@ Commit boundary and owner follow the selected execution mode and explicit author
 **Contracts and constraints:** [Interfaces, required behavior, and dependencies
 that affect this task.]
 
+- [ ] [For a behavior change: write the test and observe it fail for the expected reason.]
 - [ ] [Implement the behavior using the identified entry point and existing contracts.]
-- [ ] [Run the relevant check and record the result against the cited REQs.]
+- [ ] [Run the relevant checks and record the passing result against the cited REQs.]
 ```
 
 ## Completeness and self-review

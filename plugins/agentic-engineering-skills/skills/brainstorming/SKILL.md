@@ -21,6 +21,7 @@ When a mockup or diagram would help resolve a decision, offer the
 [visual companion](visual-companion.md) and use it with the user's agreement.
 
 Summarize the expected outcome, agreed decisions, constraints, and any open
-questions. When a standalone spec is needed, use the `to-spec` template.
+questions. When a standalone spec is needed, use the
+[`to-spec` template](../to-spec/SKILL.md).
 Follow the repository's review and authorization rules for spec approval,
 planning, and execution.

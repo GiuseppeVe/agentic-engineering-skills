@@ -1,5 +1,5 @@
 interface:
   display_name: "Brainstorming"
-  short_description: "Resolve open product, scope, and contract decisions before planning"
+  short_description: "Resolve product, scope, and contract decisions before planning"
 policy:
   allow_implicit_invocation: true

@@ -17,15 +17,18 @@ Select models and effort from the task-implement routing guidance. Invoke with t
 `task-implement` and receive its uncommitted diff and evidence. Verify the
 workspace and confirm the implementer has finished before starting review.
 
-Start a separate clean-room `test-driven-development` review with the host-native skill command and the same
-expected outcome, the original task instruction, any approved amendments,
+Start a separate clean-room `test-driven-development` review with the host-native skill command and the task's
+expected outcome as amended by any approved amendment, the original task
+instruction, those amendments,
 the plan and spec paths, the exact diff, and objective command evidence.
 Exclude implementer conclusions and prior verdicts. The reviewer verifies
-the mapped requirements, fixes in-scope findings, reruns affected checks,
-and commits only with task-commit authority.
+the mapped requirements, fixes in-scope findings, reruns the checks the plan
+requires plus those affected by its fixes, and commits only with task-commit
+authority.
 
 Follow the runtime protocol for task acceptance, parallel dispatch, integration,
-and any authorized plan PR.
+and any authorized plan PR. Before claiming plan completion, verify the plan's
+expected outcome on the integrated result.
 
 When the owner or plan selects DeepSeek/Vibe for an implementation thread, read [T3 DeepSeek routing](references/t3-deepseek-routing.md) before checking tools or dispatching.
 

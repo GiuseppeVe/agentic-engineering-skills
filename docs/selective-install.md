@@ -6,7 +6,7 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | --- | --- | --- | --- |
 | `archify` | None | `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-LICENSE`; `plugins/agentic-engineering-skills/licenses/tt-a1i-archify-THIRD_PARTY_NOTICES` | Design: checked standalone diagrams and explainers |
 | `ask-matt` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Understand: route to a fitting skill or flow |
-| `brainstorming` | `writing-plans` | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
+| `brainstorming` | `to-spec` | `plugins/agentic-engineering-skills/licenses/obra-superpowers-LICENSE` | Understand: intent discovery |
 | `caveman` | None | `plugins/agentic-engineering-skills/licenses/JuliusBrussee-caveman-0574b85-LICENSE` | Understand: compact collaboration |
 | `cleaning-repo-with-knip` | None | `LICENSE` | Clean: dead-code cleanup |
 | `deslopping-cleanup` | None | `LICENSE` | Clean: evidence review, report and separate commit per verified batch |
