@@ -1,11 +1,11 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-13",
+  "capturedAt": "2026-11-20",
   "environment": {
-    "isolation": "Separate temporary Codex and Claude Code profiles. Local marketplace source and installed payload trees were compared. No credentials or model requests were used. HTTP proxy variables pointed at an unavailable local endpoint.",
+    "isolation": "Separate temporary Codex and Claude Code profiles. Local marketplace source and installed payload trees were compared. No credentials or model requests were used.",
     "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
-    "payloadRefresh": "Version 1.1.2 source hashes are pinned here. CI verifies them against fresh isolated Codex and Claude Code installations."
+    "payloadRefresh": "Version 1.1.2 source was compared against fresh isolated Codex and Claude Code installations after the outcome-first workflow update."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -24,7 +24,6 @@
       "grill-me",
       "grilling",
       "handoff",
-      "how-to-use-codex",
       "impeccable",
       "improve-codebase-architecture",
       "learn-codebase",
@@ -49,7 +48,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.167.2",
+      "version": "codex-cli 0.170.0",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -65,7 +64,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -104,7 +102,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -129,9 +126,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:7cd4a3298361992d4b58c764d7023039abc2a10f59cc21a23f23a745e8d1cc9b",
-        "fullTreeHash": "sha256:2e56eb403f345f6cb7c7919a54e1c263bd529d827ae16a8290a1aeadf7354265",
-        "fileCount": 517
+        "treeHash": "sha256:435c2cc723aa81cabfa265b0764afdada83b505c631358b4c483387ddc1f5fb9",
+        "fullTreeHash": "sha256:fcde8d4f1e9cf0786cd20d4607d06ecf79095a60a4cdd4e1c332f11aa1c60dd0",
+        "fileCount": 518
       },
       "commands": [
         {
@@ -145,18 +142,14 @@
         {
           "command": "codex plugin add agentic-engineering-skills@agentic-engineering-skills --json",
           "exitCode": 0
-        },
-        {
-          "command": "codex plugin list --available --json",
-          "exitCode": 0
         }
       ],
       "limitations": [
-        "Isolated local marketplace installation, plugin listing, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
+        "Isolated local marketplace installation, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
       ]
     },
     "claude": {
-      "version": "2.1.322 (Claude Code)",
+      "version": "2.1.327 (Claude Code)",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -172,7 +165,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -211,7 +203,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -236,9 +227,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:32674655a869560f854995e07b877bd59dfe6ee777c60a3d8a599a04f858f053",
-        "fullTreeHash": "sha256:2e56eb403f345f6cb7c7919a54e1c263bd529d827ae16a8290a1aeadf7354265",
-        "fileCount": 517
+        "treeHash": "sha256:9e0d59533316ea42cef78561809344620686d8419e88ac7b6c1c227b7f34da25",
+        "fullTreeHash": "sha256:fcde8d4f1e9cf0786cd20d4607d06ecf79095a60a4cdd4e1c332f11aa1c60dd0",
+        "fileCount": 518
       },
       "installedAgents": [
         {
@@ -278,14 +269,10 @@
         {
           "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user",
           "exitCode": 0
-        },
-        {
-          "command": "claude plugin list --json",
-          "exitCode": 0
         }
       ],
       "limitations": [
-        "Isolated local marketplace installation, plugin listing, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
+        "Isolated local marketplace installation, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
       ]
     }
   }

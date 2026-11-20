@@ -18,7 +18,6 @@ Complete plugin is supported install path. Selective installation is advanced: c
 | `graphify-start` | None | `LICENSE` | Understand: route codebase questions through project Graphify protocol |
 | `handoff` | None | `plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE` | Plan: save a concise resumable handoff |
 | `orchestrating-gemini-workers` | None | `LICENSE` | Implement: independent bounded file-writing with sandboxed Gemini workers |
-| `how-to-use-codex` | None | `LICENSE` | Plan: Codex prompt and model guidance |
 | `task-implement` | None | `LICENSE` | Implement: one assigned plan task with bounded implementation subtasks and task-scoped verification |
 | `coordinating-implementation-plans` | `plan-orchestrator` | `LICENSE` | Implement: coordinate approved plans and dependencies |
 | `impeccable` | None | `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-LICENSE`; `plugins/agentic-engineering-skills/licenses/pbakaus-impeccable-NOTICE` | Design: frontend craft and critique |

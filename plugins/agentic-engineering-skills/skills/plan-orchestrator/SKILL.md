@@ -7,9 +7,25 @@ description: Use when orchestrating an implementation plan by invoking one task-
 
 The main thread coordinates an implementation workflow from the plan and spec, plus a contracts map when available. It manages visible, subordinate subthreads; it does not implement or review task code itself. Use the lightest workspace and tracking model that keeps concurrent mutations isolated and the run verifiable.
 
-The code your implementing through your subthreads must work - as the plan and spec suppose it to work - at the end of the run implementation, so verify wether it works or not. If not fix and make it working before claiming that the implementation is done.
+For each ready task, start the implementation brief with the task's expected
+outcome, then include the exact task instruction, plan and spec paths, and
+applicable requirements. For an older plan without an outcome field, summarize
+the assigned result from the task and its mapped requirements. If those sources
+disagree on behavior or acceptance, resolve the gap before dispatch.
 
-For each ready task, invoke `task-implement` with the host-native skill command, plan path, spec path, and exact task instruction. Read the first five lines of its body after the frontmatter to select the orchestrator and subagent models and effort. The implementation thread leaves its changes uncommitted and returns facts and evidence using the shared result contract. Verify its workspace and that no work can still modify it, then create a distinct clean-room review subthread and invoke `test-driven-development` with the host-native skill command, original task instruction, any parent- or owner-approved task amendments, plan/spec paths, exact diff, and objective command evidence. Exclude implementer conclusions and prior verdicts from the reviewer packet. The reviewer verifies criteria, fixes in-scope problems and reruns required checks; it commits only when task-commit authority exists. Verify the final reviewed state and decide task acceptance under the runtime protocol. Independent ready tasks may proceed concurrently only in isolated workspaces with clear ownership and integration order. Open a plan PR only when assigned and authorized, after all plan tasks are accepted and plan completion criteria are met; otherwise report local readiness and the omission.
+Select models and effort from the task-implement routing guidance. Invoke with the host-native skill command
+`task-implement` and receive its uncommitted diff and evidence. Verify the
+workspace and confirm the implementer has finished before starting review.
+
+Start a separate clean-room `test-driven-development` review with the host-native skill command and the same
+expected outcome, the original task instruction, any approved amendments,
+the plan and spec paths, the exact diff, and objective command evidence.
+Exclude implementer conclusions and prior verdicts. The reviewer verifies
+the mapped requirements, fixes in-scope findings, reruns affected checks,
+and commits only with task-commit authority.
+
+Follow the runtime protocol for task acceptance, parallel dispatch, integration,
+and any authorized plan PR.
 
 When the owner or plan selects DeepSeek/Vibe for an implementation thread, read [T3 DeepSeek routing](references/t3-deepseek-routing.md) before checking tools or dispatching.
 

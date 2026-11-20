@@ -13,7 +13,6 @@ export const expectedSkills = [
   "grill-me",
   "grilling",
   "handoff",
-  "how-to-use-codex",
   "impeccable",
   "improve-codebase-architecture",
   "learn-codebase",

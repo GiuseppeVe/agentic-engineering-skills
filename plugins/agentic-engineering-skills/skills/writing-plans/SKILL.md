@@ -32,18 +32,29 @@ Plain Markdown is valid MDX. Use file maps, annotated code, decision tables, or 
 
 ## Plan structure
 
-Every plan starts with this header, immediately followed by `## Requirements Inventory`, then `## File Structure` before tasks:
+Every plan starts with this header, followed by `## Expected Outcome`,
+`## Requirements Inventory`, and `## File Structure` before the tasks.
 
 ```markdown
 # [Feature Name] Implementation Plan
 
 > **For agentic workers:** Use `task-implement` for one assigned plan task, `plan-orchestrator` for dependency-aware multi-task execution with a separate review thread per task, or inline execution with explicit checkpoints. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** [One sentence]
 **Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies/libraries]
 
 ---
+```
+
+### Expected Outcome (mandatory)
+
+```md
+## Expected Outcome
+
+<Describe the observable result when the plan's tasks are integrated. Identify
+the entry point or system boundary and the acceptance evidence that will show
+the result. Derive the outcome from the approved spec or supplied requirements.
+Use the Requirements Inventory for the binding obligations and evidence.>
 ```
 
 ### Requirements Inventory (mandatory)
@@ -78,53 +89,34 @@ Map every created/modified file and its responsibility before tasks. Use clear i
 
 ### Task structure
 
-Each step is one 2-5 minute action. Use this shape; replace sample paths/code with complete task-specific content:
+Use steps where sequence, dependencies, or verification affect execution.
+Choose task boundaries that produce a coherent result the reviewer can verify.
 
 Commit boundary and owner follow the selected execution mode and explicit authority; a plan does not grant commit or PR permission. For `plan-orchestrator`, the implementer hands off an uncommitted diff and the reviewer commits the accepted task only when authorized. Inline execution commits only when explicitly assigned and authorized.
 
-````markdown
-### Task N: [Component Name]
+```md
+### Task N: [Name]
+
+**Expected outcome:** [Observable result this task delivers within its scope.]
 
 **Satisfies:** REQ-003, REQ-007
 
-**Files:**
-- Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
+**Files:** [Exact paths and ownership.]
 
-- [ ] **Step 1: Write the failing test**
+**Contracts and constraints:** [Interfaces, required behavior, and dependencies
+that affect this task.]
 
-```python
-def test_specific_behavior():
-    result = function(input)
-    assert result == expected
+- [ ] [Implement the behavior using the identified entry point and existing contracts.]
+- [ ] [Run the relevant check and record the result against the cited REQs.]
 ```
-
-- [ ] **Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
-- [ ] **Step 3: Write minimal implementation**
-
-```python
-def function(input):
-    return expected
-```
-
-- [ ] **Step 4: Run test to verify it passes**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
-
-- [ ] **Step 5: Verify handoff**
-
-Review the diff and report changed files, checks and results, and acceptance evidence for this task.
-````
 
 ## Completeness and self-review
 
-Exact paths, complete code for every code-changing step, exact commands and expected output are required. Repeat needed code rather than "Similar to Task N"; engineers may read tasks out of order. All referenced types/functions/methods must be defined in a task or identified existing code. Placeholders (`TBD`, `TODO`, "implement later", "fill in details"), vague validation/error-handling/edge-case directions, and "write tests for the above" without test code fail the plan.
+Provide exact paths, relevant existing symbols or planned interfaces, and
+runnable verification commands with expected results. Include exact code
+or data shapes when they encode an agreed contract, a decision, or a test
+case whose details affect correctness. Resolve placeholders and give each
+task enough context to execute and verify its outcome.
 
 Review yourself, not by subagent dispatch; use the spec with fresh eyes:
 
@@ -133,7 +125,8 @@ Review yourself, not by subagent dispatch; use the spec with fresh eyes:
 3. Check every task's external assumptions for a contract naming both endpoints; verify `_None._` claims.
 4. Verify bidirectional `Satisfied by:` / `Satisfies:` links, with no orphan requirements or tasks.
 5. Check each evidence level against the spec and each oracle against its required behavior and environment; retain gated and deferred work with authority, later owner task, and open status until proven.
-6. Fix placeholders and missing concrete code/commands.
+6. Verify that each task's expected outcome follows from its mapped REQs.
+   Resolve placeholders and fill gaps in paths, contracts, or checks.
 7. Check later types, signatures, and property names match earlier definitions.
 
 Fix issues inline; no separate re-review required. Preserve required content even under deadline pressure.

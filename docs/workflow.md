@@ -50,7 +50,7 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 ## Plan
 
-`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `handoff` saves a compact continuation document when work moves between agents. `how-to-use-codex` turns Codex prompting and model-choice needs into current, evidence-based guidance. `writing-plans` turns requirements into testable implementation tasks and offers `plan-orchestrator` for dependency-aware multi-task execution. `setup-goal` turns an agreed outcome into a runbook and activates the host-native Goal only after approval.
+`wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `handoff` saves a compact continuation document when work moves between agents. `writing-plans` turns requirements into testable implementation tasks and offers `plan-orchestrator` for dependency-aware multi-task execution. `setup-goal` turns an agreed outcome into a runbook and activates the host-native Goal only after approval.
 
 ## Implement
 

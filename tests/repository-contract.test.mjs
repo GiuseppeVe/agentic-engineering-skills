@@ -16,9 +16,9 @@ function trackedFiles() {
     .filter(Boolean);
 }
 
-test("requested inventory contains exactly 35 unique sorted skills", () => {
-  assert.equal(expectedSkills.length, 35);
-  assert.equal(new Set(expectedSkills).size, 35);
+test("requested inventory contains exactly 34 unique sorted skills", () => {
+  assert.equal(expectedSkills.length, 34);
+  assert.equal(new Set(expectedSkills).size, 34);
   assert.deepEqual(expectedSkills, [...expectedSkills].sort());
 });
 

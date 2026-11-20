@@ -35,14 +35,16 @@ test("plan orchestrator dispatches dependency-ready implementation and review wi
     readFile(path.join(skillsRoot, "plan-orchestrator", "tests", "pressure-scenarios.md"), "utf8"),
   ]);
   assert.match(source, /^name: plan-orchestrator$/m);
-  assert.match(source, /first five lines of its body after the frontmatter/);
-  assert.match(source, /leaves its changes uncommitted/);
-  assert.match(source, /code your implementing through your subthreads must work/);
-  assert.match(source, /verify wether it works or not/);
-  assert.match(source, /distinct clean-room review subthread/);
-  assert.match(source, /Independent ready tasks may proceed concurrently only in isolated workspaces/);
-  assert.match(source, /commits only when task-commit authority exists/);
+  assert.match(protocol, /first five lines of the invoked skill\x27s body after its frontmatter/);
+  assert.match(source, /receive its uncommitted diff and evidence/);
+  assert.match(source, /start the implementation brief with the task's expected\s+outcome/);
+  assert.match(source, /the mapped requirements, fixes in-scope findings, reruns affected checks/);
+  assert.match(source, /Start a separate clean-room/);
+  assert.match(protocol, /Independent ready tasks may run concurrently only when their workspaces and mutation scopes are isolated/);
+  assert.match(source, /commits only with task-commit authority/);
   assert.match(protocol, /exactly three task inputs/);
+  assert.match(protocol, /opened by its expected outcome/);
+  assert.match(protocol, /clean-room packet starting with the same expected outcome/);
   assert.match(protocol, /Implementation.*leaves changes uncommitted/s);
   assert.match(protocol, /Review:.*Delegate task-commit authority only when already granted/s);
   assert.match(pressure, /implementation.*uncommitted/i);
