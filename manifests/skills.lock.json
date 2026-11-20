@@ -356,7 +356,7 @@
       "name": "plan-orchestrator",
       "sourceType": "original",
       "localSha256": "25258e6333be58c217866fcf5e517b71eab241f22f80697e8cf00747c47030a1",
-      "releaseCommit": "d32b92d61f69930faec8fc836ab74261a1909ffc",
+      "releaseCommit": "5944479e075b4410aeb848886c58d6f719658dfc",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -425,7 +425,7 @@
       "name": "task-implement",
       "sourceType": "original",
       "localSha256": "3d5082812b2051c582fcca136f2ff8f04c5f9f084172045c5ac67f06ab4e1f3c",
-      "releaseCommit": "d32b92d61f69930faec8fc836ab74261a1909ffc",
+      "releaseCommit": "5944479e075b4410aeb848886c58d6f719658dfc",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
