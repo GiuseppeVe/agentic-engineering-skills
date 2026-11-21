@@ -28,7 +28,7 @@ Delega codice, diff o log che lo contengono e fonti di ricerca, incluse pagine w
 
 Per il dialogo preferisci una sessione dedicata, disponibile e autorizzata, in cui l'utente possa interagire direttamente. Fornisci contesto e chiedi una sintesi filtrata di decisioni, questioni aperte, riferimenti e conseguenze; il confronto dettagliato resta lì.
 
-Se creazione, dialogo, ripresa, monitoraggio o ritorno dei risultati non sono possibili, distingui capacità e autorizzazioni mancanti e prepara un handoff; usa la chat corrente se l'utente preferisce. Il tempo trascorso non è una risposta: attendi sui nodi dipendenti e prosegui gli indipendenti.
+Se creazione, dialogo, ripresa, monitoraggio o ritorno dei risultati non sono possibili, distingui capacità e autorizzazioni mancanti e prepara un handoff; usa la chat corrente se l'utente preferisce. Recupera dalla decisione dell'owner oggetto e revisione approvati. Se la stesura della spec rientra nel mandato, affidala appena il design è approvato. Mantieni le review e le autorizzazioni previste per i passi successivi. Il tempo trascorso non è una risposta: attendi sui nodi dipendenti e prosegui gli indipendenti.
 
 ## Stato, concorrenza e ripresa
 
