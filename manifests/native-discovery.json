@@ -290,7 +290,16 @@
       ],
       "limitations": [
         "Isolated local marketplace installation, plugin listing, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
-      ]
+      ],
+      "upgrade": {
+        "fromVersion": "1.1.2",
+        "toVersion": "1.1.3",
+        "baseCommit": "cc6ed92c6770bf86a42e45b080a801bbc1aca7e5",
+        "marketplaceSetup": "Export plugins, .agents/plugins and .claude-plugin from the base commit with git archive. Extract into an empty temporary marketplace directory. Run marketplace add and plugin install from that directory with a fresh isolated Claude profile.",
+        "baselineEvidence": "The installed 1.1.2 cache contained master-orchestrator/SKILL.md with the same SHA-256 as the base archive and a different SHA-256 from the candidate.",
+        "sourceSwitch": "Copy each candidate file listed by git diff --name-only cc6ed92c6770bf86a42e45b080a801bbc1aca7e5 -- plugins .agents/plugins .claude-plugin over the corresponding file in that same temporary marketplace. Keep the registered path and installed profile. Run plugin validate, plugin update and plugin list there.",
+        "result": "The CLI reported an update from 1.1.2 to 1.1.3. verify:installed-native compared the new 1.1.3 cache to the source and receipt."
+      }
     }
   }
 }
