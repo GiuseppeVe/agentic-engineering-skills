@@ -5,7 +5,7 @@
   "environment": {
     "isolation": "Separate temporary Windows host profiles. Installed plugin trees were compared with the local marketplace source.",
     "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
-    "payloadRefresh": "Version 1.1.2 source hashes are pinned here. CI verifies them against fresh isolated Codex and Claude Code installations."
+    "payloadRefresh": "Verified Codex install of 1.1.3 and Claude Code upgrade from the 1.1.2 base payload to 1.1.3 in isolated profiles."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:cf751137bdafc9986f3a692dbd5dbfef2883be9cc6ee21b5307b6987c8315a33",
-        "fullTreeHash": "sha256:68c1f3408fca51ef5bf24c3501818cc37d05876fb904d1ef3d2303b29160fb0b",
+        "treeHash": "sha256:cc6f24724caede6c8180a93dd8ebc71063bb63dbf4125191da7939d0110202a5",
+        "fullTreeHash": "sha256:d6a81516c483d2e1a47583a47b330ed9b8374c133b5b195bc3a14da030d371b9",
         "fileCount": 517
       },
       "commands": [
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:8d69ffca59705185d94ff27d6addf1c2757b5c95aaef730cda55ea5bf799ab40",
-        "fullTreeHash": "sha256:68c1f3408fca51ef5bf24c3501818cc37d05876fb904d1ef3d2303b29160fb0b",
+        "treeHash": "sha256:a92ad4e3cd69ba543527cc27f0d3396751c6fc935ebe320adb44d4feb485f824",
+        "fullTreeHash": "sha256:d6a81516c483d2e1a47583a47b330ed9b8374c133b5b195bc3a14da030d371b9",
         "fileCount": 517
       },
       "installedAgents": [
@@ -277,6 +277,10 @@
         },
         {
           "command": "claude plugin install agentic-engineering-skills@agentic-engineering-skills --scope user",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin update agentic-engineering-skills@agentic-engineering-skills --scope user",
           "exitCode": 0
         },
         {
