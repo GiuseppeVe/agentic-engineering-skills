@@ -1,9 +1,9 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-13",
+  "capturedAt": "2026-11-21",
   "environment": {
-    "isolation": "Separate temporary Codex and Claude Code profiles. Local marketplace source and installed payload trees were compared. No credentials or model requests were used. HTTP proxy variables pointed at an unavailable local endpoint.",
+    "isolation": "Separate temporary Windows host profiles. Installed plugin trees were compared with the local marketplace source.",
     "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
     "payloadRefresh": "Version 1.1.2 source hashes are pinned here. CI verifies them against fresh isolated Codex and Claude Code installations."
   },
@@ -49,7 +49,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.167.2",
+      "version": "codex-cli 0.170.0",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:7cd4a3298361992d4b58c764d7023039abc2a10f59cc21a23f23a745e8d1cc9b",
-        "fullTreeHash": "sha256:2e56eb403f345f6cb7c7919a54e1c263bd529d827ae16a8290a1aeadf7354265",
+        "treeHash": "sha256:cf751137bdafc9986f3a692dbd5dbfef2883be9cc6ee21b5307b6987c8315a33",
+        "fullTreeHash": "sha256:68c1f3408fca51ef5bf24c3501818cc37d05876fb904d1ef3d2303b29160fb0b",
         "fileCount": 517
       },
       "commands": [
@@ -156,7 +156,7 @@
       ]
     },
     "claude": {
-      "version": "2.1.322 (Claude Code)",
+      "version": "2.1.327 (Claude Code)",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:32674655a869560f854995e07b877bd59dfe6ee777c60a3d8a599a04f858f053",
-        "fullTreeHash": "sha256:2e56eb403f345f6cb7c7919a54e1c263bd529d827ae16a8290a1aeadf7354265",
+        "treeHash": "sha256:8d69ffca59705185d94ff27d6addf1c2757b5c95aaef730cda55ea5bf799ab40",
+        "fullTreeHash": "sha256:68c1f3408fca51ef5bf24c3501818cc37d05876fb904d1ef3d2303b29160fb0b",
         "fileCount": 517
       },
       "installedAgents": [
