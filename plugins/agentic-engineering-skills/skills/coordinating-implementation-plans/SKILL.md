@@ -9,6 +9,12 @@ Coordina il programma approvato; sei l’unico autore della sua mappa dei
 contratti. Delega esecuzione e review ai thread-piano. Per un piano isolato
 usa direttamente la skill `plan-orchestrator` con il comando nativo di invocazione dell’host.
 
+Al lancio e a ogni ripresa leggi [il dialogo master–piano](references/master-plan-dialogue.md)
+e la [definizione condivisa dei messaggi](../plan-orchestrator/references/programme-messages.md);
+il thread-piano applica la propria parte da [reporting to the master](../plan-orchestrator/references/reporting-to-master.md).
+Il master decide instradamento, readiness e ripresa entro il mandato e porta
+all’owner solo le scelte riservate.
+
 ## 1. Fonti, dipendenze e parallelismo
 
 Leggi istruzioni delle repository, workflow, mappa, spec e piani approvati.
@@ -51,6 +57,7 @@ thread di verifica della PR.
 
 Fornisci un brief con:
 
+- recapito raggiungibile del master, mandato del piano e decisioni riservate;
 - workflow; piano, spec e mappa leggibili, con revisione/SHA;
 - task o prefisso, risultati attesi, dipendenze e punti di stop;
 - `plan-orchestrator`, progetto, branch, base SHA e vincoli di worktree;
@@ -63,10 +70,13 @@ Passa fonti e vincoli senza introdurre algoritmi o riscrivere il comportamento.
 
 ## 3. Segui i thread e aggiorna la mappa
 
-Usa gli strumenti dell’host, con notifiche o snapshot compatti. Registra
-nello stato canonico piano, ID confermato, host, branch/worktree, revisioni
-e stato. Tieni separati gli ID provvisori: creazioni e proposte pendenti
-occupano uno slot, senza essere thread avviati confermati.
+Usa gli strumenti dell’host, con notifiche o snapshot compatti. Al risveglio
+riconcilia domande aperte, decisioni da consegnare e risultati sopraggiunti;
+verifica la ricezione prima di reinviare e una risposta duplicata produce un
+solo avanzamento. Registra nello stato canonico piano, ID confermato, host,
+branch/worktree, revisioni e stato. Tieni separati gli ID provvisori:
+creazioni e proposte pendenti occupano uno slot, senza essere thread avviati
+confermati.
 
 Timeout, messaggi accodati e fine turno non completano un piano. Per prove
 mancanti continua sullo stesso thread. Se attende l’owner, indica l’azione
@@ -92,6 +102,9 @@ risolta nella repository del run. Mantieni procedure e comandi in quella fonte.
 
 Ricevi PR, base, head finale, prove di readiness e blocchi. L’accettazione
 dei task, un reminder o un checker positivo non sostituiscono tali prove.
+Verifica il percorso di integrazione autorizzato e registra head e perimetro
+prima di suggerire un’azione; readiness e autorizzazione al merge restano
+distinte e gli obblighi pendenti restano visibili.
 Quando i prerequisiti sono soddisfatti, dai il via libera al thread-piano:
 questo esegue il merge autorizzato, verifica il target e completa post-merge,
 cleanup e aggiornamenti documentali/indici richiesti.
