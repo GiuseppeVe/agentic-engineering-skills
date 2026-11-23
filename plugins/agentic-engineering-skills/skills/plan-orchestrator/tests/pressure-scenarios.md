@@ -24,6 +24,40 @@ These scenarios define expected behavior for the current universal skill. Histor
 20. **Accepted dependency outside the task workspace:** Task A is accepted on another branch or as an uncommitted reviewed diff while Task B's recorded workspace still starts before A. Keep B not ready until its workspace contains the exact accepted A state and that state is verified there.
 21. **Clean-room review input:** The implementation result includes `outcome`, satisfied requirements, assumptions, deviations and self-assessment, while the parent separately approved a task-boundary amendment. Build the reviewer packet from the original task/spec, authoritative amendment, exact diff and objective command evidence only; exclude implementer conclusions and prior verdicts.
 
+Scenarios 22–30 below cover the dialogue contract and continue this numbering; the separate historical block at the end keeps its own numbering and is not the current contract.
+
+22. **Update inside a mandate:** Mandate A is in force and the plan sends an informational update, then a receipt confirmation is requested. Keep A as the work identity; the confirmation preserves the technical delivery identity, creates no step and grants no decision authority.
+23. **Question inside the mandate:** A task thread has a question covered by A's mandate or approved sources. The plan answers it locally, records the basis and sends nothing upward; only a residual flow doubt reaches the master, citing mandate, suspended action, proposed choice and consequence.
+24. **Standalone addressee:** A run starts with no master address in its brief. Keep the original commissioner as addressee; do not invent a master, block for one, or treat the absence as a missing prerequisite.
+25. **Decision that changes the base:** After a question on A, the decision changes the delivery. Create a distinct mandate B that cites A; keep the decided scope and revision; the next step cites the decision and proceeds under B.
+26. **Late report after substitution:** A delivery report for A arrives after the decision that created B. Verify it against A's base and manifest and keep it attributed to A; never re-label it as B, and keep B distinct.
+27. **Formal defect after a verified push:** A push is already verified and the manifest lacks its base. Correct the delivery while preserving the push evidence; count zero new push operations, and do not re-run the verified push to refresh the manifest.
+28. **Duplicate decision or response:** The same decision is delivered twice, or the plan receives one decision through two sends. Produce one step, citing the question reference once; an acknowledgement without an observed step is not resumption.
+29. **Stop scope:** An explicit stop or an open question affects one action. Suspend only the dependent action; continue authorised independent work, and resume only the unblocked action once the decision names it.
+30. **Uncertain receipt:** Delivery is unconfirmed. Verify receipt or use the compact snapshot before resending; do not infer completion from a sent message.
+
+## Baseline before this revision (c3bc24d)
+
+Static check of the pre-change payload, repeatable with `git show c3bc24d:plugins/agentic-engineering-skills/skills/plan-orchestrator/SKILL.md | grep -ciE "reporting-to-master|programme-messages|commissioner|master"` (result 0: no role reference, no addressee, no message definition) and `git show c3bc24d:plugins/agentic-engineering-skills/skills/plan-orchestrator/references/runtime-protocol.md | grep -n -i master` (only the "map-master" readiness sentence). The scenarios therefore fail by absence, in these uncovered points: local resolution without forwarding; delivery identity across an update and its confirmation; late and superseded report attribution; manifest correction that preserves verified operation evidence; standalone addressee; duplicate decision producing one step; scope of an explicit stop or open question; receipt verification before resending.
+
+## Repeat run after this revision
+
+Mapped each scenario to its provision by reading only the entrypoint payload (`SKILL.md` plus `references/reporting-to-master.md`, `references/programme-messages.md` and `references/runtime-protocol.md`), without the plan, spec or implementation notes. No master thread or host channel was available in this task, so this run checks that the payload carries the answers, not that a model obeys them on a host; host behaviour remains Task 4.
+
+| Scenario | Provision reached from the entrypoint | Result |
+| --- | --- | --- |
+| 22 | `programme-messages.md` — Informational update, Correlation rules | Covered |
+| 23 | `reporting-to-master.md` — Resolve locally first | Covered |
+| 24 | `programme-messages.md` — Addresses, Standalone run | Covered |
+| 25 | `programme-messages.md` — Mandate or delivery change; `reporting-to-master.md` — Questions, decisions and resumption | Covered |
+| 26 | `programme-messages.md` — Correlation rules (late and superseded) | Covered |
+| 27 | `programme-messages.md` — Correlation rules (manifest correction) | Covered |
+| 28 | `programme-messages.md` — Decision; `reporting-to-master.md` — resumption | Covered |
+| 29 | `programme-messages.md` — Stop and resume | Covered |
+| 30 | `programme-messages.md` — Correlation rules (receipt uncertain) | Covered |
+
+Standalone, update and substitution keep distinct outcomes: 24 returns the original commissioner, 22 keeps A and creates no step, 25–26 create B and keep A's late report under A.
+
 ## Historical material — previous versions only
 
 The following is retained as historical evidence. Its host-specific instructions and prior results are superseded by the current skill and runtime protocol; do not use it as the current execution contract.
