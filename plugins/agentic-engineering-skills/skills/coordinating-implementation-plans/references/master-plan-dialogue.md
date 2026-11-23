@@ -60,10 +60,12 @@ non sostituisce una prova mancante con una decisione.
    e nomina chi ha deciso. Se cambia la consegna, il master emette un mandato
    distinto che cita quello superato; il vecchio mandato non viene riscritto.
 6. Il master comunica la risposta solo ai piani coinvolti e registra nello stato
-   decisione, ambito e revisione. Una domanda ripetuta riceve la decisione
-   vigente se ambito e revisione combaciano; se sono cambiati, il master
-   rivaluta e registra la nuova decisione. Una decisione duplicata produce un
-   solo passo.
+   decisione, ambito e revisione. Una decisione registrata con ambito di
+   programma non porta revisione di piano: si riusa senza rivalutarla e si
+   comunica ai piani alla sua prima applicazione a essi. Una decisione con
+   ambito di piano si riusa solo quando ambito e revisione combaciano; se sono
+   cambiati, il master rivaluta e registra la nuova decisione. Una decisione
+   duplicata produce un solo passo.
 7. Il piano riprende solo le azioni sbloccate e il passo successivo cita la
    decisione. Un ACK in chat senza passo osservato non dimostra la ripresa.
 8. Il report di consegna si verifica contro il mandato: base, risultato atteso e

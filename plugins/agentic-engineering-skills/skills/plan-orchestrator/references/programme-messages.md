@@ -92,9 +92,13 @@ its own scope only.
   manifest lacks its base, the task thread corrects the delivery while the push
   evidence is preserved: the correction counts no new operation, does not
   re-run the push and does not create a new mandate.
-- **Receipt uncertain.** Verify receipt before resending. When the host offers
-  no notification, a compact snapshot reconciles open questions, undelivered
-  decisions and arrived results.
+- **Receipt uncertain.** A send whose result is not a confirmed `started` or
+  `steered` delivery — for example `queued`, a timeout, an error or an
+  ambiguous result — counts as uncertain. Verify arrival by reading the
+  recipient thread for the message id or by observing the next step that cites
+  the decision, log the verification result, and do not resend blindly. When
+  the host offers no notification, a compact snapshot reconciles open
+  questions, undelivered decisions and arrived results.
 - **Standalone run.** Without an identified master the original commissioner
   receives questions and deliveries, and availability of a master is not
   assumed.

@@ -24,7 +24,7 @@ These scenarios define expected behavior for the current universal skill. Histor
 20. **Accepted dependency outside the task workspace:** Task A is accepted on another branch or as an uncommitted reviewed diff while Task B's recorded workspace still starts before A. Keep B not ready until its workspace contains the exact accepted A state and that state is verified there.
 21. **Clean-room review input:** The implementation result includes `outcome`, satisfied requirements, assumptions, deviations and self-assessment, while the parent separately approved a task-boundary amendment. Build the reviewer packet from the original task/spec, authoritative amendment, exact diff and objective command evidence only; exclude implementer conclusions and prior verdicts.
 
-Scenarios 22–30 below cover the dialogue contract and continue this numbering; the separate historical block at the end keeps its own numbering and is not the current contract.
+Scenarios 22–33 below cover the dialogue contract and continue this numbering; the separate historical block at the end keeps its own numbering and is not the current contract.
 
 22. **Update inside a mandate:** Mandate A is in force and the plan sends an informational update, then a receipt confirmation is requested. Keep A as the work identity; the confirmation preserves the technical delivery identity, creates no step and grants no decision authority.
 23. **Question inside the mandate:** A task thread has a question covered by A's mandate or approved sources. The plan answers it locally, records the basis and sends nothing upward; only a residual flow doubt reaches the master, citing mandate, suspended action, proposed choice and consequence.
@@ -35,6 +35,9 @@ Scenarios 22–30 below cover the dialogue contract and continue this numbering;
 28. **Duplicate decision or response:** The same decision is delivered twice, or the plan receives one decision through two sends. Produce one step, citing the question reference once; an acknowledgement without an observed step is not resumption.
 29. **Stop scope:** An explicit stop or an open question affects one action. Suspend only the dependent action; continue authorised independent work, and resume only the unblocked action once the decision names it.
 30. **Uncertain receipt:** Delivery is unconfirmed. Verify receipt or use the compact snapshot before resending; do not infer completion from a sent message.
+31. **Contended shared resource:** A task needs a shared resource that another plan holds. The plan requests it from the master naming the resource and the suspended action; the task thread waits and is instructed only after the master's grant notice, and the resumed step cites that notice.
+32. **Unconfirmed delivery:** A send ends `queued`, times out, errors, or is otherwise ambiguous instead of returning a confirmed `started` or `steered` delivery. Treat it as uncertain: verify arrival in the recipient thread by the message id or by the next step that cites the decision, log the verification result, and do not resend blindly.
+33. **Decision reuse by scope:** A decision recorded with programme scope carries no plan revision; it is reused without re-evaluation and communicated to the plans on its first application to them. A plan-scoped decision is reused only when scope and revision match; otherwise the master re-evaluates.
 
 ## Baseline before this revision (c3bc24d)
 
@@ -57,6 +60,16 @@ Mapped each scenario to its provision by reading only the entrypoint payload (`S
 | 30 | `programme-messages.md` — Correlation rules (receipt uncertain) | Covered |
 
 Standalone, update and substitution keep distinct outcomes: 24 returns the original commissioner, 22 keeps A and creates no step, 25–26 create B and keep A's late report under A.
+
+## Task 4 fix-up scenarios
+
+Scenarios 31–33 were written before the corresponding text changes. They map statically to the written provision; host behaviour remains for the real-channel run.
+
+| Scenario | Provision written | Result |
+| --- | --- | --- |
+| 31 | `reporting-to-master.md` — Questions, decisions and resumption (contended shared resource); pass-through in `SKILL.md` | Covered by text |
+| 32 | `programme-messages.md` — Correlation rules (receipt uncertain) | Covered by text |
+| 33 | `coordinating-implementation-plans/references/master-plan-dialogue.md` — step 6 | Covered by text |
 
 ## Historical material — previous versions only
 

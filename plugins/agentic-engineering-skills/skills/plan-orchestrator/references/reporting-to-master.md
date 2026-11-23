@@ -49,6 +49,9 @@ equivalent one unless an approved basis or the owner's decision authorises it.
 - An explicit stop suspends the actions inside its scope. Authorised
   independent work keeps running; a question suspends only its dependent
   action.
+- A task that needs a contended shared resource waits for the master's grant
+  notice. The plan requests it naming the resource and the suspended action,
+  and instructs the task thread only after the notice, citing it.
 - If delivery is uncertain, verify receipt before resending. A chat
   acknowledgement without an observed step is not resumption.
 
