@@ -3,7 +3,7 @@
   "evidenceSource": "isolated-native-installs",
   "capturedAt": "2026-11-23",
   "environment": {
-    "isolation": "Separate temporary Linux host profiles.",
+    "isolation": "Separate temporary Windows host profiles.",
     "commandNotation": "Native commands ran from the local marketplace.",
     "payloadRefresh": "Fresh installations verified on both hosts."
   },
@@ -49,7 +49,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.167.2",
+      "version": "codex-cli 0.171.0",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -129,9 +129,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:59160f08837933fd74a212cc0f32ba3616c9c00ea5bb51593aaff2ca0583c929",
-        "fullTreeHash": "sha256:84c5dfb1a9fb81008a48b1a77635798073a9c98404b771b7b9df8d59f58e8aa4",
-        "fileCount": 517
+        "treeHash": "sha256:1d4415a3b3de1ecf2aef1dc497f0f5a3224e1240423653a82fa3aa8c13bc287e",
+        "fullTreeHash": "sha256:383c9416d1d14f906474bdd9ae98cbefd7a34bcb3ada2985c6846c0e88b7ae75",
+        "fileCount": 522
       },
       "commands": [
         {
@@ -156,7 +156,7 @@
       ]
     },
     "claude": {
-      "version": "2.1.322 (Claude Code)",
+      "version": "2.1.330 (Claude Code)",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -236,9 +236,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:c1bc7f0c01e6667a50b95a3bf2cf4b0175fa520dc0afb19806c140a73cd42d67",
-        "fullTreeHash": "sha256:84c5dfb1a9fb81008a48b1a77635798073a9c98404b771b7b9df8d59f58e8aa4",
-        "fileCount": 517
+        "treeHash": "sha256:01ef00cc4c0a95e08fa7921176dac4ee9c8eba1a1c89f5f3bffcfb03db5b89ff",
+        "fullTreeHash": "sha256:383c9416d1d14f906474bdd9ae98cbefd7a34bcb3ada2985c6846c0e88b7ae75",
+        "fileCount": 522
       },
       "installedAgents": [
         {
