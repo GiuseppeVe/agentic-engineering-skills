@@ -50,7 +50,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/brainstorming/",
       "sha256": "a3782402a2ea2a0c57f1a79b1b0608f2b91bd098e12e8cb1ee8702fb4a882b68",
-      "localSha256": "68727f384b48c6dc5286cea037672ec68b12c8ef6d06c374127e4ae5138fbd41",
+      "localSha256": "e6e5282b46f033a70a6aee0d9ee1b1612d10c739748fac9f6ca49bf71a80e8af",
       "dependencies": [
         "writing-plans"
       ],

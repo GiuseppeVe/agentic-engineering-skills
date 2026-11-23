@@ -1,5 +1,5 @@
 diff --git a/brainstorming/SKILL.md b/brainstorming/SKILL.md
-index b0d52b2..3459aaa 100644
+index b0d52b2..422ff7d 100644
 --- a/brainstorming/SKILL.md
 +++ b/brainstorming/SKILL.md
 @@ -5,0 +6,2 @@
@@ -8,6 +8,9 @@ index b0d52b2..3459aaa 100644
 @@ -25 +27 @@
 -2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
 +2. **Offer visual companion** (if topic will involve visual questions) — this is its own message, not combined with a clarifying question. See the Visual Companion section below.
+@@ -29 +31 @@
+-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
++6. **Write design doc** with `$to-spec` — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
 @@ -38,0 +41,2 @@
 +    "Visual questions ahead?" [shape=diamond];
 +    "Offer Visual Companion\n(own message, no other content)" [shape=box];

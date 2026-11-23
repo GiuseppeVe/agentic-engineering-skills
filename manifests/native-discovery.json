@@ -1,11 +1,11 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-21",
+  "capturedAt": "2026-11-23",
   "environment": {
-    "isolation": "Separate temporary Windows host profiles. Installed plugin trees were compared with the local marketplace source.",
-    "commandNotation": "Native commands ran from the repository marketplace in isolated Windows profiles.",
-    "payloadRefresh": "Verified Codex install of 1.1.3 and Claude Code upgrade from the 1.1.2 base payload to 1.1.3 in isolated profiles."
+    "isolation": "Separate temporary Linux host profiles.",
+    "commandNotation": "Native commands ran from the local marketplace.",
+    "payloadRefresh": "Fresh installations verified on both hosts."
   },
   "installedPayload": {
     "root": "plugins/agentic-engineering-skills",
@@ -49,7 +49,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.170.0",
+      "version": "codex-cli 0.167.2",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:cc6f24724caede6c8180a93dd8ebc71063bb63dbf4125191da7939d0110202a5",
-        "fullTreeHash": "sha256:d6a81516c483d2e1a47583a47b330ed9b8374c133b5b195bc3a14da030d371b9",
+        "treeHash": "sha256:59160f08837933fd74a212cc0f32ba3616c9c00ea5bb51593aaff2ca0583c929",
+        "fullTreeHash": "sha256:84c5dfb1a9fb81008a48b1a77635798073a9c98404b771b7b9df8d59f58e8aa4",
         "fileCount": 517
       },
       "commands": [
@@ -156,7 +156,7 @@
       ]
     },
     "claude": {
-      "version": "2.1.327 (Claude Code)",
+      "version": "2.1.322 (Claude Code)",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:a92ad4e3cd69ba543527cc27f0d3396751c6fc935ebe320adb44d4feb485f824",
-        "fullTreeHash": "sha256:d6a81516c483d2e1a47583a47b330ed9b8374c133b5b195bc3a14da030d371b9",
+        "treeHash": "sha256:c1bc7f0c01e6667a50b95a3bf2cf4b0175fa520dc0afb19806c140a73cd42d67",
+        "fullTreeHash": "sha256:84c5dfb1a9fb81008a48b1a77635798073a9c98404b771b7b9df8d59f58e8aa4",
         "fileCount": 517
       },
       "installedAgents": [
@@ -280,27 +280,13 @@
           "exitCode": 0
         },
         {
-          "command": "claude plugin update agentic-engineering-skills@agentic-engineering-skills --scope user",
-          "exitCode": 0
-        },
-        {
           "command": "claude plugin list --json",
           "exitCode": 0
         }
       ],
       "limitations": [
         "Isolated local marketplace installation, plugin listing, manifest-selected skill inventory and byte comparison only; no model invocation, live agent discovery, or hook execution."
-      ],
-      "upgrade": {
-        "fromVersion": "1.1.2",
-        "toVersion": "1.1.3",
-        "baseCommit": "cc6ed92c6770bf86a42e45b080a801bbc1aca7e5",
-        "marketplaceSetup": "Export plugins, .agents/plugins and .claude-plugin from the base commit with git archive. Extract into an empty temporary marketplace directory. Run marketplace add and plugin install from that directory with a fresh isolated Claude profile.",
-        "baselineEvidence": "The installed 1.1.2 cache contained master-orchestrator/SKILL.md with the same SHA-256 as the base archive and a different SHA-256 from the candidate.",
-        "sourceSwitch": "Copy each candidate file listed by git diff --name-only cc6ed92c6770bf86a42e45b080a801bbc1aca7e5 -- plugins .agents/plugins .claude-plugin over the corresponding file in that same temporary marketplace. Keep the registered path and installed profile. Run plugin validate, plugin update and plugin list there.",
-        "result": "The CLI reported an update from 1.1.2 to 1.1.3. verify:installed-native compared the new 1.1.3 cache to the source and receipt.",
-        "verify": "From the candidate repository root, read installPath for agentic-engineering-skills version 1.1.3 in the post-update Claude plugin list --json output. Run node scripts/verify-installed-native.mjs --host claude --installed-root \"<installPath>\". The profile contains caches for both versions."
-      }
+      ]
     }
   }
 }
