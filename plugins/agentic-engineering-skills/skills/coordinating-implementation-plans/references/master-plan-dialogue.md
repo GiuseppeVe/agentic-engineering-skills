@@ -41,6 +41,35 @@ vigore non sale: il thread che la riceve la risolve localmente e registra la
 base. Il master non inoltra al piano una risposta che il piano poteva darsi, e
 non sostituisce una prova mancante con una decisione.
 
+## Documento di mandato, file di pacchetto e gate
+
+Prima di delegare un thread-piano, committa nel suo branch il
+[documento di mandato](../../plan-orchestrator/references/plan-mandate.md) con
+tutte le sezioni richieste, e solo dopo invia il primo messaggio; passa al piano
+percorso e `revision` del documento e registrali nella mappa. I mandati dei
+piani paralleli dichiarano lo stesso titolare per ogni file condiviso.
+
+Ogni modifica del mandato è un nuovo commit del documento con `revision`
+incrementata e `supersedes`; il messaggio che avvisa il piano cita la nuova
+revisione e non precede il commit: una modifica annunciata solo in chat non
+cambia il mandato. Quando la modifica cambia la consegna (base, risultato atteso
+o manifesto), la nuova revisione è il mandato distinto che cita quello superato,
+e la revisione superata non si riscrive; a parità di consegna, una ripresa
+conserva l'identità del mandato. Un report tardivo resta attribuito alla
+revisione per cui è stato richiesto.
+
+Alla creazione di un pacchetto committa il [file di pacchetto](package-manifest.md)
+nel branch `pkg/*`, prima della prima PR di piano. Aggiornalo nello stesso passo
+in cui aggiungi un piano alla mappa, e aggiungi `pr` quando la PR del piano si
+apre: un piano presente nella mappa ma assente dal file sfuggirebbe al controllo
+di completezza.
+
+Non scegli i gate e non ne togli: la mappa versionata del progetto li seleziona
+dal diff. Le PR che non vanno in `main` eseguono i gate selezionati; le PR verso
+`main` il gate completo, salvo l'eccezione che solo l'owner concede sulla head
+corrente (un agente può chiederla, non concedersela). Dichiara readiness solo
+quando sono verdi sulla head i gate che la mappa seleziona per quella PR.
+
 ## Dal brief alla risposta consegnata
 
 1. Il brief identifica recapito, mandato e decisioni riservate. Il piano crea o

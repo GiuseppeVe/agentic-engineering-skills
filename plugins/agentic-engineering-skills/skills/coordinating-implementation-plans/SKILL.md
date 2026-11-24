@@ -55,9 +55,17 @@ Se l’host non li offre, segnala il blocco. Restano ammessi i comandi di gate
 e review locale previsti dalla repository. Il master non crea un secondo
 thread di verifica della PR.
 
+Prima di delegare un thread-piano committa nel suo branch il [documento di
+mandato](../plan-orchestrator/references/plan-mandate.md) e, nel branch `pkg/*`,
+il [file di pacchetto](references/package-manifest.md): alla creazione del
+pacchetto e a ogni piano aggiunto, nello stesso passo in cui aggiorni la mappa
+([procedura](references/master-plan-dialogue.md)). Non scegli e non togli gate:
+li seleziona la mappa del progetto.
+
 Fornisci un brief con:
 
-- recapito raggiungibile del master, mandato del piano e decisioni riservate;
+- recapito raggiungibile del master, mandato del piano (percorso e revisione del
+  documento di mandato) e decisioni riservate;
 - workflow; piano, spec e mappa leggibili, con revisione/SHA;
 - task o prefisso, risultati attesi, dipendenze e punti di stop;
 - `plan-orchestrator`, progetto, branch, base SHA e vincoli di worktree;
@@ -91,8 +99,10 @@ riverifiche allo stesso thread-piano. Per blocchi identifica causa,
 responsabile e condizione di sblocco, applicando solo retry autorizzati.
 
 Aggiorna la mappa dopo merge, decisioni o cambi di dipendenza, con prove e
-revisioni; avvisa i thread interessati. Consultala prima di assegnazioni e
-handoff. Risolvi i conflitti di contenuto nel thread competente.
+revisioni; avvisa i thread interessati. Quando aggiungi un piano o ne apri la
+PR, aggiorna nello stesso passo il file di pacchetto; un cambio di perimetro è
+una nuova revisione committata del documento di mandato. Consulta la mappa prima
+di assegnazioni e handoff. Risolvi i conflitti di contenuto nel thread competente.
 
 ## 4. Verifica readiness, autorizza e chiudi
 
