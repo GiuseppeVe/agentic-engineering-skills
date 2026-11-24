@@ -54,6 +54,9 @@ equivalent one unless an approved basis or the owner's decision authorises it.
   and instructs the task thread only after the notice, citing it.
 - If delivery is uncertain, verify receipt before resending. A chat
   acknowledgement without an observed step is not resumption.
+- Read the mandate document ([plan-mandate.md](plan-mandate.md)) at launch and
+  after resume; a mandate change is a new committed revision, not a chat
+  message. Out-of-perimeter or held paths become a question to the master.
 
 ## Deliveries and reports
 
