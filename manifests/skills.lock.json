@@ -114,8 +114,8 @@
     {
       "name": "coordinating-implementation-plans",
       "sourceType": "original",
-      "localSha256": "63924fd702b92059c5e1d05839c5a89d8427f19c66d873244a3c66e4e7a65c5d",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "localSha256": "685e63260e52a4b3422f80144b8ac6e88b7678b1243247ed81ddb2db27dbc0f8",
+      "releaseCommit": "a49abe2bcd69815496e4ece4d489317567af8d1a",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -364,8 +364,8 @@
     {
       "name": "plan-orchestrator",
       "sourceType": "original",
-      "localSha256": "e9d9bf24208198de92078426bac7c350527e1f8757b22b4e466dfc7987047344",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "localSha256": "3c2e022fb41a8d1e5ff0006482920545c8c49d9601da17f41e9e0ce1694a8818",
+      "releaseCommit": "a49abe2bcd69815496e4ece4d489317567af8d1a",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
