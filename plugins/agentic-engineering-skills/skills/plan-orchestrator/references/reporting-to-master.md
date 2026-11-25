@@ -35,8 +35,21 @@ Escalate only:
 
 For a reserved choice, state the precise choice, the observable effect and the
 dependent step, then route it to the owner through the master. Do not decide a
-reserved choice yourself, and do not replace an approved gate with an
-equivalent one unless an approved basis or the owner's decision authorises it.
+reserved choice yourself.
+
+Never substitute, drop or narrow a CI gate. The project's versioned map selects
+the gates, and a PR to `main` runs the full suite. The only reduction is the
+consumer's diff-exception label (Alfe: `gate:diff`) on the current head: an
+owner account applied it after that head was pushed, by the host's recorded
+push time, and any new push voids it. A chat reply, a mandate line or an
+approved basis is not that label, even when it comes from the owner. To ask for
+the exception, route the request to the owner through the master, and run the
+full suite until the label is on the head.
+
+A dependency gate, such as availability in `main` replaced by availability in
+the package, is a reserved choice: it changes only through an approved
+equivalence basis or the owner's decision delivered by the master, and the
+change never reduces the CI gates that run.
 
 ## Questions, decisions and resumption
 
@@ -54,6 +67,9 @@ equivalent one unless an approved basis or the owner's decision authorises it.
   and instructs the task thread only after the notice, citing it.
 - If delivery is uncertain, verify receipt before resending. A chat
   acknowledgement without an observed step is not resumption.
+- Read the mandate document ([plan-mandate.md](plan-mandate.md)) at launch and
+  after resume; a mandate change is a new committed revision, not a chat
+  message. Out-of-perimeter or held paths become a question to the master.
 
 ## Deliveries and reports
 
