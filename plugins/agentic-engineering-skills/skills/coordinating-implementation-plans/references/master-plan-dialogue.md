@@ -65,10 +65,21 @@ apre: un piano presente nella mappa ma assente dal file sfuggirebbe al controllo
 di completezza.
 
 Non scegli i gate e non ne togli: la mappa versionata del progetto li seleziona
-dal diff. Le PR che non vanno in `main` eseguono i gate selezionati; le PR verso
-`main` il gate completo, salvo l'eccezione che solo l'owner concede sulla head
-corrente (un agente può chiederla, non concedersela). Dichiara readiness solo
-quando sono verdi sulla head i gate che la mappa seleziona per quella PR.
+dal diff e, nel dubbio, seleziona di più. Il gate completo è obbligatorio quando
+il diff tocca un percorso che la mappa non assegna o un file che la mappa
+dichiara condiviso, e quando il diff o la mappa non si leggono. La mappa stessa
+è un file condiviso: una sua modifica richiede la review dell'owner, e la PR che
+la modifica è selezionata con la mappa della propria base.
+
+Le PR che non vanno in `main` eseguono i gate selezionati; le PR verso `main` il
+gate completo. L'unica eccezione è l'etichetta di eccezione al diff del
+consumatore (Alfe: `gate:diff`), che limita una PR verso `main` ai gate che la
+mappa seleziona dal diff. Vale solo se un account owner la applica dopo il push
+della head corrente, secondo l'ora che l'host registra per quel push e mai la
+data del commit; un nuovo push la fa decadere. Un consenso in chat, anche
+dell'owner, non è l'etichetta: un agente la chiede all'owner tramite il master
+e non se la concede. Dichiara readiness solo quando sono verdi sulla head i gate
+che la mappa seleziona per quella PR.
 
 ## Dal brief alla risposta consegnata
 

@@ -29,8 +29,12 @@ independent authorised work.
 
 ## Gates
 
-Never choose which gates run and never drop one. The project's versioned map
-selects them; only the owner grants a diff-only exception on a PR to `main`.
+Never choose which gates run, and never drop or substitute one. The project's
+versioned map selects them, and selects the full suite when a path is
+unmapped, a shared file changes, or the diff or the map cannot be read. A PR to
+`main` runs the full suite unless the consumer's diff-exception label (Alfe:
+`gate:diff`) was applied by an owner account after the current head was
+pushed. A new push voids the label; a chat reply never replaces it.
 
 ## Required sections
 
