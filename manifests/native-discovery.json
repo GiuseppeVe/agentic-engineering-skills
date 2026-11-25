@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-24",
+  "capturedAt": "2026-11-25",
   "environment": {
     "isolation": "Separate temporary Windows host profiles.",
     "commandNotation": "Native commands ran from the local marketplace.",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:a279c789848dc4c14a38f28d4e204736ccc37fba4627b9b9a6d1a504d5cda312",
-        "fullTreeHash": "sha256:f92a33347e1a9bd84bb48d988bb74a9956410d94a13e5b2950343e180ca3fab0",
+        "treeHash": "sha256:8448c8043ba16e83cf6c177f6d87631ea5c94f5ec288bff49822a3dd8c5e694f",
+        "fullTreeHash": "sha256:404c00f3b5ba4a9594e07b6e6641bc3d94f2a7972c1d15220d52463210e48b24",
         "fileCount": 524
       },
       "commands": [
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:2533b8fcfb4f36d808b27d1c6cb62aa0b6a93c0834a78d077d7f7a0a92d0fd88",
-        "fullTreeHash": "sha256:f92a33347e1a9bd84bb48d988bb74a9956410d94a13e5b2950343e180ca3fab0",
+        "treeHash": "sha256:3500bb7422fbce18a16a4fe9c2c536b960296c7746d2c029a47e62eb64040eba",
+        "fullTreeHash": "sha256:404c00f3b5ba4a9594e07b6e6641bc3d94f2a7972c1d15220d52463210e48b24",
         "fileCount": 524
       },
       "installedAgents": [
