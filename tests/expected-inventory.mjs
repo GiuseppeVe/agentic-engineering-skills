@@ -7,6 +7,7 @@ export const expectedSkills = [
   "codebase-design",
   "coordinating-implementation-plans",
   "deslopping-cleanup",
+  "development-process",
   "domain-modeling",
   "graphify",
   "graphify-start",

@@ -66,7 +66,7 @@ test('README has required exact section sequence and manifest-derived install co
     'Supporting skills',
     'Workflow at a glance',
     'Install',
-    'Why version 1.1',
+    'Why version 1.2',
     'Customize',
     'Compatibility',
     'Provenance',
@@ -89,41 +89,27 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /invoke one included skill/i);
 });
 
-test('README links the plugin hooks guide and guide states real runtime limits', () => {
+test('README and the plugin hooks guide describe only the Caveman startup hooks', () => {
   const readme = read('README.md');
   const guide = read('docs/plugin-hooks.md');
   const hooks = section(readme, 'Hooks I use');
-  assert.match(hooks, /PostToolUse/);
-  assert.match(hooks, /successful `gh pr create`[\s\S]*GitHub MCP[\s\S]*in both cases[\s\S]*valid GitHub PR URL/);
-  assert.match(hooks, /`cleaning-repo-with-knip` first[\s\S]*authorized safe fixes[\s\S]*`simplify`/);
-  assert.match(hooks, /`gh pr merge`[\s\S]*positive read-only GitHub check/);
-  assert.match(hooks, /do not run the skills[\s\S]*delete branches or worktrees themselves/);
-  assert.match(hooks, /Node\.js 22 or newer[\s\S]*post-merge reminder requires[\s\S]*GitHub CLI[\s\S]*successful merge verification/);
-  assert.match(hooks, /post-PR reminder only uses `gh`[\s\S]*valid PR URL[\s\S]*`gh` is unavailable or the branch lookup fails/);
+  assert.match(hooks, /registers only the Caveman startup hooks/);
+  assert.match(hooks, /`SessionStart` and `SubagentStart`/);
+  assert.match(hooks, /ships no process hook/);
+  assert.match(hooks, /development-process\/SKILL\.md/);
+  assert.match(hooks, /Node\.js 22 or newer/);
   assert.match(hooks, /reviewed and trusted[\s\S]*fresh session/);
   assert.equal((readme.match(/\[plugin hooks guide\]\(docs\/plugin-hooks\.md\)/g) ?? []).length, 1);
-  assert.match(guide, /PostToolUse/);
+  assert.match(guide, /`SessionStart` and `SubagentStart`/);
   assert.match(guide, /Node\.js 22 or newer/);
-  assert.match(guide, /GitHub CLI as `gh` from the process `PATH`/);
-  assert.match(guide, /In both cases, the tool result must contain a valid GitHub pull request URL/);
-  assert.match(guide, /post-merge hook emits no reminder if merge verification fails/);
-  assert.match(guide, /failed head-branch lookup does not suppress an otherwise eligible PR reminder/);
-  assert.doesNotMatch(guide, /A failed lookup or incomplete result emits no reminder/);
-  assert.match(guide, /mcp__\.\*\(create_pull_request\|pull_request\.\*create\|create_pr\)/);
-  assert.match(guide, /do not run skills, edit repository files, commit, push, comment, merge, or publish/i);
+  assert.match(guide, /no `PostToolUse` hook/);
   assert.match(guide, /not enforcement/i);
-  assert.match(guide, /deduplicates by pull request URL within a session/i);
-  assert.match(guide, /SHA-256 digests/);
-  assert.match(guide, /older than 14 days is treated as expired/);
-  assert.match(guide, /lazy expiration, not a background cleanup/i);
-  assert.match(guide, /Raw session IDs and PR URLs are not written/);
-  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs/);
-  for (const path of [
-    'plugins/agentic-engineering-skills/hooks/hooks.json',
-    'plugins/agentic-engineering-skills/hooks/post-merge.mjs',
-    'plugins/agentic-engineering-skills/hooks/post-pr.mjs',
-    'plugins/agentic-engineering-skills/hooks/pr-skills.json',
-  ]) assert.ok(existsSync(resolve(root, path)), `missing hook reference target: ${path}`);
+  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/caveman-startup\.test\.mjs/);
+  for (const text of [readme, guide]) assert.doesNotMatch(text, /pr-skills:v1|pr-workflow-check|post-pr\.mjs|post-merge\.mjs/);
+  assert.ok(existsSync(resolve(root, 'plugins/agentic-engineering-skills/hooks/hooks.json')), 'missing hook manifest');
+  for (const removed of ['post-merge.mjs', 'post-pr.mjs', 'pr-skills.json', 'pr-workflow-check.mjs', 'hook-lib.mjs', 'billing-fallback.md', 'billing-policies.json']) {
+    assert.ok(!existsSync(resolve(root, 'plugins/agentic-engineering-skills/hooks', removed)), `removed hook file is back: ${removed}`);
+  }
 });
 
 test('README keeps the hero-led opening and experience-shaped framing', () => {
@@ -196,13 +182,13 @@ test('README explains philosophy, quality signals, and supporting skills', () =>
   for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Improve Codebase Architecture']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
-  assert.match(supporting, /post-merge reminder/i);
+  assert.doesNotMatch(supporting, /post-merge reminder/i);
 });
 
 test('graph workflow documentation explains both available orchestration routes', () => {
   const source = read('README.md');
   const graph = section(source, 'Graph workflows');
-  const rationale = section(source, 'Why version 1.1');
+  const rationale = section(source, 'Why version 1.2');
   assert.match(graph, /new chat and an explicit orchestration skill/i);
   assert.match(graph, /`\$master-orchestrator`/);
   assert.match(graph, /master-orchestrator\/SKILL\.md/);
@@ -232,9 +218,8 @@ test('graph workflow documentation explains both available orchestration routes'
     assert.match(asset, /<desc id="desc">[^<]+<\/desc>/);
     assert.doesNotMatch(asset, /<script|<foreignObject|<image|https?:\/\/(?!www\.w3\.org\/2000\/svg)/i, 'workflow images must remain self-contained static artwork');
   }
-  assert.match(rationale, /graph workflows[\s\S]*PR lifecycle hooks/i);
-  assert.match(rationale, /Knip[\s\S]*Simplify[\s\S]*verify the merge[\s\S]*clean up/i);
-  assert.match(rationale, /remind the agent/i);
+  assert.match(rationale, /graph workflows[\s\S]*single source of my general development process/i);
+  assert.match(rationale, /`development-process`[\s\S]*PR lifecycle hooks[\s\S]*removed/i);
 });
 
 test('README owns the canonical workflow overview without duplicating it in the guide', () => {

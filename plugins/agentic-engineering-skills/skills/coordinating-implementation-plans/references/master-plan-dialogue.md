@@ -16,7 +16,7 @@ Al lancio prendi dal brief, e a ogni ripresa riconcilia con il ledger e lo stato
 reale:
 
 - il recapito raggiungibile del master, il mandato del piano, la base o
-  revisione, il risultato atteso e il manifesto verificabile;
+  revisione e il risultato atteso;
 - le decisioni riservate già concesse e i punti di stop;
 - il percorso di integrazione autorizzato e gli obblighi pendenti.
 
@@ -52,8 +52,8 @@ piani paralleli dichiarano lo stesso titolare per ogni file condiviso.
 Ogni modifica del mandato è un nuovo commit del documento con `revision`
 incrementata e `supersedes`; il messaggio che avvisa il piano cita la nuova
 revisione e non precede il commit: una modifica annunciata solo in chat non
-cambia il mandato. Quando la modifica cambia la consegna (base, risultato atteso
-o manifesto), la nuova revisione è il mandato distinto che cita quello superato,
+cambia il mandato. Quando la modifica cambia la consegna (base o risultato
+atteso), la nuova revisione è il mandato distinto che cita quello superato,
 e la revisione superata non si riscrive; a parità di consegna, una ripresa
 conserva l'identità del mandato. Un report tardivo resta attribuito alla
 revisione per cui è stato richiesto.
@@ -78,8 +78,14 @@ mappa seleziona dal diff. Vale solo se un account owner la applica dopo il push
 della head corrente, secondo l'ora che l'host registra per quel push e mai la
 data del commit; un nuovo push la fa decadere. Un consenso in chat, anche
 dell'owner, non è l'etichetta: un agente la chiede all'owner tramite il master
-e non se la concede. Dichiara readiness solo quando sono verdi sulla head i gate
-che la mappa seleziona per quella PR.
+e non se la concede. Dichiara readiness solo quando sulla head congelata sono
+verdi gli stati dei gate che la mappa seleziona per quella PR
+(`gh pr checks <PR>`) e la review indipendente di quella head è conclusa; un
+check GitHub Actions rosso solo per billing non blocca.
+
+Nota specifica di repository (Alfe): la mappa è `.github/ci-gates.json`, con
+l'owner come titolare in `.github/CODEOWNERS` e gli account owner nel campo
+`owners`; gli stati sono `alfe-gates/suites` e `alfe-gates/playwright`.
 
 ## Dal brief alla risposta consegnata
 
@@ -91,7 +97,7 @@ che la mappa seleziona per quella PR.
 3. Il piano invia al master solo il dubbio residuo di flusso. Il master verifica
    prima se esiste una decisione applicabile nel mandato, nelle fonti o nello
    stato; se esiste, risponde citandola e registra la base.
-4. Se il dubbio riguarda ordine di integrazione o risorse condivise, il master
+4. Se il dubbio riguarda ordine di integrazione o file condivisi, il master
    decide entro il mandato. Se la proposta cambia struttura, contratto,
    comportamento, perimetro o un’autorizzazione riservata e le fonti lasciano
    aperta la scelta, il master prepara la domanda per l’owner: scelta precisa,
@@ -108,8 +114,8 @@ che la mappa seleziona per quella PR.
    duplicata produce un solo passo.
 7. Il piano riprende solo le azioni sbloccate e il passo successivo cita la
    decisione. Un ACK in chat senza passo osservato non dimostra la ripresa.
-8. Il report di consegna si verifica contro il mandato: base, risultato atteso e
-   manifesto. Un report tardivo resta attribuito al mandato originale; una
+8. Il report di consegna si verifica contro il mandato (base e risultato
+   atteso); il suo `sha` lo verifichi tu su origin con git o `gh`. Un report tardivo resta attribuito al mandato originale; una
    decisione successiva mantiene precedenza solo nel proprio ambito.
 9. Se la consegna è incerta, il master verifica la ricezione prima di
    reinviare. Al risveglio riconcilia domande aperte, decisioni da consegnare e
@@ -138,10 +144,11 @@ che la mappa seleziona per quella PR.
 ## Stato del consumatore e readiness
 
 Prima di suggerire un’azione verifica il percorso di integrazione autorizzato.
-Leggi la superficie di stato esistente del consumatore e registra head,
-perimetro e destinazione; un’azione suggerita dal comando non è
-un’autorizzazione. Tieni separati fatti osservati, perimetro richiesto, prove
-disponibili, readiness e autorizzazione al merge.
+Leggi lo stato di piani e pacchetti da GitHub, mai dal tuo log:
+`gh pr list --base pkg/<x> --state merged --json number,title,body,mergeCommit`,
+associando ogni PR al piano con la riga `Piano: <id>` nel corpo. Registra head,
+perimetro e destinazione. Tieni separati fatti osservati, perimetro richiesto,
+prove disponibili, readiness e autorizzazione al merge.
 
 Dichiara readiness solo quando le prove richieste dal repository coprono il
 perimetro e la revisione effettivi. Una nuova head invalida le prove legate alla
@@ -161,16 +168,7 @@ inclusa.
 | Fonte indisponibile, mandato cambiato o gate saltato | Esplicita la prova residua e l’eventuale eccezione nel suo ambito |
 | Programma preesistente con PR diretta verso main | Conserva il percorso diretto e applica gli stessi criteri di prova |
 
-La presenza di questa griglia non dimostra l’output del comando di stato: il
-confronto con l’output effettivo del consumatore usa la superficie di stato
-esistente e resta una verifica separata.
-
 ## Risorse, stop e ripresa
-
-Per una risorsa contesa rendi visibili host, titolare, prossimo richiedente e
-condizione di rilascio. Al rilascio assegna la risorsa al prossimo piano
-compatibile e avvisalo prima che lo slot venga usato; l’avviso non amplia il
-mandato.
 
 Una domanda sospende solo l’azione dipendente: il lavoro indipendente già
 autorizzato prosegue, e uno stop esplicito dell’owner ferma le azioni incluse

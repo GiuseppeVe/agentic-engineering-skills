@@ -101,6 +101,7 @@ The master selects relevant specialist routes within the authorized scope. These
 | Small implementation | `Task Implement` | Implement one assigned plan task, coordinate bounded subtasks, and verify its acceptance criteria. |
 | Claude Code implementation | `Task Implement` | Use the same shared task workflow with Claude-specific model routing. |
 | Repository cleanup across responsibilities | `Deslopping Cleanup` | Investigate candidates, review evidence, and commit verified cleanup batches. |
+| General process rules for any session | `Development Process` | Read the mandate, verification, PR-phase and orchestration rules that the other skills point to. |
 
 Explicitly invoke [`setup-goal`](plugins/agentic-engineering-skills/skills/setup-goal/SKILL.md) when you want to prepare a native Goal run. It co-designs the outcome, constraints, and progress metrics, then saves `runbook.md` with those three sections. Review the saved runbook and exact Goal condition before giving final confirmation to start that version. Only then does it activate the host's native Goal; agreeing individual sections does not start execution. If the host has no native Goal capability, the runbook remains ready and activation is reported as blocked.
 
@@ -110,26 +111,19 @@ See [workflow guide](docs/workflow.md) for routing detail.
 
 For ordered work, `Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness through failing tests, implementation, and passing tests. Findings return through the TDD fix cycle before acceptance, then independent evidence informs review.
 
-The [PR lifecycle hooks](#hooks-i-use) keep the next quality or cleanup action visible at the point where it is needed, while the agent performs it under the receiving project's rules.
+The [process rules](plugins/agentic-engineering-skills/skills/development-process/SKILL.md) fix the order of the PR phase: a fast local check, one independent review of the whole diff with `simplify` and Knip in parallel, fixes in one commit, and the full gates once on the frozen head. They are guidance the agent follows under the receiving project's rules; no hook enforces them.
 
 ## Hooks I use
 
-I use two optional `PostToolUse` hooks to bring code quality and repository hygiene back into the conversation after a successful GitHub action. Their purpose is to reduce avoidable slop in merged changes and prevent completed branches and worktrees from accumulating.
+The plugin registers only the Caveman startup hooks. `SessionStart` and `SubagentStart` load its communication rules into new sessions and subagents, subject to host support and hook approval. If a project already supplies the same context, both hooks can run.
 
-The Caveman startup hooks also load its communication rules into new sessions and subagents, subject to host support and hook approval. If a project already supplies the same context, both hooks can run.
+The plugin ships no process hook. Earlier versions added `PostToolUse` reminders after PR creation and after merge, together with a PR preflight verifier and a comment marker. Version 1.2 removes them: the steps they repeated now live as short rules in [`development-process`](plugins/agentic-engineering-skills/skills/development-process/SKILL.md), and a repository keeps its own git hooks and CI as its gates.
 
-| Hook | When it activates | What it asks the agent to do |
-| --- | --- | --- |
-| After PR creation | A successful `gh pr create` call reported by `Bash`, or a supported GitHub MCP create-PR call; in both cases, the tool result must contain a valid GitHub PR URL. | After CI and independent review pass on the current head, run the bundled preflight verifier; only when it returns READY, run `cleaning-repo-with-knip` first on the PR changes: verify references, compatibility, and retention decisions before applying authorized safe fixes; leave out-of-scope findings as follow-ups. Then run `simplify` for behavior-preserving simplifications; recheck the final head and record the checks and fixes with the `pr-skills:v1` reporting instructions; verify the marker with the bundled checker. |
-| After merge | A recognized successful `gh pr merge` call with an explicit PR number or URL, reported by `Bash`, followed by a positive read-only GitHub check that the PR is merged and has merge metadata. | Verify the merge, apply the documented Graphify refresh where applicable, inspect branch and worktree ownership and remaining work, then perform only authorized cleanup while preserving anything uncertain. |
-
-The PR reminder makes cleanup and simplification part of finishing the change, rather than leaving them as forgotten follow-ups. The post-merge reminder prompts the agent to verify the result and, when authorized, clean up the development workspace. Both hooks add context: they do not run the skills, edit files, commit, publish, or delete branches or worktrees themselves, and they do not guarantee that the suggested work happens.
-
-Both scripts need Node.js 22 or newer. The post-merge reminder requires an authenticated GitHub CLI (`gh`) on `PATH` and successful merge verification. The post-PR reminder only uses `gh` to enrich the message with the head branch: a valid PR URL can still produce the reminder if `gh` is unavailable or the branch lookup fails. They only observe supported tool events and recognized command/result shapes, so merges or PRs created through other paths may produce no reminder. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup, detection, deduplication, and coverage limits.
+The startup script needs Node.js 22 or newer. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup and coverage limits.
 
 ## Supporting skills
 
-I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability. The post-merge reminder routes verified merge and workspace cleanup through the receiving project's approval and ownership rules.
+I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability.
 
 ### Deslopping Cleanup
 
@@ -227,21 +221,21 @@ claude plugin install agentic-engineering-skills@agentic-engineering-skills
 
 Confirm discovery with `codex plugin list --available --json` or `claude plugin list`. Then start a fresh host session and invoke one included skill, such as `brainstorming`; plugin listing alone does not prove fresh-session invocation.
 
-Enable and trust the plugin hooks separately from skill installation; see [Hooks I use](#hooks-i-use) for their triggers and prerequisites.
+Enable and trust the plugin hooks separately from skill installation; see [Hooks I use](#hooks-i-use) for what they load and their prerequisites.
 
 Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see the relevant implementation skill for its role and routing requirements.
 
-The plugin exposes 35 shared skills to both Codex and Claude Code. `task-implement` selects model and effort for its orchestrator and implementation subagents according to the host.
+The plugin exposes 36 shared skills to both Codex and Claude Code. `task-implement` selects model and effort for its orchestrator and implementation subagents according to the host.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 
-## Why version 1.1
+## Why version 1.2
 
-This release improves graph workflows: instead of managing one chat at a time, I start with a master orchestrator that coordinates the work.
+Version 1.1 introduced graph workflows: instead of managing one chat at a time, I start with a master orchestrator that coordinates the work.
 
 For research and design, the master delegates focused investigations and brings the results together. For implementation, a second master coordinates approved plans, running compatible plan threads in parallel while each plan handles its tasks and reviews in sequence.
 
-Version 1.1 also adds PR lifecycle hooks. They remind the agent to run Knip and Simplify after the required checks and review, then verify the merge and clean up the development environment. The goal is to keep merged code focused and the repository clean as work accumulates.
+Version 1.2 makes this plugin the single source of my general development process. The `development-process` skill carries the process and orchestration rules, and the orchestration skills point to it instead of restating them or pointing at one project's documents. The PR lifecycle hooks, the PR preflight verifier and its marker are removed: enforcement inside agent sessions slowed the work down, so the rules are now short guidance and each repository keeps its own git hooks and CI.
 
 ## Customize
 

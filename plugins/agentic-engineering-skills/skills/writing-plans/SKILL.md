@@ -7,7 +7,7 @@ description: Use when a spec or requirements need a multi-step implementation pl
 
 > **Adaptation:** Based on `obra/superpowers`; updated with a portable writing-plans workflow for portable Codex and Claude Code skill-pack use.
 
-Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, code, tests, commands, docs, risks, and acceptance evidence. DRY, YAGNI, TDD.
+Write standalone `.mdx` plans for skilled engineers unfamiliar with the codebase, toolset, domain, and good test design. Include what changes execution: files, contracts, interfaces, tests, commands, docs, risks, and acceptance criteria. A plan states contracts, interfaces, tests and acceptance criteria, not the complete implementation: the implementer designs the code. DRY, YAGNI, TDD.
 
 Announce: "I'm using the writing-plans skill to create the implementation plan."
 
@@ -57,6 +57,7 @@ One line per atomic, checkable obligation:
 ```
 
 - IDs stay stable: never reuse or renumber assigned IDs.
+- Each task's acceptance criteria are provable with fixtures. Put every native or live proof in a separate task of its own, naming the authority it needs. The plan makes this split: no implementer or reviewer moves a criterion between tasks.
 - Types: `behavior` (runtime behavior), `test` (test added/kept), `contract` (cross-task wiring), `constraint` (cross-cutting rule, such as UTC timestamps).
 - Split compound claims, such as validation and enqueueing, into separate requirements.
 - `Evidence:` preserves the spec's required level: `artifact` (static), `fixture` (simulated), `integration`, or `real-runtime` (operational). Select the level required by the obligation, not the easiest available proof. Fixture or simulation cannot satisfy real-runtime; isolated installation cannot satisfy activation in the real target. Weaker evidence leaves the requirement open.
@@ -78,7 +79,7 @@ Map every created/modified file and its responsibility before tasks. Use clear i
 
 ### Task structure
 
-Each step is one 2-5 minute action. Use this shape; replace sample paths/code with complete task-specific content:
+Each step is one 2-5 minute action. Use this shape; replace sample paths and snippets with task-specific contracts and tests; do not write the implementation:
 
 Commit boundary and owner follow the selected execution mode and explicit authority; a plan does not grant commit or PR permission. For `plan-orchestrator`, the implementer hands off an uncommitted diff and the reviewer commits the accepted task only when authorized. Inline execution commits only when explicitly assigned and authorized.
 
@@ -105,12 +106,9 @@ def test_specific_behavior():
 Run: `pytest tests/path/test.py::test_name -v`
 Expected: FAIL with "function not defined"
 
-- [ ] **Step 3: Write minimal implementation**
+- [ ] **Step 3: Implement the contract**
 
-```python
-def function(input):
-    return expected
-```
+Contract: `function(input) -> expected`; states, errors and cancellation behavior as stated in the task. Write the minimal code that makes the test pass.
 
 - [ ] **Step 4: Run test to verify it passes**
 
@@ -124,19 +122,23 @@ Review the diff and report changed files, checks and results, and acceptance evi
 
 ## Completeness and self-review
 
-Exact paths, complete code for every code-changing step, exact commands and expected output are required. Repeat needed code rather than "Similar to Task N"; engineers may read tasks out of order. All referenced types/functions/methods must be defined in a task or identified existing code. Placeholders (`TBD`, `TODO`, "implement later", "fill in details"), vague validation/error-handling/edge-case directions, and "write tests for the above" without test code fail the plan.
+Exact paths, exact commands and expected output, and for every code-changing step the contract (signatures, types, states, errors) and the tests that prove it are required; the implementation body is not. Repeat needed contracts rather than "Similar to Task N"; engineers may read tasks out of order. All referenced types/functions/methods must be defined in a task or identified existing code. Placeholders (`TBD`, `TODO`, "implement later", "fill in details"), vague validation/error-handling/edge-case directions, and "write tests for the above" without test code fail the plan.
 
-Review yourself, not by subagent dispatch; use the spec with fresh eyes:
+Review yourself first, with the spec and fresh eyes:
 
 1. Map every spec requirement to a `REQ`; add gaps.
 2. Scan architecture, context, tasks, comments for MUST/SHALL/REQUIRED/"has to"/"ensure that"/"always"/"never". Capture each obligation, especially cross-cutting constraints, in the inventory.
 3. Check every task's external assumptions for a contract naming both endpoints; verify `_None._` claims.
 4. Verify bidirectional `Satisfied by:` / `Satisfies:` links, with no orphan requirements or tasks.
 5. Check each evidence level against the spec and each oracle against its required behavior and environment; retain gated and deferred work with authority, later owner task, and open status until proven.
-6. Fix placeholders and missing concrete code/commands.
+6. Fix placeholders and missing contracts, tests or commands.
 7. Check later types, signatures, and property names match earlier definitions.
 
-Fix issues inline; no separate re-review required. Preserve required content even under deadline pressure.
+Fix issues inline. Preserve required content even under deadline pressure.
+
+### Design review before implementation
+
+Before the first task, a separate fresh-context reviewer reviews the plan on states, concurrency, cancellation, authorizations and privacy. Record the review (reviewer, date, findings and how each was closed) in the plan under `## Design Review`; no task starts without it.
 
 ## Execution handoff
 

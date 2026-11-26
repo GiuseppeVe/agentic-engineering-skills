@@ -9,6 +9,7 @@
 | `brainstorming` | adapted | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 | `caveman` | adapted | `JuliusBrussee/caveman@0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb` |
 | `cleaning-repo-with-knip` | original | Updated payload recorded in lock |
+| `development-process` | original | Owner-supplied general process rules and orchestration guide; payload release recorded in lock |
 | `deslopping-cleanup` | original | GiuseppeVe-authored cleanup coordinator and supporting references; payload release recorded in lock |
 | `coordinating-implementation-plans` | original | Owner-supplied skill; source file SHA-256 recorded in the source manifest, with no source commit claimed. |
 | `codebase-design` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
