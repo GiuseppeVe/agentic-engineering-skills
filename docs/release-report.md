@@ -1,5 +1,11 @@
 # Release verification report
 
+## Repository-specific notes removed and factory decision records: 2026-11-26
+
+Version 1.2.1 removes the notes tied to one repository from the general skills `development-process`, `coordinating-implementation-plans` and `plan-orchestrator`, and adds `docs/adr/` with the software-factory idea and its first four decision records. The payload still holds 36 skills for both hosts and 520 files; no skill was added or removed and no adapted skill changed, so no patch was regenerated.
+
+Fresh isolated native installs on Windows (separate temporary host profiles) passed `verify:installed-native` for Codex 0.171.0 (`sha256:8979ac15f3608d605f9d5b9111e4814510fdcfdd05784c56e965a332c8ab12f4`) and Claude Code 2.1.330 (`sha256:04e6eeb3b2f3062ca116990b2e6093d0cce149f096b5b5622ce8f8c9fa348372`); `claude plugin validate .` exited 0. This evidence covers installation, inventory and bytes. No model was invoked, no hook was executed in a host session, and the edited skills were not exercised in a live run. The decision records are documentation: no check enforces them.
+
 ## Single-source process rules and PR hook removal: 2026-11-26
 
 Version 1.2.0 adds `development-process` (general process rules and orchestration guide) and removes the `PostToolUse` PR hooks, the PR preflight verifier with its billing fallback, the `pr-skills` configuration and their tests. The payload holds 36 skills for both hosts and 520 files; `hooks/` holds only `hooks.json` with the Caveman startup hooks.
