@@ -10,4 +10,6 @@ Fonte unica delle regole generali di processo. Sono indicazioni: nessun hook le 
 - [Processo](references/PROCESSO.md): mandato e Git, verifiche, fase PR, chiusura.
 - [Orchestrazione](references/ORCHESTRAZIONE.md): delega ai sottoagenti, conduzione di un run, ciclo di vita di piani e pacchetti, consegna dei child, limiti di convergenza.
 
-Leggi solo il documento e la sezione che servono al compito. Le istruzioni del repository in cui lavori prevalgono dove sono più specifiche; ogni documento chiude con le note valide per un solo repository.
+Leggi solo il documento e la sezione che servono al compito. Le istruzioni del repository in cui lavori prevalgono dove sono più specifiche: comandi dei gate, nomi degli stati e cartelle dei documenti stanno nei documenti di quel repository.
+
+Per l'inventario e la pulizia dei worktree di un repository: `node scripts/worktrees.mjs` (sola lettura; `--remove-merged --yes` rimuove solo i worktree uniti e puliti e non cancella branch).

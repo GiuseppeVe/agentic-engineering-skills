@@ -11,7 +11,7 @@ Regole di processo per gli agenti che lavorano in un repository che adotta quest
 - Percorso: decisioni risolte → spec → review owner → piano → implementazione circoscritta → verifica e review → integrazione autorizzata.
 - Codice, configurazione e test si modificano in un branch e in un worktree dedicati (`<root-repo>/.worktrees/<nome>`); il checkout su `main` serve a leggere lo stato corrente. Le sole modifiche documentali sono esenti.
 - Stage dei soli percorsi toccati, mai `git add .`. Niente push diretto a `main`, force-push o reset distruttivi.
-- Preservare il lavoro altrui: controllare stato, branch, SHA e diff prima di editare o committare. Chi apre un worktree o un branch lo chiude a fine lavoro, oppure lo elenca nel report finale con percorso, branch e stato.
+- Preservare il lavoro altrui: controllare stato, branch, SHA e diff prima di editare o committare. Chi apre un worktree o un branch lo chiude a fine lavoro, oppure lo elenca nel report finale con percorso, branch e stato. L'inventario dei worktree di un repository, ovunque stiano su disco, si ottiene con `scripts/worktrees.mjs` di questa skill; la rimozione riguarda solo quelli uniti e puliti e parte su richiesta dell'owner.
 - Il merge in `main` richiede l'autorizzazione esplicita dell'owner per quella PR. Il merge verso branch non-`main` è dell'agente.
 
 ## Verifiche
