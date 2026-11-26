@@ -1,5 +1,11 @@
 # Release verification report
 
+## Single-source process rules and PR hook removal: 2026-11-26
+
+Version 1.2.0 adds `development-process` (general process rules and orchestration guide) and removes the `PostToolUse` PR hooks, the PR preflight verifier with its billing fallback, the `pr-skills` configuration and their tests. The payload holds 36 skills for both hosts and 520 files; `hooks/` holds only `hooks.json` with the Caveman startup hooks.
+
+Fresh isolated native installs on Windows (separate temporary host profiles) passed `verify:installed-native` for Codex 0.171.0 (`sha256:33e2632d3b74da776c333fb38d2ee53558334201397e54ca90ebb1dd85edad90`) and Claude Code 2.1.330 (`sha256:fda929123bc3b2640218fd740cc0680ebf809ee80f5919d172ea8e0c24e591d4`); `claude plugin validate .` exited 0. This evidence covers installation, inventory and bytes. No model was invoked, no hook was executed in a host session, and the reworded orchestration skills were not exercised in a live run.
+
 ## Caveman startup hook smoke: 2026-11-03
 
 Both host runs used an isolated local fake API server and dummy credentials; no real model inference was performed.
