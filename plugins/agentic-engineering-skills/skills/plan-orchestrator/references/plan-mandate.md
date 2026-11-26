@@ -1,8 +1,7 @@
 # Plan mandate document
 
 The master commits this document in the plan branch before the first message
-to the plan thread. The consumer fixes the directory (Alfe:
-`docs/work/mandates/<plan>.md`). It is the written perimeter: a thread that has
+to the plan thread. The consumer fixes the directory. It is the written perimeter: a thread that has
 lost its context recovers it from here, not from memory or chat.
 
 ## Who reads it
@@ -35,8 +34,7 @@ independent authorised work.
 Never choose which gates run, and never drop or substitute one. The project's
 versioned map selects them, and selects the full suite when a path is
 unmapped, a shared file changes, or the diff or the map cannot be read. A PR to
-`main` runs the full suite unless the consumer's diff-exception label (Alfe:
-`gate:diff`) was applied by an owner account after the current head was
+`main` runs the full suite unless the consumer's diff-exception label was applied by an owner account after the current head was
 pushed. A new push voids the label; a chat reply never replaces it.
 
 ## Required sections

@@ -73,7 +73,7 @@ la modifica è selezionata con la mappa della propria base.
 
 Le PR che non vanno in `main` eseguono i gate selezionati; le PR verso `main` il
 gate completo. L'unica eccezione è l'etichetta di eccezione al diff del
-consumatore (Alfe: `gate:diff`), che limita una PR verso `main` ai gate che la
+consumatore, che limita una PR verso `main` ai gate che la
 mappa seleziona dal diff. Vale solo se un account owner la applica dopo il push
 della head corrente, secondo l'ora che l'host registra per quel push e mai la
 data del commit; un nuovo push la fa decadere. Un consenso in chat, anche
@@ -82,10 +82,6 @@ e non se la concede. Dichiara readiness solo quando sulla head congelata sono
 verdi gli stati dei gate che la mappa seleziona per quella PR
 (`gh pr checks <PR>`) e la review indipendente di quella head è conclusa; un
 check GitHub Actions rosso solo per billing non blocca.
-
-Nota specifica di repository (Alfe): la mappa è `.github/ci-gates.json`, con
-l'owner come titolare in `.github/CODEOWNERS` e gli account owner nel campo
-`owners`; gli stati sono `alfe-gates/suites` e `alfe-gates/playwright`.
 
 ## Dal brief alla risposta consegnata
 

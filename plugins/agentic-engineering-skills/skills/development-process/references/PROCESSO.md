@@ -48,7 +48,3 @@ Per ogni sessione sostanziale riportare: contesto (repository, branch, SHA), per
 ## Bilancio del processo
 
 Un nuovo hook o script di processo entra solo con la misura che vuole migliorare e togliendone uno esistente.
-
-## Note specifiche di repository
-
-- **Alfe (`alfe_AI_app`).** Passo 5: `node scripts/agentic/gate-runner.mjs run --sha <sha> --base <branch base>` su ogni macchina dei gate, poi `node scripts/agentic/gate-runner.mjs wait --sha <sha> --timeout-min <n>`. Stati del commit: `alfe-gates/suites` e `alfe-gates/playwright`.

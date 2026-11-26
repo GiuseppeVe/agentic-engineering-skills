@@ -237,6 +237,8 @@ For research and design, the master delegates focused investigations and brings 
 
 Version 1.2 makes this plugin the single source of my general development process. The `development-process` skill carries the process and orchestration rules, and the orchestration skills point to it instead of restating them or pointing at one project's documents. The PR lifecycle hooks, the PR preflight verifier and its marker are removed: enforcement inside agent sessions slowed the work down, so the rules are now short guidance and each repository keeps its own git hooks and CI.
 
+The idea behind this software factory and the decisions that shape it are recorded in the [factory decision records](docs/adr/README.md), written in Italian.
+
 ## Customize
 
 Fork repository and edit source files, never generated plugin cache. Full workflow: [customization guide](docs/customization.md).

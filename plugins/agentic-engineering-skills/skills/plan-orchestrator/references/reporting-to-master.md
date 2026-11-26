@@ -39,7 +39,7 @@ reserved choice yourself.
 
 Never substitute, drop or narrow a CI gate. The project's versioned map selects
 the gates, and a PR to `main` runs the full suite. The only reduction is the
-consumer's diff-exception label (Alfe: `gate:diff`) on the current head: an
+consumer's diff-exception label on the current head: an
 owner account applied it after that head was pushed, by the host's recorded
 push time, and any new push voids it. A chat reply, a mandate line or an
 approved basis is not that label, even when it comes from the owner. To ask for
