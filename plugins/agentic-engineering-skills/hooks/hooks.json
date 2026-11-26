@@ -1,6 +1,19 @@
 {
-  "description": "Caveman startup context for sessions and subagents.",
+  "description": "Caveman startup context for sessions and subagents, and a background launch of the repository PR gates.",
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pr-gates.mjs\"",
+            "timeout": 10,
+            "statusMessage": "Checking for PR gates"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [

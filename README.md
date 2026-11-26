@@ -115,11 +115,13 @@ The [process rules](plugins/agentic-engineering-skills/skills/development-proces
 
 ## Hooks I use
 
-The plugin registers only the Caveman startup hooks. `SessionStart` and `SubagentStart` load its communication rules into new sessions and subagents, subject to host support and hook approval. If a project already supplies the same context, both hooks can run.
+The plugin registers the Caveman startup hooks and one PR-gate launcher. `SessionStart` and `SubagentStart` load its communication rules into new sessions and subagents, subject to host support and hook approval. If a project already supplies the same context, both hooks can run.
 
-The plugin ships no process hook. Earlier versions added `PostToolUse` reminders after PR creation and after merge, together with a PR preflight verifier and a comment marker. Version 1.2 removes them: the steps they repeated now live as short rules in [`development-process`](plugins/agentic-engineering-skills/skills/development-process/SKILL.md), and a repository keeps its own git hooks and CI as its gates.
+After a shell command opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), a `PostToolUse` hook starts the repository's own `npm run gates:pr` in the background, if the root `package.json` defines that script, and tells the agent where the log is. It never blocks, verifies or reminds; without the script it does nothing. The repository decides what its gates are.
 
-The startup script needs Node.js 22 or newer. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup and coverage limits.
+The plugin ships no reminder or verifier hook. Earlier versions added `PostToolUse` reminders after PR creation and after merge, together with a PR preflight verifier and a comment marker. Version 1.2 removed them: the steps they repeated now live as short rules in [`development-process`](plugins/agentic-engineering-skills/skills/development-process/SKILL.md), and a repository keeps its own git hooks and CI as its gates.
+
+The hook scripts need Node.js 22 or newer. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup and coverage limits.
 
 ## Supporting skills
 

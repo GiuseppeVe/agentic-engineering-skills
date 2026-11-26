@@ -27,3 +27,4 @@ Questo repository è pubblico: un ADR non contiene nomi di clienti, credenziali,
 | [0002](0002-plugin-fonte-unica.md) | Regole, skill e hook generali hanno una sola fonte: il plugin | Accettata |
 | [0003](0003-gate-su-macchine-proprie.md) | I gate girano su macchine proprie e pubblicano stati del commit | Accettata |
 | [0004](0004-watchdog-di-inattivita-spento.md) | Il watchdog di inattività dei thread è spento | Accettata, esecuzione in attesa |
+| [0005](0005-hook-che-lancia-i-gate-della-pr.md) | Un hook del plugin lancia i gate quando una PR esce dalla bozza | Accettata |

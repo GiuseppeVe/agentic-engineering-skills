@@ -89,22 +89,29 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /invoke one included skill/i);
 });
 
-test('README and the plugin hooks guide describe only the Caveman startup hooks', () => {
+test('README and the plugin hooks guide describe the Caveman startup hooks and the PR-gate launcher', () => {
   const readme = read('README.md');
   const guide = read('docs/plugin-hooks.md');
   const hooks = section(readme, 'Hooks I use');
-  assert.match(hooks, /registers only the Caveman startup hooks/);
+  assert.match(hooks, /registers the Caveman startup hooks and one PR-gate launcher/);
+  for (const text of [hooks, guide]) {
+    assert.match(text, /`gh pr create` without `--draft`/);
+    assert.match(text, /`gh pr ready`/);
+    assert.match(text, /`npm run gates:pr\b/);
+    assert.match(text, /never blocks/);
+  }
   assert.match(hooks, /`SessionStart` and `SubagentStart`/);
-  assert.match(hooks, /ships no process hook/);
+  assert.match(hooks, /ships no reminder or verifier hook/);
   assert.match(hooks, /development-process\/SKILL\.md/);
   assert.match(hooks, /Node\.js 22 or newer/);
   assert.match(hooks, /reviewed and trusted[\s\S]*fresh session/);
   assert.equal((readme.match(/\[plugin hooks guide\]\(docs\/plugin-hooks\.md\)/g) ?? []).length, 1);
   assert.match(guide, /`SessionStart` and `SubagentStart`/);
   assert.match(guide, /Node\.js 22 or newer/);
-  assert.match(guide, /no `PostToolUse` hook/);
+  assert.match(guide, /one `PostToolUse` hook/);
+  assert.match(guide, /\.agentic\/pr-gates/);
   assert.match(guide, /not enforcement/i);
-  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/caveman-startup\.test\.mjs/);
+  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/caveman-startup\.test\.mjs tests\/pr-gates-hook\.test\.mjs/);
   for (const text of [readme, guide]) assert.doesNotMatch(text, /pr-skills:v1|pr-workflow-check|post-pr\.mjs|post-merge\.mjs/);
   assert.ok(existsSync(resolve(root, 'plugins/agentic-engineering-skills/hooks/hooks.json')), 'missing hook manifest');
   for (const removed of ['post-merge.mjs', 'post-pr.mjs', 'pr-skills.json', 'pr-workflow-check.mjs', 'hook-lib.mjs', 'billing-fallback.md', 'billing-policies.json']) {
