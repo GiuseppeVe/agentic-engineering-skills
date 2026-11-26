@@ -1,6 +1,6 @@
 {
   "name": "agentic-engineering-skills",
-  "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
+  "description": "Engineering skills and general process rules for discovery, planning, implementation, review, and the PR workflow.",
   "owner": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "agentic-engineering-skills",
-      "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
-      "version": "1.1.3",
+      "description": "Engineering skills and general process rules for discovery, planning, implementation, review, and the PR workflow.",
+      "version": "1.2.0",
       "source": "./plugins/agentic-engineering-skills"
     }
   ]

@@ -75,7 +75,7 @@ test("acceptance rejects blockers, missing evidence and invented deferrals", asy
   assert.match(protocol, /`complete` report with required unverified items is partial and rejected/);
   assert.match(protocol, /plan explicitly assigns it there.*not a closure criterion of the current task/s);
   assert.match(protocol, /owner instruction to proceed cannot reassign it ad hoc/);
-  assert.match(protocol, /manifest check.*delivery consistency only.*does not prove semantic success/s);
+  assert.doesNotMatch(protocol, /delivery manifest|manifest check|watchdog/i);
 });
 
 test("review checks spec, plan, diff and evidence before committing", async () => {

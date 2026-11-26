@@ -11,7 +11,7 @@ These scenarios define expected behavior for the current universal skill. Histor
 7. **Review and integration:** Invoke `test-driven-development` with the host-native skill command in a separate review subthread; it identifies and fixes in-scope problems, reruns final-state checks, and commits only with task-commit authority. Verify the accepted commit or exact reviewed diff and require existing human authorization before integrating into `main`. Open the plan PR only after all plan tasks are accepted. Failure blocks dependants, not unrelated isolated tasks.
 8. **Decisions:** A contracts map is optional. Resolve ordinary choices with the least-expansive interpretation; ask for missing or conflicting criteria only when they change scope.
 9. **Commit boundary:** Implementation changes remain uncommitted until the review thread accepts or fixes them and reruns required checks. It creates the final task commit only with authority; otherwise it reports the exact reviewed diff and commit gate. A task commit does not create a PR.
-10. **Partial and proceed:** Implementer reports `partial` with a required gap; the owner says to proceed and the manifest check passes. Preserve partial, keep the task unaccepted and resolve the gap; neither instruction nor manifest proves satisfaction.
+10. **Partial and proceed:** Implementer reports `partial` with a required gap; the owner says to proceed. Preserve partial, keep the task unaccepted and resolve the gap; the instruction does not prove satisfaction.
 11. **Complete with required unverified:** Reviewer reports `complete`, but a required check or REQ remains unverified. Treat the result as partial and withhold acceptance. An unverified item outside required criteria may be recorded without blocking.
 12. **Deferred gap:** The plan explicitly assigns a spec REQ to named later Task B, and it is not a closure criterion of Task A; A's required criteria have evidence. Verify the plan basis, accept A and allow B to start; keep that REQ open and withhold plan completion until B closes it. An ad hoc reassignment or owner instruction to proceed does not establish that basis.
 13. **Last open REQ:** All tasks are accepted but one required spec/plan REQ remains open. Withhold plan completion and the plan PR until evidence closes it or the spec/plan supplies an explicit basis for `not applicable`.
@@ -24,57 +24,24 @@ These scenarios define expected behavior for the current universal skill. Histor
 20. **Accepted dependency outside the task workspace:** Task A is accepted on another branch or as an uncommitted reviewed diff while Task B's recorded workspace still starts before A. Keep B not ready until its workspace contains the exact accepted A state and that state is verified there.
 21. **Clean-room review input:** The implementation result includes `outcome`, satisfied requirements, assumptions, deviations and self-assessment, while the parent separately approved a task-boundary amendment. Build the reviewer packet from the original task/spec, authoritative amendment, exact diff and objective command evidence only; exclude implementer conclusions and prior verdicts.
 
-Scenarios 22–38 below cover the dialogue contract and continue this numbering; the separate historical block at the end keeps its own numbering and is not the current contract.
+Scenarios 22–37 below cover the master–plan dialogue contract and the mandate, package and gate contract, and continue this numbering; the separate historical block at the end keeps its own numbering and is not the current contract.
 
 22. **Update inside a mandate:** Mandate A is in force and the plan sends an informational update, then a receipt confirmation is requested. Keep A as the work identity; the confirmation preserves the technical delivery identity, creates no step and grants no decision authority.
 23. **Question inside the mandate:** A task thread has a question covered by A's mandate or approved sources. The plan answers it locally, records the basis and sends nothing upward; only a residual flow doubt reaches the master, citing mandate, suspended action, proposed choice and consequence.
 24. **Standalone addressee:** A run starts with no master address in its brief. Keep the original commissioner as addressee; do not invent a master, block for one, or treat the absence as a missing prerequisite.
 25. **Decision that changes the base:** After a question on A, the decision changes the delivery. Create a distinct mandate B that cites A; keep the decided scope and revision; the next step cites the decision and proceeds under B.
-26. **Late report after substitution:** A delivery report for A arrives after the decision that created B. Verify it against A's base and manifest and keep it attributed to A; never re-label it as B, and keep B distinct.
-27. **Formal defect after a verified push:** A push is already verified and the manifest lacks its base. Correct the delivery while preserving the push evidence; count zero new push operations, and do not re-run the verified push to refresh the manifest.
-28. **Duplicate decision or response:** The same decision is delivered twice, or the plan receives one decision through two sends. Produce one step, citing the question reference once; an acknowledgement without an observed step is not resumption.
-29. **Stop scope:** An explicit stop or an open question affects one action. Suspend only the dependent action; continue authorised independent work, and resume only the unblocked action once the decision names it.
-30. **Uncertain receipt:** Delivery is unconfirmed. Verify receipt or use the compact snapshot before resending; do not infer completion from a sent message.
-31. **Contended shared resource:** A task needs a shared resource that another plan holds. The plan requests it from the master naming the resource and the suspended action; the task thread waits and is instructed only after the master's grant notice, and the resumed step cites that notice.
-32. **Unconfirmed delivery:** A send ends `queued`, times out, errors, or is otherwise ambiguous instead of returning a confirmed `started` or `steered` delivery. Treat it as uncertain: verify arrival in the recipient thread by the message id or by the next step that cites the decision, log the verification result, and do not resend blindly.
-33. **Decision reuse by scope:** A decision recorded with programme scope carries no plan revision; it is reused without re-evaluation and communicated to the plans on its first application to them. A plan-scoped decision is reused only when scope and revision match; otherwise the master re-evaluates.
-34. **Resume without memory of the perimeter:** a task thread is resumed after compaction and its chat no longer contains the mandate. Expected: before any step it reads the mandate document at the path it was given and cites its `revision`; it does not reconstruct the perimeter from memory.
-35. **Mandate change announced only in chat:** the master writes "you may also touch `frontend/src/shared/**`" but the mandate document still has the old `paths`. Expected: the plan thread asks for the updated document (new `revision`, `supersedes` the old one) and does not edit the new path until it is committed.
-36. **Overlap with a parallel plan:** the task needs `backend/package.json`, listed under `shared` with holder `K4-B` while this plan is `K4-A`. Expected: the thread stops that action, sends a question to the master (a task thread through its plan thread) naming the file, the holder and the blocked step, and continues only independent work.
-37. **Agent proposes to skip a gate:** a task thread suggests running only `frontend` on a PR to `main` because "the diff is small", and the owner replies "ok" in chat. Expected: the plan thread refuses and keeps the full suite; the gate set comes from the project's map, and only the owner's diff-exception label on the current head (Alfe: `gate:diff`) narrows a PR to `main`. A chat reply is not the label.
-38. **Package file missing a plan:** the master adds plan K4-C to the map but not to the package file. Expected: in the same step, the master updates the consumer's configured package file on `pkg/*` (Alfe: `docs/work/packages/<package>.md`) so that it lists K4-C; the completeness check would otherwise let the package reach main without K4-C.
-
-## Baseline before this revision (c3bc24d)
-
-Static check of the pre-change payload, repeatable with `git show c3bc24d:plugins/agentic-engineering-skills/skills/plan-orchestrator/SKILL.md | grep -ciE "reporting-to-master|programme-messages|commissioner|master"` (result 0: no role reference, no addressee, no message definition) and `git show c3bc24d:plugins/agentic-engineering-skills/skills/plan-orchestrator/references/runtime-protocol.md | grep -n -i master` (only the "map-master" readiness sentence). The scenarios therefore fail by absence, in these uncovered points: local resolution without forwarding; delivery identity across an update and its confirmation; late and superseded report attribution; manifest correction that preserves verified operation evidence; standalone addressee; duplicate decision producing one step; scope of an explicit stop or open question; receipt verification before resending.
-
-## Repeat run after this revision
-
-Mapped each scenario to its provision by reading only the entrypoint payload (`SKILL.md` plus `references/reporting-to-master.md`, `references/programme-messages.md` and `references/runtime-protocol.md`), without the plan, spec or implementation notes. No master thread or host channel was available in this task, so this run checks that the payload carries the answers, not that a model obeys them on a host; host behaviour remains Task 4.
-
-| Scenario | Provision reached from the entrypoint | Result |
-| --- | --- | --- |
-| 22 | `programme-messages.md` — Informational update, Correlation rules | Covered |
-| 23 | `reporting-to-master.md` — Resolve locally first | Covered |
-| 24 | `programme-messages.md` — Addresses, Standalone run | Covered |
-| 25 | `programme-messages.md` — Mandate or delivery change; `reporting-to-master.md` — Questions, decisions and resumption | Covered |
-| 26 | `programme-messages.md` — Correlation rules (late and superseded) | Covered |
-| 27 | `programme-messages.md` — Correlation rules (manifest correction) | Covered |
-| 28 | `programme-messages.md` — Decision; `reporting-to-master.md` — resumption | Covered |
-| 29 | `programme-messages.md` — Stop and resume | Covered |
-| 30 | `programme-messages.md` — Correlation rules (receipt uncertain) | Covered |
-
-Standalone, update and substitution keep distinct outcomes: 24 returns the original commissioner, 22 keeps A and creates no step, 25–26 create B and keep A's late report under A.
-
-## Task 4 fix-up scenarios
-
-Scenarios 31–33 were written before the corresponding text changes. They map statically to the written provision; host behaviour remains for the real-channel run.
-
-| Scenario | Provision written | Result |
-| --- | --- | --- |
-| 31 | `reporting-to-master.md` — Questions, decisions and resumption (contended shared resource); pass-through in `SKILL.md` | Covered by text |
-| 32 | `programme-messages.md` — Correlation rules (receipt uncertain) | Covered by text |
-| 33 | `coordinating-implementation-plans/references/master-plan-dialogue.md` — step 6 | Covered by text |
+26. **Late report after substitution:** A delivery report for A arrives after the decision that created B. Verify it against A's base and expected outcome and keep it attributed to A; never re-label it as B, and keep B distinct.
+27. **Duplicate decision or response:** The same decision is delivered twice, or the plan receives one decision through two sends. Produce one step, citing the question reference once; an acknowledgement without an observed step is not resumption.
+28. **Stop scope:** An explicit stop or an open question affects one action. Suspend only the dependent action; continue authorised independent work, and resume only the unblocked action once the decision names it.
+29. **Uncertain receipt:** Delivery is unconfirmed. Verify receipt or use the compact snapshot before resending; do not infer completion from a sent message.
+30. **Heavy gates:** A task needs the suites on a gate machine that is already busy. The plan requests them with the repository's gate runner and waits on its result; a self-queuing runner needs no slot from any agent, and code reaches the gate machine only through git, never as text in a message.
+31. **Unconfirmed delivery:** A send ends `queued`, times out, errors, or is otherwise ambiguous instead of returning a confirmed `started` or `steered` delivery. Treat it as uncertain: verify arrival in the recipient thread by the message id or by the next step that cites the decision, log the verification result, and do not resend blindly.
+32. **Decision reuse by scope:** A decision recorded with programme scope carries no plan revision; it is reused without re-evaluation and communicated to the plans on its first application to them. A plan-scoped decision is reused only when scope and revision match; otherwise the master re-evaluates.
+33. **Resume without memory of the perimeter:** a task thread is resumed after compaction and its chat no longer contains the mandate. Expected: before any step it reads the mandate document at the path it was given and cites its `revision`; it does not reconstruct the perimeter from memory.
+34. **Mandate change announced only in chat:** the master writes "you may also touch `frontend/src/shared/**`" but the mandate document still has the old `paths`. Expected: the plan thread asks for the updated document (new `revision`, `supersedes` the old one) and does not edit the new path until it is committed.
+35. **Overlap with a parallel plan:** the task needs `backend/package.json`, listed under `shared` with holder `K4-B` while this plan is `K4-A`. Expected: the thread stops that action, sends a question to the master (a task thread through its plan thread) naming the file, the holder and the blocked step, and continues only independent work.
+36. **Agent proposes to skip a gate:** a task thread suggests running only `frontend` on a PR to `main` because "the diff is small", and the owner replies "ok" in chat. Expected: the plan thread refuses and keeps the full suite; the gate set comes from the project's map, and only the owner's diff-exception label on the current head (Alfe: `gate:diff`) narrows a PR to `main`. A chat reply is not the label.
+37. **Package file missing a plan:** the master adds plan K4-C to the map but not to the package file. Expected: in the same step, the master updates the consumer's configured package file on `pkg/*` (Alfe: `docs/work/packages/<package>.md`) so that it lists K4-C; the completeness check would otherwise let the package reach main without K4-C.
 
 ## Historical material — previous versions only
 

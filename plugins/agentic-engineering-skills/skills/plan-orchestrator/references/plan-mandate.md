@@ -16,6 +16,9 @@ lost its context recovers it from here, not from memory or chat.
   incremented and `supersedes` set to the previous revision. A chat message
   alone does not change the mandate: ask for the updated document, through the
   plan thread when you are a task thread, up to the master.
+- The consumer's check reads the mandate from the base of a task PR: editing
+  or deleting it inside the task PR does not change the perimeter that PR is
+  checked against.
 
 ## Overlap rule
 
@@ -42,7 +45,7 @@ pushed. A new push voids the label; a chat reply never replaces it.
 2. **Paths** — the machine-readable block below.
 3. **Parallel plans** — active plans, their paths and shared files with holders.
 4. **Overlap rule** — as above, plus any project-specific contact.
-5. **Contended resources** — resource, holder, who assigns it.
+5. **Contended resources** — resource, holder, who assigns it. Gate machines behind a self-queuing gate runner are not listed.
 6. **Reserved decisions** — what only the owner decides.
 7. **Stop criteria** — when the plan stops and reports.
 

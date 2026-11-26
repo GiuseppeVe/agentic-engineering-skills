@@ -1,7 +1,7 @@
 {
   "name": "agentic-engineering-skills",
-  "version": "1.1.3",
-  "description": "Engineering skills for discovery, planning, implementation, review, and verified PR workflow reminders.",
+  "version": "1.2.0",
+  "description": "Engineering skills and general process rules for discovery, planning, implementation, review, and the PR workflow.",
   "author": {
     "name": "GiuseppeVe",
     "url": "https://github.com/GiuseppeVe"
@@ -20,7 +20,7 @@
     "defaultPrompt": "Use the engineering skills to understand the task, plan and implement changes, verify the result, and follow the project PR workflow.",
     "displayName": "Agentic Engineering Skills",
     "shortDescription": "A verified engineering and PR workflow",
-    "longDescription": "Install a reproducible discovery-to-cleanup engineering workflow with planning, bounded implementation, independent review, and PR reminders.",
+    "longDescription": "Install a reproducible discovery-to-cleanup engineering workflow with planning, bounded implementation, independent review, and shared process rules.",
     "developerName": "GiuseppeVe",
     "category": "Productivity",
     "capabilities": [

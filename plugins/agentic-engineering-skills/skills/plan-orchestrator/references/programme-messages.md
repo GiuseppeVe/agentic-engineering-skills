@@ -30,22 +30,19 @@ Keep these layers apart in every exchange:
 - **Transport identity.** The host message, turn or thread identifier. It
   changes on each send, retry or resume.
 - **Work identity.** The mandate the exchange serves. It stays stable for the
-  life of that delivery and is what reports and manifests are verified
-  against.
+  life of that delivery and is what reports are verified against.
 - **Question identity.** The reference of an open question. A decision and a
   resumed step name it.
 
-A project may mint a UUID for every send while the correlation to the work
-identity stays stable. A transport identifier alone never proves which
-delivery a message belongs to, and an acknowledgement is never a work
-identity.
+A transport identifier alone never proves which delivery a message belongs
+to, and an acknowledgement is never a work identity.
 
 ## Message types
 
 ### Mandate or delivery change
 
-A mandate carries its own identity, an addressable base (branch or commit),
-the expected outcome and a verifiable manifest of the delivery. A change of
+A mandate carries its own identity, an addressable base (branch or commit)
+and the expected outcome. A change of
 delivery creates a **distinct mandate** that cites the superseded one; it does
 not overwrite the old mandate. Reaching the same delivery again after a resume
 keeps the existing mandate identity.
@@ -74,9 +71,14 @@ of the technical delivery; it does not create or advance a step.
 
 ### Delivery report
 
-A report is verified against the mandate it was requested under: base,
-expected outcome and manifest. A late report stays attributed to its original
-mandate even after a later decision. A later decision keeps precedence inside
+A child's final message starts with one status line; details go in the report
+file or below the line:
+
+`esito=<done|partial|blocked> | pr=<URL|none> | sha=<sha|none> | base=<branch|none> | report=<absolute path|none>`
+
+The receiver verifies `sha` on origin with git or `gh`, and the report against
+the mandate it was requested under: base and expected outcome. A late report
+stays attributed to its original mandate even after a later decision. A later decision keeps precedence inside
 its own scope only.
 
 ## Correlation rules
@@ -87,11 +89,6 @@ its own scope only.
   decision that changes the base and creates mandate B, then a late report of
   A: the report remains A. B is a distinct mandate; A's report is never
   re-labelled as B.
-- **Manifest correction.** Evidence for an operation and validity of the
-  manifest are verified separately. When a push was already verified and the
-  manifest lacks its base, the task thread corrects the delivery while the push
-  evidence is preserved: the correction counts no new operation, does not
-  re-run the push and does not create a new mandate.
 - **Receipt uncertain.** A send whose result is not a confirmed `started` or
   `steered` delivery — for example `queued`, a timeout, an error or an
   ambiguous result — counts as uncertain. Verify arrival by reading the
@@ -114,8 +111,7 @@ step does not prove resumption.
 
 ## Worked example
 
-1. Master sends mandate `A` with base `main@c0ffee`, the expected outcome and
-   the manifest to verify.
+1. Master sends mandate `A` with base `main@c0ffee` and the expected outcome.
 2. Plan sends an informational update on `A`; the master confirms receipt. Both
    keep `A` as the work identity.
 3. Plan asks: mandate `A`, action suspended "synchronise the branch", proposed
@@ -125,5 +121,5 @@ step does not prove resumption.
    The decision changes the base, so the master issues mandate `B` and cites
    `A` as superseded.
 5. A delivery report for `A` arrives late. It is verified against `A`'s base
-   and manifest and stays attributed to `A`. The plan's next step cites the
+   and expected outcome and stays attributed to `A`. The plan's next step cites the
    decision and proceeds under `B`.

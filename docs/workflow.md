@@ -54,7 +54,7 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 ## Implement
 
-Repository instructions determine worktree isolation and merge approval. The post-merge hook reminds the agent to verify the merge, apply the documented Graphify refresh where applicable, and inspect ownership before workspace cleanup. `test-driven-development` drives red-green-refactor. `task-implement` implements one assigned plan task, coordinates bounded implementation subtasks, and verifies task acceptance criteria. `plan-orchestrator` dispatches dependency-ready tasks through an implementation thread and then a separate review thread per task; reviewers fix in-scope findings and commit only with authority. Independent tasks overlap only in isolated workspaces. When task materials do not specify compatible routing, the shared `task-implement` skill defaults to GPT-6.1 Sol/high with GPT-6.1 Terra/high subagents for Codex, and Sonnet 5.5/high with Sonnet 5.5/medium subagents for Claude Code. Explicit owner- or plan-selected available routing takes precedence and is recorded. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
+Repository instructions determine worktree isolation and merge approval. `development-process` holds the general process rules: mandate and Git boundaries, verification, the PR phase and the closing report, plus the orchestration guide for delegation and the plan and package lifecycle. `test-driven-development` drives red-green-refactor. `task-implement` implements one assigned plan task, coordinates bounded implementation subtasks, and verifies task acceptance criteria. `plan-orchestrator` dispatches dependency-ready tasks through an implementation thread and then a separate review thread per task; reviewers fix in-scope findings and commit only with authority. Independent tasks overlap only in isolated workspaces. When task materials do not specify compatible routing, the shared `task-implement` skill defaults to GPT-6.1 Sol/high with GPT-6.1 Terra/high subagents for Codex, and Sonnet 5.5/high with Sonnet 5.5/medium subagents for Claude Code. Explicit owner- or plan-selected available routing takes precedence and is recorded. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
 
 ## Verify
 
@@ -64,7 +64,7 @@ For new behavior and bug fixes, `test-driven-development` requires an observed b
 
 `plan-orchestrator` creates the separate task review thread; `task-implement` performs implementation and task-scoped verification only. `grill-me` or `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session.
 
-The post-PR hook depends on `simplify` to review the PR diff for behavior-preserving cleanup. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
+The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, in parallel with the independent review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
 
 ## Clean
 

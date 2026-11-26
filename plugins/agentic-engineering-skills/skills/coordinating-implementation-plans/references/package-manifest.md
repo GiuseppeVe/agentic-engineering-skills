@@ -4,7 +4,10 @@ Il master committa questo file nel branch `pkg/*` quando crea il pacchetto e lo
 aggiorna nello stesso passo in cui aggiunge un piano alla mappa. Il consumatore
 fissa la cartella (Alfe: `docs/work/packages/<pacchetto>.md`, dove
 `<pacchetto>` è il nome del branch senza `pkg/`). Un controllo di CI lo legge
-sulla PR `pkg/*` → `main` e la blocca finché un piano elencato non è integrato.
+sulla PR `pkg/*` → `main` e la blocca finché un piano elencato non è integrato:
+la PR del piano deve risultare unita nel branch del pacchetto e il suo merge
+commit deve stare nella storia della head. Ricreare il branch da un commit
+precedente al merge riapre il piano.
 
 Un piano esce dal pacchetto solo per decisione dell'owner, espressa con
 l'etichetta `exclude:<piano>` sulla PR verso `main`: il controllo accetta

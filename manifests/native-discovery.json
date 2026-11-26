@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-25",
+  "capturedAt": "2026-11-26",
   "environment": {
     "isolation": "Separate temporary Windows host profiles.",
     "commandNotation": "Native commands ran from the local marketplace.",
@@ -18,6 +18,7 @@
       "codebase-design",
       "coordinating-implementation-plans",
       "deslopping-cleanup",
+      "development-process",
       "domain-modeling",
       "graphify",
       "graphify-start",
@@ -59,6 +60,7 @@
         "codebase-design",
         "coordinating-implementation-plans",
         "deslopping-cleanup",
+        "development-process",
         "domain-modeling",
         "graphify",
         "graphify-start",
@@ -98,6 +100,7 @@
           "codebase-design",
           "coordinating-implementation-plans",
           "deslopping-cleanup",
+          "development-process",
           "domain-modeling",
           "graphify",
           "graphify-start",
@@ -129,9 +132,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:8448c8043ba16e83cf6c177f6d87631ea5c94f5ec288bff49822a3dd8c5e694f",
-        "fullTreeHash": "sha256:404c00f3b5ba4a9594e07b6e6641bc3d94f2a7972c1d15220d52463210e48b24",
-        "fileCount": 524
+        "treeHash": "sha256:33e2632d3b74da776c333fb38d2ee53558334201397e54ca90ebb1dd85edad90",
+        "fullTreeHash": "sha256:6c16b497e58272be1f6a95c128db28821a6f373a5af0d367d98c1c9d58c0ff5a",
+        "fileCount": 520
       },
       "commands": [
         {
@@ -166,6 +169,7 @@
         "codebase-design",
         "coordinating-implementation-plans",
         "deslopping-cleanup",
+        "development-process",
         "domain-modeling",
         "graphify",
         "graphify-start",
@@ -205,6 +209,7 @@
           "codebase-design",
           "coordinating-implementation-plans",
           "deslopping-cleanup",
+          "development-process",
           "domain-modeling",
           "graphify",
           "graphify-start",
@@ -236,9 +241,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:3500bb7422fbce18a16a4fe9c2c536b960296c7746d2c029a47e62eb64040eba",
-        "fullTreeHash": "sha256:404c00f3b5ba4a9594e07b6e6641bc3d94f2a7972c1d15220d52463210e48b24",
-        "fileCount": 524
+        "treeHash": "sha256:fda929123bc3b2640218fd740cc0680ebf809ee80f5919d172ea8e0c24e591d4",
+        "fullTreeHash": "sha256:6c16b497e58272be1f6a95c128db28821a6f373a5af0d367d98c1c9d58c0ff5a",
+        "fileCount": 520
       },
       "installedAgents": [
         {

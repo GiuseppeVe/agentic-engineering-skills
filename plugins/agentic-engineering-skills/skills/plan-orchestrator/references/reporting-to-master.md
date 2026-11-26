@@ -62,9 +62,6 @@ change never reduces the CI gates that run.
 - An explicit stop suspends the actions inside its scope. Authorised
   independent work keeps running; a question suspends only its dependent
   action.
-- A task that needs a contended shared resource waits for the master's grant
-  notice. The plan requests it naming the resource and the suspended action,
-  and instructs the task thread only after the notice, citing it.
 - If delivery is uncertain, verify receipt before resending. A chat
   acknowledgement without an observed step is not resumption.
 - Read the mandate document ([plan-mandate.md](plan-mandate.md)) at launch and
@@ -73,20 +70,20 @@ change never reduces the CI gates that run.
 
 ## Deliveries and reports
 
-- Every mandate you accept identifies its base, expected outcome and
-  verifiable manifest. A change of delivery arrives as a distinct mandate
+- Every mandate you accept identifies its base and expected outcome. A change
+  of delivery arrives as a distinct mandate
   citing the previous one; do not rewrite the old mandate or mint a new one
   yourself.
 - A late report stays attributed to the mandate it was requested under, even
   after a later decision.
-- Evidence for a technical operation and validity of the manifest are checked
-  separately. Correct a manifest whose base is stale without repeating or
-  re-counting an already verified operation.
+- Report a task-level `complete` as `done`, otherwise `partial` or `blocked`,
+  on the status line of the [delivery report](programme-messages.md#delivery-report).
 - Report to the master keeping these apart: observed facts, requested
-  perimeter, available evidence, readiness and merge authorisation. As the
-  runtime protocol states for a map-master assignment, report readiness and wait
-  for the merge go-ahead. Name any remaining verification instead of implying it
-  passed.
+  perimeter, available evidence, readiness and merge authorisation. Name any
+  remaining verification instead of implying it passed.
+- Do not wait for a merge go-ahead from the master on a ready PR into a
+  non-`main` branch; only an integration into `main` waits for the owner
+  ([runtime protocol](runtime-protocol.md#integration-and-closeout)).
 
 ## Boundaries
 

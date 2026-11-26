@@ -111,6 +111,16 @@
       "localRoot": "userSkills"
     },
     {
+      "name": "development-process",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "development-process/",
+      "license": "MIT",
+      "origin": {
+        "state": "owner-supplied"
+      }
+    },
+    {
       "name": "domain-modeling",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",

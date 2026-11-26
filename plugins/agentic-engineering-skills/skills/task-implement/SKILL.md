@@ -35,6 +35,10 @@ Use focused tests before implementation when they can capture the required behav
 
 Treat a failed check, missing prerequisite, or unverified criterion required of the current task as incomplete. Report the exact command, revision, outcome, and any environmental limitation. Mark a criterion not applicable only with an explicit basis in the specification or plan.
 
+Before the first gate or push on a machine, and for gate requests and open questions, follow «Conduzione di un run» in the [orchestration guide](../development-process/references/ORCHESTRAZIONE.md).
+
+The convergence limits are counted and applied by the plan orchestrator, not by this thread. The split between criteria provable with fixtures and native or live proofs is made by the plan. Never move a criterion to another task yourself: when the plan has not made that split, a criterion of this task that you could not prove stays required here and the outcome is `partial`.
+
 Preserve unrelated user changes. Follow repository rules for worktrees, branch names, staging, and cleanup. Perform only the external actions explicitly authorized by the user.
 
 ## Completion

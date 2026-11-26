@@ -15,6 +15,13 @@ il thread-piano applica la propria parte da [reporting to the master](../plan-or
 Il master decide instradamento, readiness e ripresa entro il mandato e porta
 all’owner solo le scelte riservate.
 
+Le regole di conduzione di un run stanno solo nella [guida di orchestrazione](../development-process/references/ORCHESTRAZIONE.md),
+sezioni «Conduzione di un run» e «Ciclo di vita di piani e pacchetti»:
+applicale e nei brief rimanda, senza riscriverle. All'avvio di una mappa,
+quando il repository fornisce un preflight dell'host, fallo eseguire su ogni
+macchina prima del primo gate o push, presenta una volta all'owner l'elenco di
+push e merge previsti e crea il branch d'integrazione.
+
 ## 1. Fonti, dipendenze e parallelismo
 
 Leggi istruzioni delle repository, workflow, mappa, spec e piani approvati.
@@ -106,20 +113,21 @@ di assegnazioni e handoff. Risolvi i conflitti di contenuto nel thread competent
 
 ## 4. Verifica readiness, autorizza e chiudi
 
-Il thread-piano segue il ciclo PR canonico della repository, comprese review
-indipendente, ottimizzazioni, riverifiche e attività post-merge. La fonte è `docs/development/CODING_STANDARDS.md`, sezione «PR review e merge»,
-risolta nella repository del run. Mantieni procedure e comandi in quella fonte.
+Il thread-piano segue la [fase PR](../development-process/references/PROCESSO.md#fase-pr),
+con le istruzioni più specifiche della repository del run. Mantieni procedure
+e comandi in quelle fonti.
 
 Ricevi PR, base, head finale, prove di readiness e blocchi. L’accettazione
-dei task, un reminder o un checker positivo non sostituiscono tali prove.
+dei task non sostituisce tali prove.
 Verifica il percorso di integrazione autorizzato e registra head e perimetro
 prima di suggerire un’azione; readiness e autorizzazione al merge restano
 distinte e gli obblighi pendenti restano visibili.
-Quando i prerequisiti sono soddisfatti, dai il via libera al thread-piano:
-questo esegue il merge autorizzato, verifica il target e completa post-merge,
-cleanup e aggiornamenti documentali/indici richiesti.
+Un thread-piano integra da sé una PR pronta verso un branch non-`main`, entro
+ordine, dipendenze e stop del mandato; solo l’integrazione in `main` attende
+l’autorizzazione esplicita dell’owner. Dopo il merge il thread verifica il
+target e completa cleanup e aggiornamenti documentali/indici richiesti.
 
-Il via libera del master non amplia il mandato: rispetta l’autorizzazione
+La readiness dichiarata dal master non amplia il mandato: rispetta l’autorizzazione
 esplicita per merge in `main` e gli eventuali gate per comando della repository,
 riusando gli OK validi. Un target indicato non concede permessi.
 
