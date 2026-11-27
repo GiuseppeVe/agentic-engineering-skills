@@ -1,0 +1,5 @@
+interface:
+  display_name: "Simplify"
+  short_description: "Behavior-preserving cleanup of recent diff for reuse and clarity"
+policy:
+  allow_implicit_invocation: true

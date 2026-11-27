@@ -1,0 +1,5 @@
+interface:
+  display_name: "Coordinating Implementation Plans"
+  short_description: "Coordinate an approved multi-plan contracts map and packages"
+policy:
+  allow_implicit_invocation: false

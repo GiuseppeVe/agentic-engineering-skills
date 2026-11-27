@@ -1,141 +1,143 @@
 ---
 name: coordinating-implementation-plans
-description: "Coordina una mappa approvata di piani di implementazione, avviando thread in parallelo e gestendo dipendenze, integrazione e chiusura."
+disable-model-invocation: true
+description: Coordinate an approved contracts map of implementation plans, running compatible plan threads in parallel and managing dependencies, integration, and closeout.
 ---
 
-# Coordinare una mappa di piani di implementazione
+# Coordinating Implementation Plans
 
-Coordina il programma approvato; sei l’unico autore della sua mappa dei
-contratti. Delega esecuzione e review ai thread-piano. Per un piano isolato
-usa direttamente la skill `plan-orchestrator` con il comando nativo di invocazione dell’host.
+Coordinate an approved multi-plan programme; you are the sole author of its
+contracts map. Delegate plan execution and verification to subordinate plan
+threads (`plan-implement`). For a standalone plan, invoke `plan-implement`
+directly with the host's native invocation command.
 
-Al lancio e a ogni ripresa leggi [il dialogo master–piano](references/master-plan-dialogue.md)
-e la [definizione condivisa dei messaggi](../plan-orchestrator/references/programme-messages.md);
-il thread-piano applica la propria parte da [reporting to the master](../plan-orchestrator/references/reporting-to-master.md).
-Il master decide instradamento, readiness e ripresa entro il mandato e porta
-all’owner solo le scelte riservate.
+At launch and on every resume, read
+[master–plan dialogue](references/master-plan-dialogue.md) and the shared
+[programme messages](../plan-implement/references/programme-messages.md)
+definition; each plan thread follows its side in
+[reporting to the master](../plan-implement/references/reporting-to-master.md).
+The master decides routing, readiness, and resumption within the mandate and
+escalates only reserved choices to the owner.
 
-Le regole di conduzione di un run stanno solo nella [guida di orchestrazione](../development-process/references/ORCHESTRAZIONE.md),
-sezioni «Conduzione di un run» e «Ciclo di vita di piani e pacchetti»:
-applicale e nei brief rimanda, senza riscriverle. All'avvio di una mappa,
-quando il repository fornisce un preflight dell'host, fallo eseguire su ogni
-macchina prima del primo gate o push, presenta una volta all'owner l'elenco di
-push e merge previsti e crea il branch d'integrazione.
+Run-conduct and plan/package lifecycle rules live in one place:
+[Program orchestration](../development-process/references/program-orchestration.md).
+Apply them and point briefs there without restating them. At programme start,
+when the repository provides a host preflight script, run it on every machine
+before its first gate or push, present the owner once with the list of planned
+pushes and merges, and create the `integration/<map>` branch.
 
-## 1. Fonti, dipendenze e parallelismo
+## 1. Sources, dependencies, and parallelism
 
-Leggi istruzioni delle repository, workflow, mappa, spec e piani approvati.
-In ripresa riconcilia queste fonti con ledger, thread, branch e PR reali;
-la recenza di un documento o una checklist non dimostrano integrazione.
+Read repository instructions, workflow docs, the contracts map, specs, and
+approved plans. On resume, reconcile these sources against ledgers, threads,
+branches, and live PRs; document recency or unchecked boxes never prove
+integration.
 
-Per ogni dipendenza identifica consumatore, componente, produttore, target
-con revisione e prove di disponibilità. Un commit nel solo branch del
-produttore non sblocca il consumatore. Prefissi e integrazioni parziali
-seguono il workflow; conserva lo stato necessario a riprenderli.
+For each dependency, identify consumer, component, producer, target with
+revision, and availability proof. A commit only in the producer's feature
+branch does not unblock the consumer. Preserve enough state to resume partial
+integrations cleanly.
 
-**Avvia più thread-piano in parallelo** con prerequisiti soddisfatti: usa la
-mappa per verificare l’assenza di collisioni o la loro gestione esplicita
-(ownership, compatibilità, coordinamento). Applica gli ordini e i punti di
-stop della mappa alle attività coinvolte; lascia avanzare gli altri piani.
-Rispetta risorse e limiti dell’host. La sequenza interna di ciascun
-orchestratore non impone una sequenza globale fra piani.
+**Launch compatible plan threads in parallel** when prerequisites are met: use
+the contracts map to verify absence of collisions or explicit handling
+(ownership, compatibility, coordination). Apply map order and stop points only
+to affected plans; keep independent plans moving. Respect host capacity limits.
 
-Preserva checkout, fork, sessioni e processi estranei al programma anche
-nelle pulizie. Porta all’owner conflitti fra fonti, cambi di contratto o
-comportamenti non coperti; usa il mandato già concesso per i passi ordinari.
+Preserve checkouts, forks, sessions, and processes outside the programme,
+including during cleanup. Bring source conflicts, contract changes, or
+uncovered behaviors to the owner; use already-granted mandate authority for
+ordinary steps.
 
-Autorizza gli orchestratori di implementazione solo entro il perimetro
-definito da mappa dei contratti, piani e spec approvati. Per ogni singola
-richiesta fuori perimetro, attendi il permesso esplicito dell’utente prima
-di autorizzarla. Un’eccezione concessa non autorizza richieste successive.
+Authorize plan threads only within the perimeter of the contracts map, specs,
+and approved plans. Each out-of-perimeter request requires explicit user
+approval; one granted exception never authorizes subsequent requests.
 
-## 2. Assegna un thread a ogni piano
+## 2. Assign one visible thread per plan
 
-Crea **un thread-piano visibile all’utente** che invoca la skill
-`plan-orchestrator` con il comando nativo dell’host e riceve i path del piano,
-della spec e la mappa dei contratti. Questo crea a sua volta **thread distinti
-di implementazione e review per task**, secondo le rispettive skill, e possiede
-ledger, intero ciclo PR, merge autorizzato e cleanup del run.
+Create **one user-visible plan thread** that invokes `plan-implement` with the
+host's native command and receives the plan, spec, and contracts-map paths.
+Each plan thread coordinates its own slice-implementer and high-risk review
+subagents under `plan-implement`, and owns its ledger, full PR phase,
+authorized merge, and cleanup.
 
-Questi ruoli richiedono thread, **non subagents né processi CLI sostitutivi**.
-Se l’host non li offre, segnala il blocco. Restano ammessi i comandi di gate
-e review locale previsti dalla repository. Il master non crea un secondo
-thread di verifica della PR.
+Plan coordination requires visible subordinate threads, **not substitute CLI
+loops**. If the host cannot create them, report `blocked`. Repository gate and
+review commands remain allowed. The master does not launch a duplicate PR
+verification thread.
 
-Prima di delegare un thread-piano committa nel suo branch il [documento di
-mandato](../plan-orchestrator/references/plan-mandate.md) e, nel branch `pkg/*`,
-il [file di pacchetto](references/package-manifest.md): alla creazione del
-pacchetto e a ogni piano aggiunto, nello stesso passo in cui aggiorni la mappa
-([procedura](references/master-plan-dialogue.md)). Non scegli e non togli gate:
-li seleziona la mappa del progetto.
+Before delegating a plan thread, commit the
+[plan mandate document](../plan-implement/references/plan-mandate.md) in its
+branch and, on `pkg/*`, commit or update the
+[package manifest](references/package-manifest.md) in the same step that
+updates the contracts map ([dialogue procedure](references/master-plan-dialogue.md)).
+Never choose or drop CI gates: the project's versioned map selects them.
 
-Fornisci un brief con:
+Include in each plan brief:
 
-- recapito raggiungibile del master, mandato del piano (percorso e revisione del
-  documento di mandato) e decisioni riservate;
-- workflow; piano, spec e mappa leggibili, con revisione/SHA;
-- task o prefisso, risultati attesi, dipendenze e punti di stop;
-- `plan-orchestrator`, progetto, branch, base SHA e vincoli di worktree;
-- `pr_base`; `integration_target` solo per integrazione per-task esplicitamente prevista;
-- autorizzazioni, limiti, fallimenti noti della base e report richiesto.
+- the master's reachable address, plan mandate (path and revision), and
+  reserved decisions;
+- workflow pointers; readable plan, spec, and map paths with revisions/SHAs;
+- tasks or prefix, expected outcomes, dependencies, and stop points;
+- `plan-implement`, project, branch, base SHA, and worktree constraints;
+- `pr_base`; `integration_target` only when explicitly planned;
+- authorizations, limits, known base failures, and required closing report.
 
-Risolvi i riferimenti mancanti prima del lancio. Nei nuovi run l’orchestratore
-crea branch e worktree; nelle riprese riconcilia quelli esistenti col ledger.
-Passa fonti e vincoli senza introdurre algoritmi o riscrivere il comportamento.
+Resolve missing references before launch. On new runs the plan thread creates
+its branch and worktree; on resume it reconciles existing ones against its
+ledger. Pass sources and constraints without injecting implementation code or
+rewriting behavior.
 
-## 3. Segui i thread e aggiorna la mappa
+## 3. Track threads and update the map
 
-Usa gli strumenti dell’host, con notifiche o snapshot compatti. Al risveglio
-riconcilia domande aperte, decisioni da consegnare e risultati sopraggiunti;
-verifica la ricezione prima di reinviare e una risposta duplicata produce un
-solo avanzamento. Registra nello stato canonico piano, ID confermato, host,
-branch/worktree, revisioni e stato. Tieni separati gli ID provvisori:
-creazioni e proposte pendenti occupano uno slot, senza essere thread avviati
-confermati.
+Use host notifications or compact snapshots. On wake, reconcile open questions,
+decisions awaiting delivery, and arrived results; verify receipt before
+resending, and ensure a duplicate response produces only one step. Record plan,
+confirmed ID, host, branch/worktree, revisions, and status in canonical state.
+Keep provisional IDs distinct: pending launches occupy a slot without counting
+as confirmed running threads.
 
-Timeout, messaggi accodati e fine turno non completano un piano. Per prove
-mancanti continua sullo stesso thread. Se attende l’owner, indica l’azione
-necessaria e mantieni lo slot anche quando non puoi fermarlo o archiviarlo.
-Crea un sostituto solo dopo fallimento definitivo o chiusura confermata,
-riconciliando identità, output e stato Git. Non aggirare dinieghi tramite
-altri thread. I piani compatibili proseguono negli slot disponibili.
+Timeouts, queued messages, and turn endings do not complete a plan. For missing
+evidence, continue on the same thread. If waiting on the owner, state the exact
+action needed and hold the slot. Create a replacement thread only after a
+confirmed failure or closure, reconciling identity, output, and Git state.
+Never bypass a denial through another thread. Compatible plans continue in
+available slots.
 
-Verifica report contro commit, target, worktree e risultati effettivi;
-distingui skill invocate, concluse e correzioni applicate. Rimanda fix e
-riverifiche allo stesso thread-piano. Per blocchi identifica causa,
-responsabile e condizione di sblocco, applicando solo retry autorizzati.
+Verify reports against actual commits, targets, worktrees, and check results;
+distinguish invoked skills, completed work, and applied fixes. Route fixes and
+re-verification back to the same plan thread. For blockers, identify root
+cause, owner, and unblock condition, applying only authorized retries.
 
-Aggiorna la mappa dopo merge, decisioni o cambi di dipendenza, con prove e
-revisioni; avvisa i thread interessati. Quando aggiungi un piano o ne apri la
-PR, aggiorna nello stesso passo il file di pacchetto; un cambio di perimetro è
-una nuova revisione committata del documento di mandato. Consulta la mappa prima
-di assegnazioni e handoff. Risolvi i conflitti di contenuto nel thread competente.
+Update the contracts map after merges, decisions, or dependency changes with
+evidence and revisions; notify affected threads. When adding a plan or opening
+its PR, update the package manifest in the same step; a perimeter change is a
+new committed revision of the plan mandate. Resolve content conflicts in the
+owning thread.
 
-## 4. Verifica readiness, autorizza e chiudi
+## 4. Verify readiness, authorize, and close
 
-Il thread-piano segue la [fase PR](../development-process/references/PROCESSO.md#fase-pr),
-con le istruzioni più specifiche della repository del run. Mantieni procedure
-e comandi in quelle fonti.
+Each plan thread follows [PR phase](../development-process/references/daily-workflow.md#pr-phase)
+with any more specific rules of the receiving repository. Keep concrete
+commands and procedures in repository documents.
 
-Ricevi PR, base, head finale, prove di readiness e blocchi. L’accettazione
-dei task non sostituisce tali prove.
-Verifica il percorso di integrazione autorizzato e registra head e perimetro
-prima di suggerire un’azione; readiness e autorizzazione al merge restano
-distinte e gli obblighi pendenti restano visibili.
-Un thread-piano integra da sé una PR pronta verso un branch non-`main`, entro
-ordine, dipendenze e stop del mandato; solo l’integrazione in `main` attende
-l’autorizzazione esplicita dell’owner. Dopo il merge il thread verifica il
-target e completa cleanup e aggiornamenti documentali/indici richiesti.
+Receive PR URL, base, final head SHA, readiness evidence, and blockers; slice
+acceptance does not substitute for plan-level PR readiness. Verify the
+authorized integration path and record head and perimeter before proposing an
+action; readiness and merge authorization remain distinct and open obligations
+stay visible.
 
-La readiness dichiarata dal master non amplia il mandato: rispetta l’autorizzazione
-esplicita per merge in `main` e gli eventuali gate per comando della repository,
-riusando gli OK validi. Un target indicato non concede permessi.
+A plan thread merges its own ready PR into a non-`main` branch within mandate
+order, dependencies, and stops; only merges into `main` wait for explicit owner
+authorization. After merge, the plan thread updates the target, runs the
+integration branch check, and finishes required cleanup and index updates.
 
-Verifica SHA di integrazione, controlli e cleanup nel report di chiusura;
-aggiorna la mappa e archivia il thread solo dopo chiusura effettiva. Sblocca
-le voci dipendenti secondo la mappa, senza attendere gli altri piani compatibili.
+Master-declared readiness never widens the mandate: respect explicit owner
+approval for `main` and repository command gates, reusing valid green statuses.
+Verify integration SHA, checks, and cleanup in the closing report; update the
+map and archive the thread only after verified closure. Unblock dependent items
+immediately per the map without waiting for unrelated plans.
 
-Riporta stato per piano/pacchetto, prossime azioni, blocchi e decisioni richieste,
-distinguendo pass, fail e non eseguito, implementazione, integrazione e rilascio.
-Concludi il programma quando tutte le unità e le chiusure previste sono verificate,
-oppure l’owner ne ha ridefinito il perimetro.
+Report status per plan/package, next actions, blockers, and decisions needed,
+separating pass, fail, and not run as well as implementation, integration, and
+release. Close the programme when every planned unit and closure is verified or
+the owner re-scopes the programme.

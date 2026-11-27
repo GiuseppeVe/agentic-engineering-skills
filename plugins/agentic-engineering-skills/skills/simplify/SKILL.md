@@ -1,11 +1,11 @@
 ---
 name: simplify
-description: Review the changed code for reuse, simplification, efficiency, and altitude cleanups, then apply the fixes. Quality only - it does not hunt for bugs; use a code review for that. Use when the user asks to simplify, clean up, or tidy recent changes.
+description: Clean up changed code for reuse, simplicity, efficiency, and abstraction level without changing behavior. Quality only; use host native review for bugs.
 ---
 
 # Simplify
 
-Review the code changed in the current task and apply cleanups. Scope is quality, not correctness: do not hunt for bugs, and do not change behavior.
+Review the code changed in the current task and apply cleanups. Scope is quality, not correctness: do not hunt for bugs, and do not change behavior. Use the host's native code-review capability for correctness review.
 
 ## Scope
 

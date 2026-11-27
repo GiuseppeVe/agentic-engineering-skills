@@ -8,7 +8,7 @@ import { expectedSkillsByHost } from "./expected-inventory.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pluginRoot = path.join(root, "plugins", "agentic-engineering-skills");
 const expectedName = "agentic-engineering-skills";
-const expectedVersion = "1.4.1";
+const expectedVersion = "1.5.0";
 const strictSemver = /^\d+\.\d+\.\d+$/;
 const expectedVendorSkills = [];
 
@@ -98,7 +98,9 @@ test("both host manifests expose the same shared skills without duplicates", asy
     }
     assert.equal(new Set(discovered).size, discovered.length, `${host}: duplicate skill discovery`);
     assert.deepEqual(discovered.sort(), expectedSkillsByHost[host]);
-    assert.equal(discovered.includes("task-implement"), true);
+    assert.equal(discovered.includes("plan-implement"), true);
+    assert.equal(discovered.includes("task-implement"), false);
+    assert.equal(discovered.includes("plan-orchestrator"), false);
   }
 });
 
@@ -140,11 +142,11 @@ test("recursive host discovery cannot expose supporting documents as extra skill
 });
 
 
-test("retired generic profiles and Claude-only skills are not shipped", async () => {
-  for (const relativePath of ["agent-profiles", "manifests/agent-profiles.json"]) {
+test("retired generic profiles, legacy implementation skills, and Claude-only skills are not shipped", async () => {
+  for (const relativePath of ["agent-profiles", "manifests/agent-profiles.json", "skills/task-implement", "skills/plan-orchestrator"]) {
     await assert.rejects(access(path.join(pluginRoot, relativePath)), { code: "ENOENT" });
   }
-  await access(path.join(pluginRoot, "skills/task-implement/SKILL.md"));
-  await access(path.join(pluginRoot, "skills/task-implement/references/packet-contract.md"));
+  await access(path.join(pluginRoot, "skills/plan-implement/SKILL.md"));
+  await access(path.join(pluginRoot, "skills/plan-implement/references/slice-contract.md"));
   await assert.rejects(access(path.join(pluginRoot, "claude-skills")), { code: "ENOENT" });
 });

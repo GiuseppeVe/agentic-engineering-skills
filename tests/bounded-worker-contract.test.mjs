@@ -6,32 +6,25 @@ import { fileURLToPath } from "node:url";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "plugins", "agentic-engineering-skills");
 
-test("task implementation packets define scope, ownership, contracts and evidence", async () => {
-  const [skill, packet] = await Promise.all([
-    readFile(path.join(pluginRoot, "skills/task-implement/SKILL.md"), "utf8"),
-    readFile(path.join(pluginRoot, "skills/task-implement/references/packet-contract.md"), "utf8"),
+test("plan-implement slice contract defines scope, ownership, verification, and lightweight handoff", async () => {
+  const [skill, slice] = await Promise.all([
+    readFile(path.join(pluginRoot, "skills/plan-implement/SKILL.md"), "utf8"),
+    readFile(path.join(pluginRoot, "skills/plan-implement/references/slice-contract.md"), "utf8"),
   ]);
-  assert.match(skill, /Break the assigned task into the smallest coherent implementation packets/);
-  assert.match(skill, /clear file ownership, interfaces, constraints, and acceptance criteria/);
-  assert.match(skill, /Sequence dependent packets/);
-  assert.match(skill, /Parallelize only disjoint work with no unresolved shared dependency/);
-  assert.match(skill, /pause that packet and report the exact dependency/);
-  assert.match(packet, /allowed files/);
-  assert.match(packet, /file ownership/);
-  assert.match(packet, /shared-contract surfaces/);
-  assert.match(packet, /acceptance criteria/);
-  assert.match(packet, /expected evidence/);
-  assert.match(packet, /BLOCKED/);
+  assert.match(skill, /Keep slices disjoint in file ownership and shared-contract surfaces before running them in parallel/);
+  assert.match(skill, /one persistent slice-implementer subagent/);
+  assert.match(slice, /allowed files/);
+  assert.match(slice, /Scope is binding/);
+  assert.match(slice, /return `blocked`/);
+  assert.match(slice, /Leave verified changes uncommitted for `plan-implement` to verify and commit/);
+  assert.match(slice, /No green-washing|no green-washing/i);
+  assert.match(slice, /`process`.*`final_state`/);
+  assert.match(slice, /`done`, `partial`, or `blocked`/);
 });
 
-test("task implement keeps implementation authority and final review with the parent workflow", async () => {
-  const source = await readFile(path.join(pluginRoot, "skills/task-implement/SKILL.md"), "utf8");
-  assert.match(source, /Implement exactly one task assigned by a parent orchestrator/);
-  assert.match(source, /does not orchestrate other plan tasks/);
-  assert.match(source, /excludes review of the task's implementation/);
-  assert.match(source, /Never infer permission to commit, push, open a PR, merge, deploy/);
-  assert.match(source, /Report facts and evidence for the parent/);
-  assert.match(source, /Use `process` for historical development evidence/);
-  assert.match(source, /Use `final_state` for evidence that supports acceptance/);
-  assert.doesNotMatch(source, /clean-room reviewer|fresh independent reviewer|approval gate/i);
+test("slice implementers leave commit and publication authority with plan-implement", async () => {
+  const slice = await readFile(path.join(pluginRoot, "skills/plan-implement/references/slice-contract.md"), "utf8");
+  assert.match(slice, /without spawning nested sub-packet agents unless explicitly authorized/);
+  assert.match(slice, /Never infer permission to commit, push, open a PR, merge, deploy/);
+  assert.match(slice, /Lightweight slice handoff/);
 });

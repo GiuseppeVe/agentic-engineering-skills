@@ -50,7 +50,7 @@ expected count specified independently of `MAX_RETRIES`.
 contains an exact line proves only that the source is the source. Run
 scripts against controlled inputs and assert outputs, side effects, or
 exit codes. Documents that instruct agents are tested by the consuming
-agent's behavior (superpowers:writing-skills); prose for humans earns no
+agent's behavior (`writing-for-agents`); prose for humans earns no
 test at all.
 
 **Your code, not the framework.** Test the contract your code makes at
@@ -162,6 +162,15 @@ The TDD cycle — failing test, minimal implementation, refactor — is what
 "complete" means. Ship the tests the behavior needs and only those:
 trivial code and human prose earn none, and a test written to satisfy
 process costs maintenance forever.
+
+## Choose the Right Oracle
+
+Pick the strongest oracle that fits the obligation rather than defaulting every check to a mocked unit test:
+
+- **Unit behavioral test:** pure logic, transformations, validation, and state transitions inside one module.
+- **Cross-package or boundary contract test:** when a producer and consumer share a schema, route, manifest, or event payload, exercise both sides against the same revision so wire drift fails immediately.
+- **Property-based test:** invariants that must hold across arbitrary inputs or event orderings (authorization and revocation across list and detail views, retry idempotency, parser/serializer round-trips, state machines).
+- **Real-format or real-runtime check:** when the contract governs binary assets, persistence, browser rendering, or wire protocols, decode or exercise the real output (e.g. real image dimensions/encoding, real database query, real DOM/HTTP response) rather than checking only file presence or brittle substrings.
 
 ## The Mutation Check
 

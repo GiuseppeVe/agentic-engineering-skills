@@ -28,3 +28,7 @@ Questo repository è pubblico: un ADR non contiene nomi di clienti, credenziali,
 | [0003](0003-gate-su-macchine-proprie.md) | I gate girano su macchine proprie e pubblicano stati del commit | Accettata |
 | [0004](0004-watchdog-di-inattivita-spento.md) | Il watchdog di inattività dei thread è spento | Accettata, esecuzione in attesa |
 | [0005](0005-hook-che-lancia-i-gate-della-pr.md) | Un hook del plugin lancia i gate quando una PR esce dalla bozza | Accettata |
+| [0007](0007-confine-plugin-workspace-prodotto.md) | Confine a tre livelli: plugin pubblico, workspace della factory e repository di prodotto | Accettata |
+| [0008](0008-verifica-leggera-e-plan-implement-a-slice.md) | Verifica leggera orientata ai layer deterministici e orchestrazione `plan-implement` a slice | Accettata |
+
+*(Il numero `0006` è riservato all'ADR sull'analisi statica condivisa sviluppato in parallelo.)*

@@ -1,19 +1,19 @@
-# File di pacchetto
+# Package Manifest
 
-Il master committa questo file nel branch `pkg/*` quando crea il pacchetto e lo
-aggiorna nello stesso passo in cui aggiunge un piano alla mappa. Il consumatore
-fissa la cartella e il nome del file, che deriva dal branch senza `pkg/`. Un controllo di CI lo legge
-sulla PR `pkg/*` → `main` e la blocca finché un piano elencato non è integrato:
-la PR del piano deve risultare unita nel branch del pacchetto e il suo merge
-commit deve stare nella storia della head. Ricreare il branch da un commit
-precedente al merge riapre il piano.
+The master commits this file on the `pkg/*` branch when creating a package and
+updates it in the same step that adds a plan to the contracts map. The consumer
+sets the directory and filename, derived from the branch name without `pkg/`. A
+CI check reads it on the `pkg/*` → `main` PR and blocks until every listed plan
+is integrated: each plan's PR must be merged into the package branch with its
+merge commit in the head's history. Recreating the branch from a pre-merge
+commit reopens the plan.
 
-Un piano esce dal pacchetto solo per decisione dell'owner, espressa con
-l'etichetta `exclude:<piano>` sulla PR verso `main`: il controllo accetta
-l'esclusione solo se l'ultimo evento di etichettatura viene da un account owner.
-Non rimuovere un piano dal file per farlo passare.
+A plan leaves a package only by owner decision, expressed via the
+`exclude:<plan>` label on the PR to `main`: the check accepts the exclusion
+only when the latest labeling event comes from an owner account. Never delete a
+plan from this file to make the check pass.
 
-Un solo blocco `json`:
+Exactly one fenced `json` block:
 
 ```json
 {
@@ -26,4 +26,4 @@ Un solo blocco `json`:
 }
 ```
 
-`pr` si aggiunge quando la PR del piano si apre; un piano senza `pr` è pendente.
+Add `pr` when the plan's PR opens; a plan without `pr` is pending.
