@@ -99,3 +99,20 @@ test("plan completion requires all requirements, checkboxes and tasks closed", a
   assert.match(protocol, /open deferred REQ or required checkbox prevents plan completion/);
   assert.match(protocol, /open the plan's PR only if assigned and authorized/);
 });
+
+test("writing plans uses the contract-based task template without sample implementation code", async () => {
+  const source = await skill("writing-plans");
+  assert.match(source, /Every plan starts with this header, followed by `## Expected Outcome`,\s+`## Requirements Inventory`, and `## File Structure` before the tasks\./);
+  assert.match(source, /Steps use checkbox \(`- \[ \]`\) syntax for tracking\.\s+\*\*Architecture:\*\* \[2-3 sentences\]\s+\*\*Tech Stack:\*\* \[Key technologies\/libraries\]\s+---\s+```/);
+  assert.match(source, /### Task N: \[Name\]/);
+  assert.match(source, /\*\*Expected outcome:\*\* \[Observable result this task delivers within its scope\.\]/);
+  assert.match(source, /\*\*Satisfies:\*\* REQ-003, REQ-007/);
+  assert.match(source, /\*\*Files:\*\* \[Exact paths and ownership\.\]/);
+  assert.match(source, /\*\*Contracts and constraints:\*\* \[Interfaces, required behavior, and dependencies\s+that affect this task\.\]/);
+  assert.match(source, /- \[ \] \[Implement the behavior using the identified entry point and existing contracts\.\]/);
+  assert.match(source, /- \[ \] \[Run the relevant check and record the result against the cited REQs\.\]/);
+  assert.match(source, /Include exact code\s+or data shapes when they encode an agreed contract, a decision, or a test\s+case whose details affect correctness\./);
+  assert.match(source, /Resolve placeholders and fill gaps in paths, contracts, or checks\./);
+  assert.match(source, /Verify that each task's expected outcome follows from its mapped REQs\./);
+  assert.doesNotMatch(source, /```python|pytest|test_specific_behavior|Write the failing test|Step 1:|After the outcome, state the approach/);
+});
