@@ -1,12 +1,12 @@
 # Plugin hooks
 
-The plugin bundles one PR-gate launcher. Both hosts use the standard [hook configuration](../plugins/agentic-engineering-skills/hooks/hooks.json) and run the [PR-gate launcher](../plugins/agentic-engineering-skills/hooks/pr-gates.mjs).
+The plugin bundles one PR-gate launcher and one fast read-only static-analysis hook for edited JS/TS files. Both hosts use the standard [hook configuration](../plugins/agentic-engineering-skills/hooks/hooks.json) and run the [PR-gate launcher](../plugins/agentic-engineering-skills/hooks/pr-gates.mjs) and the [edit linter](../plugins/agentic-engineering-skills/hooks/edit-lint.mjs).
 
 Invoke `Caveman` explicitly on either host. The plugin retired its startup hooks in v1.6.0.
 
 ## PR gates launched when a pull request leaves draft
 
-The plugin registers one `PostToolUse` hook, matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` without `--draft`, or a `gh pr ready` without `--undo`. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
+The plugin registers a `PostToolUse` hook matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` without `--draft`, or a `gh pr ready` without `--undo`. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
 
 What it does:
 
@@ -18,9 +18,21 @@ Without a `gates:pr` script it prints nothing and writes nothing. The hook never
 
 Limits: only pull requests opened or marked ready through the `gh` command line in a shell tool are seen. A pull request opened in the browser, through an API call or through an MCP tool does not trigger the launch. Each matching command launches once; the hook keeps no state between calls.
 
+## Fast static check on edited JS/TS files
+
+The plugin registers a second `PostToolUse` hook matched on edit tools (`Edit|Write|MultiEdit|apply_patch`). When a tool call modifies one or more JS/TS files, [`edit-lint.mjs`](../plugins/agentic-engineering-skills/hooks/edit-lint.mjs) checks whether an ancestor up to the Git root contains `.oxlintrc.json` and a local `node_modules/oxlint/bin/oxlint`.
+
+What it does:
+
+1. Without both `.oxlintrc.json` and a local `oxlint` installation, it prints nothing and exits 0.
+2. Otherwise it runs Oxlint in fast syntactic read-only mode (`--format json --quiet`, no `--type-aware`, no `--fix`) on only the edited files.
+3. If there are zero blocking errors, it prints nothing; if errors are found, it returns a concise `additionalContext` list (up to 8 `file:line:col [rule] message` items) so the agent can fix them immediately before committing.
+
+The hook never blocks, never edits files, keeps no state, and does not replace repository git hooks or CI gates (which run full `--type-aware` analysis). Shared presets live in [`standards/static-analysis/`](../standards/static-analysis/README.md) and the decision is recorded in [decision record 0006](adr/0006-analisi-statica-condivisa-e-hook-su-modifica.md).
+
 ## No reminder or verifier hooks
 
-Versions before 1.2.0 shipped reminders after PR creation and after merge, a PR preflight verifier with a billing fallback, and a `pr-skills` comment marker. They are removed and the launcher does not bring them back. The PR phase, the verification rules and the closing report are plain rules in the [`development-process`](../plugins/agentic-engineering-skills/skills/development-process/SKILL.md) skill: guidance, not enforcement. A repository's own git hooks, CI and branch protection remain its gates.
+Versions before 1.2.0 shipped reminders after PR creation and after merge, a PR preflight verifier with a billing fallback, and a `pr-skills` comment marker. They are removed and the current hooks do not bring them back. The PR phase, the verification rules and the closing report are plain rules in the [`development-process`](../plugins/agentic-engineering-skills/skills/development-process/SKILL.md) skill: guidance, not enforcement. A repository's own git hooks, CI and branch protection remain its gates.
 
 If an earlier local setup still registers a post-PR or post-merge hook, or expects the `pr-skills` marker, that setup belongs to the project or user configuration; this plugin does not change or disable it.
 
@@ -37,7 +49,7 @@ Codex requires the user to review and trust plugin-bundled hooks before running 
 From repository root, run the hook contract tests:
 
 ```text
-node --test tests/plugin-hooks.test.mjs tests/pr-gates-hook.test.mjs
+node --test tests/plugin-hooks.test.mjs tests/pr-gates-hook.test.mjs tests/edit-lint-hook.test.mjs
 ```
 
-They validate the hook manifest, check command detection, and run the launcher against a temporary repository whose `gates:pr` script writes a marker file. Host trust, fresh-session discovery and the delivery of the launcher's context line still need to be checked in the installed Codex or Claude Code environment.
+They validate the hook manifest, check command detection, run the PR-gate launcher against a temporary repository whose `gates:pr` script writes a marker file, and run the edit-lint hook against temporary repositories with clean and failing JS/TS files. Host trust, fresh-session discovery and the delivery of hook context lines still need to be checked in the installed Codex or Claude Code environment.

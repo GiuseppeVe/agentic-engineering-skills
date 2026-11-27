@@ -1,5 +1,11 @@
 # Release verification report
 
+## Shared static analysis presets and fast edit-lint hook: 2026-11-27
+
+Adds canonical, noise-filtered static analysis presets under `standards/static-analysis/` (`base-ts-js.oxlintrc.json`, `react-web.oxlintrc.json`, `ruff.toml`, and `README.md`), records the architectural decision in `docs/adr/0006-analisi-statica-condivisa-e-hook-su-modifica.md`, and registers a second non-blocking `PostToolUse` hook (`plugins/agentic-engineering-skills/hooks/edit-lint.mjs`) matched on `Edit|Write|MultiEdit|apply_patch`. When a consumer repository configures `.oxlintrc.json` and installs local `oxlint` (at repo root or in an enclosing package directory), the hook runs fast syntactic read-only checks on only the edited JS/TS files and returns blocking errors as concise `additionalContext`; it stays silent otherwise, never edits files, and always exits 0.
+
+The payload holds 28 skills for both hosts and 469 files (one added hook script over 1.6.0); no skill was added, removed, or modified, so `manifests/skills.lock.json` is unchanged. Payload hashes in `manifests/native-discovery.json` were refreshed to Codex `sha256:11b29eee42ac3d146ecfc3e78a1b30a81633bb97587ea4959aac22f5f0999570`, Claude Code `sha256:fecd55cbd29f9817fefa633d7eafdeae930c42da876e3786a2b018372731e801`, and full tree `sha256:db4a860f275cfd6c0bd8ffc99c916b49f824115120d7a6ab0b659382f9c3bb58`. Verified locally on Windows: `verify:pack`, `audit:public`, `claude plugin validate .`, preset parsing with Oxlint 1.95.0, and the contract/hook test suite. Not yet verified in a live host session: `PostToolUse` delivery on `Edit|Write|MultiEdit|apply_patch` inside Codex and Claude Code.
+
 ## v1.6.0 catalog and invocation parity
 
 Both hosts now share 28 skills. The release retires `ask-matt`, `grill-me`, `ui-ux-pro-max`, `learn-codebase`, `orchestrating-gemini-workers`, and `graphify-start`, including unused patches and exclusive legal files. `graphify` takes over project protocol routing, queries existing graphs for codebase questions, checks findings in source, and loads the build pipeline on request.

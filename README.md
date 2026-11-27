@@ -114,9 +114,11 @@ The [process rules](plugins/agentic-engineering-skills/skills/development-proces
 
 ## Hooks I use
 
-The plugin registers one PR-gate launcher as a `PostToolUse` hook. Invoke `Caveman` explicitly when you want compact communication.
+The plugin registers one PR-gate launcher and one fast read-only edit-lint hook as `PostToolUse` hooks. Invoke `Caveman` explicitly when you want compact communication.
 
 After a shell command opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), a `PostToolUse` hook starts the repository's own `npm run gates:pr` in the background, if the root `package.json` defines that script, and tells the agent where the log is. It never blocks, verifies or reminds; without the script it does nothing. The repository decides what its gates are.
+
+After an edit tool modifies JS/TS files (`Edit`, `Write`, `MultiEdit`, `apply_patch`), a second `PostToolUse` hook (`edit-lint.mjs`) runs the repository's local Oxlint in fast syntactic read-only mode on only the edited files when `.oxlintrc.json` and local `oxlint` are present, returning only blocking errors and staying silent otherwise. Shared presets live in [`standards/static-analysis/`](standards/static-analysis/README.md).
 
 The plugin ships no reminder or verifier hook. Earlier versions added `PostToolUse` reminders after PR creation and after merge, together with a PR preflight verifier and a comment marker. Version 1.2 removed them: the steps they repeated now live as short rules in [`development-process`](plugins/agentic-engineering-skills/skills/development-process/SKILL.md), and a repository keeps its own git hooks and CI as its gates.
 

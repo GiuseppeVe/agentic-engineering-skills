@@ -1,5 +1,5 @@
 {
-  "description": "Launch the repository PR gates in the background.",
+  "description": "Launch the repository PR gates in the background and run fast read-only static checks on edited JS/TS files.",
   "hooks": {
     "PostToolUse": [
       {
@@ -10,6 +10,17 @@
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pr-gates.mjs\"",
             "timeout": 30,
             "statusMessage": "Checking for PR gates"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/edit-lint.mjs\"",
+            "timeout": 10,
+            "statusMessage": "Running fast static check"
           }
         ]
       }
