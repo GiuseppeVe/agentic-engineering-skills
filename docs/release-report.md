@@ -1,5 +1,9 @@
 # Release verification report
 
+## v1.7.0 release: 2026-11-28
+
+Bumps the plugin, both marketplaces, and the package to `1.7.0`, publishing the formal verification skills (`statechart`, `create-formal-verification-skill`, `maintain-formal-verification-skill`), ADR 0009, and the shared static analysis presets with the edit-lint hook recorded below. `statechart` excludes the upstream `scripts/test/` corpus through `excludePaths` in `manifests/skill-sources.json`, so the corpus enters neither the payload nor `manifests/patches/statechart.patch`. The payload holds 31 skills for both hosts and 508 files. Fresh isolated installs (Codex `codex-cli 0.172.0`, Claude Code `2.1.330`) matched the source byte for byte, and `manifests/native-discovery.json` now records Codex `sha256:a0e677baba94453b899047d878eeb0282ea8b67b4ca56b58c9dd57dcb495b550`, Claude Code `sha256:8982754dde2c342d77534fcfc671e85fe688a3ab21cb67741faeaa1d68a57d4c`, and full tree `sha256:a11716aa8aa49b37a4de329c638445021ac18f5b2da7ca3c0e0eb08d428d9605`.
+
 ## Formal verification skills (`statechart` and formal verification lifecycle) and ADR 0009: 2026-11-27
 
 Adds three explicit-invocation skills adapted from pinned `cursor/plugins@b7b93c36be9bcc36a74db438e0fd385d660bc559` (`pstack`, MIT): `statechart` (TLA+/TLC model checking and Mermaid statechart reporting, packaged with its 33 runtime files and excluding the 377 internal upstream test corpus fixtures), `create-formal-verification-skill`, and `maintain-formal-verification-skill`. Records ADR 0009 authorizing project-local formal-verification skills inside product repositories as a narrow exception to ADR 0001, ADR 0002, and ADR 0007 while keeping process skills plugin-only, and adds concise live-verification hygiene rules (doctor-before-drive, owned-process cleanup preserving proof artifacts, and observed dry-run verification) to `development-process/references/daily-workflow.md`.
