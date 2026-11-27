@@ -49,7 +49,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.171.0",
+      "version": "codex-cli 0.172.0",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -129,8 +129,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:12df7ee667a1cee5484bc38e5fc4def7e7d05823f15cbad56b8fd91f0d9b1cf6",
-        "fullTreeHash": "sha256:99464738a211694edebee0a9bafd957e76a985ab02762052d0a88cff0b658d4c",
+        "treeHash": "sha256:da1dc42cd368e050468ebc30b7ff6c798fb794ea1a7121adc72b8e8cc44cf64e",
+        "fullTreeHash": "sha256:5bcf47ef780066a4e718f26f7c384da2a0c43003bfe9b90768a70819435a6713",
         "fileCount": 521
       },
       "commands": [
@@ -236,8 +236,8 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:8b2b0525a810811d2bf053fae912de0246412fe8ba4ecb70ef399d7d865a79d5",
-        "fullTreeHash": "sha256:99464738a211694edebee0a9bafd957e76a985ab02762052d0a88cff0b658d4c",
+        "treeHash": "sha256:3b9aabc0c2a7b95b12ca74a6d48fbd1520700c887379c130fd9cef137538e115",
+        "fullTreeHash": "sha256:5bcf47ef780066a4e718f26f7c384da2a0c43003bfe9b90768a70819435a6713",
         "fileCount": 521
       },
       "installedAgents": [
