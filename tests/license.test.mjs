@@ -55,14 +55,6 @@ test("legal filenames accept LICENSE-MIT but reject nested paths", () => {
   assert.doesNotMatch("not-a-license.txt", legalPathPattern);
 });
 
-test("Apache-2.0 license and NOTICE match pinned claude-mem blobs", () => {
-  const entry = lock.skills.find(({ name }) => name === "learn-codebase");
-  assert.deepEqual(entry.licenseFiles, [
-    { upstreamPath: "LICENSE", path: "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE", sha256: "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30" },
-    { upstreamPath: "NOTICE", path: "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE", sha256: "35003c303ee484c77872fd45eb5d590ce679d1ae7ac5bb672d33069cca66685b" },
-  ]);
-});
-
 test("third-party notice rows exactly join lock entries to legal files", async () => {
   const notice = await readFile(new URL("THIRD_PARTY_NOTICES.md", root), "utf8");
   const rows = new Map(notice.split("\n").filter(line => /^\| `[^`]+` \|/.test(line)).map(line => {
@@ -73,10 +65,8 @@ test("third-party notice rows exactly join lock entries to legal files", async (
     ["https://github.com/obra/superpowers", "Jesse Vincent"],
     ["https://github.com/JuliusBrussee/caveman", "Julius Brussee"],
     ["https://github.com/mattpocock/skills", "Matt Pocock"],
-    ["https://github.com/thedotmack/claude-mem", "Alex Newman"],
     ["https://github.com/ruvnet/ruflo", "ruvnet"],
     ["https://github.com/pbakaus/impeccable", "Paulo Bakaus"],
-    ["https://github.com/nextlevelbuilder/ui-ux-pro-max-skill", "Next Level Builder"],
     ["https://github.com/tt-a1i/archify", "tt-a1i; Cocoon AI"],
     ["https://github.com/Graphify-Labs/graphify", "Safi Shamsi and Graphify contributors"],
   ]);
@@ -92,7 +82,7 @@ test("third-party notice rows exactly join lock entries to legal files", async (
       ? "MIT for Archify code; separately licensed assets per notice"
       : entry.name === "graphify"
         ? "Apache-2.0; MIT for portions retained under prior license"
-        : ["learn-codebase", "impeccable"].includes(entry.name) ? "Apache-2.0" : "MIT";
+        : entry.name === "impeccable" ? "Apache-2.0" : "MIT";
     assert.equal(row[5], expectedLicense);
     assert.equal(row[6], entry.licenseFiles.map(({ path }) => `\`${path}\``).join("<br>"));
     assert.ok(row[7].trim(), `${entry.name}: modification notice missing`);

@@ -93,7 +93,7 @@ The master selects relevant specialist routes within the authorized scope. These
 | Large, uncertain initiative | `Wayfinder` | Map scope that reaches beyond one session when useful and available. |
 | Outcome-driven native Goal run | `Setup Goal` | Agree the outcome, constraints, and metrics, save a runbook, then request confirmation to launch the host's native Goal. |
 | Bounded or creative design | `Brainstorming` | Clarify intent before changes. |
-| Consequential or disputed design | `Grill-me` | Pressure-test assumptions. |
+| Consequential or disputed design | `Grilling` | Pressure-test assumptions. |
 | Agreed design | `To Spec` | Create standalone specification. |
 | Multi-step implementation | `Writing Plans` | Create traceable implementation plan. |
 | Implementation program with multiple approved plans | `Coordinating Implementation Plans` | Coordinate compatible plan threads in parallel and track dependencies. |
@@ -114,17 +114,17 @@ The [process rules](plugins/agentic-engineering-skills/skills/development-proces
 
 ## Hooks I use
 
-The plugin registers the Caveman startup hooks and one PR-gate launcher. `SessionStart` and `SubagentStart` load its communication rules into new sessions and subagents, subject to host support and hook approval. If a project already supplies the same context, both hooks can run.
+The plugin registers one PR-gate launcher as a `PostToolUse` hook. Invoke `Caveman` explicitly when you want compact communication.
 
 After a shell command opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), a `PostToolUse` hook starts the repository's own `npm run gates:pr` in the background, if the root `package.json` defines that script, and tells the agent where the log is. It never blocks, verifies or reminds; without the script it does nothing. The repository decides what its gates are.
 
 The plugin ships no reminder or verifier hook. Earlier versions added `PostToolUse` reminders after PR creation and after merge, together with a PR preflight verifier and a comment marker. Version 1.2 removed them: the steps they repeated now live as short rules in [`development-process`](plugins/agentic-engineering-skills/skills/development-process/SKILL.md), and a repository keeps its own git hooks and CI as its gates.
 
-The hook scripts need Node.js 22 or newer. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup and coverage limits.
+The hook needs Node.js 22 or newer. Codex requires the plugin hooks to be reviewed and trusted before a fresh session; Claude Code also needs the plugin and hook configuration enabled. The [plugin hooks guide](docs/plugin-hooks.md) documents setup and coverage limits.
 
 ## Supporting skills
 
-I use `Impeccable` and `UI UX Pro Max` for frontend craft and design support, `Caveman` to compress communication and save tokens without losing technical substance, and `How to Use Codex` for current official guidance on model-aware prompting, settings, and delegation. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability.
+I invoke `Impeccable` for frontend design and critique, and `Caveman` to keep communication compact. `Improve Codebase Architecture` helps me identify where modules lack depth or locality, so I can choose focused refactors that improve leverage and testability.
 
 ### Deslopping Cleanup
 
@@ -227,7 +227,7 @@ Enable and trust the plugin hooks separately from skill installation; see [Hooks
 
 Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see the relevant implementation skill for its role and routing requirements.
 
-The plugin exposes 34 shared skills to both Codex and Claude Code. Role-appropriate models and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults.
+The plugin exposes 28 shared skills to both Codex and Claude Code. Role-appropriate models and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 

@@ -1,5 +1,22 @@
 # Release verification report
 
+## v1.6.0 catalog and invocation parity
+
+Both hosts now share 28 skills. The release retires `ask-matt`, `grill-me`, `ui-ux-pro-max`, `learn-codebase`, `orchestrating-gemini-workers`, and `graphify-start`, including unused patches and exclusive legal files. `graphify` takes over project protocol routing, queries existing graphs for codebase questions, checks findings in source, and loads the build pipeline on request.
+
+`impeccable`, `deslopping-cleanup`, `caveman`, `cleaning-repo-with-knip`, `marketing-screenshots`, and `handoff` require explicit invocation on both hosts. Models can invoke `to-spec` and `graphify`. Caveman starts on explicit request. The PR-gate launcher remains the sole plugin hook.
+
+`to-spec` makes key user scenarios optional. Wayfinder uses scoped research subagents and throwaway prototypes. Deslopping Cleanup points to native delegation, review and shared verification guidance. The Knip guide uses the repository's configured tooling. Only the three changed original skill payloads are stamped for this release.
+
+Fresh isolated Windows installs on 2026-11-27 verified 28 skills and 468 files per host. Both Claude marketplace and plugin validations exited 0. Full plugin payload hash is `sha256:4e393d771320a46578aa93f7b90834d291d810476840160b01ca5e331a6c178b` on both hosts.
+
+| Host | Version | Installed discovery tree |
+| --- | --- | --- |
+| Codex | `codex-cli 0.159.2` | `sha256:4aac6d83b9f041331e7e832906e92209a8809e1e301f008ec5223e75af308c86` |
+| Claude Code | `2.1.330 (Claude Code)` | `sha256:423e4a0971daed95ba308a294ad2164f4429a11d54e62a1195518f76dbb6ec69` |
+
+The [native discovery receipt](../manifests/native-discovery.json) records the install and listing commands, exit codes, inventories, and hashes. Evidence covers the host installations, manifest-selected skills, and installed bytes. Model invocation and live hook execution are outside this verification.
+
 ## Lightweight verification, English uniformity, and 2-level slice plan implementation: 2026-11-27
 
 Version 1.5.0 refines the core verification and plan-execution workflow and records the architectural boundaries in factory decision records 0007 and 0008. `development-process` is rewritten in English and split into `references/daily-workflow.md` (mandate and Git boundaries, lightweight L1–L3 verification with anti-green-washing rules, PR phase, and closing report) and `references/program-orchestration.md` (multi-package delegation, plan and package lifecycle, and convergence limits), retiring `PROCESSO.md` and `ORCHESTRAZIONE.md`. `test-driven-development` adds a compact bug-fix red-reproduction loop, adds modern oracle selection guidance (unit, cross-package contract, property-based, and real-format/real-runtime) to `writing-good-tests.md`, fixes its broken `writing-for-agents` reference, and drops the overloaded generic task-reviewer role. `writing-plans` adds `**Risk:** standard | high` and optional `## Slice N:` grouping, aligns acceptance oracles with `test-driven-development`, removes hardcoded model presets and dangling skill references, and routes multi-task plans to `plan-implement`. `plan-implement` replaces `plan-orchestrator` and absorbs `task-implement` into a 2-level controller that delegates contiguous module tasks to persistent slice-implementer subagents, verifies deterministic L1–L3 checks, triggers clean-room host-native code review checkpoints on `risk: high` slices and shared contracts, commits accepted slices when authorized, keeps a lightweight slice handoff contract, and retains DeepSeek/Vibe routing references under `plan-implement/references/`. `coordinating-implementation-plans` (explicit-only on both hosts) and `master-orchestrator` are unified in English, `simplify` points correctness findings to host-native code review, and `retro` adds a deterministic-check promotion question and operational metrics.

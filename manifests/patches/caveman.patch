@@ -57,7 +57,7 @@ index 92a055c..0000000
 -- [`SKILL.md`](./SKILL.md): full LLM-facing instructions
 -- [Caveman README](../../README.md): repo overview, install, benchmarks
 diff --git a/caveman/SKILL.md b/caveman/SKILL.md
-index ea8bf27..555896a 100644
+index ea8bf27..78dc68b 100644
 --- a/caveman/SKILL.md
 +++ b/caveman/SKILL.md
 @@ -4,3 +4,4 @@
@@ -66,8 +66,8 @@ index ea8bf27..555896a 100644
 -  /caveman, "caveman mode", "talk like caveman", "be brief" or "less tokens".
 +  Ultra-compressed communication mode. Cuts token usage ~75% by speaking like caveman
 +  while keeping full technical accuracy. Supports intensity levels: lite, full (default), ultra.
-+  Use when user says "caveman mode", "talk like caveman", "use caveman", "less tokens",
-+  "be brief", or invokes /caveman. Also auto-triggers when token efficiency is requested.
++  Use when the user invokes /caveman or explicitly asks for Caveman mode.
++disable-model-invocation: true
 @@ -13 +14 @@
 -Default style for this whole session, every response, until user say "stop caveman" or "normal mode". Keep terse on long sessions no filler drift.
 +ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift. Still active if unsure. Off only: "stop caveman" / "normal mode".
@@ -134,6 +134,17 @@ index ea8bf27..555896a 100644
 +## Additional functions
 +
 +For commit-message requests, read [commit](references/commit.md); for explicit file compression, [compress](references/compress.md); for help, statistics or delegation, [utilities](references/utilities.md).
+diff --git b/caveman/agents/openai.yaml b/caveman/agents/openai.yaml
+new file mode 100644
+index 0000000..084f8c9
+--- /dev/null
++++ b/caveman/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: "Caveman"
++  short_description: "Use compact communication"
++policy:
++  allow_implicit_invocation: false
 diff --git b/caveman/references/commit.md b/caveman/references/commit.md
 new file mode 100644
 index 0000000..2133e02
@@ -1148,24 +1159,3 @@ index 0000000..dc07307
 +        print("\nWarnings:")
 +        for w in res.warnings:
 +            print(f"  - {w}")
-diff --git b/caveman/scripts/context-hook.mjs b/caveman/scripts/context-hook.mjs
-new file mode 100644
-index 0000000..6945a5c
---- /dev/null
-+++ b/caveman/scripts/context-hook.mjs
-@@ -0,0 +1,15 @@
-+import { readFileSync } from "node:fs";
-+import { dirname, join } from "node:path";
-+import { fileURLToPath } from "node:url";
-+
-+const event = process.argv[2];
-+if (!["SessionStart", "SubagentStart"].includes(event)) process.exit(0);
-+try {
-+  const path = join(dirname(fileURLToPath(import.meta.url)), "..", "SKILL.md");
-+  const body = readFileSync(path, "utf8").replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "").trim();
-+  const context = `Caveman instructions (skill file: ${path}):\n${body}`;
-+  process.stdout.write(JSON.stringify({hookSpecificOutput: {hookEventName: event, additionalContext: context}}));
-+} catch (error) {
-+  process.stderr.write(`Caveman hook: ${error.message}\n`);
-+  process.exitCode = 1;
-+}

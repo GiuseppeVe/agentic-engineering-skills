@@ -4,6 +4,7 @@ description: "Use when designing or improving frontend interfaces: websites, lan
 version: 4.8.0
 metadata:
   version: 4.8.0
+disable-model-invocation: true
 ---
 
 Adaptation: pbakaus/impeccable skill adapted for cross-host Agent Skills distribution.

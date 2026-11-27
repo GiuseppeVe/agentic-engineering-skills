@@ -1,0 +1,5 @@
+interface:
+  display_name: "Cleaning a Repo with Knip"
+  short_description: "Triage and resolve Knip findings"
+policy:
+  allow_implicit_invocation: false

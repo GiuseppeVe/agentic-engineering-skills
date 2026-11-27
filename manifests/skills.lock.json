@@ -25,25 +25,6 @@
       ]
     },
     {
-      "name": "ask-matt",
-      "sourceType": "adapted",
-      "repository": "https://github.com/mattpocock/skills",
-      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
-      "upstreamPath": "skills/engineering/ask-matt/",
-      "sha256": "e940edda9eb590b33014332686ce20e88c3db319a92d7548164850288002457c",
-      "localSha256": "7b7b0f1c11bfec5aa9ffb96296e5fe82c61ed9fd41c30fd4c01dd22db1962866",
-      "dependencies": [],
-      "changeNotice": "Adapted host metadata and routing for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/ask-matt.patch",
-      "licenseFiles": [
-        {
-          "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-4ae2317-LICENSE",
-          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
-        }
-      ]
-    },
-    {
       "name": "brainstorming",
       "sourceType": "adapted",
       "repository": "https://github.com/obra/superpowers",
@@ -71,9 +52,9 @@
       "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
       "upstreamPath": "skills/caveman/",
       "sha256": "a6e68ff071f1da42ea28b29ceacea8850bf8f91946d73964872e24263bfcb98e",
-      "localSha256": "269cb13c093a4a4ff5321f7b94fe20db908743be126f47b7fe1ddf1a22332bde",
+      "localSha256": "bf7ef285d34f1356b36a4d57c8b7b2ddc8fbff2f1b53d7908814e007e3c2e3ed",
       "dependencies": [],
-      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
+      "changeNotice": "Preserved the upstream Caveman attribution and compression tools, made invocation explicit on both hosts, and removed startup context injection.",
       "patchPath": "manifests/patches/caveman.patch",
       "licenseFiles": [
         {
@@ -86,7 +67,7 @@
     {
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
-      "localSha256": "b9cbed6e2faca3bda1934cac9e63e9d8e8e08a82b8610dad87231aab7d344484",
+      "localSha256": "28a98f64346608796e0d110e71a97865a2f8a4109015ae83c60e3655afc6ba99",
       "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
       "license": "MIT",
       "payloadType": "directory",
@@ -126,11 +107,13 @@
     {
       "name": "deslopping-cleanup",
       "sourceType": "original",
-      "localSha256": "a751a5eb74377dfe3be83a880eb6b6d166b1ec14fce6cf227c14e40747475ed4",
+      "localSha256": "77bf315568c6075b497067c5249d4cd0d2d915e0710e83607269001e4dbf170e",
       "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
       "license": "MIT",
       "payloadType": "directory",
-      "dependencies": []
+      "dependencies": [
+        "development-process"
+      ]
     },
     {
       "name": "development-process",
@@ -167,9 +150,9 @@
       "revision": "a5957aa6ef51c9be8d054de9783d25046c187f3f",
       "upstreamPath": "graphify/skills/codex/",
       "sha256": "11b9ef42d1dfa3d2923101740e3ce69ba9db5589a22cb030e3945475f8b54f4a",
-      "localSha256": "26dc89f54a35214c943d7b990eee3afc31f4dd332c1147f6bb6d9c1143022cda",
+      "localSha256": "10316985856077ced1945b1e10531daf5fb7ce3b6cf33d7161309d7441e53b24",
       "dependencies": [],
-      "changeNotice": "Composed from the eight pinned Codex reference files under `graphify/skills/codex/` and the sibling `graphify/skill-codex.md` entrypoint; added the entrypoint and adapted references/assets for the cross-host distribution. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Composed from the eight pinned Codex references and sibling skill-codex.md. Added project protocol routing and moved the build pipeline behind a reference.",
       "patchPath": "manifests/patches/graphify.patch",
       "licenseFiles": [
         {
@@ -186,36 +169,6 @@
           "upstreamPath": "NOTICE",
           "path": "plugins/agentic-engineering-skills/licenses/Graphify-Labs-graphify-NOTICE",
           "sha256": "3448ea175bba09f6fed8a743000139fb4c7112de83f164355b5540b158576621"
-        }
-      ]
-    },
-    {
-      "name": "graphify-start",
-      "sourceType": "original",
-      "localSha256": "f8f52e5161e8aa69ad21399eab001a8a14c145683925bf54c9772c05f03da217",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": []
-    },
-    {
-      "name": "grill-me",
-      "sourceType": "adapted",
-      "repository": "https://github.com/mattpocock/skills",
-      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/productivity/grill-me/",
-      "sha256": "25b02cbdacb3d7fcf0fdea243cb8358cc5ba1e85800d0974b028f6e8bacac94d",
-      "localSha256": "2578dd8ca5fcac6def9c82b7cea7ddebafbbc298d1b812eb18cdc4262513e13d",
-      "dependencies": [
-        "grilling"
-      ],
-      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
-      "patchPath": "manifests/patches/grill-me.patch",
-      "licenseFiles": [
-        {
-          "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/mattpocock-skills-LICENSE",
-          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
         }
       ]
     },
@@ -245,9 +198,9 @@
       "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
       "upstreamPath": "skills/productivity/handoff/",
       "sha256": "4f617ccf1f815c05bec26b782c69e46ee84e3d47c06532041e95e742c78d102c",
-      "localSha256": "0e35c3311e15b2f7d025a13d26a579b13372a14dc4918113781302427f68322a",
+      "localSha256": "41dfe7278fa5b328d205c614cde22a8fa58c844b825f4bb1cdd3a012db52a6f6",
       "dependencies": [],
-      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "changeNotice": "Made invocation explicit on both hosts and retained portable handoff metadata.",
       "patchPath": "manifests/patches/handoff.patch",
       "licenseFiles": [
         {
@@ -264,9 +217,9 @@
       "revision": "6496f49a1ea0503ca130d7dd55508dd0d22aa86b",
       "upstreamPath": "skill/",
       "sha256": "8023233e074b16c314ec18354955beb425a49ae79450ef641045b19ca0dfa04b",
-      "localSha256": "2cf52ffd1fe49cf7a670b746ce14b2a7a675a036e7bbb1a72998d8bb09e19a94",
+      "localSha256": "09c62183cb4ec8b95774ebb06f9f105c29ffc209c37f3dc869ef2901957811ee",
       "dependencies": [],
-      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for cross-host distribution. Includes fresh-context subagent routing and portable specialist contracts.",
+      "changeNotice": "Packaged Impeccable and its supporting profiles, references, and scripts. Added fresh-context routing and made invocation explicit on both hosts.",
       "patchPath": "manifests/patches/impeccable.patch",
       "licenseFiles": [
         {
@@ -303,33 +256,9 @@
       ]
     },
     {
-      "name": "learn-codebase",
-      "sourceType": "adapted",
-      "repository": "https://github.com/thedotmack/claude-mem",
-      "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
-      "upstreamPath": "plugin/skills/learn-codebase/",
-      "sha256": "c5e67153be4227fb552efb41d9ec8988105809a2aeb02cd3f9d7750b90d2ae4e",
-      "localSha256": "f1bf0cc23cf319db447ccb5dea4b8388d28f6190a9eb8362b1a9bde361c871d3",
-      "dependencies": [],
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/learn-codebase.patch",
-      "licenseFiles": [
-        {
-          "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-LICENSE",
-          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-        },
-        {
-          "upstreamPath": "NOTICE",
-          "path": "plugins/agentic-engineering-skills/licenses/thedotmack-claude-mem-NOTICE",
-          "sha256": "35003c303ee484c77872fd45eb5d590ce679d1ae7ac5bb672d33069cca66685b"
-        }
-      ]
-    },
-    {
       "name": "marketing-screenshots",
       "sourceType": "original",
-      "localSha256": "0bdc354c9ad4db2d6bcd5f5695f857beb0dbda841fddbe50f5d607893fe37f46",
+      "localSha256": "21a921540ab23333cf8833fc9be87e2c38f9eb653f7ea57185f7dc5a3852229d",
       "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
       "license": "MIT",
       "payloadType": "directory",
@@ -348,15 +277,6 @@
       "name": "mdx-to-html",
       "sourceType": "original",
       "localSha256": "122c491403b0af0e9d0bd75929748fa3e522fefd599869c7fa6a5a1abce61dd9",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
-      "license": "MIT",
-      "payloadType": "directory",
-      "dependencies": []
-    },
-    {
-      "name": "orchestrating-gemini-workers",
-      "sourceType": "original",
-      "localSha256": "b7a4ce55358fbd1bb9eb51636babe298b97132563dff0755b9627fef4938be63",
       "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
       "license": "MIT",
       "payloadType": "directory",
@@ -439,7 +359,9 @@
       "upstreamPath": "skills/test-driven-development/",
       "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
       "localSha256": "521a4172459360193ce24bac6be42b4001cf802d56f28a79d177094b8c8d091b",
-      "dependencies": [],
+      "dependencies": [
+        "development-process"
+      ],
       "licenseFiles": [
         {
           "upstreamPath": "LICENSE",
@@ -457,9 +379,9 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/",
       "sha256": "305911f9a65016bf31b209ade13da492042e3ebe1434db4161a777a4efc69dbb",
-      "localSha256": "576496a49d9a46986d8cae79286687feb786cb071e8192c9bcbc71a288ccb0a5",
+      "localSha256": "238bbf69db282dedb9504dc8e8c258eae7927d2f307837e54ff75f025a5aafd9",
       "dependencies": [],
-      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
+      "changeNotice": "Enabled model invocation on both hosts, focused the spec template on key user scenarios, and retained explicit tracker-publication authorization.",
       "patchPath": "manifests/patches/to-spec.patch",
       "licenseFiles": [
         {
@@ -470,34 +392,15 @@
       ]
     },
     {
-      "name": "ui-ux-pro-max",
-      "sourceType": "adapted",
-      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
-      "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
-      "upstreamPath": ".claude/skills/ui-ux-pro-max/",
-      "sha256": "84bce1fd0d6ab9b13a392ada087c9485ee8fb599fc4e942f3d1bcf79c62fd546",
-      "localSha256": "7b62703d06af70b529d8150a9408f6500674843ac26c88f79fffff41b49836c5",
-      "dependencies": [],
-      "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/ui-ux-pro-max.patch",
-      "licenseFiles": [
-        {
-          "upstreamPath": "LICENSE",
-          "path": "plugins/agentic-engineering-skills/licenses/nextlevelbuilder-ui-ux-pro-max-LICENSE",
-          "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
-        }
-      ]
-    },
-    {
       "name": "wayfinder",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/wayfinder/",
       "sha256": "b21256d42f6810e0a8e452dd7f2c273a32869823ce0ec68bda95d6378bfe7cd1",
-      "localSha256": "0daf6f81935d7269b49580713585030c1868a7cfddfb35d7f2422801f3cd6e67",
+      "localSha256": "e726a26c6e35f99e84d0faddd15c46cf9840547ca3e5961fba4a76712921e775",
       "dependencies": [],
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Adapted for both hosts with fresh-context research delegation and scoped throwaway prototypes.",
       "patchPath": "manifests/patches/wayfinder.patch",
       "licenseFiles": [
         {

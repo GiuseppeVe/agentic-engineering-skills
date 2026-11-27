@@ -1,7 +1,6 @@
 ---
 name: to-spec
 description: Use when the user asks to turn an existing conversation, wayfinder map, or planning context into a standalone MDX spec.
-disable-model-invocation: true
 ---
 
 > **Adaptation:** Based on `mattpocock/skills`; adapted for portable Codex and Claude Code use and explicit tracker-publication authorization.
@@ -129,17 +128,9 @@ If no requirements can be stated yet, write "Deferred to planning phase" with ra
 
 List required properties that must always hold, including recovery, retries, data integrity, and other domain constraints supported by existing context. For each, record the agreed rule and observable verification. If the context leaves a required invariant unknown, include an explicit unknown entry linked to a blocking Open Question; retain any proposed default there with its rationale. Never turn an unknown or proposal into an agreed invariant.
 
-## User Stories
+## Key user scenarios (optional)
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
-
-1. As an <actor>, I want a <feature>, so that <benefit>
-
-<user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
-</user-story-example>
-
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+Include only scenarios that clarify an outcome, a meaningful boundary case, or a success criterion. Omit this section if the rest of the spec already covers them.
 
 ## Implementation Decisions
 

@@ -573,29 +573,6 @@ test("chunk URL exceptions require complete parent policy and reject private hos
   }
 });
 
-test("chunk fixture exception inherits only exact reconstructed UI-UX sample", async () => {
-  const patchPath = "manifests/patches/ui-ux-pro-max.patch";
-  const loopbackUrl = ["http:/", "localhost:8080"].join("/");
-  const samplePath = ["C:", "Users", "data", "config.json"].join("\\");
-  const makePatch = (windowsPath) => {
-    const lead = `diff --git a/avalonia.csv b/avalonia.csv\n+${loopbackUrl}\n+row,`;
-    const prefix = `${lead}${"x".repeat(PATCH_CHUNK_BYTES - Buffer.byteLength(lead) - 3)}@""`;
-    assert.equal(Buffer.byteLength(prefix), PATCH_CHUNK_BYTES);
-    return `${prefix}${windowsPath}""",Medium\n`;
-  };
-
-  const allowed = await createChunkedPatch(patchPath, makePatch(samplePath));
-  const result = await allowed.run();
-  assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-
-  const changed = ["C:", "Users", "data", "private.json"].join("\\");
-  const altered = await createChunkedPatch(patchPath, makePatch(changed));
-  const alteredResult = await altered.run();
-  assert.equal(alteredResult.status, 1, alteredResult.stderr);
-  assert.match(alteredResult.stdout, /ui-ux-pro-max\.patch:private-path:windows-home$/m);
-  assert.match(alteredResult.stdout, /000002\.txt:private-path:windows-home$/m);
-});
-
 test("allows exact synthetic fixture path without masking real Linux home paths", async () => {
   const fixturePath = "plugins/agentic-engineering-skills/skills/marketing-screenshots/tests/marketing-screenshots.test.mjs";
   const syntheticAsset = ["/tmp/assets", "home", "home--raw.png"].join("/");
@@ -609,24 +586,6 @@ test("allows exact synthetic fixture path without masking real Linux home paths"
   assert.match(withHomePath.stdout, /marketing-screenshots\.test\.mjs:private-path:linux-home$/m);
 });
 
-test("allows only exact synthetic Windows path in the pinned data patch", async () => {
-  const patchPath = "manifests/patches/ui-ux-pro-max.patch";
-  const samplePath = ["C:", "Users", "data", "config.json"].join("\\");
-  const csvRow = (filePath) => `diff --git a/avalonia.csv b/avalonia.csv\n+row,"@""${filePath}""",Medium\n`;
-  const allowed = await runRepositoryFiles([[patchPath, csvRow(samplePath)]]);
-  assert.equal(allowed.status, 0, `${allowed.stdout}\n${allowed.stderr}`);
-
-  for (const path of [
-    ["C:", "Users", "data", "private.json"].join("\\"),
-    ["C:", "Users", "alice", "secrets.json"].join("\\"),
-    ["C:", "Users", "alice,senior", "secrets.json"].join("\\"),
-  ]) {
-    const result = await runRepositoryFiles([[patchPath, csvRow(path)]]);
-    assert.equal(result.status, 1, result.stderr);
-    assert.match(result.stdout, /ui-ux-pro-max\.patch:private-path:windows-home$/m);
-  }
-});
-
 test("does not flag paths outside a Windows user home", async () => {
   const safePaths = [
     ["C:", "Users"].join("/") + "/",
@@ -638,23 +597,6 @@ test("does not flag paths outside a Windows user home", async () => {
   ];
   const result = await runFiles([["notes.txt", safePaths.join("\n")]]);
   assert.equal(result.status, 0, result.stderr);
-});
-
-test("synthetic Windows fixture cannot mask additional Windows paths", async () => {
-  const patchPath = "manifests/patches/ui-ux-pro-max.patch";
-  const samplePath = ["C:", "Users", "data", "config.json"].join("\\");
-  const csvRow = (filePath) => `diff --git a/avalonia.csv b/avalonia.csv\n+row,"@""${filePath}""",Medium\n`;
-  for (const privatePath of [
-    ["C:", "Users", "data", "config.json"].join("/"),
-    ["D:", "users", "example"].join("/") + "\\private.json",
-    JSON.stringify(["F:", "Users", "example", "private.json"].join("\\")).slice(1, -1),
-  ]) {
-    const result = await runRepositoryFiles([[patchPath, csvRow(samplePath) + csvRow(privatePath)]]);
-    assert.equal(result.status, 1, result.stderr);
-    assert.match(result.stdout, /ui-ux-pro-max\.patch:private-path:windows-home$/m);
-    assert.equal(result.stdout.includes(privatePath), false);
-    assert.equal(result.stderr.includes(privatePath), false);
-  }
 });
 
 test("never exempts secret-shaped content from copied third-party paths", async () => {

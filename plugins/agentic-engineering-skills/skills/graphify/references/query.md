@@ -73,7 +73,7 @@ If the CLI is unavailable, load `graphify-out/graph.json` and run the traversal 
 1. Find the 1-3 nodes whose label best matches the expanded tokens.
 2. Run the appropriate traversal from each starting node.
 3. Read the subgraph - node labels, edge relations, confidence tags, source locations.
-4. Answer using **only** what the graph contains. Quote `source_location` when citing a specific fact.
+4. Use `source_location` to find the relevant files and verify material claims against current source.
 5. If the graph lacks enough information, say so - do not hallucinate edges.
 
 ```bash
@@ -163,7 +163,7 @@ print(output)
 "
 ```
 
-Replace `QUESTION` with the **expanded** query string, `MODE` with `bfs` or `dfs`, and `BUDGET` with the token budget (default `2000`, or whatever `--budget N` specifies). Then answer based on the subgraph output above, using only what the graph contains.
+Replace `QUESTION` with the **expanded** query string, `MODE` with `bfs` or `dfs`, and `BUDGET` with the token budget (default `2000`, or whatever `--budget N` specifies). Use subgraph output to find relevant source files and verify material claims before answering.
 
 After writing the answer, save it back into the graph so it improves future queries. Include the expanded tokens inside the `--answer` text (e.g. `"Expanded from original query via vocab: [tokens]. Then traversed..."`) so the next `--update` extracts the expansion history as a graph node:
 

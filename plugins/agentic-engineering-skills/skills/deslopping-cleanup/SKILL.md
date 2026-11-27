@@ -2,6 +2,7 @@
 name: deslopping-cleanup
 license: MIT
 description: Use when a repository cleanup or deslopping run spans dead code, unused dependencies, overlapping implementations, disconnected components, or the residue they leave in configuration, data and deployed artifacts, and needs coordinated investigation, owner-approved batches and verified integration. Also use when explicitly asked for the cleanup orchestrator.
+disable-model-invocation: true
 ---
 
 # Deslopping Cleanup

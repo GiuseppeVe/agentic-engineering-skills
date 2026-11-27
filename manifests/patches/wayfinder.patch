@@ -1,5 +1,5 @@
 diff --git a/wayfinder/SKILL.md b/wayfinder/SKILL.md
-index 2bce062..4c0861d 100644
+index 2bce062..9246897 100644
 --- a/wayfinder/SKILL.md
 +++ b/wayfinder/SKILL.md
 @@ -3 +3 @@
@@ -113,8 +113,8 @@ index 2bce062..4c0861d 100644
 -## Out of scope
 +| Type | Mode | Use and resolution |
 +|---|---|---|
-+| Research | AFK | A decision needs facts from outside the working directory: documentation, third-party APIs or knowledge bases. A subagent loads `research` and records findings. |
-+| Prototype | HITL | Appearance/behavior needs a rough concrete artifact: outline, stub, UI or logic. Load `prototype`, obtain human reaction, link the asset from the ticket. |
++| Research | AFK | A decision needs facts from outside the working directory: documentation, third-party APIs or knowledge bases. A scoped, fresh-context subagent gathers and records findings with sources. |
++| Prototype | HITL | Appearance/behavior needs a rough concrete artifact: outline, stub, UI or logic. Create a throwaway artifact focused on the open decision, get human feedback, and link it from the ticket. |
 +| Grilling | HITL | Default: conversation. Load both `grilling` and `domain-modeling`. |
 +| Task | AFK or HITL | Prerequisite work unblocks a decision, rather than delivering the destination: access, signup, moving data. Act alone where capable and authorized; otherwise give the human a precise checklist. Resolve only after completion, recording resulting facts such as credential location, URLs or row counts, never secret values. |
 @@ -97 +72 @@
@@ -152,7 +152,7 @@ index 2bce062..4c0861d 100644
 +2. Grill **breadth-first** across the whole effort: open decisions, takeable first steps and remaining fog. If no fog remains and the journey fits one session, stop and ask how the user wants to proceed; a map is unnecessary.
 +3. Create the map with Destination and Notes filled, Decisions so far empty, and fog in Not yet specified. Apply runtime/authority checks before tracker mutations.
 +4. Create all currently precise tickets as children. In a **second pass**, wire blocking and cross-references using actual issue ids. Placeholder `#<n>` links can target unrelated issues. Keep vague areas in fog.
-+5. Launch research subagents only for eligible research tickets, claiming each before work. Each loads `research`. If subagents are unavailable, report that blocker and prepare a research brief instead of pretending parallel execution. Start each subagent with a fresh context window. Provide the objective, relevant references, constraints, and expected output explicitly.
++5. Launch research subagents only for eligible research tickets, claiming each before work. If subagents are unavailable, report that blocker and prepare a research brief instead of pretending parallel execution. Start each subagent with a fresh context window. Provide the objective, relevant references, constraints, and expected output explicitly.
 +6. Capture each research result on a throwaway `research/<name>` branch, with a context pointer from its ticket, only through the authorized isolated branch/worktree workflow. Push only when task authorization covers that push and the remote is available; open no PR and never merge the research branch. Without an authorized push, retain authorized local findings or response-text drafts and report their unpublished status.
 +7. Stop after charting and eligible research; carry remaining decisions into later sessions.
 @@ -117 +98 @@

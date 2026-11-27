@@ -1,0 +1,5 @@
+interface:
+  display_name: "Deslopping Cleanup"
+  short_description: "Coordinate a repository cleanup"
+policy:
+  allow_implicit_invocation: false

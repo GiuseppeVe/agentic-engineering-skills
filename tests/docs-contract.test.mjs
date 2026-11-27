@@ -89,29 +89,29 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /invoke one included skill/i);
 });
 
-test('README and the plugin hooks guide describe the Caveman startup hooks and the PR-gate launcher', () => {
+test('README and the plugin hooks guide describe explicit Caveman invocation and the PR-gate launcher', () => {
   const readme = read('README.md');
   const guide = read('docs/plugin-hooks.md');
   const hooks = section(readme, 'Hooks I use');
-  assert.match(hooks, /registers the Caveman startup hooks and one PR-gate launcher/);
+  assert.match(hooks, /registers one PR-gate launcher/);
   for (const text of [hooks, guide]) {
     assert.match(text, /`gh pr create` without `--draft`/);
     assert.match(text, /`gh pr ready`/);
     assert.match(text, /`npm run gates:pr\b/);
     assert.match(text, /never blocks/);
   }
-  assert.match(hooks, /`SessionStart` and `SubagentStart`/);
+  assert.match(hooks, /Invoke `Caveman` explicitly/);
   assert.match(hooks, /ships no reminder or verifier hook/);
   assert.match(hooks, /development-process\/SKILL\.md/);
   assert.match(hooks, /Node\.js 22 or newer/);
   assert.match(hooks, /reviewed and trusted[\s\S]*fresh session/);
   assert.equal((readme.match(/\[plugin hooks guide\]\(docs\/plugin-hooks\.md\)/g) ?? []).length, 1);
-  assert.match(guide, /`SessionStart` and `SubagentStart`/);
+  assert.match(guide, /Invoke `Caveman` explicitly/);
   assert.match(guide, /Node\.js 22 or newer/);
   assert.match(guide, /one `PostToolUse` hook/);
   assert.match(guide, /\.agentic\/pr-gates/);
   assert.match(guide, /not enforcement/i);
-  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/caveman-startup\.test\.mjs tests\/pr-gates-hook\.test\.mjs/);
+  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/pr-gates-hook\.test\.mjs/);
   for (const text of [readme, guide]) assert.doesNotMatch(text, /pr-skills:v1|pr-workflow-check|post-pr\.mjs|post-merge\.mjs/);
   assert.ok(existsSync(resolve(root, 'plugins/agentic-engineering-skills/hooks/hooks.json')), 'missing hook manifest');
   for (const removed of ['post-merge.mjs', 'post-pr.mjs', 'pr-skills.json', 'pr-workflow-check.mjs', 'hook-lib.mjs', 'billing-fallback.md', 'billing-policies.json']) {
@@ -131,7 +131,7 @@ test('README keeps the hero-led opening and experience-shaped framing', () => {
   assert.match(lines[4], /^I share this experience-shaped workflow/);
   assert.equal(lines[5], '');
   assert.equal(lines[6], '## What this repository shares');
-  assert.doesNotMatch(lines.slice(0, 6).join('\n'), /Wayfinder|Brainstorming|Grill-me|To Spec|Writing Plans/);
+  assert.doesNotMatch(lines.slice(0, 6).join('\n'), /Wayfinder|Brainstorming|Grilling|To Spec|Writing Plans/);
 });
 
 test('README documents conditional workflow routing and example', () => {
@@ -144,7 +144,7 @@ test('README documents conditional workflow routing and example', () => {
     ['Large, uncertain initiative', 'Wayfinder'],
     ['Outcome-driven native Goal run', 'Setup Goal'],
     ['Bounded or creative design', 'Brainstorming'],
-    ['Consequential or disputed design', 'Grill-me'],
+    ['Consequential or disputed design', 'Grilling'],
     ['Agreed design', 'To Spec'],
     ['Multi-step implementation', 'Writing Plans'],
     ['Implementation program with multiple approved plans', 'Coordinating Implementation Plans'],
@@ -186,7 +186,7 @@ test('README explains philosophy, quality signals, and supporting skills', () =>
   assert.match(quality, /`Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness/i);
   assert.match(quality, /TDD fix cycle before acceptance/i);
 
-  for (const skill of ['Impeccable', 'UI UX Pro Max', 'Caveman', 'How to Use Codex', 'Improve Codebase Architecture']) {
+  for (const skill of ['Impeccable', 'Caveman', 'Improve Codebase Architecture']) {
     assert.ok(supporting.includes(`\`${skill}\``), `missing supporting skill: ${skill}`);
   }
   assert.doesNotMatch(supporting, /post-merge reminder/i);
@@ -299,13 +299,13 @@ test('workflow guide covers every public skill', () => {
   for (const name of names) assert.match(workflow, new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`));
 });
 
-test('compatibility names exactly two supported hosts and marks native verification pending', () => {
+test('compatibility names exactly two supported hosts and records isolated native verification', () => {
   const source = read('docs/compatibility.md');
   const rows = tableRows(source);
   assert.equal(rows.length, 2);
   assert.deepEqual(rows.map(cells).map(([host, status]) => ({ host, status })), [
-    { host: 'Codex', status: 'Pending native re-verification' },
-    { host: 'Claude Code', status: 'Pending native re-verification' },
+    { host: 'Codex', status: 'Isolated local install and byte verification' },
+    { host: 'Claude Code', status: 'Isolated local install and byte verification' },
   ]);
   assert.match(source, /`codex plugin list --available --json`/);
   assert.match(source, /`claude plugin list`/);
@@ -341,7 +341,8 @@ test('selective installation has one lock-derived row per skill', () => {
 test('selective installation includes mandatory skill prerequisites', () => {
   const required = [
     ['brainstorming', 'to-spec'],
-    ['grill-me', 'grilling'],
+    ['test-driven-development', 'development-process'],
+    ['deslopping-cleanup', 'development-process'],
     ['retro', 'writing-for-agents'],
     ['improve-codebase-architecture', 'codebase-design'],
   ];
@@ -367,10 +368,6 @@ test('selective installation explains conditional skill prerequisites', () => {
   assert.match(wayfinder, /`grilling`/);
   assert.match(wayfinder, /`domain-modeling`/);
 
-  const graphifyStart = lineFor('graphify-start');
-  assert.match(graphifyStart, /no project-specific.*protocol/i);
-  assert.match(graphifyStart, /`graphify`/);
-
   const architecture = lineFor('improve-codebase-architecture');
   assert.match(architecture, /`grilling`.*candidate.*select/i);
   assert.match(architecture, /`domain-modeling`.*terminology.*decisions/i);
@@ -383,7 +380,6 @@ test('selective installation explains conditional skill prerequisites', () => {
   for (const [skill, conditional] of [
     ['wayfinder', 'grilling'],
     ['wayfinder', 'domain-modeling'],
-    ['graphify-start', 'graphify'],
     ['improve-codebase-architecture', 'grilling'],
     ['improve-codebase-architecture', 'domain-modeling'],
   ]) {

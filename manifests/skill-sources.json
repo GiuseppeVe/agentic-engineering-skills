@@ -12,17 +12,6 @@
       "patchPath": "manifests/patches/archify.patch"
     },
     {
-      "name": "ask-matt",
-      "sourceType": "adapted",
-      "repository": "https://github.com/mattpocock/skills",
-      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
-      "upstreamPath": "skills/engineering/ask-matt/",
-      "localRoot": "projectSkills",
-      "localPath": "ask-matt/",
-      "changeNotice": "Adapted host metadata and routing for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/ask-matt.patch"
-    },
-    {
       "name": "brainstorming",
       "sourceType": "adapted",
       "repository": "https://github.com/obra/superpowers",
@@ -40,7 +29,7 @@
       "revision": "0574b85a19ab7b2b7f42cc3b3838e20f24ab85eb",
       "upstreamPath": "skills/caveman/",
       "localPath": "caveman/",
-      "changeNotice": "Aligned the unified Caveman payload with the owner-supplied snapshot; retained upstream attribution and normalized trailing whitespace in one reference.",
+      "changeNotice": "Preserved the upstream Caveman attribution and compression tools, made invocation explicit on both hosts, and removed startup context injection.",
       "patchPath": "manifests/patches/caveman.patch",
       "localRoot": "projectSkills"
     },
@@ -116,29 +105,8 @@
       "upstreamPath": "graphify/skills/codex/",
       "localRoot": "projectSkills",
       "localPath": "graphify/",
-      "changeNotice": "Composed from the eight pinned Codex reference files under `graphify/skills/codex/` and the sibling `graphify/skill-codex.md` entrypoint; added the entrypoint and adapted references/assets for the cross-host distribution. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Composed from the eight pinned Codex references and sibling skill-codex.md. Added project protocol routing and moved the build pipeline behind a reference.",
       "patchPath": "manifests/patches/graphify.patch"
-    },
-    {
-      "name": "graphify-start",
-      "sourceType": "original",
-      "localRoot": "projectSkills",
-      "localPath": "graphify-start/",
-      "license": "MIT",
-      "origin": {
-        "state": "owner-supplied"
-      }
-    },
-    {
-      "name": "grill-me",
-      "sourceType": "adapted",
-      "repository": "https://github.com/mattpocock/skills",
-      "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
-      "upstreamPath": "skills/productivity/grill-me/",
-      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
-      "patchPath": "manifests/patches/grill-me.patch",
-      "localRoot": "projectSkills",
-      "localPath": "grill-me/"
     },
     {
       "name": "grilling",
@@ -159,7 +127,7 @@
       "upstreamPath": "skills/productivity/handoff/",
       "localRoot": "projectSkills",
       "localPath": "handoff/",
-      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "changeNotice": "Made invocation explicit on both hosts and retained portable handoff metadata.",
       "patchPath": "manifests/patches/handoff.patch"
     },
     {
@@ -170,7 +138,7 @@
       "upstreamPath": "skill/",
       "localPath": "impeccable/",
       "localRoot": "projectSkills",
-      "changeNotice": "Packaged the current Impeccable skill and supporting references/scripts for cross-host distribution. Includes fresh-context subagent routing and portable specialist contracts.",
+      "changeNotice": "Packaged Impeccable and its supporting profiles, references, and scripts. Added fresh-context routing and made invocation explicit on both hosts.",
       "patchPath": "manifests/patches/impeccable.patch"
     },
     {
@@ -183,17 +151,6 @@
       "patchPath": "manifests/patches/improve-codebase-architecture.patch",
       "localRoot": "projectSkills",
       "localPath": "improve-codebase-architecture/"
-    },
-    {
-      "name": "learn-codebase",
-      "sourceType": "adapted",
-      "repository": "https://github.com/thedotmack/claude-mem",
-      "revision": "312d640b0188753acd92a1a82d95a84d5c7c43db",
-      "upstreamPath": "plugin/skills/learn-codebase/",
-      "localPath": "learn-codebase/",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/learn-codebase.patch",
-      "localRoot": "userSkills"
     },
     {
       "name": "marketing-screenshots",
@@ -235,16 +192,6 @@
       "sourceType": "original",
       "localRoot": "projectSkills",
       "localPath": "mdx-to-html/",
-      "license": "MIT",
-      "origin": {
-        "state": "owner-supplied"
-      }
-    },
-    {
-      "name": "orchestrating-gemini-workers",
-      "sourceType": "original",
-      "localRoot": "projectSkills",
-      "localPath": "orchestrating-gemini-workers/",
       "license": "MIT",
       "origin": {
         "state": "owner-supplied"
@@ -326,20 +273,9 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/",
       "localPath": "to-spec/",
-      "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
+      "changeNotice": "Enabled model invocation on both hosts, focused the spec template on key user scenarios, and retained explicit tracker-publication authorization.",
       "patchPath": "manifests/patches/to-spec.patch",
       "localRoot": "projectSkills"
-    },
-    {
-      "name": "ui-ux-pro-max",
-      "sourceType": "adapted",
-      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
-      "revision": "314307f156aeab0c6b567bbaa1ce4e7aabd5a636",
-      "upstreamPath": ".claude/skills/ui-ux-pro-max/",
-      "changeNotice": "Packaged the current UI UX Pro Max skill and searchable design data for the cross-host Agent Skills distribution.",
-      "patchPath": "manifests/patches/ui-ux-pro-max.patch",
-      "localRoot": "projectSkills",
-      "localPath": "ui-ux-pro-max/"
     },
     {
       "name": "wayfinder",
@@ -348,7 +284,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/wayfinder/",
       "localPath": "wayfinder/",
-      "changeNotice": "Adapted for the cross-host Agent Skills distribution. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Adapted for both hosts with fresh-context research delegation and scoped throwaway prototypes.",
       "patchPath": "manifests/patches/wayfinder.patch",
       "localRoot": "projectSkills"
     },

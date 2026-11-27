@@ -16,7 +16,7 @@ flowchart LR
 
 ## Discover before deciding
 
-Start with evidence, not an implementation guess. Use wayfinding when scope or architecture is broad and uncertain, grilling when consequential design intent needs pressure-testing, and brainstorming for smaller design questions. Discovery ends when decisions, constraints, success criteria, and unresolved questions are explicit.
+Start with evidence, not an implementation guess. Use wayfinding when scope or architecture is broad and uncertain, grilling when consequential design intent needs pressure-testing, and brainstorming for smaller design questions. When a project has a Graphify protocol, follow it and verify graph findings against current source. Discovery ends when decisions, constraints, success criteria, and unresolved questions are explicit.
 
 ## Preserve intent in durable artifacts
 

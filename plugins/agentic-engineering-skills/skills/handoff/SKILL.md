@@ -1,6 +1,7 @@
 ---
 name: handoff
 description: Compact the current conversation into a handoff document for another agent to pick up.
+disable-model-invocation: true
 ---
 
 > **Adaptation:** Based on Matt Pocock's `handoff`; adapted with portable host metadata for cross-host distribution.

@@ -7,18 +7,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const hookDirectory = path.join(root, 'plugins/agentic-engineering-skills/hooks');
 const manifest = JSON.parse(readFileSync(path.join(hookDirectory, 'hooks.json'), 'utf8'));
-const startupEvents = ['SessionStart', 'SubagentStart'];
-
-test('plugin registers the Caveman startup hooks and one PR-gate launcher', () => {
-  assert.deepEqual(Object.keys(manifest.hooks).sort(), ['PostToolUse', ...startupEvents]);
-  for (const event of startupEvents) {
-    const commands = manifest.hooks[event].flatMap(group => group.hooks);
-    assert.equal(commands.length, 1, `${event} must register one hook`);
-    assert.equal(commands[0].type, 'command');
-    assert.equal(commands[0].command, `node "\${CLAUDE_PLUGIN_ROOT}/skills/caveman/scripts/context-hook.mjs" ${event}`);
-  }
-  assert.match(manifest.description, /Caveman startup context/);
-  assert.doesNotMatch(manifest.description, /reminder/i);
+test('plugin registers only the PR-gate launcher', () => {
+  assert.deepEqual(Object.keys(manifest.hooks), ['PostToolUse']);
+  assert.match(manifest.description, /repository PR gates/);
 });
 
 test('the only PostToolUse hook is the PR-gate launcher on the shell tools', () => {
