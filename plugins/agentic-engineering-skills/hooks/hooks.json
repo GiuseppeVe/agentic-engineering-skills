@@ -1,5 +1,5 @@
 {
-  "description": "Launch the repository PR gates in the background and run fast read-only static checks on edited JS/TS files.",
+  "description": "Launch the repository PR gates (ratchet lint, then full gates) in the background and run fast read-only static checks on edited JS/TS files.",
   "hooks": {
     "PostToolUse": [
       {

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // PostToolUse hook: after a shell command opened a non-draft pull request or
-// marked one ready, start the repository's own `gates:pr` script in the
-// background. It launches and reports where the log is; it never blocks,
-// verifies or reminds. Any doubt about the command means: do nothing.
+// marked one ready, start the repository's own `gates:lint` and `gates:pr`
+// scripts (each only if defined, lint first) in the background. It launches
+// and reports where the log is; it never blocks, verifies or reminds. Any
+// doubt about the command means: do nothing.
 import { spawn, spawnSync } from 'node:child_process';
 import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync } from 'node:fs';
 import os from 'node:os';
@@ -10,6 +11,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SCRIPT = 'gates:pr';
+const LINT_SCRIPT = 'gates:lint';
+// Run order: the fast ratchet lint on the PR diff first, then the full gates.
+const SCRIPTS = [LINT_SCRIPT, SCRIPT];
 const RUN_FLAG = '--run-gates';
 const DYNAMIC = '\0';
 const PULL_URL = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/\d+/i;
@@ -379,26 +383,33 @@ export function findGitRoot(start) {
   }
 }
 
-export function hasGateScript(root) {
+// The gate scripts the root `package.json` defines, in run order.
+export function gateScripts(root) {
   try {
-    const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
-    return typeof manifest?.scripts?.[SCRIPT] === 'string' && manifest.scripts[SCRIPT].trim() !== '';
-  } catch { return false; }
+    const scripts = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'))?.scripts;
+    return SCRIPTS.filter(name => typeof scripts?.[name] === 'string' && scripts[name].trim() !== '');
+  } catch { return []; }
 }
 
-// Start the gates in a detached copy of this script, which runs
-// `npm run gates:pr` with its output in a log file. `ref` is reduced to a
-// number or a GitHub pull URL, so the Windows command line needs no quoting.
-export function launchGates(root, ref, { home = os.homedir(), now = new Date() } = {}) {
+export function hasGateScript(root) {
+  return gateScripts(root).length > 0;
+}
+
+// Start the gates in a detached copy of this script, which runs each script
+// in `scripts` with `npm run`, one after the other, with their output in one
+// log file. `ref` is reduced to a number or a GitHub pull URL and script names
+// come from a fixed list, so the Windows command line needs no quoting.
+export function launchGates(root, ref, { home = os.homedir(), now = new Date(), scripts = gateScripts(root) } = {}) {
   const safeRef = pullReference(ref);
+  const names = scripts.filter(name => SCRIPTS.includes(name));
   const directory = path.join(home, '.agentic', 'pr-gates');
   mkdirSync(directory, { recursive: true });
   const name = path.basename(root).replace(/[^\w.-]/g, '_').slice(0, 80) || 'repo';
   const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
   const log = path.join(directory, `${name}-${stamp}-${process.pid}.log`);
   closeSync(openSync(log, 'a'));
-  startDetached([fileURLToPath(import.meta.url), RUN_FLAG, log, ...(safeRef ? [safeRef] : [])], root);
-  return { log, ref: safeRef };
+  startDetached([fileURLToPath(import.meta.url), RUN_FLAG, log, names.join(','), ...(safeRef ? [safeRef] : [])], root);
+  return { log, ref: safeRef, scripts: names };
 }
 
 // Codex runs hook commands on Windows through PowerShell. A child that the
@@ -430,16 +441,21 @@ function startDetached(args, cwd) {
 }
 
 // The detached side: npm is a .cmd file on Windows and needs a shell there.
-function runGates(log, ref) {
+// Every script runs whatever the previous one returned: a red lint does not
+// hide the gates, and each outcome gets its own line in the log.
+function runGates(log, list, ref) {
   const safeRef = pullReference(ref);
-  const args = ['run', SCRIPT, ...(safeRef ? ['--', '--pr', safeRef] : [])];
+  const names = String(list ?? '').split(',').filter(name => SCRIPTS.includes(name));
   const descriptor = openSync(log, 'a');
   const options = { stdio: ['ignore', descriptor, descriptor], windowsHide: true };
-  const result = process.platform === 'win32'
-    ? spawnSync(`npm ${args.join(' ')}`, { ...options, shell: true })
-    : spawnSync('npm', args, options);
-  const outcome = result.error ? `could not start npm: ${result.error.message}` : `npm run ${SCRIPT} exited with ${result.status ?? result.signal}`;
-  appendFileSync(descriptor, `[pr-gates] ${outcome}\n`);
+  for (const name of names) {
+    const args = ['run', name, ...(name === SCRIPT && safeRef ? ['--', '--pr', safeRef] : [])];
+    const result = process.platform === 'win32'
+      ? spawnSync(`npm ${args.join(' ')}`, { ...options, shell: true })
+      : spawnSync('npm', args, options);
+    const outcome = result.error ? `could not start npm run ${name}: ${result.error.message}` : `npm run ${name} exited with ${result.status ?? result.signal}`;
+    appendFileSync(descriptor, `[pr-gates] ${outcome}\n`);
+  }
   closeSync(descriptor);
 }
 
@@ -449,15 +465,18 @@ export function run(text, options) {
   const event = pullRequestEvent(input);
   if (!event) return null;
   const root = findGitRoot(event.cwd);
-  if (!root || !hasGateScript(root)) return null;
-  const { log, ref } = launchGates(root, event.ref, options);
-  const context = `[pr-gates] Launched \`npm run ${SCRIPT}\` in the background${ref ? ` for PR ${ref}` : ''} from ${root}. Log: ${log}. The launch is not a result: wait for the final outcome and react to it.`;
+  if (!root) return null;
+  const scripts = gateScripts(root);
+  if (!scripts.length) return null;
+  const { log, ref } = launchGates(root, event.ref, { ...options, scripts });
+  const launched = scripts.map(name => `\`npm run ${name}\``).join(', then ');
+  const context = `[pr-gates] Launched ${launched} in the background${ref ? ` for PR ${ref}` : ''} from ${root}. Log: ${log}. The launch is not a result: wait for the final outcome of each script and react to it.`;
   return { hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: context } };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    if (process.argv[2] === RUN_FLAG) runGates(process.argv[3], process.argv[4]);
+    if (process.argv[2] === RUN_FLAG) runGates(process.argv[3], process.argv[4], process.argv[5]);
     else {
       const output = run(readFileSync(0, 'utf8'));
       if (output) process.stdout.write(JSON.stringify(output));

@@ -137,7 +137,7 @@
     {
       "name": "development-process",
       "sourceType": "original",
-      "localSha256": "833f64403664ed7f943e7665b273885bc42627b49041e442460c451712b2eda9",
+      "localSha256": "b7a13db1237fcc2618ff2ac17b8eaa31e34336e7faf5f16add3bbdad44ca1680",
       "releaseCommit": "01d6cf70b72e9b488f27b0c9ce7fa21e98eb7f74",
       "license": "MIT",
       "payloadType": "directory",
@@ -323,7 +323,7 @@
     {
       "name": "plan-implement",
       "sourceType": "original",
-      "localSha256": "e146c9213e9be6b2df5aa7af5026f9a1dd6828270f6973808223554aebaa5381",
+      "localSha256": "14f6e0a55da48b4578bf71170156630b9be0b55f49dd38de1040206ed2f440e6",
       "releaseCommit": "c6dff1f2231a17f379e0477dd1e64452c9744881",
       "license": "MIT",
       "payloadType": "directory",

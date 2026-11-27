@@ -286,6 +286,52 @@ test('the hook launches gates:pr without --pr when the pull request is unknown',
   } finally { remove(base); }
 });
 
+test('the hook runs gates:lint before gates:pr, and a red lint does not skip the gates', async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:pr': 'node gate.mjs pr', 'gates:lint': 'node gate.mjs lint' });
+  const done = path.join(repository, 'pr.json');
+  writeFileSync(path.join(repository, 'gate.mjs'), [
+    "import { appendFileSync, writeFileSync } from 'node:fs';",
+    "const [role, ...rest] = process.argv.slice(2);",
+    "appendFileSync('order.txt', role + '\\n');",
+    "writeFileSync(role + '.json', JSON.stringify(rest));",
+    "if (role === 'lint') { console.log('lint error line'); process.exit(1); }",
+  ].join('\n'));
+  try {
+    const input = { tool_name: 'Bash', cwd: repository, tool_input: { command: 'gh pr create --fill' }, tool_response: { stdout: `${pullUrl}\n` } };
+    const result = runHook(input, home);
+    assert.equal(result.status, 0, result.stderr);
+    const context = JSON.parse(result.stdout).hookSpecificOutput.additionalContext;
+    assert.match(context, /^\[pr-gates\] Launched `npm run gates:lint`, then `npm run gates:pr` in the background for PR https:/);
+    assert.ok(await waitFor(done), 'the gates:pr run never started after a red lint');
+    assert.equal(readFileSync(path.join(repository, 'order.txt'), 'utf8'), 'lint\npr\n');
+    assert.deepEqual(JSON.parse(readFileSync(path.join(repository, 'lint.json'), 'utf8')), []);
+    assert.deepEqual(JSON.parse(readFileSync(done, 'utf8')), ['--pr', pullUrl]);
+    const [log] = readdirSync(path.join(home, '.agentic', 'pr-gates'));
+    const deadline = Date.now() + 30_000;
+    let text = '';
+    while (Date.now() < deadline && !/npm run gates:pr exited with/.test(text)) {
+      text = readFileSync(path.join(home, '.agentic', 'pr-gates', log), 'utf8');
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    assert.match(text, /lint error line/);
+    assert.match(text, /npm run gates:lint exited with 1/);
+    assert.match(text, /npm run gates:pr exited with 0/);
+  } finally { remove(base); }
+});
+
+test('a repository with only gates:lint gets the lint run', async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:lint': 'node lint.mjs' });
+  const marker = path.join(repository, 'marker.json');
+  writeFileSync(path.join(repository, 'lint.mjs'), "import { writeFileSync } from 'node:fs';\nwriteFileSync('marker.json', JSON.stringify(process.argv.slice(2)));\n");
+  try {
+    const result = runHook({ tool_name: 'Bash', cwd: repository, tool_input: { command: 'gh pr ready 12' }, tool_response: { stdout: '' } }, home);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /^\[pr-gates\] Launched `npm run gates:lint` in the background for PR 12 /);
+    assert.ok(await waitFor(marker), 'the detached gates:lint run never wrote its marker');
+    assert.deepEqual(JSON.parse(readFileSync(marker, 'utf8')), []);
+  } finally { remove(base); }
+});
+
 // Codex runs hook commands on Windows as `powershell.exe -NoProfile -Command <command>`
 // and waits until the hook's stdout pipe closes. A gates run that inherits
 // that pipe keeps the hook open until the timeout, and the host then kills it.
