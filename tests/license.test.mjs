@@ -69,6 +69,7 @@ test("third-party notice rows exactly join lock entries to legal files", async (
     ["https://github.com/pbakaus/impeccable", "Paulo Bakaus"],
     ["https://github.com/tt-a1i/archify", "tt-a1i; Cocoon AI"],
     ["https://github.com/Graphify-Labs/graphify", "Safi Shamsi and Graphify contributors"],
+    ["https://github.com/cursor/plugins", "Lauren Tan"],
   ]);
   for (const entry of lock.skills.filter(({ sourceType, excluded }) => sourceType !== "original" && !excluded)) {
     const row = rows.get(entry.name);

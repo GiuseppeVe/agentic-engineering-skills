@@ -31,6 +31,7 @@ Anti-green-washing rules:
 - Keep delivery states distinct: verified locally, pushed to `origin`, integrated in target, verified on running SHA.
 - Red gate: reproduce it, fix diff-introduced regressions within scope, and record unrelated issues separately. Classify a failure as **pre-existing** only if reproduced on the base revision in the same environment, and **flaky** only if repeated runs on the same revision disagree.
 - **Promote mechanical defects to L2:** when verification or review uncovers a repeatable mechanical error (banned API, missing await, unsafe cast, broken import shape), propose a deterministic lint or static check in the repository instead of adding another line of prose.
+- **Live-verification hygiene:** health-check a running instance (process, port, build, auth) before driving it and after any unexpected failure; tear down only processes started by your run without deleting proof artifacts; observe what a dry-run or test mode actually skips rather than trusting its name.
 - Never include tokens, personal transcripts, or raw noisy tool dumps in messages, evidence, or PR comments.
 
 ## PR Phase

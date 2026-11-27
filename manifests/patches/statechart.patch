@@ -1,0 +1,18 @@
+diff --git a/statechart/SKILL.md b/statechart/SKILL.md
+index 18d653a..365b170 100644
+--- a/statechart/SKILL.md
++++ b/statechart/SKILL.md
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on pinned `cursor/plugins` (`pstack/skills/statechart`); packaged with explicit-invocation Codex metadata and without the upstream internal test corpus.
++
+diff --git b/statechart/agents/openai.yaml b/statechart/agents/openai.yaml
+new file mode 100644
+index 0000000..68ddae3
+--- /dev/null
++++ b/statechart/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: statechart
++  short_description: Invoke statechart explicitly
++policy:
++  allow_implicit_invocation: false

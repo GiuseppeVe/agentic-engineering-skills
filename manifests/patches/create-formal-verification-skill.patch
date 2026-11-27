@@ -1,0 +1,24 @@
+diff --git a/create-formal-verification-skill/SKILL.md b/create-formal-verification-skill/SKILL.md
+index 92f7aa4..e721f2e 100644
+--- a/create-formal-verification-skill/SKILL.md
++++ b/create-formal-verification-skill/SKILL.md
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on pinned `cursor/plugins` (`pstack/skills/create-formal-verification-skill`); packaged with explicit-invocation Codex metadata, cross-host local skill paths, and a portable `/statechart` reference.
++
+@@ -33 +35 @@
+-Write a project-local skill with frontmatter that names the area and says when to use it. Without frontmatter, the skill never registers. From the skill alone, the next agent must be able to tell whether a change touches the verified code, run the check, tell a real bug from a modeling error, and update the verification when a change is intended. Put the coverage record and the sync commit in the skill, and tell the next agent to move the sync commit forward only after it confirms that the verification describes the code at the new commit. Use this repo's real commands, paths, and nouns, and leave no placeholders.
++Write a project-local skill (under the repository's host skill root, such as `.agents/skills/` or `.claude/skills/`) with frontmatter that names the area and says when to use it. Without frontmatter, the skill never registers. From the skill alone, the next agent must be able to tell whether a change touches the verified code, run the check, tell a real bug from a modeling error, and update the verification when a change is intended. Put the coverage record and the sync commit in the skill, and tell the next agent to move the sync commit forward only after it confirms that the verification describes the code at the new commit. Use this repo's real commands, paths, and nouns, and leave no placeholders.
+@@ -35 +37 @@
+-If the check is a TLA+ model, tell the next agent to read every result with the pstack [`/statechart`](../statechart/SKILL.md) skill. It shows each invariant violation the checker finds as its shortest path in plain words. When the check passes, `/statechart` draws a chart of how the system moves between states. Refer to `/statechart` by name. Its commands, options, and file paths change between releases and machines, so copy none of them into the generated skill or its scripts.
++If the check is a TLA+ model, tell the next agent to read every result with the bundled [`/statechart`](../statechart/SKILL.md) skill. It shows each invariant violation the checker finds as its shortest path in plain words. When the check passes, `/statechart` draws a chart of how the system moves between states. Refer to `/statechart` by name. Its commands, options, and file paths change between releases and machines, so copy none of them into the generated skill or its scripts.
+diff --git b/create-formal-verification-skill/agents/openai.yaml b/create-formal-verification-skill/agents/openai.yaml
+new file mode 100644
+index 0000000..9580fa0
+--- /dev/null
++++ b/create-formal-verification-skill/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: create-formal-verification-skill
++  short_description: Invoke create-formal-verification-skill explicitly
++policy:
++  allow_implicit_invocation: false

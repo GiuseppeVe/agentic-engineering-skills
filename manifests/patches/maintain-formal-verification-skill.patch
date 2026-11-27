@@ -1,0 +1,18 @@
+diff --git a/maintain-formal-verification-skill/SKILL.md b/maintain-formal-verification-skill/SKILL.md
+index 5d2f7f2..f9f7600 100644
+--- a/maintain-formal-verification-skill/SKILL.md
++++ b/maintain-formal-verification-skill/SKILL.md
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on pinned `cursor/plugins` (`pstack/skills/maintain-formal-verification-skill`); packaged with explicit-invocation Codex metadata for cross-host distribution.
++
+diff --git b/maintain-formal-verification-skill/agents/openai.yaml b/maintain-formal-verification-skill/agents/openai.yaml
+new file mode 100644
+index 0000000..c4fa2f7
+--- /dev/null
++++ b/maintain-formal-verification-skill/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: maintain-formal-verification-skill
++  short_description: Invoke maintain-formal-verification-skill explicitly
++policy:
++  allow_implicit_invocation: false

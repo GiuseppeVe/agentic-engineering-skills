@@ -19,11 +19,18 @@ function canonicalBytes(data) {
   return normalizeLf(data);
 }
 
-async function collectFiles(from, base = from, result = []) {
+// Excluded prefixes are normalized POSIX directory paths relative to the payload root.
+function isExcluded(path, exclude) {
+  const posixPath = path.split(sep).join("/");
+  return exclude.some(prefix => `${posixPath}/`.startsWith(prefix));
+}
+
+async function collectFiles(from, base = from, result = [], exclude = []) {
   for (const entry of await readdir(from, { withFileTypes: true })) {
     const src = join(from, entry.name);
+    if (isExcluded(relative(base, src), exclude)) continue;
     const info = await lstat(src);
-    if (info.isDirectory()) await collectFiles(src, base, result);
+    if (info.isDirectory()) await collectFiles(src, base, result, exclude);
     else if (info.isFile()) result.push(relative(base, src));
     else throw new Error(`unsupported skill payload entry: ${src}`);
   }
@@ -69,12 +76,13 @@ async function fileModes(sourceRoot, files, sourceFiles = files) {
   return modes;
 }
 
-async function stageDirectory(from, to, modes, base = from) {
+async function stageDirectory(from, to, modes, base = from, exclude = []) {
   await mkdir(to, { recursive: true });
   for (const entry of await readdir(from, { withFileTypes: true })) {
     const src = join(from, entry.name), dst = join(to, entry.name);
+    if (isExcluded(relative(base, src), exclude)) continue;
     const info = await lstat(src);
-    if (info.isDirectory()) await stageDirectory(src, dst, modes, base);
+    if (info.isDirectory()) await stageDirectory(src, dst, modes, base, exclude);
     else if (info.isFile()) {
       const mode = modes.get(relative(base, src)) ?? (info.mode & 0o111 ? "100755" : "100644");
       await writeFile(dst, canonicalBytes(await readFile(src)));
@@ -132,17 +140,20 @@ async function preservePatchModes(patch, normalized, name, oldModes, newModes, m
 // Generate a reproducible, complete patch for file or directory acquisitions.
 // For directory inputs all additions, modifications, removals and binary files
 // are captured; the generated patch applies at -p1 to a directory named skill.
-export async function generatePatch({ name, upstream, local, directory }) {
+// excludePaths drops upstream subtrees that are deliberately not packaged, so
+// the patch applies to the upstream directory without those subtrees.
+export async function generatePatch({ name, upstream, local, directory, excludePaths = [] }) {
   if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) throw new Error(`invalid skill name: ${name}`);
   const normalized = await mkdtemp(join(tmpdir(), "skill-patch-input-"));
   try {
     const a = join(normalized, "a", name), b = join(normalized, "b", name);
     let oldFiles, newFiles, oldModes, newModes;
     if (directory) {
-      [oldFiles, newFiles] = await Promise.all([collectFiles(upstream), collectFiles(local)]);
+      [oldFiles, newFiles] = await Promise.all([collectFiles(upstream, upstream, [], excludePaths), collectFiles(local)]);
       [oldModes, newModes] = await Promise.all([fileModes(upstream, oldFiles), fileModes(local, newFiles)]);
-      await Promise.all([stageDirectory(upstream, a, oldModes), stageDirectory(local, b, newModes)]);
+      await Promise.all([stageDirectory(upstream, a, oldModes, upstream, excludePaths), stageDirectory(local, b, newModes)]);
     } else {
+      if (excludePaths.length) throw new Error(`excludePaths requires a directory acquisition: ${name}`);
       oldFiles = newFiles = ["SKILL.md"];
       [oldModes, newModes] = await Promise.all([
         fileModes(dirname(upstream), oldFiles, [upstream.split(/[\\/]/).at(-1)]),
@@ -175,7 +186,7 @@ async function main() {
     try {
       const directory = source.upstreamPath.endsWith("/");
       const localRoot = join(root, "plugins/agentic-engineering-skills/skills", source.name);
-      const patch = await generatePatch({ name: source.name, upstream: join(checkout.path, source.upstreamPath), local: directory ? localRoot : join(localRoot, "SKILL.md"), directory });
+      const patch = await generatePatch({ name: source.name, upstream: join(checkout.path, source.upstreamPath), local: directory ? localRoot : join(localRoot, "SKILL.md"), directory, excludePaths: source.excludePaths });
       const path = join(root, source.patchPath);
       const rel = relative(join(root, "manifests", "patches"), path);
       if (!rel || rel.startsWith(`..${sep}`) || rel === "..") throw new Error(`invalid patch path: ${source.patchPath}`);

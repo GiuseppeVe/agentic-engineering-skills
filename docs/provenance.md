@@ -11,11 +11,13 @@
 | `development-process` | original | Owner-supplied general process rules and orchestration guide; payload release recorded in lock |
 | `deslopping-cleanup` | original | GiuseppeVe-authored cleanup coordinator and supporting references; payload release recorded in lock |
 | `coordinating-implementation-plans` | original | Owner-supplied skill; source file SHA-256 recorded in the source manifest, with no source commit claimed. |
+| `create-formal-verification-skill` | adapted | `cursor/plugins@b7b93c36be9bcc36a74db438e0fd385d660bc559` (`pstack/skills/create-formal-verification-skill/`) |
 | `codebase-design` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `domain-modeling` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `grilling` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `graphify` | adapted | `Graphify-Labs/graphify@a5957aa6ef51c9be8d054de9783d25046c187f3f` |
 | `handoff` | adapted | `mattpocock/skills@4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` |
+| `maintain-formal-verification-skill` | adapted | `cursor/plugins@b7b93c36be9bcc36a74db438e0fd385d660bc559` (`pstack/skills/maintain-formal-verification-skill/`) |
 | `marketing-screenshots` | original | Owner-supplied original material; earlier upstream provenance undocumented |
 | `master-orchestrator` | original | Owner-supplied, untracked local snapshot; both host paths and exact source-file hashes recorded in the source manifest. No source commit is claimed. |
 | `mdx-to-html` | original | Owner-supplied original material; earlier upstream provenance undocumented |
@@ -27,6 +29,7 @@
 | `plan-implement` | original | Repository-original 2-level slice plan coordinator and runtime protocol; payload hash and release recorded in lock |
 | `retro` | adapted | `mattpocock/skills@4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` |
 | `simplify` | original | GiuseppeVe-authored behavior-preserving code cleanup skill; release recorded in lock after commit |
+| `statechart` | adapted | `cursor/plugins@b7b93c36be9bcc36a74db438e0fd385d660bc559` (`pstack/skills/statechart/`) |
 | `test-driven-development` | adapted | `obra/superpowers@d884ae04edebef577e82ff7c4e143debd0bbec99` |
 | `to-spec` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
 | `wayfinder` | adapted | `mattpocock/skills@391a2701dd948f94f56a39f7533f8eea9a859c87` |
