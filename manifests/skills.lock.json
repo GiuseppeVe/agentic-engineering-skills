@@ -68,7 +68,7 @@
       "name": "cleaning-repo-with-knip",
       "sourceType": "original",
       "localSha256": "28a98f64346608796e0d110e71a97865a2f8a4109015ae83c60e3655afc6ba99",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "releaseCommit": "519d219a6401dbd78af9f194934c09ef49d5aa80",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -108,7 +108,7 @@
       "name": "deslopping-cleanup",
       "sourceType": "original",
       "localSha256": "77bf315568c6075b497067c5249d4cd0d2d915e0710e83607269001e4dbf170e",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "releaseCommit": "519d219a6401dbd78af9f194934c09ef49d5aa80",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -259,7 +259,7 @@
       "name": "marketing-screenshots",
       "sourceType": "original",
       "localSha256": "21a921540ab23333cf8833fc9be87e2c38f9eb653f7ea57185f7dc5a3852229d",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "releaseCommit": "519d219a6401dbd78af9f194934c09ef49d5aa80",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
