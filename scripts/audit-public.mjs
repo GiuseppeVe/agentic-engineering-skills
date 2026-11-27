@@ -34,7 +34,6 @@ const contentRules = [
 const controlledLoopbackArtifacts = new Map([
   ["manifests/patches/brainstorming.patch", 2],
   ["manifests/patches/impeccable.patch", 18],
-  ["manifests/patches/ui-ux-pro-max.patch", 1],
   ["plugins/agentic-engineering-skills/skills/archify/bin/open-artifact.mjs", 1],
   ["plugins/agentic-engineering-skills/skills/brainstorming/visual-companion.md", 1],
   ["plugins/agentic-engineering-skills/skills/impeccable/reference/generate.md", 1],
@@ -62,12 +61,6 @@ const controlledSyntheticPathArtifacts = new Map([
     count: 1,
     prefix: "/tmp/assets",
     match: ["", "home", "home--raw.png'"].join("/"),
-  }],
-  ["manifests/patches/ui-ux-pro-max.patch", {
-    rule: "private-path:windows-home",
-    count: 1,
-    prefix: '@""',
-    match: ["C:", "Users", "data", "config.json"].join("\\"),
   }],
 ]);
 

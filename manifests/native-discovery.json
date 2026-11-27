@@ -3,7 +3,7 @@
   "evidenceSource": "isolated-native-installs",
   "capturedAt": "2026-11-27",
   "environment": {
-    "isolation": "Separate temporary Windows host profiles.",
+    "isolation": "Separate temporary Windows profiles for Codex and Claude Code, each with HOME, USERPROFILE, APPDATA, LOCALAPPDATA, CODEX_HOME, and CLAUDE_CONFIG_DIR redirected.",
     "commandNotation": "Native commands ran from the local marketplace.",
     "payloadRefresh": "Fresh installations verified on both hosts."
   },
@@ -11,7 +11,6 @@
     "root": "plugins/agentic-engineering-skills",
     "skills": [
       "archify",
-      "ask-matt",
       "brainstorming",
       "caveman",
       "cleaning-repo-with-knip",
@@ -21,17 +20,13 @@
       "development-process",
       "domain-modeling",
       "graphify",
-      "graphify-start",
-      "grill-me",
       "grilling",
       "handoff",
       "impeccable",
       "improve-codebase-architecture",
-      "learn-codebase",
       "marketing-screenshots",
       "master-orchestrator",
       "mdx-to-html",
-      "orchestrating-gemini-workers",
       "plan-implement",
       "retro",
       "setup-goal",
@@ -40,7 +35,6 @@
       "simplify",
       "test-driven-development",
       "to-spec",
-      "ui-ux-pro-max",
       "wayfinder",
       "writing-for-agents",
       "writing-plans"
@@ -51,7 +45,6 @@
       "version": "codex-cli 0.159.2",
       "discoveredSkills": [
         "archify",
-        "ask-matt",
         "brainstorming",
         "caveman",
         "cleaning-repo-with-knip",
@@ -61,17 +54,13 @@
         "development-process",
         "domain-modeling",
         "graphify",
-        "graphify-start",
-        "grill-me",
         "grilling",
         "handoff",
         "impeccable",
         "improve-codebase-architecture",
-        "learn-codebase",
         "marketing-screenshots",
         "master-orchestrator",
         "mdx-to-html",
-        "orchestrating-gemini-workers",
         "plan-implement",
         "retro",
         "setup-goal",
@@ -80,7 +69,6 @@
         "simplify",
         "test-driven-development",
         "to-spec",
-        "ui-ux-pro-max",
         "wayfinder",
         "writing-for-agents",
         "writing-plans"
@@ -89,7 +77,6 @@
       "installedPayload": {
         "skills": [
           "archify",
-          "ask-matt",
           "brainstorming",
           "caveman",
           "cleaning-repo-with-knip",
@@ -99,17 +86,13 @@
           "development-process",
           "domain-modeling",
           "graphify",
-          "graphify-start",
-          "grill-me",
           "grilling",
           "handoff",
           "impeccable",
           "improve-codebase-architecture",
-          "learn-codebase",
           "marketing-screenshots",
           "master-orchestrator",
           "mdx-to-html",
-          "orchestrating-gemini-workers",
           "plan-implement",
           "retro",
           "setup-goal",
@@ -118,7 +101,6 @@
           "simplify",
           "test-driven-development",
           "to-spec",
-          "ui-ux-pro-max",
           "wayfinder",
           "writing-for-agents",
           "writing-plans"
@@ -126,9 +108,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:a27fbf7d4c72addc88f584f188daff207f4cba86835f52c57f6a21f8f9b7677d",
-        "fullTreeHash": "sha256:5a17c00feae601dbb92212bf6cd1b2d2a971e664f702f1f77b893363da3bcd04",
-        "fileCount": 522
+        "treeHash": "sha256:4aac6d83b9f041331e7e832906e92209a8809e1e301f008ec5223e75af308c86",
+        "fullTreeHash": "sha256:4e393d771320a46578aa93f7b90834d291d810476840160b01ca5e331a6c178b",
+        "fileCount": 468
       },
       "commands": [
         {
@@ -156,7 +138,6 @@
       "version": "2.1.330 (Claude Code)",
       "discoveredSkills": [
         "archify",
-        "ask-matt",
         "brainstorming",
         "caveman",
         "cleaning-repo-with-knip",
@@ -166,17 +147,13 @@
         "development-process",
         "domain-modeling",
         "graphify",
-        "graphify-start",
-        "grill-me",
         "grilling",
         "handoff",
         "impeccable",
         "improve-codebase-architecture",
-        "learn-codebase",
         "marketing-screenshots",
         "master-orchestrator",
         "mdx-to-html",
-        "orchestrating-gemini-workers",
         "plan-implement",
         "retro",
         "setup-goal",
@@ -185,7 +162,6 @@
         "simplify",
         "test-driven-development",
         "to-spec",
-        "ui-ux-pro-max",
         "wayfinder",
         "writing-for-agents",
         "writing-plans"
@@ -194,7 +170,6 @@
       "installedPayload": {
         "skills": [
           "archify",
-          "ask-matt",
           "brainstorming",
           "caveman",
           "cleaning-repo-with-knip",
@@ -204,17 +179,13 @@
           "development-process",
           "domain-modeling",
           "graphify",
-          "graphify-start",
-          "grill-me",
           "grilling",
           "handoff",
           "impeccable",
           "improve-codebase-architecture",
-          "learn-codebase",
           "marketing-screenshots",
           "master-orchestrator",
           "mdx-to-html",
-          "orchestrating-gemini-workers",
           "plan-implement",
           "retro",
           "setup-goal",
@@ -223,7 +194,6 @@
           "simplify",
           "test-driven-development",
           "to-spec",
-          "ui-ux-pro-max",
           "wayfinder",
           "writing-for-agents",
           "writing-plans"
@@ -231,9 +201,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:e876f7b7d68a084bd62441f00af440a62c79d6a55542f910caa3c38440c2201f",
-        "fullTreeHash": "sha256:5a17c00feae601dbb92212bf6cd1b2d2a971e664f702f1f77b893363da3bcd04",
-        "fileCount": 522
+        "treeHash": "sha256:423e4a0971daed95ba308a294ad2164f4429a11d54e62a1195518f76dbb6ec69",
+        "fullTreeHash": "sha256:4e393d771320a46578aa93f7b90834d291d810476840160b01ca5e331a6c178b",
+        "fileCount": 468
       },
       "installedAgents": [
         {

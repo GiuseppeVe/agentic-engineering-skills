@@ -1,6 +1,7 @@
 ---
 name: cleaning-repo-with-knip
 description: Use when removing dead code, unused dependencies, unused exports, or unlisted/missing imports flagged by knip; running a knip cleanup pass on a repo or monorepo; deciding whether a knip result is a real removal or a false positive; or recording knip false positives so future runs stop re-flagging them.
+disable-model-invocation: true
 ---
 
 # Cleaning a Repo with Knip
@@ -34,11 +35,9 @@ authority.
 
 ## Environment Prerequisites
 
-- Use stable Knip `6.40.0` (Node `^20.19.0 || >=22.12.0`). Where Knip is
-  already declared, align its manifest and lockfile with that exact version during
-  authorized cleanup; analysis-only runs report version drift without editing it.
-  Otherwise invoke `npm exec --yes --package=knip@6.40.0 -- knip`; this uses
-  npm's tool cache without adding a project or global dependency.
+- Use the repository's configured Knip script or installed Knip version. Run in
+  the intended workspace and record the version for reproducibility. If neither
+  exists, report the missing prerequisite before proposing any tooling changes.
 - Knip config located: a root `knip.json`/`knip.ts`, OR per-workspace configs
   (`<ws>/knip.json`). Check workspace discovery before classifying findings.
 - Verification commands known (typecheck / lint / test / build). Find them in
@@ -83,7 +82,7 @@ human-reviewable mirror; the config is the suppression sink.
 ```bash
 # Use the verified installed version after authorized alignment; in analysis-only
 # runs, use the existing version and report any drift.
-npm exec --yes --package=knip@6.40.0 -- knip --reporter json
+npm exec --no -- knip --reporter json
 node "<skill-directory>/parse-knip.mjs" --in "<saved-knip-report.json>" --fp "<repository-ledger-path>"
 ```
 

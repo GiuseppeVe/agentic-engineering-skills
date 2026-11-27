@@ -1,10 +1,8 @@
 # Plugin hooks
 
-The plugin bundles the Caveman startup hooks and one PR-gate launcher. Hook configuration lives in [`hooks.json`](../plugins/agentic-engineering-skills/hooks/hooks.json); the startup script lives in the Caveman skill and the launcher in [`pr-gates.mjs`](../plugins/agentic-engineering-skills/hooks/pr-gates.mjs). Codex discovers `hooks/hooks.json` for plugin packages unless an OpenAI extension or compatibility manifest explicitly overrides hook discovery. Claude Code uses the same standard plugin hook file.
+The plugin bundles one PR-gate launcher. Both hosts use the standard [hook configuration](../plugins/agentic-engineering-skills/hooks/hooks.json) and run the [PR-gate launcher](../plugins/agentic-engineering-skills/hooks/pr-gates.mjs).
 
-## Caveman context at startup
-
-The plugin registers `SessionStart` and `SubagentStart` hooks. Each runs the bundled Caveman context script and supplies the skill's core instructions as additional context for the started session or subagent. Hook availability, approval and delivery depend on the host; the script does not start agents. If a project also registers Caveman startup hooks, both may inject context. Enable and trust the plugin hooks before use.
+Invoke `Caveman` explicitly on either host. The plugin retired its startup hooks in v1.6.0.
 
 ## PR gates launched when a pull request leaves draft
 
@@ -28,7 +26,7 @@ If an earlier local setup still registers a post-PR or post-merge hook, or expec
 
 ## Requirements and setup
 
-The hook scripts require Node.js 22 or newer and work with Windows and Unix Node runtimes. Both hosts replace `${CLAUDE_PLUGIN_ROOT}` in the hook command with the installed plugin folder before running it: Claude Code runs the command through Git Bash on Windows, and Codex 0.172.0 substitutes the text and runs it as `powershell.exe -NoProfile -Command <command>`. The launcher also needs `npm` on the `PATH` of the host session.
+The hook requires Node.js 22 or newer and work with Windows and Unix Node runtimes. Both hosts replace `${CLAUDE_PLUGIN_ROOT}` in the hook command with the installed plugin folder before running it: Claude Code runs the command through Git Bash on Windows, and Codex 0.172.0 substitutes the text and runs it as `powershell.exe -NoProfile -Command <command>`. The launcher also needs `npm` on the `PATH` of the host session.
 
 On Windows the launcher starts the detached run through a short-lived PowerShell `Start-Process`, not directly. Under the PowerShell that Codex uses, a child started directly inherits the hook's output pipe; Codex then waits for the whole gates run, kills it at the hook timeout and reports `PostToolUse Failed`. `Start-Process` passes no handles, so the hook completes in a few seconds and the gates keep running after it and after the session ends. Starting PowerShell costs one to four seconds, which is why the launcher's timeout is 30 seconds.
 
@@ -39,7 +37,7 @@ Codex requires the user to review and trust plugin-bundled hooks before running 
 From repository root, run the hook contract tests:
 
 ```text
-node --test tests/plugin-hooks.test.mjs tests/caveman-startup.test.mjs tests/pr-gates-hook.test.mjs
+node --test tests/plugin-hooks.test.mjs tests/pr-gates-hook.test.mjs
 ```
 
-They validate the hook manifest, run the startup script with JSON on stdin, check the command detection, and run the launcher against a temporary repository whose `gates:pr` script writes a marker file. Host trust, fresh-session discovery and the delivery of the launcher's context line still need to be checked in the installed Codex or Claude Code environment.
+They validate the hook manifest, check command detection, and run the launcher against a temporary repository whose `gates:pr` script writes a marker file. Host trust, fresh-session discovery and the delivery of the launcher's context line still need to be checked in the installed Codex or Claude Code environment.

@@ -273,14 +273,14 @@ Check the items relevant to the candidate before calling it unused:
 - **Fallback:** an owner statement, recorded as such; without it, `defer`. Runtime
   absence never covers rare paths (yearly jobs, recovery, admin tools).
 
-### `dispatching-parallel-agents` / `swarm-advanced`
+### Parallel exploration
 
 *Exploration and independent review.*
 
 - **Choose when:** independent responsibility areas need investigation, or
   material exploration claims need a separate source check.
-- **Specialist:** `dispatching-parallel-agents` for small independent scopes;
-  `swarm-advanced` for complex runs, subject to repository delegation rules.
+- **Specialist:** use the host's native parallel subagent delegation for disjoint
+  scopes, subject to repository rules. Start each agent with a fresh context.
 - **Additional input:** disjoint read scopes and questions, shared verified context,
   expected evidence and the claims requiring review.
 - **Required result:** scoped explorer findings and independently checked review
@@ -292,11 +292,11 @@ Check the items relevant to the candidate before calling it unused:
 
 ### Batch review and verification
 
-*`requesting-code-review` + `verification-before-completion`.*
+*Host-native code review and [development-process verification](../../development-process/references/daily-workflow.md#verification).*
 
 - **Choose when:** a batch diff needs independent review or closure evidence.
-- **Specialist:** available `requesting-code-review` and
-  `verification-before-completion`, with current repository checks and permissions.
+- **Specialist:** use the host's native independent code review and follow the
+  linked verification guidance with current repository checks and permissions.
 - **Additional input:** Batch-ID, approved actions/allowlist, base and diff,
   validated content manifest, expected wiring and authorized check commands.
 - **Required result:** findings, their resolution, checks with actual scope and

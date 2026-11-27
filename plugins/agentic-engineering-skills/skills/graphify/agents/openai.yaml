@@ -1,0 +1,5 @@
+interface:
+  display_name: "Graphify"
+  short_description: "Query or build a project knowledge graph"
+policy:
+  allow_implicit_invocation: true

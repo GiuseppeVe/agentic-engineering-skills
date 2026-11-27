@@ -2,3 +2,5 @@ interface:
   display_name: "Marketing Screenshots"
   short_description: "Capture polished real-app marketing visuals"
   default_prompt: "Use $marketing-screenshots to capture onboarding screens as phone mockups."
+policy:
+  allow_implicit_invocation: false

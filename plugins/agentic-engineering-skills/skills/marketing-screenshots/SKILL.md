@@ -1,6 +1,7 @@
 ---
 name: marketing-screenshots
 description: Use when capturing real running app UI for marketing/product screenshots, browser/mobile viewports, device/phone mockups, landing pages, pitch decks/presentations, or App Store/product marketing assets.
+disable-model-invocation: true
 ---
 
 # Marketing Screenshots

@@ -40,13 +40,13 @@ Add or refine instructions when a recurring project-specific need is observed. R
 
 ## Understand
 
-`learn-codebase` builds broad project context. `graphify-start` routes codebase questions through the project Graphify protocol when present, then `graphify` can build and query a persistent knowledge graph. `ask-matt` routes a situation to an available skill or flow. `brainstorming` clarifies intent before creative changes. `grill-me` and `grilling` pressure-test uncertain proposals. `caveman` keeps collaboration compact.
+`graphify` follows the project Graphify protocol and queries an existing graph before broad source exploration. Check graph findings against current source. Build or update a graph on explicit request. `brainstorming` clarifies intent before creative changes. `grilling` pressure-tests uncertain proposals. Invoke `caveman` for compact communication.
 
 Before adopting Graphify, weigh its indexing and upkeep costs against the time and tokens spent finding code. The [README guidance](../README.md#when-graphify-is-useful) treats 100,000 lines as a rough heuristic, not a requirement.
 
 ## Design
 
-`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. `impeccable` and `ui-ux-pro-max` guide frontend visual, interaction, accessibility, and design-system decisions. `marketing-screenshots` captures real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
+`domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. Invoke `impeccable` for frontend visual, interaction, accessibility, and design-system decisions. Invoke `marketing-screenshots` to capture real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
 
 ## Plan
 
@@ -54,7 +54,7 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 ## Implement
 
-Repository instructions determine worktree isolation and merge approval. `development-process` holds the general process rules split between `references/daily-workflow.md` (mandate and Git boundaries, L1–L3 verification, PR phase, closing report) and `references/program-orchestration.md` (multi-package delegation, plan and package lifecycle, convergence limits). `test-driven-development` drives red-green-refactor and bug red-reproduction. `plan-implement` coordinates an approved plan using one persistent slice-implementer subagent per module slice, verifies deterministic `final_state` checks, dispatches clean-room native review checkpoints on `risk: high` slices and shared contracts, and commits accepted slices when authorized. Independent slices overlap only in isolated worktrees with disjoint ownership. Model and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults. Authorized multi-agent work uses the host's available delegation tools and repository routing. `orchestrating-gemini-workers` assigns small independent file tasks to sandboxed Gemini workers through `dsh` when required tooling is available.
+Repository instructions determine worktree isolation and merge approval. `development-process` holds the general process rules split between `references/daily-workflow.md` (mandate and Git boundaries, L1–L3 verification, PR phase, closing report) and `references/program-orchestration.md` (multi-package delegation, plan and package lifecycle, convergence limits). `test-driven-development` drives red-green-refactor and bug red-reproduction. `plan-implement` coordinates an approved plan using one persistent slice-implementer subagent per module slice, verifies deterministic `final_state` checks, dispatches clean-room native review checkpoints on `risk: high` slices and shared contracts, and commits accepted slices when authorized. Independent slices overlap only in isolated worktrees with disjoint ownership. Model and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults. Authorized multi-agent work uses the host's available delegation tools and repository routing.
 
 ## Verify
 
@@ -62,7 +62,7 @@ For new behavior and bug fixes, `test-driven-development` requires an observed b
 
 ## Review
 
-`plan-implement` dispatches clean-room native review checkpoints on `risk: high` slices and runs the full-diff PR review once on the integrated head. `grill-me` or `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session, including promoting recurring review findings into deterministic L1–L3 checks.
+`plan-implement` dispatches clean-room native review checkpoints on `risk: high` slices and runs the full-diff PR review once on the integrated head. `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session, including promoting recurring review findings into deterministic L1–L3 checks.
 
 The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, in parallel with the independent native review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
 
@@ -78,7 +78,7 @@ The PR phase in `development-process` runs `simplify` on the PR diff for behavio
 flowchart TD
   Q[Incoming work] --> S{Scope and intent clear?}
   S -->|No, broad| W[wayfinder]
-  S -->|No, consequential| G[grill-me or grilling]
+  S -->|No, consequential| G[grilling]
   S -->|No, bounded| B[brainstorming]
   W --> D[Durable specification]
   G --> D

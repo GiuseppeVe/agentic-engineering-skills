@@ -13,3 +13,6 @@ plugins/agentic-engineering-skills/licenses/** -text
 plugins/agentic-engineering-skills/skills/** -text
 plugins/agentic-engineering-skills/claude-skills/** -text
 manifests/patches/** -text
+
+# Generated Impeccable patch chunks preserve payload whitespace for round-trip verification.
+manifests/patches/impeccable.patch.parts/** whitespace=-blank-at-eol

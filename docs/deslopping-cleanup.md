@@ -22,10 +22,8 @@ read-only observation) and need no external skill.
 | Graphify | Skill included; runtime external | Targeted text/language searches and source confirmation. |
 | Desloppify | No skill or runtime | Symbol/reference analysis and semantic review. |
 | Dependency Cruiser | No dedicated skill or runtime | Language tooling and manual import/consumer tracing. |
-| `dispatching-parallel-agents` | No | Authorized native explorer/reviewer delegation. |
-| `swarm-advanced` | No | Authorized native delegation or scoped sequential investigation. |
-| `requesting-code-review` | No | Independent source/diff review using the available host or reviewer role. |
-| `verification-before-completion` | No | Authorized repository checks with explicit revision, results and limits. |
+| Host-native delegation and code review | Host capability | Scoped sequential investigation and direct source review, subject to repository requirements. |
+| `development-process` | Yes, repository-original MIT runbook | Follow its verification guidance with the repository's authorized checks. |
 
 Use the host's available native agents for research, review and coordination.
 Follow the current repository's routing and permissions for delegation.
@@ -48,8 +46,6 @@ upstream state, not pinned payloads distributed by this repository.
 | [Dependency Cruiser](https://github.com/sverweij/dependency-cruiser/blob/main/LICENSE) | MIT | Name/reference only; no runtime or skill payload. |
 | [Desloppify](https://github.com/peteromallet/desloppify/blob/main/LICENSE) | OSNL v0.2, 2026-03-24 | Name/reference only; no upstream guide or program. |
 | [Graphify](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE) | Apache-2.0; [NOTICE](https://github.com/Graphify-Labs/graphify/blob/v8/NOTICE) identifies earlier portions retained under MIT in [LICENSE-MIT](https://github.com/Graphify-Labs/graphify/blob/v8/LICENSE-MIT) | Adapted skill and notices included; runtime external. |
-| [Superpowers](https://github.com/obra/superpowers/blob/main/LICENSE): dispatch and review/verification skills | MIT | Names only; the optional named skills are not added to this pack. Existing retained Superpowers material keeps its own notices. |
-| `swarm-advanced` | No specific upstream payload selected or license asserted | Optional catalog name only; verify the actual installed source separately. |
 
 **Publication assessment:** no specialist-redistribution obligation was identified
 for this independently authored coordinator's name references and capability

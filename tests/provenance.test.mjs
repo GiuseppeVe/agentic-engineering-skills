@@ -374,15 +374,12 @@ test("adapted and original local imports retain provenance contracts", async () 
   const adapted = {
     brainstorming: "obra/superpowers",
     caveman: "JuliusBrussee/caveman",
-    "grill-me": "mattpocock/skills",
     "improve-codebase-architecture": "mattpocock/skills",
     impeccable: "pbakaus/impeccable",
-    "learn-codebase": "thedotmack/claude-mem",
     "to-spec": "mattpocock/skills",
     wayfinder: "mattpocock/skills",
     "test-driven-development": "obra/superpowers",
     "writing-plans": "obra/superpowers",
-    "ui-ux-pro-max": "nextlevelbuilder/ui-ux-pro-max-skill"
   };
   for (const [name, upstream] of Object.entries(adapted)) {
     const entry = byName.get(name);
@@ -443,8 +440,8 @@ test("Owner-supplied imports retain explicit activation metadata and a verifiabl
   assert.match(goalFallback, /native Goal is disabled\/unavailable, explain the prerequisite and preserve the ready runbook/i);
 });
 
-test("Owner-supplied skill imports retain host activation metadata and documented omissions", async () => {
-  const names = ["marketing-screenshots", "mdx-to-html", "orchestrating-gemini-workers"];
+test("Owner-supplied skill imports retain host activation metadata and provenance", async () => {
+  const names = ["marketing-screenshots", "mdx-to-html"];
   const sources = JSON.parse(await readFile(new URL("../manifests/skill-sources.json", import.meta.url), "utf8"));
   const lock = JSON.parse(await readFile(new URL("../manifests/skills.lock.json", import.meta.url), "utf8"));
   for (const name of names) {
@@ -466,21 +463,14 @@ test("Owner-supplied skill imports retain host activation metadata and documente
   }
   const marketing = await readFile(new URL("../plugins/agentic-engineering-skills/skills/marketing-screenshots/SKILL.md", import.meta.url), "utf8");
   const marketingAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/marketing-screenshots/agents/openai.yaml", import.meta.url), "utf8");
-  assert.doesNotMatch(marketing, /^disable-model-invocation:/m);
-  assert.doesNotMatch(marketingAgent, /allow_implicit_invocation:\s*false/);
+  assert.match(marketing, /^disable-model-invocation: true$/m);
+  assert.match(marketingAgent, /allow_implicit_invocation:\s*false/);
 
   const mdx = await readFile(new URL("../plugins/agentic-engineering-skills/skills/mdx-to-html/SKILL.md", import.meta.url), "utf8");
   const mdxAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/mdx-to-html/agents/openai.yaml", import.meta.url), "utf8");
   assert.match(mdx, /^disable-model-invocation: true$/m);
   assert.match(mdxAgent, /allow_implicit_invocation:\s*false/);
 
-  const gemini = await readFile(new URL("../plugins/agentic-engineering-skills/skills/orchestrating-gemini-workers/SKILL.md", import.meta.url), "utf8");
-  const geminiAgent = await readFile(new URL("../plugins/agentic-engineering-skills/skills/orchestrating-gemini-workers/agents/openai.yaml", import.meta.url), "utf8");
-  assert.doesNotMatch(gemini, /^disable-model-invocation:/m);
-  assert.match(geminiAgent, /allow_implicit_invocation:\s*true/);
-  assert.doesNotMatch(gemini, /\[example log\]\(example-log\.md\)/i);
-  assert.match(gemini, /historical source `example-log\.md` is intentionally omitted/i);
-  assert.match(gemini, /If `dsh`.*stop before dispatch and report the missing prerequisite/i);
   assert.match(await readFile(new URL("../docs/provenance.md", import.meta.url), "utf8"), /earlier upstream provenance undocumented/i);
 });
 
