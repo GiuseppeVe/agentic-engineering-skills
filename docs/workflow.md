@@ -58,7 +58,7 @@ Repository instructions determine worktree isolation and merge approval. `develo
 
 ## Verify
 
-For new behavior and bug fixes, `test-driven-development` requires an observed behavioral failure before implementation and passing tests afterward, matching the oracle (unit, cross-package contract, property-based, or real-runtime) to the obligation. For refactoring or behavior already implemented, follow its coverage and recovery guidance. `mdx-to-html` creates standalone review pages from explicit MDX inputs. `setup-harness-evaluation` and `setup-workflow-comparison` collect independent run evidence for the user’s manual evaluation.
+For new behavior and bug fixes, `test-driven-development` requires an observed behavioral failure before implementation and passing tests afterward, matching the oracle (unit, cross-package contract, property-based, or real-runtime) to the obligation. For refactoring or behavior already implemented, follow its coverage and recovery guidance. For high-risk stateful flows, protocols, retries, or concurrency invariants where tests reach the least, invoke `statechart` (to model-check a TLA+ spec with TLC and inspect the behavioral statechart and shortest bug paths), `create-formal-verification-skill` (to build and prove a project-local formal verification skill under ADR 0009), and `maintain-formal-verification-skill` (to resync models after code changes and distinguish drift from bugs). `mdx-to-html` creates standalone review pages from explicit MDX inputs. `setup-harness-evaluation` and `setup-workflow-comparison` collect independent run evidence for the user’s manual evaluation.
 
 ## Review
 

@@ -229,7 +229,7 @@ Enable and trust the plugin hooks separately from skill installation; see [Hooks
 
 Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see the relevant implementation skill for its role and routing requirements.
 
-The plugin exposes 28 shared skills to both Codex and Claude Code. Role-appropriate models and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults.
+The plugin exposes 31 shared skills to both Codex and Claude Code. Role-appropriate models and reasoning effort are selected from host, plan, or operator workspace options rather than hardcoded defaults.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 

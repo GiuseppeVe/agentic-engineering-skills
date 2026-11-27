@@ -4,10 +4,10 @@ Codex and Claude Code are the supported hosts. The current payload passed isolat
 
 | Host | Status | Payload |
 | --- | --- | --- |
-| `Codex` | Isolated local install and byte verification | `.codex-plugin/plugin.json` and 28 shared skills under `skills/` |
-| `Claude Code` | Isolated local install and byte verification | `.claude-plugin/plugin.json` and 28 shared skills under `skills/` |
+| `Codex` | Isolated local install and byte verification | `.codex-plugin/plugin.json` and 31 shared skills under `skills/` |
+| `Claude Code` | Isolated local install and byte verification | `.claude-plugin/plugin.json` and 31 shared skills under `skills/` |
 
-See the [native discovery receipt](../manifests/native-discovery.json) for versions, commands, and evidence limits. Both hosts consume the same 28-skill payload at `plugins/agentic-engineering-skills/skills/`. Implementation skills choose role-appropriate models and effort from host, plan, or operator workspace options rather than hardcoded defaults. See [installation](../README.md#install) and [provenance](provenance.md).
+See the [native discovery receipt](../manifests/native-discovery.json) for versions, commands, and evidence limits. Both hosts consume the same 31-skill payload at `plugins/agentic-engineering-skills/skills/`. Implementation skills choose role-appropriate models and effort from host, plan, or operator workspace options rather than hardcoded defaults. See [installation](../README.md#install) and [provenance](provenance.md).
 
 Claude Code discovers the four `impeccable-*` specialists under the `agentic-engineering-skills:` namespace. Codex does not register plugin-provided agent profiles automatically: if a matching specialist is not already available, Impeccable sends its bundled TOML contract to a fresh generic subagent. Model choice and enforced read-only tools depend on the host's subagent capabilities.
 

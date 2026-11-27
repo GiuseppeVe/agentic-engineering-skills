@@ -70,6 +70,17 @@
       }
     },
     {
+      "name": "create-formal-verification-skill",
+      "sourceType": "adapted",
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "b7b93c36be9bcc36a74db438e0fd385d660bc559",
+      "upstreamPath": "pstack/skills/create-formal-verification-skill/",
+      "localRoot": "projectSkills",
+      "localPath": "create-formal-verification-skill/",
+      "changeNotice": "Packaged from cursor/plugins (pstack) with explicit-invocation Codex metadata, cross-host local skill paths, and a portable /statechart reference.",
+      "patchPath": "manifests/patches/create-formal-verification-skill.patch"
+    },
+    {
       "name": "deslopping-cleanup",
       "sourceType": "original",
       "localPath": "deslopping-cleanup/",
@@ -151,6 +162,17 @@
       "patchPath": "manifests/patches/improve-codebase-architecture.patch",
       "localRoot": "projectSkills",
       "localPath": "improve-codebase-architecture/"
+    },
+    {
+      "name": "maintain-formal-verification-skill",
+      "sourceType": "adapted",
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "b7b93c36be9bcc36a74db438e0fd385d660bc559",
+      "upstreamPath": "pstack/skills/maintain-formal-verification-skill/",
+      "localRoot": "projectSkills",
+      "localPath": "maintain-formal-verification-skill/",
+      "changeNotice": "Packaged from cursor/plugins (pstack) with explicit-invocation Codex metadata for cross-host distribution.",
+      "patchPath": "manifests/patches/maintain-formal-verification-skill.patch"
     },
     {
       "name": "marketing-screenshots",
@@ -254,6 +276,17 @@
       "localPath": "simplify/",
       "license": "MIT",
       "localRoot": "projectSkills"
+    },
+    {
+      "name": "statechart",
+      "sourceType": "adapted",
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "b7b93c36be9bcc36a74db438e0fd385d660bc559",
+      "upstreamPath": "pstack/skills/statechart/",
+      "localRoot": "projectSkills",
+      "localPath": "statechart/",
+      "changeNotice": "Packaged from cursor/plugins (pstack) with explicit-invocation Codex metadata and without the upstream internal test corpus.",
+      "patchPath": "manifests/patches/statechart.patch"
     },
     {
       "name": "test-driven-development",

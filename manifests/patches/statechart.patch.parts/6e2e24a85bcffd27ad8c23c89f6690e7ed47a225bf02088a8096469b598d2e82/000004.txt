@@ -1,0 +1,1905 @@
+tInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>25</begin><end>29</end></column><line><begin>17</begin><end>17</end></line><filename>Naturals</filename></location><level>0</level><operator><UserDefinedOpKindRef><UID>162</UID></UserDefinedOpKindRef></operator><operands><OpApplNode><location><column><begin>25</begin><end>25</end></column><line><begin>17</begin><end>17</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>164</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>29</begin><end>29</end></column><line><begin>17</begin><end>17</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>165</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode><OpApplNode><location><column><begin>33</begin><end>33</end></column><line><begin>17</begin><end>17</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>163</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></operands><boundSymbols><unbound><FormalParamNodeRef><UID>165</UID></FormalParamNodeRef></unbound></boundSymbols></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>163</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>164</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>173</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>18</begin><end>18</end></line><filename>Naturals</filename></location><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>174</UID><FormalParamNode><location><column><begin>3</begin><end>3</end></column><line><begin>18</begin><end>18</end></line><filename>Naturals</filename></location><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>176</UID><UserDefinedOpKind><location><column><begin>1</begin><end>17</end></column><line><begin>18</begin><end>18</end></line><filename>Naturals</filename></location><level>0</level><uniquename>*</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>14</begin><end>17</end></column><line><begin>18</begin><end>18</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>2</UID></BuiltInKindRef></operator><operands/></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>173</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>174</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>177</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>178</UID><FormalParamNode><location><column><begin>3</begin><end>3</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>182</UID><UserDefinedOpKind><location><column><begin>1</begin><end>19</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><uniquename>^</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>14</begin><end>19</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>106</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>15</begin><end>15</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>177</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>18</begin><end>18</end></column><line><begin>19</begin><end>19</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>178</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>177</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>178</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>183</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>184</UID><FormalParamNode><location><column><begin>3</begin><end>3</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>188</UID><UserDefinedOpKind><location><column><begin>1</begin><end>19</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><uniquename>&lt;</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>19</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>15</begin><end>15</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>183</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>20</begin><end>20</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>184</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>183</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>184</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>189</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>61</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>3</level><uniquename>[]</uniquename><arity>1</arity><params><leibnizparam><FormalParamNodeRef><UID>62</UID></FormalParamNodeRef></leibnizparam></params></BuiltInKind></entry><entry><UID>190</UID><FormalParamNode><location><column><begin>3</begin><end>3</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>62</UID><FormalParamNode><uniquename>Formal_0</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>194</UID><UserDefinedOpKind><location><column><begin>1</begin><end>19</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><uniquename>&gt;</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>19</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>15</begin><end>15</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>189</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>21</begin><end>21</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>190</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>189</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>190</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>195</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>67</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>2</level><uniquename>UNCHANGED</uniquename><arity>1</arity><params><leibnizparam><FormalParamNodeRef><UID>68</UID></FormalParamNodeRef></leibnizparam></params></BuiltInKind></entry><entry><UID>196</UID><FormalParamNode><location><column><begin>8</begin><end>8</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>68</UID><FormalParamNode><uniquename>Formal_0</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>200</UID><UserDefinedOpKind><location><column><begin>1</begin><end>19</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><uniquename>\leq</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>19</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>15</begin><end>15</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>195</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>22</begin><end>22</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>196</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>195</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>196</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>201</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>202</UID><FormalParamNode><location><column><begin>8</begin><end>8</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>206</UID><UserDefinedOpKind><location><column><begin>1</begin><end>19</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><uniquename>\geq</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>19</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>15</begin><end>15</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>201</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>23</begin><end>23</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>202</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>201</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>202</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>207</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>208</UID><FormalParamNode><location><column><begin>5</begin><end>5</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>212</UID><UserDefinedOpKind><location><column><begin>1</begin><end>20</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><uniquename>%</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>20</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>106</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>16</begin><end>16</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>207</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>33</begin><end>33</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>208</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>207</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>208</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>213</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>214</UID><FormalParamNode><location><column><begin>8</begin><end>8</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>218</UID><UserDefinedOpKind><location><column><begin>1</begin><end>20</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><uniquename>\div</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>20</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>106</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>16</begin><end>16</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>213</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>34</begin><end>34</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>214</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>213</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>214</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>219</UID><FormalParamNode><location><column><begin>1</begin><end>1</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><uniquename>a</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>220</UID><FormalParamNode><location><column><begin>6</begin><end>6</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><uniquename>b</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>224</UID><UserDefinedOpKind><location><column><begin>1</begin><end>20</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><uniquename>..</uniquename><arity>2</arity><body><OpApplNode><location><column><begin>15</begin><end>20</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><operator><BuiltInKindRef><UID>106</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>16</begin><end>16</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>219</UID></FormalParamNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>19</begin><end>19</end></column><line><begin>35</begin><end>35</end></line><filename>Naturals</filename></location><level>0</level><operator><FormalParamNodeRef><UID>220</UID></FormalParamNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params><leibnizparam><FormalParamNodeRef><UID>219</UID></FormalParamNodeRef><leibniz/></leibnizparam><leibnizparam><FormalParamNodeRef><UID>220</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></UserDefinedOpKind></entry><entry><UID>229</UID><ModuleNode><location><column><begin>1</begin><end>4</end></column><line><begin>1</begin><end>9</end></line><filename>Grid</filename></location><uniquename>Grid</uniquename><OpDeclNodeRef><UID>230</UID></OpDeclNodeRef><OpDeclNodeRef><UID>231</UID></OpDeclNodeRef><UserDefinedOpKindRef><UID>156</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>162</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>172</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>176</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>182</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>188</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>194</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>200</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>206</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>212</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>218</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>224</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>235</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>243</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>253</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>263</UID></UserDefinedOpKindRef><UserDefinedOpKindRef><UID>272</UID></UserDefinedOpKindRef></ModuleNode></entry><entry><UID>230</UID><OpDeclNode><location><column><begin>11</begin><end>11</end></column><line><begin>3</begin><end>3</end></line><filename>Grid</filename></location><level>1</level><uniquename>x</uniquename><arity>0</arity><kind>3</kind></OpDeclNode></entry><entry><UID>231</UID><OpDeclNode><location><column><begin>14</begin><end>14</end></column><line><begin>3</begin><end>3</end></line><filename>Grid</filename></location><level>1</level><uniquename>y</uniquename><arity>0</arity><kind>3</kind></OpDeclNode></entry><entry><UID>106</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>0</level><uniquename>$SetEnumerate</uniquename><arity>-1</arity></BuiltInKind></entry><entry><UID>235</UID><UserDefinedOpKind><location><column><begin>1</begin><end>16</end></column><line><begin>4</begin><end>4</end></line><filename>Grid</filename></location><level>1</level><uniquename>vars</uniquename><arity>0</arity><body><OpApplNode><location><column><begin>9</begin><end>16</end></column><line><begin>4</begin><end>4</end></line><filename>Grid</filename></location><level>1</level><operator><BuiltInKindRef><UID>125</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>11</begin><end>11</end></column><line><begin>4</begin><end>4</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>230</UID></OpDeclNodeRef></operator><operands/></OpApplNode><OpApplNode><location><column><begin>14</begin><end>14</end></column><line><begin>4</begin><end>4</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>231</UID></OpDeclNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></body><params/></UserDefinedOpKind></entry><entry><UID>113</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>2</level><uniquename>$SquareAct</uniquename><arity>2</arity><params><leibnizparam><FormalParamNodeRef><UID>114</UID></FormalParamNodeRef></leibnizparam><leibnizparam><FormalParamNodeRef><UID>115</UID></FormalParamNodeRef></leibnizparam></params></BuiltInKind></entry><entry><UID>114</UID><FormalParamNode><uniquename>Formal_0</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>243</UID><UserDefinedOpKind><location><column><begin>1</begin><end>22</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><uniquename>Init</uniquename><arity>0</arity><body><OpApplNode><location><column><begin>9</begin><end>22</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><operator><BuiltInKindRef><UID>19</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>9</begin><end>13</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>9</begin><end>9</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>230</UID></OpDeclNodeRef></operator><operands/></OpApplNode><NumeralNode><location><column><begin>13</begin><end>13</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>0</level><IntValue>0</IntValue></NumeralNode></operands></OpApplNode><OpApplNode><location><column><begin>18</begin><end>22</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>18</begin><end>18</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>231</UID></OpDeclNodeRef></operator><operands/></OpApplNode><NumeralNode><location><column><begin>22</begin><end>22</end></column><line><begin>5</begin><end>5</end></line><filename>Grid</filename></location><level>0</level><IntValue>0</IntValue></NumeralNode></operands></OpApplNode></operands></OpApplNode></body><params/></UserDefinedOpKind></entry><entry><UID>115</UID><FormalParamNode><uniquename>Formal_1</uniquename><arity>0</arity></FormalParamNode></entry><entry><UID>125</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>0</level><uniquename>$Tuple</uniquename><arity>-1</arity></BuiltInKind></entry><entry><UID>253</UID><UserDefinedOpKind><location><column><begin>1</begin><end>33</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>2</level><uniquename>IncX</uniquename><arity>0</arity><body><OpApplNode><location><column><begin>9</begin><end>33</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>2</level><operator><BuiltInKindRef><UID>19</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>9</begin><end>18</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>2</level><operator><BuiltInKindRef><UID>4</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>9</begin><end>10</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>2</level><operator><BuiltInKindRef><UID>13</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>9</begin><end>9</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>230</UID></OpDeclNodeRef></operator><operands/></OpApplNode></operands></OpApplNode><OpApplNode><location><column><begin>14</begin><end>18</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>1</level><operator><UserDefinedOpKindRef><UID>162</UID></UserDefinedOpKindRef></operator><operands><OpApplNode><location><column><begin>14</begin><end>14</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>230</UID></OpDeclNodeRef></operator><operands/></OpApplNode><NumeralNode><location><column><begin>18</begin><end>18</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>0</level><IntValue>1</IntValue></NumeralNode></operands></OpApplNode></operands></OpApplNode><OpApplNode><location><column><begin>23</begin><end>33</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>2</level><operator><BuiltInKindRef><UID>67</UID></BuiltInKindRef></operator><operands><OpApplNode><location><column><begin>33</begin><end>33</end></column><line><begin>6</begin><end>6</end></line><filename>Grid</filename></location><level>1</level><operator><OpDeclNodeRef><UID>231</UID></OpDeclNodeRef></operator><operands/></OpApplNode></operands></OpApplNode></operands></OpApplNode></body><params/></UserDefinedOpKind></entry><entry><UID>126</UID><BuiltInKind><location><column><begin>0</begin><end>0</end></column><line><begin>0</begin><end>0</end></line><filename>--TLA+ BUILTINS--</filename></location><level>0</level><uniquename>$UnboundedChoose</uniquename><arity>1</arity><params><leibnizparam><FormalParamNodeRef><UID>127</UID></FormalParamNodeRef><leibniz/></leibnizparam></params></BuiltInKind></entry><entry><UID>127</UID><FormalParamNode><uniquename>Formal_0</uniquename><arity>0</arity></FormalParamNode></entry></context><ModuleNodeRef><UID>154</UID></ModuleNodeRef><ModuleNodeRef><UID>229</UID></ModuleNodeRef></modules>Semantic processing of module Naturals
+-Semantic processing of module Grid
+diff --git a/statechart/scripts/test/java.ts a/statechart/scripts/test/java.ts
+deleted file mode 100755
+index b6634ad..0000000
+--- a/statechart/scripts/test/java.ts
++++ /dev/null
+@@ -1,63 +0,0 @@
+-#!/usr/bin/env node
+-import { spawnSync } from "node:child_process";
+-import fs from "node:fs";
+-import path from "node:path";
+-import { plainText } from "../backends/plain-text.ts";
+-import { readMessages } from "../frontends/messages.ts";
+-
+-const args = process.argv.slice(2);
+-const config = args.includes("-config") ? args[args.indexOf("-config") + 1] : undefined;
+-const name = config ? path.basename(config, ".cfg") : "sany";
+-const dump = args.includes("-dump") ? `${args[args.indexOf("-dump") + 2]}.dot` : undefined;
+-const {
+-  STATECHART_RECORD: record,
+-  STATECHART_REPLAY: replay,
+-  STATECHART_LOG: log,
+-  STATECHART_PLAIN: plain,
+-} = process.env;
+-if (log && config) fs.appendFileSync(log, `## ${name}\n${fs.readFileSync(config, "utf8")}\n`);
+-
+-const TAG = /"chart-[0-9a-f]{32}"/g;
+-
+-const java = (folder: string, args: string[]) => {
+-  const r = spawnSync(process.env.STATECHART_JAVA ?? "java", args, {
+-    encoding: "utf8",
+-    maxBuffer: 1 << 30,
+-  });
+-  fs.writeFileSync(path.join(folder, `${name}.out`), (r.stdout + r.stderr).replace(TAG, '"chart"'));
+-  if (r.status) fs.writeFileSync(path.join(folder, `${name}.exit`), `${r.status}\n`);
+-  return r;
+-};
+-
+-if (record) {
+-  let tool = plain ? args.map((a, i) => (args[i - 1] === "-workers" ? "1" : a)) : args;
+-  const wantsPlainText = tool.includes("tlc2.TLC") && !tool.includes("-tool");
+-  if (wantsPlainText) tool = tool.flatMap((a) => (a === "tlc2.TLC" ? [a, "-tool"] : [a]));
+-  const r = java(record, tool);
+-  if (dump && fs.existsSync(dump)) fs.copyFileSync(dump, path.join(record, "graph.dot"));
+-  if (plain && tool.includes("-tool"))
+-    java(
+-      plain,
+-      tool
+-        .filter((a) => a !== "-tool")
+-        .map((a, i, all) =>
+-          all[i - 1] === "-metadir" || all[i - 2] === "-dump" ? `${a}-plain` : a,
+-        ),
+-    );
+-  const shown = (text: string) =>
+-    wantsPlainText ? [...plainText(readMessages(text))].join("") : text;
+-  process.stdout.write(shown(r.stdout));
+-  process.stderr.write(shown(r.stderr));
+-  process.exit(r.status ?? 1);
+-}
+-
+-if (!replay) throw new Error("Set STATECHART_RECORD or STATECHART_REPLAY to a folder.");
+-const file = (ext: string) => path.join(replay, `${name}${ext}`);
+-if (dump && fs.existsSync(path.join(replay, "graph.dot")))
+-  fs.copyFileSync(path.join(replay, "graph.dot"), dump);
+-const tag = fs.existsSync("ChartRun.tla")
+-  ? fs.readFileSync("ChartRun.tla", "utf8").match(TAG)?.[0]
+-  : undefined;
+-const saved = fs.readFileSync(file(".out"), "utf8");
+-process.stdout.write(tag ? saved.replace(/(<<\s*)"chart"(?=,)/g, `$1${tag}`) : saved);
+-process.exit(fs.existsSync(file(".exit")) ? Number(fs.readFileSync(file(".exit"), "utf8")) : 0);
+diff --git a/statechart/scripts/test/labels.ts a/statechart/scripts/test/labels.ts
+deleted file mode 100644
+index 8249724..0000000
+--- a/statechart/scripts/test/labels.ts
++++ /dev/null
+@@ -1,648 +0,0 @@
+-import { inspect } from "node:util";
+-import { drawnEdges, mermaid as chartText } from "../backends/mermaid.ts";
+-import { checkView } from "../frontends/view.ts";
+-import type { Chart, ChartState, State, Step, View } from "../ir.ts";
+-import { walk } from "../passes/reach.ts";
+-import { project } from "../pipeline.ts";
+-
+-export type Render = (text: string) => { svg: string };
+-
+-type MermaidNode = {
+-  id: string;
+-  label?: string;
+-  shape?: string;
+-  parentId?: string;
+-  isGroup?: boolean;
+-  dir?: string;
+-};
+-
+-export type Mermaid = {
+-  parse: (text: string) => Promise<unknown>;
+-  mermaidAPI: {
+-    getDiagramFromText: (text: string) => Promise<{
+-      db: {
+-        getData: () => {
+-          nodes: MermaidNode[];
+-          edges: { start: string; end: string; label?: string }[];
+-          direction?: string;
+-        };
+-      };
+-    }>;
+-  };
+-};
+-
+-export type Html = (markup: string) => string;
+-
+-type Tools = { render: Render; mermaid: Mermaid; html: Html };
+-
+-const THEME = ["blue", "orange", "purple", "yellow", "teal", "tan", "pink"];
+-const WORDS = ["Idle", "Run", "a", "b", "x1", "ok", "Done", "waiting", "on", "off", "p q"];
+-const SYNTAX = [
+-  "-->",
+-  "[*]",
+-  "{",
+-  "}",
+-  "[",
+-  "]",
+-  "(",
+-  ")",
+-  ":",
+-  ";",
+-  "#",
+-  "%%",
+-  '"',
+-  "'",
+-  "`",
+-  "|",
+-  "\\",
+-  ":::",
+-  "::: x",
+-  "--",
+-  "---",
+-  "<<fork>>",
+-  "<<join>>",
+-  "<<choice>>",
+-  "[[fork]]",
+-  "[[join]]",
+-  "[[choice]]",
+-  "<br>",
+-  "<b>x</b>",
+-  "<a",
+-  "<a=",
+-  "=",
+-  "&amp;",
+-  "&lt;",
+-  "&#59;",
+-  "&quot;",
+-  "#quot;",
+-  "#59;",
+-  "#35;",
+-  "**",
+-  "__",
+-  "*",
+-  "_",
+-  "~~",
+-  "$$",
+-  "${x}",
+-  "state",
+-  "as",
+-  "note",
+-  "end",
+-  "class",
+-  "classDef",
+-  "style",
+-  "click",
+-  "direction LR",
+-  "direction TB",
+-  "Direction rl",
+-  "direction\tBT",
+-  "direction  LR",
+-  "accTitle: x",
+-  "accDescr: y",
+-  "title: t",
+-  "%%{",
+-  "}%%",
+-  "%%{init: {}}%%",
+-  "C4Context",
+-  "C4Container",
+-  "C4Component",
+-  "C4Dynamic",
+-  "C4Deployment",
+-  "&nbsp;",
+-  "\\n",
+-  "---\n",
+-  "`**b**`",
+-  "ﬂ°°65¶ß",
+-  "ﬂ°lt¶ß",
+-  'marker-end="url(a#',
+-  "<<",
+-  ">>",
+-  "<<a>>",
+-  "|->",
+-  ":>",
+-  "@@",
+-  "/\\",
+-  "\\/",
+-  "..",
+-  '"A"',
+-  'x="a"',
+-  "[a |-> 1]",
+-  "{1, 2}",
+-  '"\\n"',
+-  "&",
+-  "<",
+-  ">",
+-  "@",
+-  "~",
+-  "^",
+-  "$",
+-  "%",
+-];
+-const SPACE = [
+-  " ",
+-  "  ",
+-  "\t",
+-  "\n",
+-  "\r",
+-  "\r\n",
+-  "\v",
+-  "\f",
+-  "\u00a0",
+-  "\u2028",
+-  "\u2029",
+-  "\u0085",
+-  "\u200b",
+-  "\ufeff",
+-  "\u3000",
+-];
+-const OTHER = [
+-  "é",
+-  "ü",
+-  "中文",
+-  "😀",
+-  "👩‍💻",
+-  "e\u0301",
+-  "\u202e",
+-  "\u200f",
+-  "ß",
+-  "Ω",
+-  "\ud800",
+-  "\x7f",
+-  "\x80",
+-  "\x9f",
+-  "\x1b",
+-  "\x00",
+-];
+-const BAD_COLORS: unknown[] = [
+-  "pink\n  s99: Ghost state",
+-  "blue\r\nclassDef x fill:#f00",
+-  "teal\r",
+-  " pink",
+-  "Pink",
+-  "red",
+-  "#00f",
+-  "breaks",
+-  "mayBreak",
+-  "bugPath",
+-  "repeats",
+-  "toString",
+-  "",
+-  null,
+-  7,
+-  ["blue"],
+-];
+-
+-const random = (seed: number) => {
+-  let a = seed >>> 0;
+-  const next = () => {
+-    a = (a + 0x6d2b79f5) >>> 0;
+-    let t = a;
+-    t = Math.imul(t ^ (t >>> 15), t | 1);
+-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+-  };
+-  const int = (n: number) => Math.floor(next() * n);
+-  return {
+-    int,
+-    range: (lo: number, hi: number) => lo + int(hi - lo + 1),
+-    chance: (p: number) => next() < p,
+-    pick: <T>(items: readonly T[]) => items[int(items.length)],
+-  };
+-};
+-
+-type Random = ReturnType<typeof random>;
+-
+-const label = (r: Random) => {
+-  let s = "";
+-  for (let n = r.range(1, 4); n > 0; n--) {
+-    const k = r.int(13);
+-    if (k < 4) s += r.pick(WORDS);
+-    else if (k < 7) s += r.pick(SYNTAX);
+-    else if (k < 9) s += r.pick(SPACE);
+-    else if (k < 11) s += r.pick(OTHER);
+-    else s += String.fromCharCode(32 + r.int(95));
+-  }
+-  return s;
+-};
+-
+-const color = (r: Random) => {
+-  if (r.chance(0.85)) return r.pick(THEME);
+-  const k = r.int(3);
+-  if (k === 0) return r.pick(BAD_COLORS);
+-  if (k === 1) return r.pick(THEME) + r.pick(SPACE) + label(r);
+-  return label(r);
+-};
+-
+-const several = <T>(n: number, make: () => T) => {
+-  const out: T[] = [];
+-  for (let i = 0; i < n; i++) out.push(make());
+-  return out;
+-};
+-
+-type Shape =
+-  | { mode: "flat"; leaf: number[] }
+-  | { mode: "parents"; leaf: number[]; parents: number[]; parentOf: number[] }
+-  | { mode: "regions"; regions: number[]; pools: number[][]; values: number[][] };
+-
+-type Groups =
+-  | { groups?: undefined; colors?: undefined; groupOf?: undefined }
+-  | { groups: number[]; colors: unknown[]; groupOf: number[] };
+-
+-type Case = Shape &
+-  Groups & { n: number; labels: string[]; actions: number[]; steps: number[][]; title?: number };
+-
+-function generate(r: Random): Case {
+-  const labels: string[] = [];
+-  const slot = () => labels.push(label(r)) - 1;
+-  const k = r.int(10);
+-  const mode = k < 4 ? "flat" : k < 7 ? "parents" : "regions";
+-  const n = r.range(2, 4);
+-  let shape: Shape;
+-  if (mode === "regions") {
+-    shape = {
+-      mode,
+-      regions: [slot(), slot()],
+-      pools: [
+-        [slot(), slot()],
+-        [slot(), slot()],
+-      ],
+-      values: several(n, () => [r.int(2), r.int(2)]),
+-    };
+-  } else {
+-    const leaf = several(n, slot);
+-    if (mode === "parents") {
+-      const parents = r.chance(0.5) ? [slot(), slot()] : [slot()];
+-      const parentOf = several(n, () => (r.chance(0.75) ? r.int(parents.length) : -1));
+-      shape = { mode, leaf, parents, parentOf };
+-    } else shape = { mode, leaf };
+-  }
+-  const actions = several(r.range(1, 3), slot);
+-  const steps = several(r.range(1, 5), () => [r.int(n), r.int(n), r.int(actions.length)]);
+-  let groups: Groups = {};
+-  if (r.chance(0.4)) {
+-    const named = several(r.range(1, 2), slot);
+-    const colors = several(named.length, () => color(r));
+-    const groupOf = several(n, () => (r.chance(0.8) ? r.int(named.length) : -1));
+-    groups = { groups: named, colors, groupOf };
+-  }
+-  const title = r.chance(0.3) ? slot() : undefined;
+-  return { ...shape, ...groups, n, labels, actions, steps, title };
+-}
+-
+-type RawView = {
+-  state: (vars: { k: number }) => unknown;
+-  step: (action: string) => string;
+-  group?: (vars: { k: number }) => string | undefined;
+-  colors?: { [group: string]: unknown };
+-  title?: string;
+-};
+-
+-function build(c: Case, labels: string[]) {
+-  const states = new Map<string, State>();
+-  for (let i = 0; i < c.n; i++)
+-    states.set(String(i), { vars: { k: i }, start: i === 0, breaks: [] });
+-  const steps: Step[] = [];
+-  for (const [from, to, a] of c.steps)
+-    steps.push({ from: String(from), to: String(to), action: `A${a}` });
+-  const view: RawView = {
+-    state: ({ k }) => {
+-      if (c.mode === "regions") {
+-        const shape: [string, string][] = [];
+-        for (let j = 0; j < c.regions.length; j++)
+-          shape.push([labels[c.regions[j]], labels[c.pools[j][c.values[k][j]]]]);
+-        return Object.fromEntries(shape);
+-      }
+-      const leaf = labels[c.leaf[k]];
+-      return c.mode === "parents" && c.parentOf[k] >= 0
+-        ? [labels[c.parents[c.parentOf[k]]], leaf]
+-        : leaf;
+-    },
+-    step: (action) => labels[c.actions[Number(action.slice(1))]],
+-  };
+-  if (c.groups) {
+-    view.group = ({ k }) => (c.groupOf[k] < 0 ? undefined : labels[c.groups[c.groupOf[k]]]);
+-    const colors: [string, unknown][] = [];
+-    for (let j = 0; j < c.groups.length; j++) colors.push([labels[c.groups[j]], c.colors[j]]);
+-    view.colors = Object.fromEntries(colors);
+-  }
+-  if (c.title !== undefined) view.title = labels[c.title];
+-  return { graph: { states, steps }, view };
+-}
+-
+-const visible = (s: string) =>
+-  s
+-    .toWellFormed()
+-    .replace(/(?![\t-\r\x85])[\p{Cc}\u200b-\u200f\u202a-\u202e\u2060-\u2069\ufeff]/gu, "")
+-    .replace(/\p{White_Space}+/gu, " ")
+-    .trim();
+-const wrapped = (s: string) => visible(s).replaceAll(" ", "");
+-const titled = (want: Want) => /[^\0\x80-\x84\x86-\x9f]/.test(want.title ?? "");
+-const NAMED: { [name: string]: string } = {
+-  quot: '"',
+-  lt: "<",
+-  gt: ">",
+-  amp: "&",
+-  apos: "'",
+-  nbsp: "\u00a0",
+-};
+-const WINDOWS_1252 = "€\x81‚ƒ„…†‡ˆ‰Š‹Œ\x8dŽ\x8f\x90‘’“”•–—˜™š›œ\x9džŸ";
+-const fromRef = (n: number) => {
+-  if (n === 0 || n > 0x10ffff || (n >= 0xd800 && n <= 0xdfff)) return "\ufffd";
+-  if (n >= 0x80 && n <= 0x9f) return WINDOWS_1252[n - 0x80];
+-  return String.fromCodePoint(n);
+-};
+-const fromMermaid = (s: string) =>
+-  s.replace(/ﬂ°°(\d+)¶ß|ﬂ°(\w+)¶ß/g, (_, d, n) =>
+-    d ? fromRef(Number(d)) : (NAMED[n] ?? `&${n};`),
+-  );
+-const decoded = (s: string) =>
+-  s
+-    .replace(/ﬂ°°/g, "&#")
+-    .replace(/ﬂ°/g, "&")
+-    .replace(/¶ß/g, ";");
+-const MARKER_END = /marker-end="url\([\d+./:=?A-Za-z-]*?#/g;
+-const rewritten = (s: string) =>
+-  /ﬂ°|¶ß/.test(s) || s.replace(MARKER_END, 'marker-end="url(#') !== s;
+-const fromSvg = (s: string) =>
+-  s
+-    .replace(/<\/tspan>\s*<tspan[^>]*>/g, " ")
+-    .replace(/<[^>]*>/g, "")
+-    .replace(/&#x([0-9a-f]+);/gi, (_, h) => fromRef(parseInt(h, 16)))
+-    .replace(/&#(\d+);/g, (_, d) => fromRef(Number(d)))
+-    .replace(/&(quot|lt|gt|apos|nbsp);/g, (_, n) => NAMED[n])
+-    .replace(/&amp;/g, "&");
+-
+-type Node = { text: string; parent: string | null; group: boolean };
+-
+-type Want = {
+-  nodes: Map<string, Node>;
+-  edges: string[][];
+-  direction: string;
+-  title: string | undefined;
+-};
+-
+-function expected(chart: Chart): Want {
+-  const nodes = new Map<string, Node>();
+-  const edges: string[][] = [];
+-  const ids = new Map<string, string>();
+-  const id = (region: string, path: string[]) => {
+-    const key = JSON.stringify([region, path]);
+-    const found = ids.get(key) ?? `s${ids.size}`;
+-    ids.set(key, found);
+-    return found;
+-  };
+-  const multi = chart.regions.length > 1;
+-  const used = new Set<string>();
+-  if (multi) nodes.set("all", { text: "At the same time", parent: null, group: true });
+-  for (let i = 0; i < chart.regions.length; i++) {
+-    const region = chart.regions[i];
+-    const wrap = multi ? `r${i}` : null;
+-    if (wrap) nodes.set(wrap, { text: region.name, parent: "all", group: true });
+-    const drawn = drawnEdges(region);
+-    const tree = (prefix: string[], parent: string | null, below: ChartState[]) => {
+-      const heads = new Map<string, ChartState[]>();
+-      for (const s of below) {
+-        const head = s.path[prefix.length];
+-        heads.set(head, [...(heads.get(head) ?? []), s]);
+-      }
+-      for (const [head, under] of heads) {
+-        const path = [...prefix, head];
+-        const inner: ChartState[] = [];
+-        let leaf: ChartState | undefined;
+-        for (const s of under)
+-          if (s.path.length > path.length) inner.push(s);
+-          else leaf = s;
+-        const node = id(region.name, path);
+-        nodes.set(node, { text: head, parent, group: inner.length > 0 });
+-        if (inner.length) {
+-          tree(path, node, inner);
+-          const key = JSON.stringify(path);
+-          for (const e of drawn)
+-            if (e.start && JSON.stringify(e.from) === key)
+-              edges.push([`${node}_start`, id(region.name, e.to), e.label ?? ""]);
+-        } else if (leaf?.group !== undefined) used.add(chart.colors[String(leaf.group)]);
+-      }
+-    };
+-    tree([], wrap, region.states);
+-    for (const e of drawn)
+-      if (!e.start || !e.from.length)
+-        edges.push([
+-          e.start ? `${wrap ?? "root"}_start` : id(region.name, e.from),
+-          id(region.name, e.to),
+-          e.label ?? "",
+-        ]);
+-  }
+-  let legend = 0;
+-  for (const [text, cls] of Object.entries(chart.colors))
+-    if (used.has(cls)) nodes.set(`lg${legend++}`, { text, parent: "legend", group: false });
+-  if (legend) nodes.set("legend", { text: "Legend", parent: null, group: true });
+-  return { nodes, edges, direction: multi ? "LR" : "TB", title: chart.title };
+-}
+-
+-const edgeKeys = (edges: string[][], withLabels: boolean) => {
+-  const keys: string[] = [];
+-  for (const [from, to, text] of edges)
+-    keys.push(withLabels ? `${from} ${to} ${visible(text)}` : `${from} ${to}`);
+-  return keys.sort().join("\n");
+-};
+-
+-async function readMermaid(text: string, want: Want, { mermaid, html }: Tools, problems: string[]) {
+-  let data;
+-  try {
+-    data = (await mermaid.mermaidAPI.getDiagramFromText(text)).db.getData();
+-  } catch (e) {
+-    if (!(e instanceof Error)) throw e;
+-    problems.push(`mermaid-refuses: ${e.message.split("\n")[0]}`);
+-    return;
+-  }
+-  const byId = new Map<string | undefined, MermaidNode>();
+-  for (const n of data.nodes) byId.set(n.id, n);
+-  let count = 0;
+-  for (const n of data.nodes) {
+-    if (n.shape === "divider" || n.shape === "stateStart" || n.shape === "stateEnd") continue;
+-    count++;
+-    let parent = byId.get(n.parentId);
+-    while (parent?.shape === "divider") parent = byId.get(parent.parentId);
+-    const w = want.nodes.get(n.id);
+-    const shown = fromMermaid(n.label ?? "");
+-    if (!w || (parent?.id ?? null) !== w.parent || Boolean(n.isGroup) !== w.group)
+-      problems.push(`mermaid-nodes: Mermaid draws ${n.id} where the chart has no such node`);
+-    else if (rewritten(shown))
+-      problems.push(
+-        `mermaid-text: Mermaid's SVG cleanup rewrites ${n.id}'s ${JSON.stringify(shown)}`,
+-      );
+-    else if (visible(html(decoded(n.label ?? ""))) !== visible(w.text))
+-      problems.push(
+-        `mermaid-text: ${n.id} shows ${JSON.stringify(html(decoded(n.label ?? "")))} for ${JSON.stringify(w.text)}`,
+-      );
+-    if (n.isGroup && n.dir && n.dir !== "TB")
+-      problems.push(`mermaid-direction: ${n.id} runs ${n.dir}`);
+-  }
+-  if (count !== want.nodes.size)
+-    problems.push(`mermaid-nodes: ${count} nodes for ${want.nodes.size}`);
+-  if ((data.direction ?? "TB") !== want.direction)
+-    problems.push(`mermaid-direction: the chart runs ${data.direction}`);
+-  const head = text.match(/^---\ntitle: (.*)\n---\n/);
+-  const raw = head ? String(JSON.parse(head[1])) : undefined;
+-  const title = raw === undefined ? undefined : fromMermaid(raw);
+-  if ((title !== undefined) !== titled(want))
+-    problems.push(`mermaid-title: Mermaid draws a title for ${JSON.stringify(want.title)}`);
+-  else if (raw?.includes("<"))
+-    problems.push(
+-      `mermaid-title: Mermaid's sanitizer reads the < in ${JSON.stringify(raw)} as a tag`,
+-    );
+-  else if (title?.includes("\0"))
+-    problems.push(`mermaid-title: a browser draws the NUL in ${JSON.stringify(title)} as U+FFFD`);
+-  else if (title !== undefined && visible(title) !== visible(want.title ?? ""))
+-    problems.push(
+-      `mermaid-text: the title shows ${JSON.stringify(title)} for ${JSON.stringify(want.title)}`,
+-    );
+-  const got: string[][] = [];
+-  const shown: string[][] = [];
+-  for (const e of data.edges) {
+-    got.push([e.start, e.end, fromMermaid(e.label ?? "")]);
+-    shown.push([e.start, e.end, html(decoded(e.label ?? ""))]);
+-  }
+-  if (edgeKeys(got, false) !== edgeKeys(want.edges, false))
+-    problems.push("mermaid-edges: the arrows join other states");
+-  else if (edgeKeys(shown, true) !== edgeKeys(want.edges, true))
+-    problems.push("mermaid-text: an arrow shows other text");
+-  for (const [from, to, text] of got)
+-    if (rewritten(text))
+-      problems.push(
+-        `mermaid-text: Mermaid's SVG cleanup rewrites the arrow from ${from} to ${to}'s ${JSON.stringify(text)}`,
+-      );
+-}
+-
+-function readPele(text: string, want: Want, render: Render, problems: string[]) {
+-  let svg: string;
+-  try {
+-    ({ svg } = render(text));
+-  } catch (e) {
+-    if (!(e instanceof Error)) throw e;
+-    problems.push(`pele-refuses: ${e.message.split("\n")[0]}`);
+-    return;
+-  }
+-  const drawn = new Map<string, string>();
+-  for (const m of svg.matchAll(
+-    /<g class="pele-(?:node|cluster) ([^"]*)" data-id="([^"]*)"[^>]*>([\s\S]*?)<\/g>/g,
+-  )) {
+-    if (/state-(start|end)/.test(m[1])) continue;
+-    const t = m[3].match(/<text[^>]*>([\s\S]*?)<\/text>/);
+-    drawn.set(m[2], t ? fromSvg(t[1]) : "");
+-  }
+-  if (drawn.size !== want.nodes.size)
+-    problems.push(`pele-nodes: ${drawn.size} nodes for ${want.nodes.size}`);
+-  for (const [node, w] of want.nodes) {
+-    const shown = drawn.get(node);
+-    if (shown === undefined) problems.push(`pele-nodes: Pele draws no ${node}`);
+-    else if (wrapped(shown) !== wrapped(w.text))
+-      problems.push(
+-        `pele-text: ${node} shows ${JSON.stringify(shown)} for ${JSON.stringify(w.text)}`,
+-      );
+-  }
+-  let arrows = 0;
+-  for (const _ of svg.matchAll(/<g class="pele-edge pele-transition"/g)) arrows++;
+-  if (arrows !== want.edges.length)
+-    problems.push(`pele-edges: ${arrows} arrows for ${want.edges.length}`);
+-  for (const m of svg.matchAll(
+-    /<g class="pele-edge-label" data-id="edge(\d+)"[^>]*>[\s\S]*?<text[^>]*>([\s\S]*?)<\/text>/g,
+-  )) {
+-    const w = want.edges[Number(m[1])];
+-    if (!w) problems.push(`pele-edges: Pele labels edge${m[1]}, which the chart does not have`);
+-    else if (wrapped(fromSvg(m[2])) !== wrapped(w[2]))
+-      problems.push(
+-        `pele-text: edge${m[1]} shows ${JSON.stringify(fromSvg(m[2]))} for ${JSON.stringify(w[2])}`,
+-      );
+-  }
+-  const title = svg.match(/<text class="pele-title"[^>]*>([\s\S]*?)<\/text>/);
+-  if (Boolean(title) !== titled(want))
+-    problems.push(`pele-title: Pele draws a title for ${JSON.stringify(want.title)}`);
+-  else if (title && wrapped(fromSvg(title[1])) !== wrapped(want.title ?? ""))
+-    problems.push(
+-      `pele-text: the title shows ${JSON.stringify(fromSvg(title[1]))} for ${JSON.stringify(want.title)}`,
+-    );
+-}
+-
+-type Checked = { refused?: true; text?: string; problems: string[] };
+-
+-async function check(c: Case, labels: string[], tools: Tools): Promise<Checked> {
+-  const { graph, view } = build(c, labels);
+-  let refuse = false;
+-  for (const [, value] of Object.entries(view.colors ?? {}))
+-    if (typeof value !== "string" || !THEME.includes(value)) refuse = true;
+-  let checked: View;
+-  try {
+-    checked = checkView(view, inspect);
+-  } catch (e) {
+-    if (!(e instanceof Error)) throw e;
+-    if (refuse && /^The view's colors give /.test(e.message))
+-      return { refused: true, problems: [] };
+-    return { problems: [`skill-throws: ${e.message}`] };
+-  }
+-  if (refuse) return { problems: ["colors: checkView accepts a color that is not in the theme"] };
+-  let chart: Chart;
+-  let text: string;
+-  try {
+-    ({ chart } = project(graph, walk(graph), checked, []));
+-    text = chartText(chart);
+-  } catch (e) {
+-    if (!(e instanceof Error)) throw e;
+-    if (/^The view's (state|step)\(\) returned /.test(e.message))
+-      return { refused: true, problems: [] };
+-    return { problems: [`skill-throws: ${e.constructor.name}: ${e.message}`] };
+-  }
+-  const want = expected(chart);
+-  const problems: string[] = [];
+-  await readMermaid(text, want, tools, problems);
+-  readPele(text, want, tools.render, problems);
+-  return { text, problems };
+-}
+-
+-const kind = (problem: string) => problem.slice(0, problem.indexOf(":"));
+-
+-export async function fuzz({
+-  seed,
+-  charts,
+-  ...tools
+-}: { seed: number; charts: number } & Tools): Promise<{
+-  drawn: number;
+-  refused: number;
+-  failure?: string;
+-}> {
+-  await tools.mermaid.parse("stateDiagram-v2\n  s0: a");
+-  const r = random(seed);
+-  let drawn = 0;
+-  let refused = 0;
+-  for (let i = 1; i <= charts; i++) {
+-    const c = generate(r);
+-    const result = await check(c, c.labels, tools);
+-    if (result.refused) refused++;
+-    else drawn++;
+-    if (!result.problems.length) continue;
+-    const first = kind(result.problems[0]);
+-    let labels = c.labels;
+-    for (let j = 0; j < labels.length; j++) {
+-      const plain = labels.with(j, `n${j}`);
+-      const again = await check(c, plain, tools);
+-      let same = false;
+-      for (const p of again.problems) if (kind(p) === first) same = true;
+-      if (same) labels = plain;
+-    }
+-    const kept = [];
+-    for (let j = 0; j < labels.length; j++) if (labels[j] !== `n${j}`) kept.push(labels[j]);
+-    const last = await check(c, labels, tools);
+-    const colors = c.colors ? ` and the colors ${JSON.stringify(c.colors)}` : "";
+-    return {
+-      drawn,
+-      refused,
+-      failure: [
+-        `Chart ${i} of seed ${seed} goes wrong with the labels ${JSON.stringify(kept)}${colors}:`,
+-        ...last.problems,
+-        "",
+-        last.text ?? "",
+-      ].join("\n"),
+-    };
+-  }
+-  return { drawn, refused };
+-}
+diff --git a/statechart/scripts/test/messages.test.ts a/statechart/scripts/test/messages.test.ts
+deleted file mode 100644
+index 4e0d3c3..0000000
+--- a/statechart/scripts/test/messages.test.ts
++++ /dev/null
+@@ -1,226 +0,0 @@
+-import assert from "node:assert/strict";
+-import fs from "node:fs";
+-import path from "node:path";
+-import { test } from "node:test";
+-import { fileURLToPath } from "node:url";
+-import { plainText, runtime } from "../backends/plain-text.ts";
+-import { readMessages } from "../frontends/messages.ts";
+-import { readVerdict } from "../frontends/verdict.ts";
+-
+-const here = path.dirname(fileURLToPath(import.meta.url));
+-
+-const tool = (code: number, level: number, ...lines: string[]) =>
+-  [`@!@!@STARTMSG ${code}:${level} @!@!@`, ...lines, `@!@!@ENDMSG ${code} @!@!@`].join("\n");
+-
+-const plain = (text: string) => [...plainText(readMessages(text))].join("");
+-
+-test("TLC output with Windows line ends names the rule that breaks and prints as with Unix ones", () => {
+-  const unix = fs.readFileSync(path.join(here, "corpus", "FirstRule", "verdict-1.out"), "utf8");
+-  const windows = unix.replaceAll("\n", "\r\n");
+-  assert.deepEqual(readVerdict(readMessages(windows)).broke, { kind: "invariant", name: "NotOne" });
+-  assert.deepEqual(readVerdict(readMessages(windows)), readVerdict(readMessages(unix)));
+-  assert.equal(plain(windows), plain(unix));
+-});
+-
+-test("TLC's -tool output prints as plain TLC prints it", () => {
+-  const text = [
+-    tool(2262, 0, "TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)"),
+-    tool(2401, 3, "Please run the Java VM with a throughput optimized garbage collector."),
+-    tool(2220, 0, "Starting SANY..."),
+-    "Parsing file /tmp/Spec.tla",
+-    "<<",
+-    '"chart",',
+-    ">>",
+-    tool(2219, 0, "SANY finished."),
+-    tool(2154, 3, "The spec has no TypeOK."),
+-    tool(2200, 0, "Progress(1) at 2026-10-25 12:58:36: 3 states generated."),
+-    tool(2116, 1, "Temporal properties were violated.", ""),
+-    tool(2217, 4, "1: <Initial predicate>", "/\\ x = 0", ""),
+-    tool(2217, 4, "2: <Next line 5, col 9 to line 5, col 20 of module Spec>", "/\\ x = 1", ""),
+-    tool(2122, 4, "1: Back to state: <Back line 6, col 9 to line 6, col 23 of module Spec>", ""),
+-    tool(2218, 4, "3: Stuttering"),
+-    tool(1000, 2, "This was a bug."),
+-    tool(2200, 0, "Progress(2) at 2026-10-25 12:58:37: 3 states generated."),
+-    tool(2199, 0, "3 states generated."),
+-    tool(2186, 0, "Finished in 61000ms at (2026-10-25 12:58:37)"),
+-    "",
+-  ].join("\n");
+-  assert.equal(
+-    plain(text),
+-    [
+-      "TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)",
+-      "Warning: Please run the Java VM with a throughput optimized garbage collector.",
+-      "(Use the -nowarning option to disable this warning.)",
+-      "Parsing file /tmp/Spec.tla",
+-      "<<",
+-      '"chart",',
+-      ">>",
+-      "Warning: The spec has no TypeOK.",
+-      "Progress(1) at 2026-10-25 12:58:36: 3 states generated.",
+-      "Error: Temporal properties were violated.",
+-      "",
+-      "State 1: <Initial predicate>",
+-      "/\\ x = 0",
+-      "",
+-      "State 2: <Next line 5, col 9 to line 5, col 20 of module Spec>",
+-      "/\\ x = 1",
+-      "",
+-      "Back to state 1: <Back line 6, col 9 to line 6, col 23 of module Spec>",
+-      "",
+-      "State 3: Stuttering",
+-      "TLC Bug: This was a bug.",
+-      "3 states generated.",
+-      "Finished in 01min 01s at (2026-10-25 12:58:37)",
+-      "",
+-    ].join("\n"),
+-  );
+-});
+-
+-test("a message that TLC prints inside another prints as plain TLC prints it", () => {
+-  const assertion = "The first argument of Assert evaluated to FALSE; the second argument was:";
+-  const text = [
+-    tool(
+-      2111,
+-      1,
+-      "Evaluating invariant Bad failed.",
+-      tool(2179, 0, "The second argument of \\div is 0."),
+-    ),
+-    tool(2121, 1, "The behavior up to this point is:"),
+-    tool(1000, 1, tool(2132, 0, assertion, '"left @!@!@STARTMSG 9999:1 @!@!@ right"')),
+-    tool(1000, 1, tool(2132, 0, assertion, '"@!@!@ENDMSG 2103 @!@!@"')),
+-    "",
+-  ].join("\n");
+-  assert.equal(
+-    plain(text),
+-    [
+-      "Error: Evaluating invariant Bad failed.",
+-      "The second argument of \\div is 0.",
+-      "Error: The behavior up to this point is:",
+-      `Error: ${assertion}`,
+-      '"left @!@!@STARTMSG 9999:1 @!@!@ right"',
+-      `Error: ${assertion}`,
+-      '"@!@!@ENDMSG 2103 @!@!@"',
+-      "",
+-    ].join("\n"),
+-  );
+-});
+-
+-test("an end line closes the innermost message whatever code it names", () => {
+-  const text = [
+-    "@!@!@STARTMSG 2111:1 @!@!@",
+-    "Evaluating invariant Bad failed: @!@!@STARTMSG 2179:0 @!@!@",
+-    "The second argument of \\div is 0.",
+-    "@!@!@ENDMSG 2179 @!@!@",
+-    "@!@!@ENDMSG 2111 @!@!@",
+-    tool(2186, 0, "Finished in 0ms at (T)"),
+-    "",
+-  ].join("\n");
+-  assert.equal(
+-    plain(text),
+-    [
+-      "Error: Evaluating invariant Bad failed: The second argument of \\div is 0.",
+-      "Finished in 00s at (T)",
+-      "",
+-    ].join("\n"),
+-  );
+-});
+-
+-test("a message that TLC starts at the end of a line of text prints on that line", () => {
+-  const text = [
+-    "@!@!@STARTMSG 1000:1 @!@!@",
+-    "TLC threw an unexpected exception.",
+-    "This was probably caused by an error in the spec or model.",
+-    "See the User Output or TLC Console for clues to what happened.",
+-    "The exception was a java.lang.RuntimeException",
+-    ": tlc2.tool.EvalException: @!@!@STARTMSG 2179:0 @!@!@",
+-    "The second argument of \\div is 0.",
+-    "@!@!@ENDMSG 2179 @!@!@",
+-    "@!@!@ENDMSG 1000 @!@!@",
+-    "@!@!@STARTMSG 2103:1 @!@!@",
+-    "The error occurred when TLC was evaluating the nested",
+-    "expressions at the following positions:",
+-    "0. Line 8, column 8 to line 8, column 25 in ConstraintEval",
+-    "1. Line 8, column 8 to line 8, column 21 in ConstraintEval",
+-    "",
+-    "",
+-    "@!@!@ENDMSG 2103 @!@!@",
+-    "@!@!@STARTMSG 2200:0 @!@!@",
+-    "Progress(2) at 2026-10-25 17:45:59: 3 states generated (598 s/min), 2 distinct states found (398 ds/min), 0 states left on queue.",
+-    "@!@!@ENDMSG 2200 @!@!@",
+-    "@!@!@STARTMSG 2199:0 @!@!@",
+-    "3 states generated, 2 distinct states found, 0 states left on queue.",
+-    "@!@!@ENDMSG 2199 @!@!@",
+-    "@!@!@STARTMSG 2186:0 @!@!@",
+-    "Finished in 304ms at (2026-10-25 17:45:59)",
+-    "@!@!@ENDMSG 2186 @!@!@",
+-    "",
+-  ].join("\n");
+-  assert.equal(
+-    plain(text),
+-    [
+-      "Error: TLC threw an unexpected exception.",
+-      "This was probably caused by an error in the spec or model.",
+-      "See the User Output or TLC Console for clues to what happened.",
+-      "The exception was a java.lang.RuntimeException",
+-      ": tlc2.tool.EvalException: The second argument of \\div is 0.",
+-      "Error: The error occurred when TLC was evaluating the nested",
+-      "expressions at the following positions:",
+-      "0. Line 8, column 8 to line 8, column 25 in ConstraintEval",
+-      "1. Line 8, column 8 to line 8, column 21 in ConstraintEval",
+-      "",
+-      "",
+-      "3 states generated, 2 distinct states found, 0 states left on queue.",
+-      "Finished in 00s at (2026-10-25 17:45:59)",
+-      "",
+-    ].join("\n"),
+-  );
+-});
+-
+-test("output that ends where TLC died prints as plain TLC's output cut at the same point", () => {
+-  const computing = tool(2189, 0, "Computing initial states...");
+-  const assertion = "The first argument of Assert evaluated to FALSE; the second argument was:";
+-  const insideEnd = [
+-    computing,
+-    "@!@!@STARTMSG 2111:1 @!@!@",
+-    "Evaluating invariant ChartMark failed.",
+-    "@!@!@STARTMSG 2132:0 @!@!@",
+-    assertion,
+-    '"c went past eleven"',
+-    "@!@!@ENDMSG 21",
+-  ].join("\n");
+-  assert.equal(
+-    plain(insideEnd),
+-    [
+-      "Computing initial states...",
+-      "Error: Evaluating invariant ChartMark failed.",
+-      assertion,
+-      '"c went past eleven"',
+-      "",
+-    ].join("\n"),
+-  );
+-  const afterStarts = [computing, "@!@!@STARTMSG 1000:1 @!@!@", "@!@!@STARTMSG 2132:0 @!@!@", ""];
+-  assert.equal(plain(afterStarts.join("\n")), "Computing initial states...\n");
+-});
+-
+-test("text outside TLC's messages, such as SANY's output, passes through unchanged", () => {
+-  for (const text of ["", "\n", "a\n\nb\n", "Semantic errors:\n\n  line 1\n"])
+-    assert.equal(plain(text), text);
+-});
+-
+-test("TLC's run time prints as plain TLC prints it, with each field wrapping", () => {
+-  for (const [ms, printed] of [
+-    [0, "00s"],
+-    [394, "00s"],
+-    [59_999, "59s"],
+-    [60_000, "00s"],
+-    [60_001, "01min 00s"],
+-    [3_599_999, "59min 59s"],
+-    [3_600_000, "00min 00s"],
+-    [3_600_001, "01h 00min"],
+-    [86_400_000, "00h 00min"],
+-    [86_400_001, "1d 00h"],
+-    [90_000_000, "1d 01h"],
+-    [366 * 86_400_000, "1d 00h"],
+-  ] satisfies [number, string][])
+-    assert.equal(runtime(ms), printed, String(ms));
+-});
+diff --git a/statechart/scripts/test/pipeline.test.ts a/statechart/scripts/test/pipeline.test.ts
+deleted file mode 100644
+index 81a5056..0000000
+--- a/statechart/scripts/test/pipeline.test.ts
++++ /dev/null
+@@ -1,270 +0,0 @@
+-import assert from "node:assert/strict";
+-import { execFileSync } from "node:child_process";
+-import fs from "node:fs";
+-import path from "node:path";
+-import { test } from "node:test";
+-import { fileURLToPath, pathToFileURL } from "node:url";
+-import { inspect } from "node:util";
+-import { checkView } from "../frontends/view.ts";
+-import {
+-  type CheckResult,
+-  EC,
+-  LEVEL,
+-  type Rule,
+-  type Spec,
+-  stateRules,
+-  type Verdict,
+-} from "../ir.ts";
+-import { compile } from "../pipeline.ts";
+-
+-const scripts = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+-
+-const sources = (target: string) => {
+-  const full = path.join(scripts, target);
+-  if (!fs.statSync(full).isDirectory()) return [target];
+-  return fs
+-    .readdirSync(full, { recursive: true, encoding: "utf8" })
+-    .map((entry) => path.join(target, entry))
+-    .filter((file) => fs.statSync(path.join(scripts, file)).isFile());
+-};
+-
+-const RECORD = `
+-import { registerHooks } from "node:module";
+-const edges = [];
+-registerHooks({
+-  resolve(specifier, context, nextResolve) {
+-    const resolved = nextResolve(specifier, context);
+-    if (context.parentURL !== import.meta.url) edges.push([context.parentURL, resolved.url]);
+-    return resolved;
+-  },
+-});
+-for (const url of process.argv.slice(1)) await import(url);
+-console.log(JSON.stringify(edges));
+-`;
+-const loads = (...targets: string[]) => {
+-  const urls = targets.flatMap(sources).map((file) => pathToFileURL(path.join(scripts, file)).href);
+-  const out = execFileSync(process.execPath, ["--input-type=module", "-e", RECORD, ...urls], {
+-    encoding: "utf8",
+-  });
+-  const name = (url: string) =>
+-    url.startsWith("file:") ? path.relative(scripts, fileURLToPath(url)) : url;
+-  return (JSON.parse(out) as string[][]).map(([from, to]) => [name(from), name(to)]);
+-};
+-
+-const COMMENT =
+-  /("(?:[^"\\\n]|\\[\s\S])*"|'(?:[^'\\\n]|\\[\s\S])*'|`(?:[^`\\]|\\[\s\S])*`)|\/\/[^\n]*|\/\*[\s\S]*?\*\//g;
+-const codeOf = (file: string) =>
+-  fs.readFileSync(path.join(scripts, file), "utf8").replace(COMMENT, (_, text) => text ?? " ");
+-
+-const RUNTIME =
+-  /\b(?:process|require|globalThis|global|Deno|Bun|Buffer|setImmediate|clearImmediate|fetch)\b|\bimport\s*\(/g;
+-const TYPE_IMPORT =
+-  /\b(?:import|export)\s+type\b\s*(?:[\w$]+|\*(?:\s*as\s+[\w$]+)?|\{[^}]*\})\s*from\s*["']([^"']*)["']/g;
+-const typeImports = (file: string) =>
+-  Array.from(codeOf(file).matchAll(TYPE_IMPORT), (m) => path.join(path.dirname(file), m[1]));
+-
+-test("ir.ts imports nothing", () => {
+-  assert.deepEqual(loads("ir.ts"), []);
+-  assert.deepEqual(typeImports("ir.ts"), []);
+-});
+-
+-test("each pass imports only ir.ts", () => {
+-  const files = sources("passes");
+-  assert.deepEqual(
+-    files.filter((file) => !file.endsWith(".ts")),
+-    [],
+-  );
+-  const found = loads("passes");
+-  assert.ok(found.length > 0);
+-  for (const [from, to] of found) assert.equal(to, "ir.ts", `${from} imports ${to}`);
+-  for (const file of files)
+-    for (const to of typeImports(file))
+-      assert.equal(to, "ir.ts", `${file} imports types from ${to}`);
+-});
+-
+-test("pipeline.ts reaches no node: module", () => {
+-  assert.deepEqual(
+-    loads("pipeline.ts").filter(([, to]) => to.startsWith("node:")),
+-    [],
+-  );
+-  for (const to of typeImports("pipeline.ts"))
+-    assert.equal(to, "ir.ts", `pipeline.ts imports types from ${to}`);
+-});
+-
+-test("ir.ts, the passes, pipeline.ts, the frontends, the backends, and every file they load are .ts files that name no listed runtime global and call no import()", () => {
+-  const targets = ["ir.ts", "passes", "pipeline.ts", "frontends", "backends"];
+-  const reached = loads(...targets).flatMap(([, to]) => (to.startsWith("node:") ? [] : [to]));
+-  const files = [...new Set([...targets.flatMap(sources), ...reached])];
+-  assert.deepEqual(
+-    files.filter((file) => !file.endsWith(".ts")),
+-    [],
+-  );
+-  for (const file of files) assert.deepEqual(codeOf(file).match(RUNTIME), null, file);
+-});
+-
+-test("no frontend or backend loads a node: module when imported, even through another file", () => {
+-  for (const folder of ["frontends", "backends"]) {
+-    const files = fs
+-      .readdirSync(path.join(scripts, folder), { encoding: "utf8", recursive: true })
+-      .filter((f) => f.endsWith(".ts"));
+-    assert.ok(files.length > 0, folder);
+-    for (const f of files)
+-      for (const [, to] of loads(path.join(folder, f)))
+-        assert.ok(!to.startsWith("node:"), `${folder}/${f} reaches ${to}`);
+-  }
+-});
+-
+-const small: Rule = { kind: "invariant", name: "Small" };
+-
+-const noView = checkView({}, inspect);
+-
+-const holding = (spec: Spec) => {
+-  const verdicts: Verdict[] = [];
+-  for (const rule of stateRules(spec))
+-    verdicts.push({ rule, outcome: "holds", messages: undefined });
+-  return verdicts;
+-};
+-
+-const twoStates = (breaks: Rule[], property = "Settles"): CheckResult => ({
+-  spec: {
+-    module: "Two",
+-    variables: ["x"],
+-    invariants: ["Small"],
+-    properties: [property],
+-    deadlock: false,
+-    written: [],
+-    folder: "",
+-  },
+-  paths: undefined,
+-  graph: {
+-    states: new Map([
+-      ["1", { vars: { x: 0 }, start: true, breaks: [] }],
+-      ["2", { vars: { x: 1 }, start: false, breaks }],
+-    ]),
+-    steps: [{ from: "1", to: "2", action: "Grow" }],
+-  },
+-  rules: [{ rule: small, outcome: breaks.length ? "broken" : "holds", messages: undefined }],
+-  properties: [
+-    {
+-      rule: { kind: "property", name: property },
+-      outcome: breaks.length ? "broken" : "holds",
+-      messages: [
+-        {
+-          code: EC.TLC_STATE_PRINT2,
+-          level: LEVEL.STATE,
+-          body: ["1: <Initial predicate>", "x = 0"],
+-        },
+-      ],
+-      bug: undefined,
+-      initialOnly: false,
+-    },
+-  ],
+-  exit: breaks.length ? 1 : 0,
+-  stop: undefined,
+-  drawing: undefined,
+-  states: { distinct: 2, initial: 1, complete: true, cut: false },
+-  messages: [{ code: EC.TLC_FINISHED, level: LEVEL.NONE, body: ["Finished in 394ms at (T)"] }],
+-});
+-
+-const body = (files: Map<string, Iterable<string | Uint8Array>>, name: string) => {
+-  let text = "";
+-  for (const part of files.get(name) ?? [])
+-    text += typeof part === "string" ? part : new TextDecoder().decode(part);
+-  return text;
+-};
+-
+-test("the pipeline turns a hand-built graph into the out folder's files with no TLC", () => {
+-  const broken = compile(twoStates([small]), noView);
+-  assert.equal(broken.exit, 1);
+-  assert.deepEqual(
+-    [...broken.files.keys()],
+-    ["chart.mmd", "report.md", "tlc.out", "tlc-Settles.out"],
+-  );
+-  assert.equal(body(broken.files, "report.md"), broken.report);
+-  assert.equal(body(broken.files, "tlc.out"), "Finished in 00s at (T)\n");
+-  assert.equal(body(broken.files, "tlc-Settles.out"), "State 1: <Initial predicate>\nx = 0\n");
+-  assert.equal(
+-    broken.report,
+-    [
+-      "# Two",
+-      "",
+-      "TLC reached 2 states and 1 steps. The chart draws 2 states and 1 arrows.",
+-      "",
+-      "## Small breaks",
+-      "The shortest path has 1 step:",
+-      "0. 0",
+-      "1. Grow: 1",
+-      "",
+-      "## Settles breaks",
+-      "TLC found a counterexample. It is in tlc-Settles.out.",
+-    ].join("\n"),
+-  );
+-  assert.match(
+-    body(broken.files, "chart.mmd"),
+-    /^ {2}(s\d+) --> (s\d+): Grow\n[\s\S]*^ {2}class \2 breaks$/m,
+-  );
+-
+-  const holds = compile(twoStates([]), noView);
+-  assert.equal(holds.exit, 0);
+-  assert.deepEqual([...holds.files.keys()], ["chart.mmd", "report.md", "tlc.out"]);
+-  assert.match(holds.report, /^## Rules that hold\nSmall, Settles$/m);
+-  assert.doesNotMatch(body(holds.files, "chart.mmd"), /breaks/);
+-});
+-
+-test("an invariant and a property with one name stay two rules", () => {
+-  const reportWithSmallProperty = (breaks: Rule[]) => {
+-    const result = twoStates(breaks);
+-    const step = result.graph.steps[0];
+-    result.spec.properties = ["Small"];
+-    result.properties = [
+-      {
+-        rule: { kind: "property", name: "Small" },
+-        outcome: "broken",
+-        messages: [],
+-        bug: { start: "1", path: [{ action: "Grow", state: "2", step }], loop: 1, stutters: true },
+-        initialOnly: false,
+-      },
+-    ];
+-    return compile(result, noView).report;
+-  };
+-  const both = reportWithSmallProperty([small]);
+-  assert.match(both, /^## Small breaks\nThe shortest path has 1 step:$/m);
+-  assert.match(
+-    both,
+-    /^## Small breaks\nTLC's counterexample is in tlc-Small\.out\. It has 1 step:$/m,
+-  );
+-  assert.match(reportWithSmallProperty([]), /^## Rules that hold\nSmall$/m);
+-});
+-
+-test("a PROPERTY that breaks with no path writes TLC's counterexample", () => {
+-  const result = twoStates([]);
+-  result.properties[0].outcome = "broken";
+-  const { report, files } = compile(result, noView);
+-  assert.match(
+-    report,
+-    /^## Settles breaks\nTLC found a counterexample\. It is in tlc-Settles\.out\.$/m,
+-  );
+-  assert.equal(body(files, "tlc-Settles.out"), "State 1: <Initial predicate>\nx = 0\n");
+-});
+-
+-test("a rule named NoDeadlock leaves the deadlock rule a name of its own", () => {
+-  const holds = (result: CheckResult) => {
+-    result.spec.deadlock = true;
+-    result.rules = holding(result.spec);
+-    return compile(result, noView).report.match(/^## Rules that hold\n(.*)$/m)?.[1];
+-  };
+-  const invariant = twoStates([]);
+-  invariant.spec.invariants = ["NoDeadlock"];
+-  assert.equal(holds(invariant), "NoDeadlock, CHECK_DEADLOCK, Settles");
+-  assert.equal(holds(twoStates([], "NoDeadlock")), "Small, CHECK_DEADLOCK, NoDeadlock");
+-  assert.equal(holds(twoStates([])), "Small, NoDeadlock, Settles");
+-});
+-
+-test("a run that does not check for deadlock never names CHECK_DEADLOCK", () => {
+-  const invariant = twoStates([]);
+-  invariant.spec.invariants = ["Small", "NoDeadlock"];
+-  for (const result of [invariant, twoStates([], "NoDeadlock")]) {
+-    result.rules = holding(result.spec);
+-    assert.doesNotMatch(compile(result, noView).report, /CHECK_DEADLOCK/);
+-  }
+-});
+diff --git a/statechart/scripts/test/plain-tlc.test.ts a/statechart/scripts/test/plain-tlc.test.ts
+deleted file mode 100644
+index 434e256..0000000
+--- a/statechart/scripts/test/plain-tlc.test.ts
++++ /dev/null
+@@ -1,255 +0,0 @@
+-import assert from "node:assert/strict";
+-import { test } from "node:test";
+-import { agrees, skip } from "./tlc.ts";
+-
+-const late = [
+-  "---- MODULE Late ----",
+-  "EXTENDS Naturals, TLC",
+-  "CONSTANT Mode",
+-  "VARIABLES x",
+-  "f == [i \\in 0..2 |-> 0]",
+-  "Init == x = 0",
+-  "Grow == x < 5 /\\ x' = x + 1",
+-  'Bad == x = 3 /\\ \\/ Mode = "assert" /\\ Assert(FALSE, "late error") /\\ x\' = 0',
+-  '                \\/ Mode = "div" /\\ x\' = 1 \\div 0',
+-  "Next == Grow \\/ Bad",
+-  "Small == x < 1",
+-  "Below == x < 2",
+-  "InDomain == f[x] = 0",
+-  "====",
+-];
+-const lateCfg = (mode: string, rules: string) =>
+-  `CONSTANT Mode = "${mode}"\nINIT Init\nNEXT Next\nINVARIANTS ${rules}\n`;
+-
+-test(
+-  "a rule that breaks before another rule fails to evaluate breaks in either order",
+-  { skip },
+-  () => {
+-    const first = agrees("Late", { Late: late }, lateCfg("none", "Below InDomain"));
+-    const last = agrees("Late", { Late: late }, lateCfg("none", "InDomain Below"));
+-    assert.equal(first.status, 1);
+-    assert.deepEqual(first.breaks, new Map([["Below", 2]]));
+-    assert.deepEqual(first.holds, []);
+-    assert.deepEqual(first.unchecked, ["InDomain", "NoDeadlock"]);
+-    assert.deepEqual(last, first);
+-  },
+-);
+-
+-test("a rule that breaks before a step fails to evaluate breaks", { skip }, () => {
+-  for (const mode of ["div", "assert"]) {
+-    const v = agrees("Late", { Late: late }, lateCfg(mode, "Small"));
+-    assert.equal(v.status, 1);
+-    assert.deepEqual(v.breaks, new Map([["Small", 1]]));
+-    assert.deepEqual(v.unchecked, ["NoDeadlock"]);
+-  }
+-});
+-
+-const warnPath = (next: string) => [
+-  "---- MODULE WarnPath ----",
+-  "EXTENDS Naturals",
+-  "VARIABLES x",
+-  "f == [i \\in 0..1 |-> i]",
+-  "Init == x = 0",
+-  "One == x < 3 /\\ x' = x + 1",
+-  "Two == x < 3 /\\ x' = x + 2",
+-  `Next == ${next}`,
+-  "Zero == f[x] = 0",
+-  "====",
+-];
+-
+-test("a rule that breaks before it fails to evaluate breaks", { skip }, () => {
+-  const v = agrees(
+-    "WarnPath",
+-    { WarnPath: warnPath("One \\/ Two") },
+-    "INIT Init\nNEXT Next\nINVARIANT Zero\n",
+-  );
+-  assert.equal(v.status, 1);
+-  assert.equal(v.breaks.get("Zero"), 1);
+-});
+-
+-test("a rule that fails to evaluate before TLC reaches a break exits 2", { skip }, () => {
+-  for (const deadlock of ["", "CHECK_DEADLOCK FALSE\n"]) {
+-    const v = agrees(
+-      "WarnPath",
+-      { WarnPath: warnPath("Two \\/ One") },
+-      `INIT Init\nNEXT Next\nINVARIANT Zero\n${deadlock}`,
+-    );
+-    assert.equal(v.status, 2);
+-    assert.deepEqual(v.holds, []);
+-  }
+-});
+-
+-test("a rule that no verdict run checks stays not checked under a SYMMETRY", { skip }, () => {
+-  const v = agrees(
+-    "Hide",
+-    {
+-      Hide: [
+-        "---- MODULE Hide ----",
+-        "EXTENDS Naturals, TLC",
+-        "CONSTANTS a, b, S",
+-        "VARIABLES x, n",
+-        "Perms == Permutations(S)",
+-        "Init == x \\in S /\\ n = 0",
+-        "Next == n < 4 /\\ n' = n + 1 /\\ UNCHANGED x",
+-        "Early == n # 1",
+-        "Bad == x = a",
+-        'Boom == n < 3 \\/ Assert(FALSE, "boom")',
+-        "====",
+-      ],
+-    },
+-    "CONSTANTS a = a b = b S = {a, b}\nSYMMETRY Perms\nINIT Init\nNEXT Next\nINVARIANTS Early Boom Bad\n",
+-  );
+-  assert.equal(v.status, 1);
+-  assert.deepEqual(v.breaks, new Map([["Early", 1]]));
+-  assert.deepEqual(v.holds, []);
+-  assert.deepEqual(v.unchecked, ["Bad", "Boom", "NoDeadlock"]);
+-});
+-
+-test("a deadlock breaks whatever shape the SPECIFICATION has", { skip }, () => {
+-  const live = agrees(
+-    "Live",
+-    {
+-      Live: [
+-        "---- MODULE Live ----",
+-        "EXTENDS Naturals",
+-        "VARIABLE x",
+-        "Init == x = 0",
+-        "Next == x < 2 /\\ x' = x + 1",
+-        "Spec == Init /\\ [][Next]_x",
+-        "LiveSpec == Spec /\\ WF_x(Next)",
+-        "TypeOK == x \\in 0..2",
+-        "====",
+-      ],
+-    },
+-    "SPECIFICATION LiveSpec\nINVARIANT TypeOK\n",
+-  );
+-  assert.deepEqual(live.breaks, new Map([["NoDeadlock", 2]]));
+-  assert.deepEqual(live.holds, ["TypeOK"]);
+-  for (const next of ["[][Next \\/ Tick]_vars", "[][\\E i \\in 1..2 : Step(i)]_vars"]) {
+-    const v = agrees(
+-      "Shape",
+-      {
+-        Shape: [
+-          "---- MODULE Shape ----",
+-          "EXTENDS Naturals",
+-          "VARIABLES x, t",
+-          "vars == <<x, t>>",
+-          "Init == x = 0 /\\ t = 0",
+-          "Step(i) == x < 2 /\\ x' = x + i /\\ UNCHANGED t",
+-          "Next == Step(1)",
+-          "Tick == t < 1 /\\ t' = 1 /\\ UNCHANGED x",
+-          `Spec == Init /\\ ${next}`,
+-          "====",
+-        ],
+-      },
+-      "SPECIFICATION Spec\n",
+-    );
+-    assert.equal(v.status, 1);
+-    assert.ok(v.breaks.has("NoDeadlock"));
+-  }
+-});
+-
+-test("a SPECIFICATION from an INSTANCE checks deadlock and finds none", { skip }, () => {
+-  const v = agrees(
+-    "Outer",
+-    {
+-      Inner: [
+-        "---- MODULE Inner ----",
+-        "EXTENDS Naturals",
+-        "VARIABLE x",
+-        "Spec == x = 0 /\\ [][x' = (x + 1) % 3]_x",
+-        "====",
+-      ],
+-      Outer: [
+-        "---- MODULE Outer ----",
+-        "VARIABLE x",
+-        "I == INSTANCE Inner",
+-        "Spec == I!Spec",
+-        "====",
+-      ],
+-    },
+-    "SPECIFICATION Spec\n",
+-  );
+-  assert.equal(v.status, 0);
+-  assert.deepEqual(v.holds, ["NoDeadlock"]);
+-});
+-
+-test("a state at a CONSTRAINT bound is no deadlock", { skip }, () => {
+-  const v = agrees(
+-    "Bound",
+-    {
+-      Bound: [
+-        "---- MODULE Bound ----",
+-        "EXTENDS Naturals",
+-        "VARIABLE x",
+-        "Init == x = 0",
+-        "Next == x' = x + 1",
+-        "Small == x < 3",
+-        "====",
+-      ],
+-    },
+-    "INIT Init\nNEXT Next\nCONSTRAINT Small\n",
+-  );
+-  assert.equal(v.status, 0);
+-  assert.deepEqual(v.holds, ["NoDeadlock"]);
+-  assert.doesNotMatch(v.chart, /^ {2}class s\d+ breaks$/m);
+-});
+-
+-test(
+-  "a model with no initial state passes as it does in TLC, and the report says why",
+-  { skip },
+-  () => {
+-    const v = agrees(
+-      "NoInit",
+-      {
+-        NoInit: [
+-          "---- MODULE NoInit ----",
+-          "EXTENDS Naturals",
+-          "VARIABLE x",
+-          "Init == x = 0 /\\ x > 0",
+-          "Next == x' = x + 1",
+-          "Small == x < 3",
+-          "====",
+-        ],
+-      },
+-      "INIT Init\nNEXT Next\nINVARIANT Small\n",
+-    );
+-    assert.equal(v.status, 0);
+-    assert.deepEqual(v.holds, ["NoDeadlock", "Small"]);
+-    assert.match(
+-      v.report,
+-      /^TLC found no state that satisfies Init, so no state can break a rule\.$/m,
+-    );
+-  },
+-);
+-
+-test(
+-  "a run after a break stops at the state bound and leaves its rules not checked",
+-  { skip },
+-  () => {
+-    const v = agrees(
+-      "Cycle",
+-      {
+-        Cycle: [
+-          "---- MODULE Cycle ----",
+-          "EXTENDS Naturals",
+-          "VARIABLE x",
+-          "Next == x' = (x + 1) % 100005",
+-          "Spec == x = 0 /\\ [][Next]_x /\\ WF_x(Next)",
+-          "Early == x # 3",
+-          "Back == []<>(x = 0)",
+-          "====",
+-        ],
+-      },
+-      "SPECIFICATION Spec\nINVARIANT Early\nPROPERTY Back\n",
+-    );
+-    assert.equal(v.status, 1);
+-    assert.deepEqual(v.breaks, new Map([["Early", 3]]));
+-    assert.deepEqual(v.holds, []);
+-    assert.deepEqual(v.unchecked, ["Back", "NoDeadlock"]);
+-    assert.match(
+-      v.report,
+-      /^After the first break, each TLC run stops at 100,000 distinct states\./m,
+-    );
+-  },
+-);
+diff --git a/statechart/scripts/test/render.test.ts a/statechart/scripts/test/render.test.ts
+deleted file mode 100644
+index 57ff41e..0000000
+--- a/statechart/scripts/test/render.test.ts
++++ /dev/null
+@@ -1,145 +0,0 @@
+-import assert from "node:assert/strict";
+-import { execFileSync } from "node:child_process";
+-import fs from "node:fs";
+-import { createRequire } from "node:module";
+-import os from "node:os";
+-import path from "node:path";
+-import { before, test } from "node:test";
+-import { fileURLToPath, pathToFileURL } from "node:url";
+-import { mermaid as chartText } from "../backends/mermaid.ts";
+-import type { Graph } from "../ir.ts";
+-import { walk } from "../passes/reach.ts";
+-import { project } from "../pipeline.ts";
+-import { fuzz, type Html, type Mermaid, type Render } from "./labels.ts";
+-
+-const here = path.dirname(fileURLToPath(import.meta.url));
+-const charts = [];
+-for (const f of fs.readdirSync(path.join(here, "charts")))
+-  charts.push(path.join(here, "charts", f));
+-for (const d of fs.readdirSync(path.join(here, "corpus")))
+-  charts.push(path.join(here, "corpus", d, "chart.mmd"));
+-const guide = fs.readFileSync(path.join(here, "../../references/render.md"), "utf8");
+-const css = guide.match(/```css\n([\s\S]*?)```/);
+-assert.ok(css, "references/render.md has no css block");
+-const theme = css[1];
+-const cache = path.join(
+-  process.env.XDG_CACHE_HOME ?? path.join(os.homedir(), ".cache"),
+-  "statechart",
+-);
+-const install = (name: string, ...packages: string[]) => {
+-  const dir = path.join(cache, name);
+-  execFileSync(
+-    "npm",
+-    ["install", "--prefix", dir, "--no-audit", "--no-fund", "--save-exact", ...packages],
+-    { stdio: ["ignore", "pipe", "pipe"] },
+-  );
+-  return createRequire(path.join(dir, "package.json"));
+-};
+-
+-let render: Render;
+-let mermaid: Mermaid;
+-let html: Html;
+-before(async () => {
+-  const pele = install("test-pele-1.9.0", "pele@1.9.0");
+-  ({ render } = await import(pathToFileURL(pele.resolve("pele")).href));
+-
+-  const parser = install("test-mermaid-11.16.0", "mermaid@11.16.0", "jsdom@26.1.0");
+-  const { window } = new (parser("jsdom").JSDOM)("");
+-  Object.assign(globalThis, { window, document: window.document, DOMParser: window.DOMParser });
+-  mermaid = (await import(pathToFileURL(parser.resolve("mermaid")).href)).default;
+-  html = (markup) => {
+-    const t = window.document.createElement("template");
+-    t.innerHTML = markup;
+-    return t.content.textContent ?? "";
+-  };
+-});
+-
+-const classes = new Set<string>();
+-for (const chart of charts) {
+-  const name = path.relative(here, chart);
+-  const text = fs.readFileSync(chart, "utf8");
+-  const marks = [...text.matchAll(/^ {2}class (\w+) (\w+)$/gm)];
+-  for (const [, , mark] of marks) classes.add(mark);
+-
+-  test(`${name} renders in Pele 1.9.0 with each class on its node`, () => {
+-    const { svg } = render(text);
+-    assert.match(svg, /^<svg /);
+-    for (const [, id, mark] of marks)
+-      assert.match(svg, new RegExp(`class="pele-node[^"]* ${mark}\\b[^"]*" data-id="${id}"`), id);
+-  });
+-
+-  test(`${name} parses in mermaid.js, which chat views use`, async () => {
+-    await mermaid.parse(text);
+-  });
+-}
+-
+-test("random labels and colors keep their text and the chart's shape in Mermaid and Pele", async () => {
+-  const { drawn, refused, failure } = await fuzz({ seed: 1, charts: 500, render, mermaid, html });
+-  if (failure) assert.fail(failure);
+-  assert.ok(drawn > 400 && refused > 20, `${drawn} charts drawn, ${refused} refused`);
+-});
+-
+-const pathPoints = (d: string) => {
+-  const points: number[][] = [];
+-  let [ax, ay] = [0, 0];
+-  for (const [, cmd, args] of d.matchAll(/([MLC])([^MLC]*)/g)) {
+-    const n = args.split(/[ ,]/).filter(Boolean).map(Number);
+-    const [x, y] = n.slice(-2);
+-    if (cmd !== "M")
+-      for (let t = 0; t <= 1; t += 1 / 64) {
+-        const u = 1 - t;
+-        points.push(
+-          cmd === "L"
+-            ? [ax + (x - ax) * t, ay + (y - ay) * t]
+-            : [
+-                u ** 3 * ax + 3 * u * u * t * n[0] + 3 * u * t * t * n[2] + t ** 3 * x,
+-                u ** 3 * ay + 3 * u * u * t * n[1] + 3 * u * t * t * n[3] + t ** 3 * y,
+-              ],
+-        );
+-      }
+-    [ax, ay] = [x, y];
+-  }
+-  return points;
+-};
+-
+-test("an arrow into a parent from its only way in stays out of the parent's title bar in Pele 1.9.0", () => {
+-  const graph: Graph = { states: new Map(), steps: [] };
+-  for (const [id, at] of [
+-    ["ask", "Asking your view for labels"],
+-    ["flat", "Laying out the chart/Flat"],
+-    ["parents", "Laying out the chart/Parent states"],
+-    ["regions", "Laying out the chart/Regions"],
+-  ])
+-    graph.states.set(id, { vars: { at }, start: id === "ask", breaks: [] });
+-  for (const [to, action] of [
+-    ["flat", "String"],
+-    ["parents", "Array"],
+-    ["regions", "Object"],
+-  ])
+-    graph.steps.push({ from: "ask", to, action });
+-  const { chart } = project(graph, walk(graph), { state: (v) => String(v.at).split("/") }, []);
+-  const { svg } = render(chartText(chart));
+-  const bars = [
+-    ...svg.matchAll(
+-      /<g class="pele-cluster [^"]*" data-id="([^"]*)"><rect x="([\d.]+)" y="([\d.]+)" width="([\d.]+)"[^>]*\/><path d="M[\d.]+,([\d.]+)H/g,
+-    ),
+-  ].map(([, id, x, y, w, rule]) => ({ id, left: +x, right: +x + +w, top: +y, bottom: +rule }));
+-  assert.equal(bars.length, 1);
+-  const crossings: string[] = [];
+-  for (const [, id, d] of svg.matchAll(
+-    /<g class="pele-edge pele-transition" data-id="([^"]*)"><path d="([^"]*)"/g,
+-  ))
+-    for (const bar of bars)
+-      if (
+-        pathPoints(d).some(
+-          ([x, y]) => x > bar.left && x < bar.right && y > bar.top && y < bar.bottom,
+-        )
+-      )
+-        crossings.push(`${id} crosses the title bar of ${bar.id}`);
+-  assert.deepEqual(crossings, []);
+-});
+-
+-test("the theme in references/render.md colors each class that the charts use", () => {
+-  assert.ok(classes.size > 0);
+-  for (const name of classes) assert.match(theme, new RegExp(`\\.pele \\.${name} rect \\{`), name);
+-});
+diff --git a/statechart/scripts/test/tlc-out.test.ts a/statechart/scripts/test/tlc-out.test.ts
+deleted file mode 100644
+index 7f27d04..0000000
+--- a/statechart/scripts/test/tlc-out.test.ts
++++ /dev/null
+@@ -1,90 +0,0 @@
+-import assert from "node:assert/strict";
+-import { spawn } from "node:child_process";
+-import { once } from "node:events";
+-import fs from "node:fs";
+-import os from "node:os";
+-import path from "node:path";
+-import { test } from "node:test";
+-import { fileURLToPath } from "node:url";
+-import { plainText } from "../backends/plain-text.ts";
+-import { readMessages } from "../frontends/messages.ts";
+-
+-const here = path.dirname(fileURLToPath(import.meta.url));
+-const corpus = path.join(here, "corpus");
+-const skip = !process.env.TLA2TOOLS && "set TLA2TOOLS to the path of tla2tools.jar to run TLC";
+-const read = (file: string) => fs.readFileSync(file, "utf8");
+-const maybe = (file: string) => (fs.existsSync(file) ? read(file) : "");
+-const plain = (text: string) => [...plainText(readMessages(text))].join("");
+-
+-const steady = (text: string) =>
+-  text
+-    .replace(/"chart-[0-9a-f]{32}"/g, '"chart"')
+-    .replace(/\bfp \d+ and seed -?\d+/g, "fp _ and seed _")
+-    .replace(/\[pid: \d+\]/g, "[pid: _]")
+-    .replace(/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/g, "_")
+-    .replace(/ \([\d,]+ d?s\/min\)/g, "")
+-    .replace(/ in (?:\d+d \d\dh|\d\dh \d\dmin|\d\dmin \d\ds|\d\ds) at /g, " in _ at ");
+-
+-test(
+-  "each corpus spec's TLC output reads as plain TLC prints it at -workers 1",
+-  { skip, concurrency: 4 },
+-  async (t) => {
+-    await Promise.all(
+-      fs.readdirSync(corpus).map((name) =>
+-        t.test(name, async () => {
+-          const dir = path.join(corpus, name);
+-          const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "statechart-plain-"));
+-          const [tool, twin, out] = ["tool", "plain", "out"].map((f) => path.join(tmp, f));
+-          fs.mkdirSync(tool);
+-          fs.mkdirSync(twin);
+-          const view = path.join(dir, "view.mjs");
+-          const child = spawn(
+-            process.execPath,
+-            [
+-              path.join(here, "../statechart.ts"),
+-              path.join(dir, `${name}.tla`),
+-              ...(fs.existsSync(view) ? ["--view", view] : []),
+-              "--out",
+-              out,
+-            ],
+-            {
+-              env: {
+-                ...process.env,
+-                JAVA: path.join(here, "java.ts"),
+-                STATECHART_JAVA: process.env.JAVA ?? "java",
+-                STATECHART_RECORD: tool,
+-                STATECHART_PLAIN: twin,
+-              },
+-              stdio: ["ignore", "ignore", "pipe"],
+-            },
+-          );
+-          let stderr = "";
+-          child.stderr.on("data", (chunk: Buffer) => (stderr += chunk));
+-          await once(child, "close");
+-          assert.equal(stderr, "");
+-          const runs = fs.readdirSync(twin).filter((f) => f.endsWith(".out"));
+-          assert.ok(runs.includes("ChartRun.out"), "the drawing run has a plain twin");
+-          for (const run of runs) {
+-            const exit = run.replace(/\.out$/, ".exit");
+-            assert.equal(maybe(path.join(tool, exit)), maybe(path.join(twin, exit)), exit);
+-            assert.equal(
+-              steady(plain(read(path.join(tool, run)))),
+-              steady(read(path.join(twin, run))),
+-              run,
+-            );
+-          }
+-          assert.equal(
+-            steady(read(path.join(out, "tlc.out"))),
+-            steady(`${read(path.join(twin, "verdict-1.out"))}\n`),
+-          );
+-          const verdicts = new Set<string>();
+-          for (const run of runs)
+-            if (run.startsWith("verdict-")) verdicts.add(steady(`${read(path.join(twin, run))}\n`));
+-          for (const f of fs.readdirSync(out))
+-            if (/^tlc-\w+\.out$/.test(f))
+-              assert.ok(verdicts.has(steady(read(path.join(out, f)))), f);
+-        }),
+-      ),
+-    );
+-  },
+-);
+diff --git a/statechart/scripts/test/tlc.ts a/statechart/scripts/test/tlc.ts
+deleted file mode 100644
+index f659423..0000000
+--- a/statechart/scripts/test/tlc.ts
++++ /dev/null
+@@ -1,158 +0,0 @@
+-import assert from "node:assert/strict";
+-import { spawnSync } from "node:child_process";
+-import fs from "node:fs";
+-import os from "node:os";
+-import path from "node:path";
+-import { fileURLToPath } from "node:url";
+-import { PINNED_FLAGS } from "../run.ts";
+-
+-const here = path.dirname(fileURLToPath(import.meta.url));
+-const jar = process.env.TLA2TOOLS;
+-export const skip = !jar && "set TLA2TOOLS to the path of tla2tools.jar to run TLC";
+-
+-const RULES = /^(INVARIANTS?|PROPERTY|PROPERTIES|CHECK_DEADLOCK)$/;
+-
+-const exitClass = (status: number | null) =>
+-  status === 0 ? 0 : status === 11 || status === 12 || status === 13 ? 1 : 2;
+-
+-const stepsIn = (text: string) =>
+-  Math.max((text.match(/^State \d+: (?!Stuttering$)/gm)?.length ?? 0) - 1, 0) +
+-  (text.match(/^Back to state \d+: </gm)?.length ?? 0);
+-
+-function properties(cfg: string) {
+-  const names: string[] = [];
+-  let section = "";
+-  for (const line of cfg.split("\n")) {
+-    section = line.match(/^[A-Z_]+/)?.[0] ?? section;
+-    if (/^PROPERT(Y|IES)$/.test(section))
+-      for (const word of line.trim().split(/\s+/)) if (word && word !== section) names.push(word);
+-  }
+-  return names;
+-}
+-
+-function tlc(dir: string, module: string, cfg: string) {
+-  const run = `alone-${fs.readdirSync(dir).length}`;
+-  const file = path.join(dir, `${run}.cfg`);
+-  fs.writeFileSync(file, cfg);
+-  const tmp = path.join(dir, `${run}-tmp`);
+-  fs.mkdirSync(tmp);
+-  const r = spawnSync(
+-    process.env.JAVA ?? "java",
+-    [
+-      `-Djava.io.tmpdir=${tmp}`,
+-      "-cp",
+-      jar ?? "",
+-      "tlc2.TLC",
+-      ...PINNED_FLAGS,
+-      "-config",
+-      file,
+-      "-metadir",
+-      path.join(dir, `${run}-meta`),
+-      module,
+-    ],
+-    { cwd: dir, encoding: "utf8" },
+-  );
+-  const out = r.stdout + r.stderr;
+-  const temporal = properties(cfg);
+-  const broke =
+-    out.match(/^Error: (?:Invariant|Action property|Property) (\S+) is violated/m)?.[1] ??
+-    (/^Error: Deadlock reached\./m.test(out) ? "NoDeadlock" : undefined) ??
+-    (/^Error: Temporal properties were violated\./m.test(out) && temporal.length === 1
+-      ? temporal[0]
+-      : undefined);
+-  return { status: r.status, out, broke, steps: stepsIn(out) };
+-}
+-
+-function alone(cfg: string, rule: string) {
+-  const lines: string[] = [];
+-  let section = "";
+-  for (const line of cfg.split("\n")) {
+-    section = line.match(/^[A-Z_]+/)?.[0] ?? section;
+-    if (!RULES.test(section)) lines.push(line);
+-  }
+-  if (rule !== "NoDeadlock")
+-    lines.push(
+-      `${properties(cfg).includes(rule) ? "PROPERTY" : "INVARIANT"} ${rule}`,
+-      "CHECK_DEADLOCK FALSE",
+-    );
+-  return `${lines.join("\n")}\n`;
+-}
+-
+-export type Verdict = {
+-  status: number | null;
+-  breaks: Map<string, number>;
+-  holds: string[];
+-  unchecked: string[];
+-  chart: string;
+-  report: string;
+-};
+-
+-export function agrees(module: string, files: { [name: string]: string[] }, cfg: string): Verdict {
+-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "statechart-plain-"));
+-  try {
+-    for (const [name, lines] of Object.entries(files))
+-      fs.writeFileSync(path.join(dir, `${name}.tla`), `${lines.join("\n")}\n`);
+-    fs.writeFileSync(path.join(dir, `${module}.cfg`), cfg);
+-    const out = path.join(dir, "out");
+-    const cli = spawnSync(
+-      process.execPath,
+-      [path.join(here, "../statechart.ts"), path.join(dir, `${module}.tla`), "--out", out],
+-      { encoding: "utf8" },
+-    );
+-    const plain = tlc(dir, module, cfg);
+-    const report = fs.existsSync(out) ? fs.readFileSync(path.join(out, "report.md"), "utf8") : "";
+-    const shown = `${cli.stderr}${report}`;
+-    assert.equal(
+-      cli.status,
+-      exitClass(plain.status),
+-      `TLC says:\n${plain.out}\nThe command says:\n${shown}`,
+-    );
+-    assert.doesNotMatch(shown, /Chart\w*Mark/);
+-    if (cli.status !== 2) assert.equal(cli.stderr, "");
+-    if (!report) assert.match(cli.stderr, /TLC could not check/);
+-    if (cli.status === 2) {
+-      const error = plain.out.match(/^Error: .*$/m)?.[0];
+-      assert.ok(
+-        error && shown.includes(error),
+-        `TLC says:\n${plain.out}\nThe command says:\n${shown}`,
+-      );
+-    }
+-
+-    const breaks = new Map<string, number>();
+-    const bounded = new Set<string>();
+-    for (const [, rule, body] of report.matchAll(/^## (\S+) breaks\n(.*)$/gm)) {
+-      const said = body.match(/has (\d+) steps?:/)?.[1];
+-      const file = body.match(/ is in (tlc-\S+\.out)\./)?.[1];
+-      if (!file) {
+-        breaks.set(rule, Number(said));
+-        continue;
+-      }
+-      const text = fs.readFileSync(path.join(out, file), "utf8");
+-      if (said) assert.equal(Number(said), stepsIn(text), rule);
+-      if (/^Semantic processing of module ChartBound$/m.test(text)) bounded.add(rule);
+-      breaks.set(rule, stepsIn(text));
+-    }
+-    const list = (title: string) =>
+-      report
+-        .match(new RegExp(`^## ${title}\\n(.*)$`, "m"))?.[1]
+-        .split(", ")
+-        .sort() ?? [];
+-    const holds = list("Rules that hold");
+-    const unchecked = list("Rules not checked");
+-    const chartFile = path.join(out, "chart.mmd");
+-    const chart = fs.existsSync(chartFile) ? fs.readFileSync(chartFile, "utf8") : "";
+-    if (plain.broke) assert.equal(breaks.get(plain.broke), plain.steps, shown);
+-    for (const rule of holds) {
+-      const r = tlc(dir, module, alone(cfg, rule));
+-      assert.equal(r.status, 0, `${rule} holds in the report, but TLC says:\n${r.out}`);
+-    }
+-    for (const [rule, steps] of breaks) {
+-      const r = tlc(dir, module, alone(cfg, rule));
+-      assert.equal(r.broke, rule, `${rule} breaks in the report, but TLC says:\n${r.out}`);
+-      if (!bounded.has(rule)) assert.equal(steps, r.steps, rule);
+-    }
+-    return { status: cli.status, breaks, holds, unchecked, chart, report };
+-  } finally {
+-    fs.rmSync(dir, { recursive: true, force: true });
+-  }
+-}
