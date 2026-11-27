@@ -11,7 +11,9 @@ Portable process rules for everyday work in repositories that adopt this workflo
 - Default path for substantial changes: settled decisions → spec → owner review → plan → scoped implementation → verification and review → authorized integration.
 - Edit code, configuration, and tests in a dedicated branch and worktree (`<repo-root>/.worktrees/<name>`); keep the `main` checkout for reading current state. Docs-only edits are exempt.
 - Stage only touched paths; never `git add .`. No direct pushes to `main`, force-pushes, or destructive resets.
-- Preserve others' work: check status, branch, SHA, and diff before editing or committing. Close worktrees and branches you open when done, or list them in the closing report with path, branch, and state. Inventory all worktrees of a repository with `scripts/worktrees.mjs`; removal covers only merged clean worktrees and requires owner authorization.
+- Preserve others' work: check status, branch, SHA, and diff before editing or committing. Inventory all worktrees of a repository with `scripts/worktrees.mjs`.
+- Standing owner authorization for disposable residue: once your PR is merged, remove without asking the residue you created for it, and list what you removed in the closing report. This covers merged clean worktrees under `<repo-root>/.worktrees/` (`scripts/worktrees.mjs --remove-merged --yes`), their local branches (`git branch -d`, never `-D`) and merged remote branches, containers, images and build cache of your gate runs labeled `factory.owner`, and temporary folders you created.
+- Hard limits that no authorization or automation overrides: never remove a worktree with uncommitted changes or unpushed commits, an unmerged branch, a Docker resource without the `factory.owner` label, a volume that holds data, or residue owned by another session. When in doubt, keep it and list it in the closing report with path, branch, and state.
 - Merging into `main` requires explicit owner authorization for that PR. Merging into non-`main` branches is within agent authority unless restricted by a mandate.
 
 ## Verification

@@ -14,4 +14,4 @@ Read only the reference needed for the task:
 
 Repository-specific instructions override where more specific: exact gate commands, status names, static-analysis configs, and document paths live in the receiving repository. Operator-local defaults (workspace index, machines, model routing, report language) live in the operator workspace, not here.
 
-For a repository's linked worktree inventory and safe removal of merged clean worktrees: `node scripts/worktrees.mjs` (read-only; `--remove-merged --yes` removes only merged clean worktrees and never deletes branches).
+For a repository's linked worktree inventory and safe removal of merged clean worktrees: `node scripts/worktrees.mjs` (read-only; `--remove-merged --yes` removes only merged clean worktrees and never deletes branches; see the standing cleanup authorization in `references/daily-workflow.md`).
