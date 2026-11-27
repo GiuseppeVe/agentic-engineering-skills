@@ -20,7 +20,6 @@
 | `graphify-start` | original | Owner-supplied original material |
 | `handoff` | adapted | `mattpocock/skills@4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` |
 | `orchestrating-gemini-workers` | original | Owner-supplied original material; earlier upstream provenance undocumented |
-| `how-to-use-codex` | original | GiuseppeVe-authored Codex prompting and model-guidance skill; release recorded in lock |
 | `marketing-screenshots` | original | Owner-supplied original material; earlier upstream provenance undocumented |
 | `master-orchestrator` | original | Owner-supplied, untracked local snapshot; both host paths and exact source-file hashes recorded in the source manifest. No source commit is claimed. |
 | `mdx-to-html` | original | Owner-supplied original material; earlier upstream provenance undocumented |

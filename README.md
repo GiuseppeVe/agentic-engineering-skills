@@ -227,7 +227,7 @@ Enable and trust the plugin hooks separately from skill installation; see [Hooks
 
 Role attachments and native-agent registrations are separate. Implementation session profiles require explicit local setup; see the relevant implementation skill for its role and routing requirements.
 
-The plugin exposes 36 shared skills to both Codex and Claude Code. `task-implement` selects model and effort for its orchestrator and implementation subagents according to the host.
+The plugin exposes 35 shared skills to both Codex and Claude Code. `task-implement` selects model and effort for its orchestrator and implementation subagents according to the host.
 
 Selective copying is advanced and can remove workflow stages. See [selective installation](docs/selective-install.md).
 

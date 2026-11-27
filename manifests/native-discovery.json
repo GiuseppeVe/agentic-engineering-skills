@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-26",
+  "capturedAt": "2026-11-27",
   "environment": {
     "isolation": "Separate temporary Windows host profiles.",
     "commandNotation": "Native commands ran from the local marketplace.",
@@ -25,7 +25,6 @@
       "grill-me",
       "grilling",
       "handoff",
-      "how-to-use-codex",
       "impeccable",
       "improve-codebase-architecture",
       "learn-codebase",
@@ -50,7 +49,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.171.0",
+      "version": "codex-cli 0.172.0",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -67,7 +66,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -107,7 +105,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -132,9 +129,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:ae16e8746d24ad8c8da0e71948133ce63a3ca7e605c396ca4d38203b5a2c19f4",
-        "fullTreeHash": "sha256:9fca6e15e3d820c4b1db9d83375ee76e831d2053e2c6767d6a749d71465b2bad",
-        "fileCount": 522
+        "treeHash": "sha256:da1dc42cd368e050468ebc30b7ff6c798fb794ea1a7121adc72b8e8cc44cf64e",
+        "fullTreeHash": "sha256:5bcf47ef780066a4e718f26f7c384da2a0c43003bfe9b90768a70819435a6713",
+        "fileCount": 521
       },
       "commands": [
         {
@@ -176,7 +173,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -216,7 +212,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -241,9 +236,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:ba6e7e9e64cc31a70d0058f7e4fa3b00faeea5506a1093ce76c3385a48bee03d",
-        "fullTreeHash": "sha256:9fca6e15e3d820c4b1db9d83375ee76e831d2053e2c6767d6a749d71465b2bad",
-        "fileCount": 522
+        "treeHash": "sha256:3b9aabc0c2a7b95b12ca74a6d48fbd1520700c887379c130fd9cef137538e115",
+        "fullTreeHash": "sha256:5bcf47ef780066a4e718f26f7c384da2a0c43003bfe9b90768a70819435a6713",
+        "fileCount": 521
       },
       "installedAgents": [
         {

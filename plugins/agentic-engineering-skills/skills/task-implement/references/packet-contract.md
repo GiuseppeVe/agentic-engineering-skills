@@ -1,6 +1,6 @@
 # Packet contract
 
-Every packet must define its `id`, classification, objective, dependencies, allowed files, file ownership, shared-contract surfaces, constraints, acceptance criteria, required tests, expected evidence, risks, and assumptions.
+Every packet must define its `id`, classification, objective (the observable part of the task outcome owned by this packet), dependencies, allowed files, file ownership, shared-contract surfaces, constraints, acceptance criteria, required tests, expected evidence, risks, and assumptions.
 
 Eligible parallel packets must have all prerequisites integrated and disjoint allowed files, ownership, and shared-contract surfaces. Use at most three parallel workers unless the operator explicitly authorizes more and host capacity is verified.
 

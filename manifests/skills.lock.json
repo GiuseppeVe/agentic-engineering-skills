@@ -50,9 +50,9 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/brainstorming/",
       "sha256": "a3782402a2ea2a0c57f1a79b1b0608f2b91bd098e12e8cb1ee8702fb4a882b68",
-      "localSha256": "e6e5282b46f033a70a6aee0d9ee1b1612d10c739748fac9f6ca49bf71a80e8af",
+      "localSha256": "f05485d9c74ed237c433fea3c044a17c1d06b1e91e320b20527e6e0dc82c9bec",
       "dependencies": [
-        "writing-plans"
+        "to-spec"
       ],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/brainstorming.patch",
@@ -258,15 +258,6 @@
       ]
     },
     {
-      "name": "how-to-use-codex",
-      "sourceType": "original",
-      "localSha256": "e5c9fae8478714792d239f27b620a30faf63dbc52b3c92aec727678a6847b7b1",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
-      "license": "MIT",
-      "payloadType": "file",
-      "dependencies": []
-    },
-    {
       "name": "impeccable",
       "sourceType": "adapted",
       "repository": "https://github.com/pbakaus/impeccable",
@@ -374,8 +365,8 @@
     {
       "name": "plan-orchestrator",
       "sourceType": "original",
-      "localSha256": "eb0ba53a256d9ae15869ab0b0b283ee8729116f3a9cf60dce26a96370c5576a6",
-      "releaseCommit": "3e386566fa46673e31047098e0402c69fed51e47",
+      "localSha256": "35ca8b7f31eafc46f06674fa19d3d6f6239cd6d8148860ab1a43eb0c239dc9ff",
+      "releaseCommit": "83eb006e097390f24e7b9669818bfcacc0192ac3",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -444,8 +435,8 @@
     {
       "name": "task-implement",
       "sourceType": "original",
-      "localSha256": "ce68908f9d246bed244fc310f1b95e886996017a2cc1462e54c8d4eebd315317",
-      "releaseCommit": "644ebd36b6435c3c44ed08da5d848942c6451eb3",
+      "localSha256": "5026db42612208c542c259a8f5a71969e7ef590c24aa16a681c8cd2ea786c655",
+      "releaseCommit": "83eb006e097390f24e7b9669818bfcacc0192ac3",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
@@ -478,7 +469,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/",
       "sha256": "305911f9a65016bf31b209ade13da492042e3ebe1434db4161a777a4efc69dbb",
-      "localSha256": "5bf37fa11cbbd3001794562b53535b80a9e8e2c0ff2e4028a5c40f616a50a91b",
+      "localSha256": "576496a49d9a46986d8cae79286687feb786cb071e8192c9bcbc71a288ccb0a5",
       "dependencies": [],
       "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
       "patchPath": "manifests/patches/to-spec.patch",
@@ -544,7 +535,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "c80ab89bcbe4dd386c16c78342ac542def28ac4922ec2c3ae9ec6ca8753d0b7a",
+      "localSha256": "8145bd5a010bed1d9ca4f1c7fac4dac7d9c8d9c46f3263577026b15a200352d5",
       "dependencies": [],
       "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",

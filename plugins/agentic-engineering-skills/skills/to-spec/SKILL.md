@@ -23,7 +23,9 @@ The `.mdx` file is the durable source of truth; the project issue tracker is its
 
 Treat the spec as a reviewable artifact, not chat-only prose. The `.mdx` file must stand alone for a reader who never saw the chat, source discussion, wayfinder map, or prior drafts.
 
-- **Lead with context.** Explain the problem, destination, scope, and user impact before implementation detail.
+- **Lead with the expected outcome.** Follow with the problem, scope, and user
+  impact before implementation detail. Link any unresolved decision that
+  materially affects the outcome to Open Questions.
 - **Use MDX blocks only when useful.** Plain Markdown is valid MDX. Add diagrams, file maps, decision tables, callouts, or review surfaces when they make the spec easier to read.
 - **Keep it user-readable.** Prefer short sections, tables for comparisons, and Mermaid diagrams for relationships. Avoid dumping implementation minutiae into prose.
 - **No revision memos.** If adapting an existing `.md`, issue body, or pasted draft, publish a clean standalone `.mdx` proposal. Do not write "unlike the previous version" or "preserve prior spec".
@@ -65,6 +67,8 @@ flowchart TD
 4. Write the `.mdx` using the template, including its requirements, invariants, executor, status, and open-decision contracts. Continue the draft while decisions or publication remain blocked.
 
 5. Self-review before any publication. Verify `.mdx` extension, standalone context, complete template obligations and Related Work, no unresolved placeholders, and valid Markdown-compatible MDX, Mermaid, and tables. Trace known requirements, invariants, unknowns, and proposed defaults from context to the artifact; check acceptance drafts and testing decisions. Verify status, executor selection, and intended tracker labels against the template contracts.
+   Verify that the expected outcome is supported by the requirements and draft
+   acceptance checks, and that it introduces no new obligation.
 
 6. Publish only when existing session authorization and applicable permissions allow tracker writes. Create or update the relevant spec issue and link the `.mdx`. Make `ready-for-agent` reflect the template status: apply it only for Ready for planning; remove it from a blocked draft when authorized. No additional triage is needed. If approval is required or tracker access/configuration is missing, deliver the reviewed local spec, prepared issue content, and concrete setup or publication proposal; report the pending action and request only the missing authorization or setup information. Already authorized actions need no repeated permission request. The skill does not grant tracker-write or setup-mutation permission.
 
@@ -76,11 +80,16 @@ flowchart TD
 >
 > **Downstream execution:** State the executor selected explicitly by the user or applicable project instructions. If none is selected, write "Executor selection pending in planning."
 
-**Goal:** <one sentence describing what this spec enables>
-
 **Status:** State "Ready for planning" only when remaining questions do not block safe, testable planning. Otherwise write "Draft - blocked" and identify the blocking Open Questions. Unknown required invariants, unresolved requirements that prevent acceptance criteria, and unaccepted defaults needed to settle those decisions are blockers. Nonblocking executor selection or tracker setup remains explicitly pending without inventing a decision.
 
 ---
+
+## Expected Outcome
+
+<In one to three sentences, describe who gains what capability or what system
+behavior changes, under which relevant conditions, and what observable result
+would show the change worked. Keep implementation choices in Implementation
+Decisions and unresolved requirements in Open Questions.>
 
 ## Problem Statement
 

@@ -340,7 +340,7 @@ test('selective installation has one lock-derived row per skill', () => {
 
 test('selective installation includes mandatory skill prerequisites', () => {
   const required = [
-    ['brainstorming', 'writing-plans'],
+    ['brainstorming', 'to-spec'],
     ['grill-me', 'grilling'],
     ['retro', 'writing-for-agents'],
     ['improve-codebase-architecture', 'codebase-design'],
