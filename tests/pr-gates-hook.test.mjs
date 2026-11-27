@@ -242,7 +242,7 @@ test('the hook launches gates:pr detached with the pull request and reports the 
   writeFileSync(path.join(repository, 'gate.mjs'), [
     "import { writeFileSync } from 'node:fs';",
     "console.log('gate output line');",
-    "await new Promise(resolve => setTimeout(resolve, 1500));",
+    "await new Promise(resolve => setTimeout(resolve, 12_000));",
     "writeFileSync('marker.json', JSON.stringify({ args: process.argv.slice(2), cwd: process.cwd() }));",
   ].join('\n'));
   try {
@@ -250,7 +250,7 @@ test('the hook launches gates:pr detached with the pull request and reports the 
     const result = runHook(input, home);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(result.stderr, '');
-    assert.ok(result.elapsed < 5_000, `hook took ${result.elapsed} ms`);
+    assert.ok(result.elapsed < 10_000, `hook took ${result.elapsed} ms`);
     assert.ok(!existsSync(marker), 'the hook must return before the gates finish');
     const output = JSON.parse(result.stdout);
     assert.deepEqual(Object.keys(output), ['hookSpecificOutput']);
@@ -283,5 +283,38 @@ test('the hook launches gates:pr without --pr when the pull request is unknown',
     assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /in the background from /);
     assert.ok(await waitFor(marker), 'the detached gates:pr run never wrote its marker');
     assert.deepEqual(JSON.parse(readFileSync(marker, 'utf8')), []);
+  } finally { remove(base); }
+});
+
+// Codex runs hook commands on Windows as `powershell.exe -NoProfile -Command <command>`
+// and waits until the hook's stdout pipe closes. A gates run that inherits
+// that pipe keeps the hook open until the timeout, and the host then kills it.
+test('under PowerShell the hook output closes before the gates finish', { skip: process.platform !== 'win32' && 'Windows only' }, async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:pr': 'node gate.mjs' });
+  const started = path.join(repository, 'started.json');
+  const finished = path.join(repository, 'finished.json');
+  writeFileSync(path.join(repository, 'gate.mjs'), [
+    "import { writeFileSync } from 'node:fs';",
+    "writeFileSync('started.json', JSON.stringify({ args: process.argv.slice(2), probe: process.env.PR_GATES_TEST_PROBE ?? null }));",
+    "await new Promise(resolve => setTimeout(resolve, 20_000));",
+    "writeFileSync('finished.json', '{}');",
+  ].join('\n'));
+  try {
+    const input = { hook_event_name: 'PostToolUse', tool_name: 'PowerShell', cwd: repository, tool_input: { command: 'gh pr create --fill' }, tool_response: { stdout: `${pullUrl}\n`, exit_code: 0 } };
+    const begin = Date.now();
+    const result = spawnSync('powershell.exe', ['-NoProfile', '-Command', `node "${hook}"`], {
+      input: JSON.stringify(input),
+      encoding: 'utf8',
+      env: { ...process.env, HOME: home, USERPROFILE: home, PR_GATES_TEST_PROBE: 'inherited' },
+      timeout: 40_000,
+    });
+    const elapsed = Date.now() - begin;
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /^\[pr-gates\] Launched/);
+    assert.ok(elapsed < 15_000, `the hook output stayed open ${elapsed} ms`);
+    assert.ok(!existsSync(finished), 'the hook output must close before the gates finish');
+    assert.ok(await waitFor(started), 'the gates:pr run never started');
+    assert.deepEqual(JSON.parse(readFileSync(started, 'utf8')), { args: ['--pr', pullUrl], probe: 'inherited' });
+    assert.ok(await waitFor(finished), 'the gates:pr run did not survive the hook');
   } finally { remove(base); }
 });

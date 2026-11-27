@@ -397,12 +397,36 @@ export function launchGates(root, ref, { home = os.homedir(), now = new Date() }
   const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
   const log = path.join(directory, `${name}-${stamp}-${process.pid}.log`);
   closeSync(openSync(log, 'a'));
-  const child = spawn(process.execPath, [fileURLToPath(import.meta.url), RUN_FLAG, log, ...(safeRef ? [safeRef] : [])], {
-    cwd: root, detached: true, windowsHide: true, stdio: 'ignore',
-  });
-  child.on('error', () => {});
-  child.unref();
+  startDetached([fileURLToPath(import.meta.url), RUN_FLAG, log, ...(safeRef ? [safeRef] : [])], root);
   return { log, ref: safeRef };
+}
+
+// Codex runs hook commands on Windows through PowerShell. A child that the
+// hook starts there with spawn() inherits the hook's stdout pipe, so the host
+// waits for the whole gates run and kills it at the hook timeout. On Windows
+// the gates are therefore started by a short-lived PowerShell with
+// Start-Process, which creates them through ShellExecute and passes no
+// handles. The hook waits for that PowerShell (a detached one dies before it
+// starts anything) and falls back to plain spawn() only when PowerShell
+// itself cannot be started, so the gates never start twice. Plain spawn()
+// is the path on the other platforms.
+const START_PROCESS = [
+  "$list = $env:PR_GATES_ARGS -split \"`n\" | ForEach-Object { '\"' + $_ + '\"' }",
+  "Start-Process -FilePath $env:PR_GATES_NODE -ArgumentList ($list -join ' ') -WorkingDirectory $env:PR_GATES_CWD -WindowStyle Hidden",
+].join('; ');
+
+function startDetached(args, cwd) {
+  const direct = () => {
+    const child = spawn(process.execPath, args, { cwd, detached: true, windowsHide: true, stdio: 'ignore' });
+    child.on('error', () => {});
+    child.unref();
+  };
+  if (process.platform !== 'win32') return direct();
+  const env = { ...process.env, PR_GATES_NODE: process.execPath, PR_GATES_ARGS: args.join('\n'), PR_GATES_CWD: cwd };
+  const result = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', START_PROCESS], {
+    env, windowsHide: true, stdio: 'ignore', timeout: 15_000,
+  });
+  if (result.error?.code === 'ENOENT') direct();
 }
 
 // The detached side: npm is a .cmd file on Windows and needs a shell there.
