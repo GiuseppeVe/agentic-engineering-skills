@@ -32,18 +32,34 @@ Plain Markdown is valid MDX. Use file maps, annotated code, decision tables, or 
 
 ## Plan structure
 
-Every plan starts with this header, immediately followed by `## Requirements Inventory`, then `## File Structure` before tasks:
+Every plan starts with this header, then `## Expected Outcome`, the
+architecture and tech stack lines, `## Requirements Inventory`, and
+`## File Structure` before the tasks.
 
 ```markdown
 # [Feature Name] Implementation Plan
 
 > **For agentic workers:** Use `task-implement` for one assigned plan task, `plan-orchestrator` for dependency-aware multi-task execution with a separate review thread per task, or inline execution with explicit checkpoints. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** [One sentence]
+---
+```
+
+### Expected Outcome (mandatory)
+
+```md
+## Expected Outcome
+
+<Describe the observable result when the plan's tasks are integrated. Identify
+the entry point or system boundary and the acceptance evidence that will show
+the result. Derive the outcome from the approved spec or supplied requirements.
+Use the Requirements Inventory for the binding obligations and evidence.>
+```
+
+After the outcome, state the approach in two lines:
+
+```markdown
 **Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies/libraries]
-
----
 ```
 
 ### Requirements Inventory (mandatory)
@@ -85,6 +101,8 @@ Commit boundary and owner follow the selected execution mode and explicit author
 
 ````markdown
 ### Task N: [Component Name]
+
+**Expected outcome:** [Observable result this task delivers within its scope.]
 
 **Satisfies:** REQ-003, REQ-007
 
@@ -131,7 +149,8 @@ Review yourself first, with the spec and fresh eyes:
 3. Check every task's external assumptions for a contract naming both endpoints; verify `_None._` claims.
 4. Verify bidirectional `Satisfied by:` / `Satisfies:` links, with no orphan requirements or tasks.
 5. Check each evidence level against the spec and each oracle against its required behavior and environment; retain gated and deferred work with authority, later owner task, and open status until proven.
-6. Fix placeholders and missing contracts, tests or commands.
+6. Verify that each task's expected outcome follows from its mapped REQs.
+   Fix placeholders and missing contracts, tests or commands.
 7. Check later types, signatures, and property names match earlier definitions.
 
 Fix issues inline. Preserve required content even under deadline pressure.

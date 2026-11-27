@@ -186,13 +186,6 @@
       "patchPath": "manifests/patches/handoff.patch"
     },
     {
-      "name": "how-to-use-codex",
-      "sourceType": "original",
-      "localPath": "how-to-use-codex/SKILL.md",
-      "license": "MIT",
-      "localRoot": "projectSkills"
-    },
-    {
       "name": "impeccable",
       "sourceType": "adapted",
       "repository": "https://github.com/pbakaus/impeccable",

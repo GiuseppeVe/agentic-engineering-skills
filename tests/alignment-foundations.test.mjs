@@ -39,7 +39,7 @@ test("brainstorming visual companion guide and runtime resolve inside the plugin
   const skillPath = skill("brainstorming", "SKILL.md");
   const body = await readFile(skillPath, "utf8");
 
-  assert.match(body, /`visual-companion\.md`/);
+  assert.match(body, /\]\(visual-companion\.md\)/);
   for (const file of [
     "visual-companion.md",
     "agents/openai.yaml",

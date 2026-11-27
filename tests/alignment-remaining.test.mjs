@@ -15,16 +15,6 @@ async function skill(name) {
   };
 }
 
-test("How to Use Codex trigger covers prompt requests without catching coding work", async () => {
-  const { source } = await skill("how-to-use-codex");
-  const description = source.match(/^description: (.+)$/m)?.[1] ?? "";
-
-  assert.match(description, /write, generate, improve, shorten, or critique a prompt/i);
-  assert.match(description, /GPT-5\.6/);
-  assert.match(description, /GPT-6 Astra/);
-  assert.match(description, /not when they ask to carry out coding work directly/i);
-});
-
 test("deslopping cleanup keeps analysis read-only and requires a separate decision for functional cleanup", async () => {
   const { source } = await skill("deslopping-cleanup");
 

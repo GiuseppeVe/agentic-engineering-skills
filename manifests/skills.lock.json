@@ -50,9 +50,9 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/brainstorming/",
       "sha256": "a3782402a2ea2a0c57f1a79b1b0608f2b91bd098e12e8cb1ee8702fb4a882b68",
-      "localSha256": "e6e5282b46f033a70a6aee0d9ee1b1612d10c739748fac9f6ca49bf71a80e8af",
+      "localSha256": "f05485d9c74ed237c433fea3c044a17c1d06b1e91e320b20527e6e0dc82c9bec",
       "dependencies": [
-        "writing-plans"
+        "to-spec"
       ],
       "changeNotice": "Adapted for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/brainstorming.patch",
@@ -256,15 +256,6 @@
           "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5"
         }
       ]
-    },
-    {
-      "name": "how-to-use-codex",
-      "sourceType": "original",
-      "localSha256": "e5c9fae8478714792d239f27b620a30faf63dbc52b3c92aec727678a6847b7b1",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
-      "license": "MIT",
-      "payloadType": "file",
-      "dependencies": []
     },
     {
       "name": "impeccable",
@@ -478,7 +469,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/",
       "sha256": "305911f9a65016bf31b209ade13da492042e3ebe1434db4161a777a4efc69dbb",
-      "localSha256": "5bf37fa11cbbd3001794562b53535b80a9e8e2c0ff2e4028a5c40f616a50a91b",
+      "localSha256": "576496a49d9a46986d8cae79286687feb786cb071e8192c9bcbc71a288ccb0a5",
       "dependencies": [],
       "changeNotice": "Preserves explicit-only invocation on Codex and Claude Code and packages host metadata with the skill.",
       "patchPath": "manifests/patches/to-spec.patch",
@@ -544,7 +535,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "c80ab89bcbe4dd386c16c78342ac542def28ac4922ec2c3ae9ec6ca8753d0b7a",
+      "localSha256": "c3dc0d3f450db63cd15d34fbb20dc48375589bc4fc86c478c8b9dd98e61705c9",
       "dependencies": [],
       "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
       "patchPath": "manifests/patches/writing-plans.patch",
