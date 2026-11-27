@@ -1,0 +1,23 @@
+target-version = "py312"
+extend-exclude = [
+  ".agents",
+  ".claude",
+  ".git",
+  ".venv",
+  ".worktrees",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+]
+
+[lint]
+select = [
+  "F",      # Pyflakes (undefined names, unused imports/vars, redefinitions)
+  "B",      # flake8-bugbear (real Python bug patterns)
+  "E711",   # comparison to None
+  "E712",   # comparison to True/False
+  "E722",   # bare except
+  "S110",   # try-except-pass
+  "BLE001", # blind except Exception
+]

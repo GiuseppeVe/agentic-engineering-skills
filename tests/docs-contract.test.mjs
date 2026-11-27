@@ -89,15 +89,16 @@ test('README has required exact section sequence and manifest-derived install co
   assert.match(source, /invoke one included skill/i);
 });
 
-test('README and the plugin hooks guide describe explicit Caveman invocation and the PR-gate launcher', () => {
+test('README and the plugin hooks guide describe explicit Caveman invocation, the PR-gate launcher, and the edit-lint hook', () => {
   const readme = read('README.md');
   const guide = read('docs/plugin-hooks.md');
   const hooks = section(readme, 'Hooks I use');
-  assert.match(hooks, /registers one PR-gate launcher/);
+  assert.match(hooks, /registers one PR-gate launcher and one fast read-only edit-lint hook/);
   for (const text of [hooks, guide]) {
     assert.match(text, /`gh pr create` without `--draft`/);
     assert.match(text, /`gh pr ready`/);
     assert.match(text, /`npm run gates:pr\b/);
+    assert.match(text, /edit-lint\.mjs/);
     assert.match(text, /never blocks/);
   }
   assert.match(hooks, /Invoke `Caveman` explicitly/);
@@ -108,10 +109,10 @@ test('README and the plugin hooks guide describe explicit Caveman invocation and
   assert.equal((readme.match(/\[plugin hooks guide\]\(docs\/plugin-hooks\.md\)/g) ?? []).length, 1);
   assert.match(guide, /Invoke `Caveman` explicitly/);
   assert.match(guide, /Node\.js 22 or newer/);
-  assert.match(guide, /one `PostToolUse` hook/);
+  assert.match(guide, /`PostToolUse` hook/);
   assert.match(guide, /\.agentic\/pr-gates/);
   assert.match(guide, /not enforcement/i);
-  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/pr-gates-hook\.test\.mjs/);
+  assert.match(guide, /node --test tests\/plugin-hooks\.test\.mjs tests\/pr-gates-hook\.test\.mjs tests\/edit-lint-hook\.test\.mjs/);
   for (const text of [readme, guide]) assert.doesNotMatch(text, /pr-skills:v1|pr-workflow-check|post-pr\.mjs|post-merge\.mjs/);
   assert.ok(existsSync(resolve(root, 'plugins/agentic-engineering-skills/hooks/hooks.json')), 'missing hook manifest');
   for (const removed of ['post-merge.mjs', 'post-pr.mjs', 'pr-skills.json', 'pr-workflow-check.mjs', 'hook-lib.mjs', 'billing-fallback.md', 'billing-policies.json']) {
