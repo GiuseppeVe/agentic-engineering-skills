@@ -1,2 +1,18 @@
-AGENTIC-PATCH-CHUNKS/1
-{"version":1,"byteLength":2858909,"sha256":"6e2e24a85bcffd27ad8c23c89f6690e7ed47a225bf02088a8096469b598d2e82","chunks":[{"path":"statechart.patch.parts/6e2e24a85bcffd27ad8c23c89f6690e7ed47a225bf02088a8096469b598d2e82/000001.txt","byteLength":921600,"sha256":"01d1ea0c4e1491b800a1dc5d517bd85bac092341a55223dc7723659fa517a59c"},{"path":"statechart.patch.parts/6e2e24a85bcffd27ad8c23c89f6690e7ed47a225bf02088a8096469b598d2e82/000002.txt","byteLength":921600,"sha256":"fb9dfe7be4a0d724c0de9c24bb696fc056850c87ed7b513291fe940800bc5220"},{"path":"statechart.patch.parts/6e2e24a85bcffd27ad8c23c89f6690e7ed47a225bf02088a8096469b598d2e82/000003.txt","byteLength":921600,"sha256":"fbd50217991dac46dddf6fd6874f4be7cb9a7fd40dcc16802fd213937d499b3f"},{"path":"statechart.patch.parts/6e2e24a85bcffd27ad8c23c89f6690e7ed47a225bf02088a8096469b598d2e82/000004.txt","byteLength":94109,"sha256":"ac4750e13f8233dee2b916452ec8e7c317905e732dd7685b1d12061b5578ce39"}]}
+diff --git a/statechart/SKILL.md b/statechart/SKILL.md
+index 18d653a..365b170 100644
+--- a/statechart/SKILL.md
++++ b/statechart/SKILL.md
+@@ -6,0 +7,2 @@
++> **Adaptation:** Based on pinned `cursor/plugins` (`pstack/skills/statechart`); packaged with explicit-invocation Codex metadata and without the upstream internal test corpus.
++
+diff --git b/statechart/agents/openai.yaml b/statechart/agents/openai.yaml
+new file mode 100644
+index 0000000..68ddae3
+--- /dev/null
++++ b/statechart/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: statechart
++  short_description: Invoke statechart explicitly
++policy:
++  allow_implicit_invocation: false

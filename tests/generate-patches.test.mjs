@@ -38,6 +38,23 @@ test("directory patch captures every change and reconstructs the payload", async
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
+test("excludePaths drops unpackaged upstream subtrees from directory patches", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "patch-test-"));
+  try {
+    const old = join(dir, "old"), next = join(dir, "next");
+    await Promise.all([mkdir(join(old, "scripts", "test"), { recursive: true }), mkdir(next)]);
+    await Promise.all([
+      writeFile(join(old, "SKILL.md"), "old\n"),
+      writeFile(join(old, "scripts", "test", "fixture.md"), "upstream only\n"),
+      writeFile(join(next, "SKILL.md"), "new\n"),
+    ]);
+    const patch = await generatePatch({ name: "fixture", upstream: old, local: next, directory: true, excludePaths: ["scripts/test/"] });
+    assert.ok(patch.includes("SKILL.md"));
+    assert.ok(!patch.includes("scripts/test"));
+    await assert.rejects(generatePatch({ name: "fixture", upstream: join(old, "SKILL.md"), local: join(next, "SKILL.md"), directory: false, excludePaths: ["scripts/test/"] }), /directory acquisition/);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
 test("single-file adaptations and empty-patch rejection remain supported", async () => {
   const dir = await mkdtemp(join(tmpdir(), "patch-test-"));
   try {

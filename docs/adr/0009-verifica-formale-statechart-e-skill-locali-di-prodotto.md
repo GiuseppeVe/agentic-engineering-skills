@@ -24,7 +24,7 @@ Le skill `create-formal-verification-skill` e `maintain-formal-verification-skil
 
 - **Salvare le verifiche formali solo come runbook Markdown senza skill locale nel prodotto.** Scartata dall'owner: la skill locale dedicata a un invariante critico rende la riesecuzione e il controllo di drift immediatamente scopribili dagli agenti quando toccano i file coperti.
 - **Importare anche `create-verification-skill` e `maintain-verification-skill`.** Scartata: duplicano la documentazione operativa e le suite E2E/contract già presenti nei repository di prodotto e introducono una feature map parallela soggetta a drift continuo, in contrasto con la verifica leggera di ADR 0008.
-- **Includere nel payload distribuito del plugin i 377 file del corpus di test interno di `statechart`.** Scartata: quasi raddoppierebbe il numero di file copiati nelle cache utente degli host senza aggiungere alcuna capacità operativa agli agenti (la rimozione resta tracciata in `manifests/patches/statechart.patch`).
+- **Includere nel payload distribuito del plugin i 377 file del corpus di test interno di `statechart`.** Scartata: quasi raddoppierebbe il numero di file copiati nelle cache utente degli host senza aggiungere alcuna capacità operativa agli agenti (il corpus è escluso con `excludePaths: ["scripts/test/"]` in `manifests/skill-sources.json`, quindi non entra né nel payload né in `manifests/patches/statechart.patch`; l'hash upstream nel lock copre comunque l'intera cartella pinnata).
 
 ## Misura
 

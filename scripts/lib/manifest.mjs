@@ -419,5 +419,9 @@ export function validateSourceManifest(manifest) {
       if (!source.localPath || isAbsolute(source.localPath) || source.localPath.split(/[\\/]/).includes("..")) throw new Error(`localPath must be portable and relative for ${source.name}`);
     }
   }
+  for (const source of manifest.skills.filter(x => x.excludePaths !== undefined)) {
+    if (source.sourceType !== "adapted" || !source.upstreamPath?.endsWith("/")) throw new Error(`excludePaths requires an adapted directory acquisition for ${source.name}`);
+    if (!Array.isArray(source.excludePaths) || source.excludePaths.length === 0 || source.excludePaths.some(path => typeof path !== "string" || !path.endsWith("/") || !normalizedRelative(path.slice(0, -1)))) throw new Error(`excludePaths must be normalized relative directories ending with / for ${source.name}`);
+  }
   return [...manifest.skills].sort((a, b) => a.name.localeCompare(b.name));
 }

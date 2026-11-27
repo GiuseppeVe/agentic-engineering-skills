@@ -286,7 +286,8 @@
       "localRoot": "projectSkills",
       "localPath": "statechart/",
       "changeNotice": "Packaged from cursor/plugins (pstack) with explicit-invocation Codex metadata and without the upstream internal test corpus.",
-      "patchPath": "manifests/patches/statechart.patch"
+      "patchPath": "manifests/patches/statechart.patch",
+      "excludePaths": ["scripts/test/"]
     },
     {
       "name": "test-driven-development",
