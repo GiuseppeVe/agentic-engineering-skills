@@ -8,7 +8,7 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pr-gates.mjs\"",
-            "timeout": 10,
+            "timeout": 30,
             "statusMessage": "Checking for PR gates"
           }
         ]

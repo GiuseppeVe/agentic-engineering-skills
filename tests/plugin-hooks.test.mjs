@@ -29,7 +29,9 @@ test('the only PostToolUse hook is the PR-gate launcher on the shell tools', () 
   const [hook] = groups[0].hooks;
   assert.equal(hook.type, 'command');
   assert.equal(hook.command, 'node "${CLAUDE_PLUGIN_ROOT}/hooks/pr-gates.mjs"');
-  assert.ok(hook.timeout <= 10, 'the launcher must stay a short hook');
+  // The launcher does not wait for the gates, but on Windows it starts them
+  // through a short-lived PowerShell, which a slow machine can hold for seconds.
+  assert.ok(hook.timeout >= 20 && hook.timeout <= 30, 'the launcher must stay a short hook with room for the Windows start');
 });
 
 test('plugin ships no reminder, verifier or marker scripts', () => {

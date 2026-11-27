@@ -28,7 +28,9 @@ If an earlier local setup still registers a post-PR or post-merge hook, or expec
 
 ## Requirements and setup
 
-The hook scripts require Node.js 22 or newer and work with Windows and Unix Node runtimes when the host can expand the plugin-root variable in the hook command. The launcher also needs `npm` on the `PATH` of the host session.
+The hook scripts require Node.js 22 or newer and work with Windows and Unix Node runtimes. Both hosts replace `${CLAUDE_PLUGIN_ROOT}` in the hook command with the installed plugin folder before running it: Claude Code runs the command through Git Bash on Windows, and Codex 0.172.0 substitutes the text and runs it as `powershell.exe -NoProfile -Command <command>`. The launcher also needs `npm` on the `PATH` of the host session.
+
+On Windows the launcher starts the detached run through a short-lived PowerShell `Start-Process`, not directly. Under the PowerShell that Codex uses, a child started directly inherits the hook's output pipe; Codex then waits for the whole gates run, kills it at the hook timeout and reports `PostToolUse Failed`. `Start-Process` passes no handles, so the hook completes in a few seconds and the gates keep running after it and after the session ends. Starting PowerShell costs one to four seconds, which is why the launcher's timeout is 30 seconds.
 
 Codex requires the user to review and trust plugin-bundled hooks before running them. Enable the plugin, inspect and trust its hook definition in the host controls, then start a fresh session. A listed plugin or skill does not prove hooks are enabled or trusted. Claude Code also needs the plugin and its hook configuration enabled by the host.
 
