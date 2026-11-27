@@ -58,7 +58,3 @@ Il dettaglio sta sotto la riga o nel report. `done` solo se il compito è comple
 ## Thread OpenCode
 
 Un thread su un'istanza OpenCode (DeepSeek via Vibe) funziona solo con il bridge loopback e il server OpenCode accesi. Script e procedura stanno nel repository che fornisce il bridge e nel riferimento `t3-deepseek-routing.md` della skill `plan-orchestrator`. Con `ECONNREFUSED` non ritentare: accendere il bridge. Non cambiare modello o provider di propria iniziativa.
-
-## Note specifiche di repository
-
-- **Alfe (`alfe_AI_app`).** Preflight: `node scripts/agentic/preflight-host.mjs [--branch <branch>]` (esce 0 o 1 ed elenca i problemi). Gate: `node scripts/agentic/gate-runner.mjs`; suite backend sull'integrazione: `node scripts/agentic/gate-runner.mjs run --sha <sha> --base main --role suites`. I job `mandate-scope` e `package-complete` di `verify.yml` leggono `docs/work/mandates/<piano>.md` e `docs/work/packages/<pacchetto>.md`. Bridge DeepSeek/Vibe: `scripts/agentic/*deepseek-vibe-bridge*.mjs`, bridge su `127.0.0.1:4319`, server OpenCode su `4096`.
