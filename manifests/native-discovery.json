@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "evidenceSource": "isolated-native-installs",
-  "capturedAt": "2026-11-26",
+  "capturedAt": "2026-11-27",
   "environment": {
     "isolation": "Separate temporary Windows host profiles.",
     "commandNotation": "Native commands ran from the local marketplace.",
@@ -25,7 +25,6 @@
       "grill-me",
       "grilling",
       "handoff",
-      "how-to-use-codex",
       "impeccable",
       "improve-codebase-architecture",
       "learn-codebase",
@@ -67,7 +66,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -107,7 +105,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -132,9 +129,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:ae16e8746d24ad8c8da0e71948133ce63a3ca7e605c396ca4d38203b5a2c19f4",
-        "fullTreeHash": "sha256:9fca6e15e3d820c4b1db9d83375ee76e831d2053e2c6767d6a749d71465b2bad",
-        "fileCount": 522
+        "treeHash": "sha256:12df7ee667a1cee5484bc38e5fc4def7e7d05823f15cbad56b8fd91f0d9b1cf6",
+        "fullTreeHash": "sha256:99464738a211694edebee0a9bafd957e76a985ab02762052d0a88cff0b658d4c",
+        "fileCount": 521
       },
       "commands": [
         {
@@ -176,7 +173,6 @@
         "grill-me",
         "grilling",
         "handoff",
-        "how-to-use-codex",
         "impeccable",
         "improve-codebase-architecture",
         "learn-codebase",
@@ -216,7 +212,6 @@
           "grill-me",
           "grilling",
           "handoff",
-          "how-to-use-codex",
           "impeccable",
           "improve-codebase-architecture",
           "learn-codebase",
@@ -241,9 +236,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:ba6e7e9e64cc31a70d0058f7e4fa3b00faeea5506a1093ce76c3385a48bee03d",
-        "fullTreeHash": "sha256:9fca6e15e3d820c4b1db9d83375ee76e831d2053e2c6767d6a749d71465b2bad",
-        "fileCount": 522
+        "treeHash": "sha256:8b2b0525a810811d2bf053fae912de0246412fe8ba4ecb70ef399d7d865a79d5",
+        "fullTreeHash": "sha256:99464738a211694edebee0a9bafd957e76a985ab02762052d0a88cff0b658d4c",
+        "fileCount": 521
       },
       "installedAgents": [
         {
