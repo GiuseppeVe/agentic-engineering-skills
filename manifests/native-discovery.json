@@ -32,13 +32,12 @@
       "master-orchestrator",
       "mdx-to-html",
       "orchestrating-gemini-workers",
-      "plan-orchestrator",
+      "plan-implement",
       "retro",
       "setup-goal",
       "setup-harness-evaluation",
       "setup-workflow-comparison",
       "simplify",
-      "task-implement",
       "test-driven-development",
       "to-spec",
       "ui-ux-pro-max",
@@ -49,7 +48,7 @@
   },
   "hosts": {
     "codex": {
-      "version": "codex-cli 0.172.0",
+      "version": "codex-cli 0.159.2",
       "discoveredSkills": [
         "archify",
         "ask-matt",
@@ -73,13 +72,12 @@
         "master-orchestrator",
         "mdx-to-html",
         "orchestrating-gemini-workers",
-        "plan-orchestrator",
+        "plan-implement",
         "retro",
         "setup-goal",
         "setup-harness-evaluation",
         "setup-workflow-comparison",
         "simplify",
-        "task-implement",
         "test-driven-development",
         "to-spec",
         "ui-ux-pro-max",
@@ -112,13 +110,12 @@
           "master-orchestrator",
           "mdx-to-html",
           "orchestrating-gemini-workers",
-          "plan-orchestrator",
+          "plan-implement",
           "retro",
           "setup-goal",
           "setup-harness-evaluation",
           "setup-workflow-comparison",
           "simplify",
-          "task-implement",
           "test-driven-development",
           "to-spec",
           "ui-ux-pro-max",
@@ -129,9 +126,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:84b61abd0407735782600ef328b0b94ce84d271745dd124d221966a8e75a752b",
-        "fullTreeHash": "sha256:2c381b414374c4669cecb2fa309cf3184d1f322cf3b4b1d93684c9bb8bc7658a",
-        "fileCount": 521
+        "treeHash": "sha256:a27fbf7d4c72addc88f584f188daff207f4cba86835f52c57f6a21f8f9b7677d",
+        "fullTreeHash": "sha256:5a17c00feae601dbb92212bf6cd1b2d2a971e664f702f1f77b893363da3bcd04",
+        "fileCount": 522
       },
       "commands": [
         {
@@ -180,13 +177,12 @@
         "master-orchestrator",
         "mdx-to-html",
         "orchestrating-gemini-workers",
-        "plan-orchestrator",
+        "plan-implement",
         "retro",
         "setup-goal",
         "setup-harness-evaluation",
         "setup-workflow-comparison",
         "simplify",
-        "task-implement",
         "test-driven-development",
         "to-spec",
         "ui-ux-pro-max",
@@ -219,13 +215,12 @@
           "master-orchestrator",
           "mdx-to-html",
           "orchestrating-gemini-workers",
-          "plan-orchestrator",
+          "plan-implement",
           "retro",
           "setup-goal",
           "setup-harness-evaluation",
           "setup-workflow-comparison",
           "simplify",
-          "task-implement",
           "test-driven-development",
           "to-spec",
           "ui-ux-pro-max",
@@ -236,9 +231,9 @@
         "skillRoots": [
           "skills"
         ],
-        "treeHash": "sha256:41bbd235a9b8cd99167dbbc025c4911c53bd7f7dd9b5830b261ae0458f4d9aef",
-        "fullTreeHash": "sha256:2c381b414374c4669cecb2fa309cf3184d1f322cf3b4b1d93684c9bb8bc7658a",
-        "fileCount": 521
+        "treeHash": "sha256:e876f7b7d68a084bd62441f00af440a62c79d6a55542f910caa3c38440c2201f",
+        "fullTreeHash": "sha256:5a17c00feae601dbb92212bf6cd1b2d2a971e664f702f1f77b893363da3bcd04",
+        "fileCount": 522
       },
       "installedAgents": [
         {
@@ -269,6 +264,10 @@
         },
         {
           "command": "claude plugin validate .",
+          "exitCode": 0
+        },
+        {
+          "command": "claude plugin validate plugins/agentic-engineering-skills",
           "exitCode": 0
         },
         {

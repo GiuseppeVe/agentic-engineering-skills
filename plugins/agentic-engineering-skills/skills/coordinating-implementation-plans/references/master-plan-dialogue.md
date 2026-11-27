@@ -1,180 +1,156 @@
-# Dialogo master–piano
+# Master–Plan Dialogue
 
-Leggi questo riferimento al lancio e a ogni ripresa, prima di creare o
-riprendere un thread-piano. Descrive il lato master di un unico protocollo: la
-definizione condivisa di mandato, domanda, decisione, aggiornamento e report è
-in [programme-messages.md](../../plan-orchestrator/references/programme-messages.md);
-il thread-piano applica la propria parte da
-[reporting-to-master.md](../../plan-orchestrator/references/reporting-to-master.md).
-I due riferimenti non duplicano il protocollo: fissano il comportamento del
-ruolo e rimandano alla stessa definizione. Il trasporto è dell’host; evidenze,
-gate e formato di merge restano del progetto consumatore.
+Read this reference at launch and on every resume before creating or resuming a
+plan thread (`plan-implement`). It describes the master side of one shared
+protocol: message meanings and correlation live in
+[programme-messages.md](../../plan-implement/references/programme-messages.md),
+and the plan thread side lives in
+[reporting-to-master.md](../../plan-implement/references/reporting-to-master.md).
 
-## Ingresso, recapito e mandato
+## Addresses and escalation ladder
 
-Al lancio prendi dal brief, e a ogni ripresa riconcilia con il ledger e lo stato
-reale:
+Record in the contracts map and canonical master state, for every plan:
+reachable address, revision, decision scope, resources, and state. The run
+ledger belongs to the plan thread — read it to reconcile, do not overwrite it.
+Never invent a missing address or treat a stale brief as a new mandate.
 
-- il recapito raggiungibile del master, il mandato del piano, la base o
-  revisione e il risultato atteso;
-- le decisioni riservate già concesse e i punti di stop;
-- il percorso di integrazione autorizzato e gli obblighi pendenti.
+The plan thread receives address and mandate and publishes its own address to
+its slice subagents. Questions travel along this ladder:
 
-Registra nella mappa e nello stato canonico del master (§3 della skill), per
-ogni piano, recapito, revisione, ambito delle decisioni, risorse e stato. Il
-ledger del run appartiene al thread-piano: leggilo per riconciliare, non
-riscriverlo. Non inventare un recapito mancante e non trattare un brief vecchio
-come un nuovo mandato.
-
-Il thread-piano riceve recapito e mandato e li passa ai propri thread di task.
-Le domande seguono questa direzione:
-
-| Chi domanda | A chi | Contenuto |
+| Sender | Recipient | Content |
 | --- | --- | --- |
-| Thread di task | Thread-piano | Domanda sul proprio mandato |
-| Thread-piano | Master | Solo il dubbio residuo di flusso o la scelta riservata, con mandato, azione sospesa, scelta proposta e conseguenza |
-| Master | Owner | Solo la scelta riservata, con scelta precisa, effetto osservabile e passo dipendente |
-| Master | Piani coinvolti | Decisione correlata alla domanda, con ambito e revisione; solo i piani coinvolti |
+| Slice subagent | Plan thread | Question on its assigned slice or mandate |
+| Plan thread | Master | Residual flow doubt or reserved choice only, with mandate, suspended action, proposed choice, and consequence |
+| Master | Owner | Reserved choice only, with exact choice, observable effect, and blocked step |
+| Master | Affected plans | Decision correlated to the question, with scope and revision; only to affected plans |
 
-Una domanda già coperta dal mandato, dalle fonti approvate o da una decisione in
-vigore non sale: il thread che la riceve la risolve localmente e registra la
-base. Il master non inoltra al piano una risposta che il piano poteva darsi, e
-non sostituisce una prova mancante con una decisione.
+A question already answered by the mandate, approved sources, or a decision in
+force never climbs the ladder: the receiving thread resolves it locally and
+records the basis. The master never forwards a question the plan could settle
+locally, and never substitutes a decision for missing verification evidence.
 
-## Documento di mandato, file di pacchetto e gate
+## Plan mandate, package manifest, and gates
 
-Prima di delegare un thread-piano, committa nel suo branch il
-[documento di mandato](../../plan-orchestrator/references/plan-mandate.md) con
-tutte le sezioni richieste, e solo dopo invia il primo messaggio; passa al piano
-percorso e `revision` del documento e registrali nella mappa. I mandati dei
-piani paralleli dichiarano lo stesso titolare per ogni file condiviso.
+Before delegating a plan thread, commit the
+[plan mandate document](../../plan-implement/references/plan-mandate.md) in its
+branch with all required sections, and only then send the first message; pass
+the document's path and `revision` to the plan thread and record them in the
+map. Parallel plan mandates declare the same holder for every shared file.
 
-Ogni modifica del mandato è un nuovo commit del documento con `revision`
-incrementata e `supersedes`; il messaggio che avvisa il piano cita la nuova
-revisione e non precede il commit: una modifica annunciata solo in chat non
-cambia il mandato. Quando la modifica cambia la consegna (base o risultato
-atteso), la nuova revisione è il mandato distinto che cita quello superato,
-e la revisione superata non si riscrive; a parità di consegna, una ripresa
-conserva l'identità del mandato. Un report tardivo resta attribuito alla
-revisione per cui è stato richiesto.
+Every mandate change is a new commit of the document with incremented
+`revision` and `supersedes`; the notification message cites the new revision
+and never precedes the commit: a chat-only message does not change a mandate.
+When a change alters delivery (base or expected outcome), the new revision is a
+distinct mandate citing the superseded one, and the old revision is never
+rewritten. A late report remains attributed to the revision under which it was
+requested.
 
-Alla creazione di un pacchetto committa il [file di pacchetto](package-manifest.md)
-nel branch `pkg/*`, prima della prima PR di piano. Aggiornalo nello stesso passo
-in cui aggiungi un piano alla mappa, e aggiungi `pr` quando la PR del piano si
-apre: un piano presente nella mappa ma assente dal file sfuggirebbe al controllo
-di completezza.
+When creating a package, commit the [package manifest](package-manifest.md) on
+`pkg/*` before the first plan PR. Update it in the same step that adds a plan
+to the map, and record `pr` when the plan PR opens: a plan present in the map
+but absent from the package manifest escapes completeness checks.
 
-Non scegli i gate e non ne togli: la mappa versionata del progetto li seleziona
-dal diff e, nel dubbio, seleziona di più. Il gate completo è obbligatorio quando
-il diff tocca un percorso che la mappa non assegna o un file che la mappa
-dichiara condiviso, e quando il diff o la mappa non si leggono. La mappa stessa
-è un file condiviso: una sua modifica richiede la review dell'owner, e la PR che
-la modifica è selezionata con la mappa della propria base.
+Never choose or drop CI gates: the project's versioned map selects them from
+the diff and defaults to running more when uncertain. Full gates are mandatory
+when the diff touches an unmapped path or a shared file, or when the diff or
+map cannot be read. The map itself is a shared file: changing it requires owner
+review, and a PR changing it is evaluated against the map on its base.
 
-Le PR che non vanno in `main` eseguono i gate selezionati; le PR verso `main` il
-gate completo. L'unica eccezione è l'etichetta di eccezione al diff del
-consumatore, che limita una PR verso `main` ai gate che la
-mappa seleziona dal diff. Vale solo se un account owner la applica dopo il push
-della head corrente, secondo l'ora che l'host registra per quel push e mai la
-data del commit; un nuovo push la fa decadere. Un consenso in chat, anche
-dell'owner, non è l'etichetta: un agente la chiede all'owner tramite il master
-e non se la concede. Dichiara readiness solo quando sulla head congelata sono
-verdi gli stati dei gate che la mappa seleziona per quella PR
-(`gh pr checks <PR>`) e la review indipendente di quella head è conclusa; un
-check GitHub Actions rosso solo per billing non blocca.
+PRs targeting non-`main` branches run selected gates; PRs targeting `main` run
+the full suite. The sole exception is the consumer's diff-exception label on
+the current head, valid only when applied by an owner account after that head
+was pushed (by the host's recorded push timestamp, never commit timestamp); any
+new push voids it. Chat approval, even from the owner, is not that label: an
+agent requests it through the master and never grants it itself. Declare
+readiness only when required gate statuses on the frozen head are green
+(`gh pr checks <PR>`) and independent review of that head is concluded; a
+hosted CI check red solely due to billing is not a blocker.
 
-## Dal brief alla risposta consegnata
+## From brief to verified delivery
 
-1. Il brief identifica recapito, mandato e decisioni riservate. Il piano crea o
-   riprende branch, worktree e thread di task.
-2. Un aggiornamento informativo si associa al mandato vigente. L’eventuale
-   conferma di ricezione conserva l’identità della consegna tecnica, non crea un
-   passo e non concede autorità.
-3. Il piano invia al master solo il dubbio residuo di flusso. Il master verifica
-   prima se esiste una decisione applicabile nel mandato, nelle fonti o nello
-   stato; se esiste, risponde citandola e registra la base.
-4. Se il dubbio riguarda ordine di integrazione o file condivisi, il master
-   decide entro il mandato. Se la proposta cambia struttura, contratto,
-   comportamento, perimetro o un’autorizzazione riservata e le fonti lasciano
-   aperta la scelta, il master prepara la domanda per l’owner: scelta precisa,
-   effetto osservabile, passo che resta fermo.
-5. La decisione identifica la domanda, l’ambito e la revisione a cui si applica,
-   e nomina chi ha deciso. Se cambia la consegna, il master emette un mandato
-   distinto che cita quello superato; il vecchio mandato non viene riscritto.
-6. Il master comunica la risposta solo ai piani coinvolti e registra nello stato
-   decisione, ambito e revisione. Una decisione registrata con ambito di
-   programma non porta revisione di piano: si riusa senza rivalutarla e si
-   comunica ai piani alla sua prima applicazione a essi. Una decisione con
-   ambito di piano si riusa solo quando ambito e revisione combaciano; se sono
-   cambiati, il master rivaluta e registra la nuova decisione. Una decisione
-   duplicata produce un solo passo.
-7. Il piano riprende solo le azioni sbloccate e il passo successivo cita la
-   decisione. Un ACK in chat senza passo osservato non dimostra la ripresa.
-8. Il report di consegna si verifica contro il mandato (base e risultato
-   atteso); il suo `sha` lo verifichi tu su origin con git o `gh`. Un report tardivo resta attribuito al mandato originale; una
-   decisione successiva mantiene precedenza solo nel proprio ambito.
-9. Se la consegna è incerta, il master verifica la ricezione prima di
-   reinviare. Al risveglio riconcilia domande aperte, decisioni da consegnare e
-   risultati sopraggiunti tramite notifiche dell’host o uno snapshot compatto.
+1. The brief identifies address, mandate, and reserved decisions. The plan
+   thread creates or resumes its branch, worktree, and slice subagents.
+2. An informational update binds to the active mandate. Any receipt confirmation
+   preserves delivery identity, creates no step, and grants no authority.
+3. The plan thread escalates only residual flow doubts. The master checks first
+   whether the mandate, sources, or state already answer it; if so, reply with
+   the citation and record the basis.
+4. For integration order or shared files within the mandate, the master decides
+   directly. When a proposal alters structure, contracts, behavior, perimeter,
+   or a reserved authorization left open by sources, the master asks the owner
+   with exact choice, observable effect, and blocked step.
+5. Each decision identifies the question, scope, revision, and decision maker.
+   If delivery changes, the master issues a distinct mandate citing the
+   superseded one.
+6. Communicate the decision only to affected plans and record it. A
+   programme-scoped decision carries no plan revision and is reused without
+   re-evaluation. A plan-scoped decision is reused only when scope and revision
+   match; if they changed, re-evaluate and record a new decision. A duplicate
+   decision produces a single step.
+7. The plan resumes only unblocked actions, citing the decision in the next
+   step. A chat acknowledgement without an observed step does not prove
+   resumption.
+8. Verify every delivery report against its mandate (base and expected outcome)
+   and verify `sha` on `origin` with Git or `gh`. A late report stays bound to
+   its original mandate; a later decision holds precedence only within its
+   scope.
+9. When delivery is uncertain, verify receipt before resending. On wake,
+   reconcile open questions, pending decisions, and arrived results via host
+   notifications or a compact snapshot.
 
-## Casi discriminanti
+## Discriminating cases
 
-- **Sync autorizzato.** Il piano chiede quando sincronizzare una branch: è un
-  dubbio di flusso che il master decide entro il mandato. La domanda arriva dal
-  piano e la decisione torna al piano; non coinvolge l’owner se il mandato copre
-  già la scelta. Se la decisione cambia la base, nasce un mandato distinto che
-  cita il precedente.
-- **Cambio di garanzia da main a pkg.** Sostituire un gate che richiede
-  disponibilità in `main` con la disponibilità nel pacchetto richiede una base
-  approvata per l’equivalenza oppure una decisione dell’owner. Il piano manda
-  la domanda al master, che non la decide e la porta all’owner completa di
-  scelta, effetto e passo dipendente; la risposta torna al piano tramite il
-  master. Un contratto di prodotto mancante segue lo stesso percorso,
-  mentre un dubbio sul sync resta nel mandato.
-- **K2 con PR individuale in bozza.** Se il mandato prevede una PR aggregata, il
-  prossimo passo segue il percorso aggregato; la bozza individuale può restare
-  tale e non riceve un via libera al merge.
-- **Programma preesistente con PR diretta verso main.** Conserva quel percorso
-  di integrazione e applica gli stessi criteri di prova.
+- **Authorized sync:** the plan asks when to sync a branch — a flow doubt the
+  master settles within the mandate without involving the owner. If the sync
+  changes the base, issue a distinct mandate citing the prior one.
+- **Guarantee change from `main` to `pkg/*`:** replacing a `main`-availability
+  gate with package availability requires an approved equivalence basis or an
+  owner decision escalated through the master. Missing product contracts follow
+  the same route.
+- **Draft individual PR under an aggregate mandate:** when the mandate calls
+  for an aggregate PR, follow the aggregate path; the draft individual PR may
+  remain draft and receives no merge green light.
+- **Pre-existing programme with direct PR to `main`:** preserve that direct
+  integration route and apply the same verification criteria.
 
-## Stato del consumatore e readiness
+## Consumer state and readiness
 
-Prima di suggerire un’azione verifica il percorso di integrazione autorizzato.
-Leggi lo stato di piani e pacchetti da GitHub, mai dal tuo log:
+Verify the authorized integration path before proposing action. Derive plan and
+package state from GitHub, never from orchestrator logs:
 `gh pr list --base pkg/<x> --state merged --json number,title,body,mergeCommit`,
-associando ogni PR al piano con la riga `Piano: <id>` nel corpo. Registra head,
-perimetro e destinazione. Tieni separati fatti osservati, perimetro richiesto,
-prove disponibili, readiness e autorizzazione al merge.
+matching each PR via the `Plan: <id>` line in its body. Record head, perimeter,
+and target, keeping observed facts, required perimeter, available evidence,
+readiness, and merge authorization distinct.
 
-Dichiara readiness solo quando le prove richieste dal repository coprono il
-perimetro e la revisione effettivi. Una nuova head invalida le prove legate alla
-precedente. Con fonte illeggibile, mandato cambiato o gate saltato, esplicita la
-verifica residua; un’eccezione vale soltanto entro l’ambito autorizzato. Un tip
-già in `main` non chiude il pacchetto se resta un piano obbligatorio aperto, e
-il contenimento della revisione richiesta va verificato prima di dichiararla
-inclusa.
+Declare readiness only when required repository proofs cover the actual
+perimeter and revision. A new push invalidates prior head proofs. With
+unreadable sources, changed mandates, or skipped gates, state the remaining
+verification explicitly; exceptions apply only within their authorized scope.
+A tip already on `main` does not close a package while a required plan remains
+open, and containment of a required revision must be verified before claiming
+inclusion.
 
-| Riga di accettazione della spec | Classificazione del master |
+| Spec acceptance scenario | Master classification |
 | --- | --- |
-| PR fuori bozza con review mancante o gate fallito | Readiness aperta: riporta la prova mancante o il fallimento, nessun via libera |
-| Nuovo push dopo review positiva | Rivaluta le prove sulla revisione corrente; quelle della head precedente non valgono |
-| K4 confluisce tramite K6 e il tip richiesto di K4 avanza | Verifica il contenimento della nuova revisione prima di dichiararla inclusa |
-| K2 ha una PR individuale in bozza e il mandato prevede una PR aggregata | Il prossimo passo segue il percorso aggregato; la bozza individuale può restare |
-| Il tip è in main e resta un piano obbligatorio aperto | Il tip risulta integrato e il pacchetto resta aperto |
-| Fonte indisponibile, mandato cambiato o gate saltato | Esplicita la prova residua e l’eventuale eccezione nel suo ambito |
-| Programma preesistente con PR diretta verso main | Conserva il percorso diretto e applica gli stessi criteri di prova |
+| Non-draft PR with missing review or failed gate | Readiness open: report missing proof or failure; no green light |
+| New push after positive review | Re-verify on current head; prior head proofs are stale |
+| Upstream plan feeds through another package and its tip advances | Verify containment of the new revision before claiming inclusion |
+| Plan has draft individual PR under an aggregate mandate | Next step follows aggregate path; draft individual PR may stay draft |
+| Tip is on `main` while a required plan remains open | Tip is integrated; package remains open |
+| Source unavailable, mandate changed, or gate skipped | State residual proof and scoped exception explicitly |
+| Pre-existing programme with direct PR to `main` | Preserve direct path and apply the same evidence rules |
 
-## Risorse, stop e ripresa
+## Resources, stops, and resumption
 
-Una domanda sospende solo l’azione dipendente: il lavoro indipendente già
-autorizzato prosegue, e uno stop esplicito dell’owner ferma le azioni incluse
-nel suo ambito. Dopo la ricognizione un task leggero autorizzato può avanzare
-mentre un altro resta bloccato. Alla ripresa ripartono solo le azioni sbloccate
-e ciascuna cita la decisione che la consente.
+A question pauses only its dependent action; independent authorized work keeps
+running, and an explicit owner stop halts only actions inside its declared
+scope. On resume, restart only unblocked actions, each citing the authorizing
+decision.
 
-## Confini
+## Boundaries
 
-Dipendenza, isolamento del workspace, review, commit e integrazione restano nel
-[runtime protocol](../../plan-orchestrator/references/runtime-protocol.md). Il
-dialogo non aggira un gate di dipendenza, una revisione o un confine di commit,
-e una domanda o una decisione non sostituisce una prova mancante.
+Dependency selection, workspace isolation, slice-implementer and high-risk
+review dispatch, commits, and integration remain governed by
+[runtime protocol](../../plan-implement/references/runtime-protocol.md). The
+dialogue never bypasses a dependency gate, review stage, or commit boundary,
+and a question or decision never substitutes for missing evidence.

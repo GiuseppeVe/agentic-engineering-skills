@@ -1,0 +1,5 @@
+interface:
+  display_name: "Test-Driven Development"
+  short_description: "Write behavioral tests first, reproduce bugs red, and verify oracles"
+policy:
+  allow_implicit_invocation: true

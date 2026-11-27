@@ -1,15 +1,17 @@
 ---
 name: development-process
-description: Use when working in a repository that follows this workflow and you need its general process rules - mandate and Git boundaries, verification, the PR phase, the closing report, subagent briefs, run conduct, and the plan and package lifecycle.
+description: General engineering process rules — mandate and Git boundaries, L1-L3 verification, PR phase, closing report, and multi-plan orchestration.
 ---
 
-# Processo di sviluppo
+# Development Process
 
-Fonte unica delle regole generali di processo. Sono indicazioni: nessun hook le impone. Le altre skill rimandano a questi due documenti e non li riscrivono.
+Single source of portable process rules. These are guidance: no session hook enforces them. Other skills point here instead of restating them.
 
-- [Processo](references/PROCESSO.md): mandato e Git, verifiche, fase PR, chiusura.
-- [Orchestrazione](references/ORCHESTRAZIONE.md): delega ai sottoagenti, conduzione di un run, ciclo di vita di piani e pacchetti, consegna dei child, limiti di convergenza.
+Read only the reference needed for the task:
 
-Leggi solo il documento e la sezione che servono al compito. Le istruzioni del repository in cui lavori prevalgono dove sono più specifiche: comandi dei gate, nomi degli stati e cartelle dei documenti stanno nei documenti di quel repository.
+- [Daily workflow](references/daily-workflow.md): mandate and Git boundaries, L1–L3 verification and anti-green-washing rules, PR phase, closing report, and process budget.
+- [Program orchestration](references/program-orchestration.md): loaded only for multi-task plans or multi-package programmes — subagent delegation, run conduct, plan/package lifecycle, child delivery, and convergence limits.
 
-Per l'inventario e la pulizia dei worktree di un repository: `node scripts/worktrees.mjs` (sola lettura; `--remove-merged --yes` rimuove solo i worktree uniti e puliti e non cancella branch).
+Repository-specific instructions override where more specific: exact gate commands, status names, static-analysis configs, and document paths live in the receiving repository. Operator-local defaults (workspace index, machines, model routing, report language) live in the operator workspace, not here.
+
+For a repository's linked worktree inventory and safe removal of merged clean worktrees: `node scripts/worktrees.mjs` (read-only; `--remove-merged --yes` removes only merged clean worktrees and never deletes branches).

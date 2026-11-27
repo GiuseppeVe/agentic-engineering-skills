@@ -63,29 +63,6 @@
       "patchPath": "manifests/patches/codebase-design.patch"
     },
     {
-      "name": "task-implement",
-      "sourceType": "original",
-      "localPath": "task-implement/",
-      "license": "MIT",
-      "localRoot": "projectSkills",
-      "origin": {
-        "state": "owner-supplied-unified-host-variants",
-        "paths": [
-          ".agents/skills/task-implement/SKILL.md",
-          ".claude/skills/task-implement/SKILL.md"
-        ],
-        "files": {
-          ".agents/skills/task-implement/SKILL.md": "b732ee3bebb532cd3c749fc148ae855103a731a7884ab8d7e743369f5353c0d2",
-          ".agents/skills/task-implement/references/packet-contract.md": "96bf0932ff4e6c4c98d5ff6398fcc0357915549508c0e3566e407062a78d5edd",
-          ".agents/skills/task-implement/tests/alignment-task-implement.md": "7bce2b24d70fee116e70a4bfccad05f7df30e6e8af100fedd70a4e729e18cce5",
-          ".agents/skills/task-implement/tests/bounded-worker.md": "5e78d46acfc271292bf763a48afc61b58c0ac6ba1dc9362c2e50d27d1620f681",
-          ".agents/skills/task-implement/tests/orchestration.md": "f90c444a26bed3329c7348882daeb5cfbb7cc52fe47c72632af2a02f0a9a1da5",
-          ".claude/skills/task-implement/SKILL.md": "00c4569dbe3fccfbf0ee0890814658b11b4d39bd7b8c28a936a2616fbd280684",
-          ".claude/skills/task-implement/references/packet-contract.md": "310b639ec20a25977eb88c83e52ad5c11033bdee5b13093e50fff8aca31de391"
-        }
-      }
-    },
-    {
       "name": "coordinating-implementation-plans",
       "sourceType": "original",
       "localRoot": "projectSkills",
@@ -274,6 +251,16 @@
       }
     },
     {
+      "name": "plan-implement",
+      "sourceType": "original",
+      "localRoot": "projectSkills",
+      "localPath": "plan-implement/",
+      "license": "MIT",
+      "origin": {
+        "state": "owner-supplied"
+      }
+    },
+    {
       "name": "retro",
       "sourceType": "adapted",
       "repository": "https://github.com/mattpocock/skills",
@@ -281,30 +268,8 @@
       "upstreamPath": "skills/engineering/retro/",
       "localRoot": "projectSkills",
       "localPath": "retro/",
-      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "changeNotice": "Adapted host metadata and added deterministic check promotion and operational metric reflection for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/retro.patch"
-    },
-    {
-      "name": "plan-orchestrator",
-      "sourceType": "original",
-      "localPath": "plan-orchestrator/",
-      "license": "MIT",
-      "localRoot": "projectSkills",
-      "origin": {
-        "state": "untracked-local-snapshot",
-        "paths": [
-          ".agents/skills/plan-orchestrator/",
-          ".claude/skills/plan-orchestrator/"
-        ],
-        "files": {
-          ".agents/skills/plan-orchestrator/SKILL.md": "f192ae82c606b555118bd8071194c3880d88d9ad6b3f6c2f8d2225ab78f752fc",
-          ".agents/skills/plan-orchestrator/references/runtime-protocol.md": "f05c154e105b63eabbe1336cdb08b1f3797f2bda249ee9e966129c78c0f4bcb4",
-          ".agents/skills/plan-orchestrator/tests/pressure-scenarios.md": "4c5b3606084988bc7492e367bc9581643f8296d9ffe5b64d3c5eb72d754c6f9b",
-          ".claude/skills/plan-orchestrator/SKILL.md": "caed1888977e3289e1c8eb64e652677de9e3c384f530eca2b8f4af3c51eabac5",
-          ".claude/skills/plan-orchestrator/references/runtime-protocol.md": "841e72afe30de333046a0c5b4d60451268bdb7866d3c701d729d62e11b21ef90",
-          ".claude/skills/plan-orchestrator/tests/pressure-scenarios.md": "67541abf077e362d62b859609c22a96f925821725977fd911f31e495a1fa215d"
-        }
-      }
     },
     {
       "name": "setup-goal",
@@ -339,7 +304,7 @@
     {
       "name": "simplify",
       "sourceType": "original",
-      "localPath": "simplify/SKILL.md",
+      "localPath": "simplify/",
       "license": "MIT",
       "localRoot": "projectSkills"
     },
@@ -351,7 +316,7 @@
       "upstreamPath": "skills/test-driven-development/",
       "localPath": "test-driven-development/",
       "localRoot": "projectSkills",
-      "changeNotice": "Condensed cross-host TDD guidance with explicit behavioral coverage-gap assessment and updated anti-patterns. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Condensed cross-host TDD guidance with bug-fix red-reproduction, modern verification oracles, explicit behavioral coverage-gap assessment, and host metadata.",
       "patchPath": "manifests/patches/test-driven-development.patch"
     },
     {
@@ -404,7 +369,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "localPath": "writing-plans/SKILL.md",
-      "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
+      "changeNotice": "Adapted for cross-host Agent Skills distribution; adds slice grouping, risk tags, and oracle selection guidance, routing multi-task plans to plan-implement.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "localRoot": "projectSkills"
     }

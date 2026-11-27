@@ -114,13 +114,13 @@
     {
       "name": "coordinating-implementation-plans",
       "sourceType": "original",
-      "localSha256": "4500e40a00022fd197b8474dba18bea66c5cdbb325fcc3d90aa62b3edeac8826",
-      "releaseCommit": "3e386566fa46673e31047098e0402c69fed51e47",
+      "localSha256": "16153eb862134e6e940fc5c0c6900b94daeaff425d61b3eb80892675f83acb2b",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
         "development-process",
-        "plan-orchestrator"
+        "plan-implement"
       ]
     },
     {
@@ -135,8 +135,8 @@
     {
       "name": "development-process",
       "sourceType": "original",
-      "localSha256": "29a3ada6ae69da962c095af317dc43f0268825d1be5690f3f92e01a9d1c5eef7",
-      "releaseCommit": "6748eeebeca9e9cbfb078b5830abaa27d15c59ef",
+      "localSha256": "ebda5731286110c474c38efd71fe53f495051f89728301c51602c3392d9c02a9",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -338,8 +338,8 @@
     {
       "name": "master-orchestrator",
       "sourceType": "original",
-      "localSha256": "585a655801476f6ba2785ac2f9e9411a850c1bdb56d1de0ba05920a9c992219a",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
+      "localSha256": "67d9d657f9ad250334b57586cfba85d5658ef5b73b495f3127ca9bb211f5ef0c",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": []
@@ -363,15 +363,14 @@
       "dependencies": []
     },
     {
-      "name": "plan-orchestrator",
+      "name": "plan-implement",
       "sourceType": "original",
-      "localSha256": "35ca8b7f31eafc46f06674fa19d3d6f6239cd6d8148860ab1a43eb0c239dc9ff",
-      "releaseCommit": "83eb006e097390f24e7b9669818bfcacc0192ac3",
+      "localSha256": "e146c9213e9be6b2df5aa7af5026f9a1dd6828270f6973808223554aebaa5381",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
       "dependencies": [
         "development-process",
-        "task-implement",
         "test-driven-development"
       ]
     },
@@ -382,11 +381,11 @@
       "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
       "upstreamPath": "skills/engineering/retro/",
       "sha256": "33e50d2e1b6da392645e0dee2f5ac3b1ca03b3d1c3aa39e9d25269656b4d4714",
-      "localSha256": "4701de114d2b350a686c02ace844d71e257be31d7af4ba994db4298de0fe2c59",
+      "localSha256": "fbc2f0fcb973f29290169be9f29bb9bb965c6b28f853a56d3ed65d98303425a9",
       "dependencies": [
         "writing-for-agents"
       ],
-      "changeNotice": "Adapted host metadata for the cross-host Agent Skills distribution.",
+      "changeNotice": "Adapted host metadata and added deterministic check promotion and operational metric reflection for the cross-host Agent Skills distribution.",
       "patchPath": "manifests/patches/retro.patch",
       "licenseFiles": [
         {
@@ -426,22 +425,11 @@
     {
       "name": "simplify",
       "sourceType": "original",
-      "localSha256": "9ecf57ab4bb1943947099307a107dda7021694022888f6bc0b817f75f70e589c",
-      "releaseCommit": "3bcafbc15214739ccfe3936dac24fc6fc14bf517",
-      "license": "MIT",
-      "payloadType": "file",
-      "dependencies": []
-    },
-    {
-      "name": "task-implement",
-      "sourceType": "original",
-      "localSha256": "5026db42612208c542c259a8f5a71969e7ef590c24aa16a681c8cd2ea786c655",
-      "releaseCommit": "83eb006e097390f24e7b9669818bfcacc0192ac3",
+      "localSha256": "01580967cf54a9a546601d57b147cf1849c3815286157efe1ab2ef4c93ea609a",
+      "releaseCommit": "0000000000000000000000000000000000000000",
       "license": "MIT",
       "payloadType": "directory",
-      "dependencies": [
-        "development-process"
-      ]
+      "dependencies": []
     },
     {
       "name": "test-driven-development",
@@ -450,7 +438,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/test-driven-development/",
       "sha256": "7c3b1fa71c313b7c51b451858ec855c0f22fd5925bf0ec9b385382c1bcd3d75b",
-      "localSha256": "3c870f5c2beb274a42ce5b693db4326a3f259b027a17f118224725d72f107626",
+      "localSha256": "521a4172459360193ce24bac6be42b4001cf802d56f28a79d177094b8c8d091b",
       "dependencies": [],
       "licenseFiles": [
         {
@@ -459,7 +447,7 @@
           "sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
         }
       ],
-      "changeNotice": "Condensed cross-host TDD guidance with explicit behavioral coverage-gap assessment and updated anti-patterns. Includes fresh-context dispatch guidance.",
+      "changeNotice": "Condensed cross-host TDD guidance with bug-fix red-reproduction, modern verification oracles, explicit behavioral coverage-gap assessment, and host metadata.",
       "patchPath": "manifests/patches/test-driven-development.patch"
     },
     {
@@ -535,9 +523,9 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "8145bd5a010bed1d9ca4f1c7fac4dac7d9c8d9c46f3263577026b15a200352d5",
+      "localSha256": "548cbb180cc4a5456be28ba984d909191feba59b979db9680db56c8b11a8e40b",
       "dependencies": [],
-      "changeNotice": "Adapted for cross-host Agent Skills distribution; routes single-task implementation to task-implement and ordered multi-task runs with per-task review to plan-orchestrator.",
+      "changeNotice": "Adapted for cross-host Agent Skills distribution; adds slice grouping, risk tags, and oracle selection guidance, routing multi-task plans to plan-implement.",
       "patchPath": "manifests/patches/writing-plans.patch",
       "licenseFiles": [
         {

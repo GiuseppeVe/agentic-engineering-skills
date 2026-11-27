@@ -148,11 +148,11 @@ test('README documents conditional workflow routing and example', () => {
     ['Agreed design', 'To Spec'],
     ['Multi-step implementation', 'Writing Plans'],
     ['Implementation program with multiple approved plans', 'Coordinating Implementation Plans'],
-    ['One implementation plan', 'Plan Orchestrator'],
-    ['Small implementation', 'Task Implement'],
-    ['Claude Code implementation', 'Task Implement'],
+    ['One implementation plan', 'Plan Implement'],
+    ['Small, well-understood implementation', 'Inline with `Test-Driven Development`'],
   ]) {
-    assert.ok(routing.includes(`| ${situation} | \`${path}\` |`), `missing routing row: ${situation}`);
+    const cell = path.includes('`') ? path : `\`${path}\``;
+    assert.ok(routing.includes(`| ${situation} | ${cell} |`), `missing routing row: ${situation}`);
   }
 
   assert.match(routing, /composable choices, not mandatory stages/i);
@@ -162,8 +162,8 @@ test('README documents conditional workflow routing and example', () => {
   assert.match(routing, /no native Goal capability[\s\S]*activation is reported as blocked/);
   assert.doesNotMatch(source, /long-task-run|Long Task Run/i);
   assert.match(example, /diagram below shows the shared lifecycle of delivery responsibilities/i);
-  assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Plan Orchestrator/i);
-  assert.match(example, /small, well-understood change[\s\S]*Task Implement[\s\S]*owner-approval gates/i);
+  assert.match(example, /large change spanning multiple modules[\s\S]*Wayfinder[\s\S]*Plan Implement/i);
+  assert.match(example, /small, well-understood change[\s\S]*Test-Driven Development[\s\S]*owner-approval gates/i);
 });
 
 test('README explains philosophy, quality signals, and supporting skills', () => {
@@ -209,7 +209,7 @@ test('graph workflow documentation explains both available orchestration routes'
   const preview = graph.slice(graph.indexOf('### Implementation'));
   assert.match(available, /research, audits, design, and migration planning/i);
   assert.match(preview, /coordinating-implementation-plans\/SKILL\.md/);
-  assert.match(preview, /plan-orchestrator/);
+  assert.match(preview, /plan-implement/);
   assert.match(preview, /visible subordinate thread/i);
   assert.match(preview, /host cannot create the required visible threads/i);
 
@@ -375,10 +375,9 @@ test('selective installation explains conditional skill prerequisites', () => {
   assert.match(architecture, /`grilling`.*candidate.*select/i);
   assert.match(architecture, /`domain-modeling`.*terminology.*decisions/i);
 
-  const orchestrator = lineFor('plan-orchestrator');
-  assert.match(orchestrator, /`task-implement`.*`test-driven-development`/i);
-  assert.match(orchestrator, /separate per-task implementation and review threads/i);
-  assert.match(orchestrator, /`coordinating-implementation-plans`/);
+  const planImplement = lineFor('plan-implement');
+  assert.match(planImplement, /`simplify`.*`cleaning-repo-with-knip`/i);
+  assert.match(planImplement, /`coordinating-implementation-plans`/);
   assert.doesNotMatch(source, /bundled worker reference/i);
 
   for (const [skill, conditional] of [

@@ -6,8 +6,9 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const skillsRoot = path.join(root, "plugins", "agentic-engineering-skills", "skills");
-const orchestratorRoot = path.join(skillsRoot, "plan-orchestrator");
-const implementRoot = path.join(skillsRoot, "task-implement");
+const planImplementRoot = path.join(skillsRoot, "plan-implement");
+const developmentProcessRoot = path.join(skillsRoot, "development-process");
+const coordinatorRoot = path.join(skillsRoot, "coordinating-implementation-plans");
 
 async function source(file) {
   return readFile(file, "utf8");
@@ -37,22 +38,25 @@ async function markdownFiles(directory, prefix = "") {
   return files;
 }
 
-test("orchestration references resolve within both skill packages", async () => {
-  await assertMarkdownLinksResolve(orchestratorRoot);
-  await assertMarkdownLinksResolve(implementRoot);
+test("orchestration and process references resolve within their skill packages", async () => {
+  await assertMarkdownLinksResolve(planImplementRoot);
+  await assertMarkdownLinksResolve(developmentProcessRoot);
+  await assertMarkdownLinksResolve(coordinatorRoot);
 });
 
-async function orchestratorSources() {
-  const [skill, protocol] = await Promise.all([
-    source(path.join(orchestratorRoot, "SKILL.md")),
-    source(path.join(orchestratorRoot, "references", "runtime-protocol.md")),
+async function planImplementSources() {
+  const [skill, protocol, slice] = await Promise.all([
+    source(path.join(planImplementRoot, "SKILL.md")),
+    source(path.join(planImplementRoot, "references", "runtime-protocol.md")),
+    source(path.join(planImplementRoot, "references", "slice-contract.md")),
   ]);
-  return { skill, protocol, combined: `${skill}\n${protocol}` };
+  return { skill, protocol, slice, combined: `${skill}\n${protocol}\n${slice}` };
 }
 
-test("orchestrator keeps a single portable runtime reference", async () => {
-  const { skill, protocol } = await orchestratorSources();
+test("plan-implement keeps portable host-neutral protocol and slice contract references", async () => {
+  const { skill, protocol, slice } = await planImplementSources();
   assert.match(skill, /references\/runtime-protocol\.md/);
-  assert.match(skill, /visible, subordinate subthreads/);
-  assert.doesNotMatch(`${skill}\n${protocol}`, /\b(?:claude|codex|cli)\b/i);
+  assert.match(skill, /references\/slice-contract\.md/);
+  assert.match(skill, /slice-implementer/);
+  assert.doesNotMatch(`${skill}\n${protocol}\n${slice}`, /\b(?:claude|codex|cli)\b/i);
 });

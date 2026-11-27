@@ -1,0 +1,5 @@
+interface:
+  display_name: "Development Process"
+  short_description: "General mandate, verification, PR phase, and orchestration rules"
+policy:
+  allow_implicit_invocation: true

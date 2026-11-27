@@ -26,7 +26,7 @@ index 0000000..abf0390
 +OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 +SOFTWARE.
 diff --git a/test-driven-development/SKILL.md b/test-driven-development/SKILL.md
-index 60d2609..65555a4 100644
+index 60d2609..5190df2 100644
 --- a/test-driven-development/SKILL.md
 +++ b/test-driven-development/SKILL.md
 @@ -3 +3 @@
@@ -34,7 +34,7 @@ index 60d2609..65555a4 100644
 +description: Use when implementing features, fixing bugs, changing behavior, or refactoring tested code.
 @@ -8 +8 @@
 -## Overview
-+> Adaptation: obra/superpowers condensed cross-host TDD guidance with behavioral coverage-gap assessment.
++> Adaptation: obra/superpowers condensed cross-host TDD guidance with behavioral coverage-gap assessment, bug reproduction discipline, and oracle selection.
 @@ -10 +10 @@
 -Write the test first. Watch it fail. Write minimal code to pass.
 +Write a behavioral test, observe its expected failure, implement the smallest change, then refactor while green. A passing test alone does not prove it can detect the bug.
@@ -59,35 +59,36 @@ index 60d2609..65555a4 100644
 -- Throwaway prototypes
 -- Generated code
 -- Configuration files
-+## Coverage gaps
++## Bug fixes: reproduce red first
 @@ -29 +22 @@
 -Thinking "skip TDD just this once"? Stop. That's rationalization.
-+Map changed behavior and acceptance criteria to existing behavioral tests, using the request and available specifications. Check relevant success, boundary, and failure paths; assess whether tests exercise production behavior and detect realistic defects. Prioritize material gaps by impact, reuse existing coverage, and add focused tests when warranted. For existing correct behavior, use safe regression sensitivity evidence when needed; report missing evidence and unresolved gaps.
-@@ -31 +24 @@
++Before editing production code for a bug or regression:
+@@ -31 +24,4 @@
 -## The Iron Law
-+## RED → GREEN → REFACTOR
-@@ -33,15 +26,5 @@
++1. Establish **one tight command already red on this bug** (or separate a deterministic bug from a flake by reproducing on the base revision vs repeating on the same SHA).
++2. Trace to the broken seam; never mask failures with arbitrary sleeps, silent `catch` blocks, disabled lint/type rules, or weakened assertions.
++3. Lock the failure into a behavioral, contract, or property test, observe RED, fix the root cause, and rerun affected L1–L3 checks.
++4. If the defect is a repeatable mechanical error, record a candidate L2 static check in the repository instead of adding prose.
+@@ -33,5 +29 @@
 -```
 -NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 -```
 -
 -Write code before the test? Delete it. Start over.
--
++## Coverage gaps
+@@ -39,5 +31 @@
 -**No exceptions:**
 -- Don't keep it as "reference"
 -- Don't "adapt" it while writing tests
 -- Don't look at it
 -- Delete means delete
--
++Map changed behavior and acceptance criteria to existing behavioral tests, using the request and available specifications. Check relevant success, boundary, and failure paths; assess whether tests exercise production behavior and detect realistic defects. Prioritize material gaps by impact, reuse existing coverage, and add focused tests when warranted. For existing correct behavior, use safe regression sensitivity evidence when needed; report missing evidence and unresolved gaps.
+@@ -45 +33 @@
 -Implement fresh from tests. Period.
--
++## RED → GREEN → REFACTOR
+@@ -47,23 +35,5 @@
 -## Red-Green-Refactor
-+1. **Specify.** Identify the observable contract and the realistic production defect the test should catch. Derive expected values independently of implementation helpers or constants.
-+2. **RED.** Write one focused test with a behavior-based name. Exercise real code; use doubles at external boundaries when necessary. Read [writing-good-tests.md](writing-good-tests.md) for test design and [testing-anti-patterns.md](testing-anti-patterns.md) when writing or changing tests, especially when using mocks or test utilities.
-+3. **Verify RED.** Run the smallest relevant test command from the project. Observe the assertion fail because behavior is missing or wrong. A syntax, import, fixture, dependency, or infrastructure error is not behavioral RED: repair the harness and rerun. A test passing immediately needs a relevant missing case or verified regression sensitivity; do not count it as observed RED.
-+4. **GREEN.** Implement only what the failing test requires. Run it again; fix production code rather than weakening a valid expectation. Run affected existing checks and resolve failures introduced by the change. Disclose unrelated failures and blockers.
-+5. **REFACTOR.** Improve structure without changing behavior. Rerun affected checks; add the next behavior through another verified RED.
-@@ -49,9 +32 @@
+-
 -```dot
 -digraph tdd_cycle {
 -    rankdir=LR;
@@ -97,8 +98,7 @@ index 60d2609..65555a4 100644
 -    verify_green [label="Verify passes\nAll green", shape=diamond];
 -    refactor [label="REFACTOR\nClean up", shape=box, style=filled, fillcolor="#ccccff"];
 -    next [label="Next", shape=ellipse];
-+## Meaningful test example
-@@ -59,15 +34 @@
+-
 -    red -> verify_red;
 -    verify_red -> green [label="yes"];
 -    verify_red -> red [label="wrong\nfailure"];
@@ -110,20 +110,26 @@ index 60d2609..65555a4 100644
 -    next -> red;
 -}
 -```
--
++1. **Specify.** Identify the observable contract and the realistic production defect the test should catch. Derive expected values independently of implementation helpers or constants.
++2. **RED.** Write one focused test with a behavior-based name. Exercise real code; use doubles at external boundaries when necessary. Read [writing-good-tests.md](writing-good-tests.md) for test and oracle design and [testing-anti-patterns.md](testing-anti-patterns.md) when writing or changing tests, especially when using mocks or test utilities.
++3. **Verify RED.** Run the smallest relevant test command from the project. Observe the assertion fail because behavior is missing or wrong. A syntax, import, fixture, dependency, or infrastructure error is not behavioral RED: repair the harness and rerun. A test passing immediately needs a relevant missing case or verified regression sensitivity; do not count it as observed RED.
++4. **GREEN.** Implement only what the failing test requires. Run it again; fix production code rather than weakening a valid expectation. Run affected existing checks and resolve failures introduced by the change. Disclose unrelated failures and blockers.
++5. **REFACTOR.** Improve structure without changing behavior. Rerun affected checks; add the next behavior through another verified RED.
+@@ -71 +41 @@
 -### RED - Write Failing Test
--
++## Meaningful test example
+@@ -73 +43 @@
 -Write one minimal test showing what should happen.
 +Contract: at most three total attempts; stop after success.
-@@ -75 +35,0 @@
+@@ -75 +44,0 @@
 -<Good>
-@@ -77 +37 @@
+@@ -77 +46 @@
 -test('retries failed operations 3 times', async () => {
 +test('succeeds on third attempt without another call', async () => {
-@@ -79 +39 @@
+@@ -79 +48 @@
 -  const operation = () => {
 +  const result = await retryOperation(async () => {
-@@ -81,7 +41,4 @@
+@@ -81,7 +50,4 @@
 -    if (attempts < 3) throw new Error('fail');
 -    return 'success';
 -  };
@@ -135,7 +141,7 @@ index 60d2609..65555a4 100644
 +    return 'saved';
 +  });
 +  expect(result).toBe('saved');
-@@ -91,239 +47,0 @@
+@@ -91,116 +56,0 @@
 -Clear name, tests real behavior, one thing
 -</Good>
 -
@@ -252,29 +258,41 @@ index 60d2609..65555a4 100644
 -| **Shows intent** | Demonstrates desired API | Obscures what code should do |
 -
 -## Why Order Matters
--
+@@ -208 +58 @@
 -**"I'll write tests after to verify it works"**
--
++Also cover exhaustion separately. Assert outcomes and contract-relevant side effects, not mock existence or private structure. Keep test-only utilities outside production APIs.
+@@ -210,5 +60 @@
 -Tests written after code pass immediately. Passing immediately proves nothing:
 -- Might test wrong thing
 -- Might test implementation, not behavior
 -- Might miss edge cases you forgot
 -- You never saw it catch the bug
--
++## Recovery when implementation already exists
+@@ -216 +62 @@
 -Test-first forces you to see the test fail, proving it actually tests something.
--
++Preserve existing and user work. Establish requirements independently; add the missing behavioral tests. In an isolated copy or narrowly reversible change, reproduce pre-fix behavior or disable only the relevant change; observe expected failures, restore, and rerun green. Never delete unrelated work or apply a blanket reset to recover process order.
+@@ -218 +64 @@
 -**"I already manually tested all the edge cases"**
--
++Report this as regression verification, not a claim that the original implementation followed test-first order. Resume verified RED before further behavior changes. If safe reproduction is unavailable, report the missing evidence.
+@@ -220,5 +66 @@
 -Manual testing is ad-hoc. You think you tested everything but:
 -- No record of what you tested
 -- Can't re-run when code changes
 -- Easy to forget cases under pressure
 -- "It worked when I tried it" ≠ comprehensive
--
++## Common mistakes
+@@ -226 +68,6 @@
 -Automated tests are systematic. They run the same way every time.
--
++| Temptation | Required response |
++|---|---|
++| Tests afterward or manual checks prove TDD | Establish regression sensitivity; report actual sequence. |
++| Any failing command counts as RED | Reach the intended behavioral assertion. |
++| Assert the imported constant or mock output | Use independently specified observable behavior. |
++| Test every method for coverage | Cover meaningful contracts and boundary cases; reuse existing coverage. |
+@@ -228 +75 @@
 -**"Deleting X hours of work is wasteful"**
--
++## Completion evidence
+@@ -230,140 +77 @@
 -Sunk cost fallacy. The time is already gone. Your choice now:
 -- Delete and rewrite with TDD (X more hours, high confidence)
 -- Keep it and add tests after (30 min, low confidence, likely bugs)
@@ -375,7 +393,7 @@ index 60d2609..65555a4 100644
 -## Verification Checklist
 -
 -Before marking work complete:
-@@ -331,8 +49 @@
+-
 -- [ ] Every new function/method has a test
 -- [ ] Watched each test fail before implementing
 -- [ ] Each test failed for expected reason (feature missing, not typo)
@@ -384,36 +402,24 @@ index 60d2609..65555a4 100644
 -- [ ] Output pristine (no errors, warnings)
 -- [ ] Tests use real code (mocks only if unavoidable)
 -- [ ] Edge cases and errors covered
-+Also cover exhaustion separately. Assert outcomes and contract-relevant side effects, not mock existence or private structure. Keep test-only utilities outside production APIs.
-@@ -340 +51 @@
+-
 -Can't check all boxes? You skipped TDD. Start over.
-+## Recovery when implementation already exists
-@@ -342 +53 @@
+-
 -## When Stuck
-+Preserve existing and user work. Establish requirements independently; add the missing behavioral tests. In an isolated copy or narrowly reversible change, reproduce pre-fix behavior or disable only the relevant change; observe expected failures, restore, and rerun green. Never delete unrelated work or apply a blanket reset to recover process order.
-@@ -344,6 +55 @@
+-
 -| Problem | Solution |
 -|---------|----------|
 -| Don't know how to test | Write wished-for API. Write assertion first. Ask your human partner. |
 -| Test too complicated | Design too complicated. Simplify interface. |
 -| Must mock everything | Code too coupled. Use dependency injection. |
 -| Test setup huge | Extract helpers. Still complex? Simplify design. |
-+Report this as regression verification, not a claim that the original implementation followed test-first order. Resume verified RED before further behavior changes. If safe reproduction is unavailable, report the missing evidence.
-@@ -351 +57 @@
+-
 -## Debugging Integration
-+## Common mistakes
-@@ -353 +59,6 @@
+-
 -Bug found? Write failing test reproducing it. Follow TDD cycle. Test proves fix and prevents regression.
-+| Temptation | Required response |
-+|---|---|
-+| Tests afterward or manual checks prove TDD | Establish regression sensitivity; report actual sequence. |
-+| Any failing command counts as RED | Reach the intended behavioral assertion. |
-+| Assert the imported constant or mock output | Use independently specified observable behavior. |
-+| Test every method for coverage | Cover meaningful contracts and boundary cases; reuse existing coverage. |
-@@ -355 +66 @@
+-
 -Never fix bugs without a test.
-+## Completion evidence
-@@ -357,13 +68 @@
+-
 -## Testing Anti-Patterns
 -
 -When adding mocks or test utilities, read [testing-anti-patterns.md](testing-anti-patterns.md) to avoid common pitfalls:
@@ -427,10 +433,21 @@ index 60d2609..65555a4 100644
 -Production code → test exists and failed first
 -Otherwise → not TDD
 -```
-+Report relevant contracts, observed RED failures, GREEN commands/results, affected checks, and remaining gaps. Classify observed RED as `process` evidence and identify its pre-fix revision or reproducible state, command, expected behavioral failure and observation time. Classify GREEN and affected acceptance checks as `final_state` evidence, rerun them after the last relevant fix, and bind them to the final reviewed commit or exact uncommitted diff. Do not rerun RED on the fixed commit merely to make its revision current. Tests should detect realistic wrong branches, missing side effects, boundary violations, and error outcomes. Distinguish passed, failed, and not run; never label missing verification complete.
-@@ -371 +70 @@
++Report relevant contracts, observed RED failures, GREEN commands/results, affected L1–L3 checks, and remaining gaps following [Verification](../development-process/references/daily-workflow.md#verification). Classify observed RED as `process` evidence and identify its pre-fix revision or reproducible state, command, expected behavioral failure, and observation time. Classify GREEN and affected acceptance checks as `final_state` evidence, rerun them after the last relevant fix, and bind them to the final commit SHA or exact uncommitted diff. Do not rerun RED on the fixed commit merely to make its revision current. Distinguish passed, failed, and not run; never label missing verification complete.
+@@ -371 +79 @@
 -No exceptions without your human partner's permission.
-+When reviewing a plan task, verify its criteria and requirements against the specification, plan, diff, and evidence; fix findings within the authorized task scope. Return findings and the [shared result contract](../task-implement/SKILL.md#completion), including the final commit SHA when authorized and created. The plan orchestrator decides acceptance; a review thread ending does not establish completion.
++This skill covers test-first implementation and behavioral test verification; independent code review uses the host's native code-review capability under [PR phase](../development-process/references/daily-workflow.md#pr-phase).
+diff --git b/test-driven-development/agents/openai.yaml b/test-driven-development/agents/openai.yaml
+new file mode 100644
+index 0000000..ee661a9
+--- /dev/null
++++ b/test-driven-development/agents/openai.yaml
+@@ -0,0 +1,5 @@
++interface:
++  display_name: "Test-Driven Development"
++  short_description: "Write behavioral tests first, reproduce bugs red, and verify oracles"
++policy:
++  allow_implicit_invocation: true
 diff --git a/test-driven-development/testing-anti-patterns.md b/test-driven-development/testing-anti-patterns.md
 index e77ab6b..a1a52c1 100644
 --- a/test-driven-development/testing-anti-patterns.md
@@ -474,10 +491,10 @@ index e77ab6b..a1a52c1 100644
 +- Test checks only mock existence or canned output without exercising production behavior
 diff --git b/test-driven-development/writing-good-tests.md b/test-driven-development/writing-good-tests.md
 new file mode 100644
-index 0000000..dce5409
+index 0000000..a6f9345
 --- /dev/null
 +++ b/test-driven-development/writing-good-tests.md
-@@ -0,0 +1,208 @@
+@@ -0,0 +1,217 @@
 +# Writing Good Tests
 +
 +**Load this reference when:** writing or changing tests, adding mocks, or
@@ -530,7 +547,7 @@ index 0000000..dce5409
 +contains an exact line proves only that the source is the source. Run
 +scripts against controlled inputs and assert outputs, side effects, or
 +exit codes. Documents that instruct agents are tested by the consuming
-+agent's behavior (superpowers:writing-skills); prose for humans earns no
++agent's behavior (`writing-for-agents`); prose for humans earns no
 +test at all.
 +
 +**Your code, not the framework.** Test the contract your code makes at
@@ -642,6 +659,15 @@ index 0000000..dce5409
 +"complete" means. Ship the tests the behavior needs and only those:
 +trivial code and human prose earn none, and a test written to satisfy
 +process costs maintenance forever.
++
++## Choose the Right Oracle
++
++Pick the strongest oracle that fits the obligation rather than defaulting every check to a mocked unit test:
++
++- **Unit behavioral test:** pure logic, transformations, validation, and state transitions inside one module.
++- **Cross-package or boundary contract test:** when a producer and consumer share a schema, route, manifest, or event payload, exercise both sides against the same revision so wire drift fails immediately.
++- **Property-based test:** invariants that must hold across arbitrary inputs or event orderings (authorization and revocation across list and detail views, retry idempotency, parser/serializer round-trips, state machines).
++- **Real-format or real-runtime check:** when the contract governs binary assets, persistence, browser rendering, or wire protocols, decode or exercise the real output (e.g. real image dimensions/encoding, real database query, real DOM/HTTP response) rather than checking only file presence or brittle substrings.
 +
 +## The Mutation Check
 +

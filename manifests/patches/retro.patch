@@ -1,5 +1,5 @@
 diff --git a/retro/SKILL.md b/retro/SKILL.md
-index 12149ac..7066d6b 100644
+index 12149ac..66e2b09 100644
 --- a/retro/SKILL.md
 +++ b/retro/SKILL.md
 @@ -3 +3 @@
@@ -8,3 +8,7 @@ index 12149ac..7066d6b 100644
 @@ -6,0 +7,2 @@
 +> **Adaptation:** Based on Matt Pocock's `retro`; adapted with explicit-invocation host metadata.
 +
+@@ -18 +20,2 @@
+-- **Automated checks**: are there automated checks that could catch errors the agent made? Linting, typing, tests, filesystem linters? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow), so a check that already exists but sits unwired or silently broken is the finding, not a reinvention. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding: an un-linted repo is a standing missed opportunity, not a neutral default. _Use when_ the agent made a mistake an automated check could have caught, or the repo has no guardrail at all.
++- **Automated checks**: are there automated checks that could catch errors the agent made? Linting, typing, tests, filesystem linters? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow), so a check that already exists but sits unwired or silently broken is the finding, not a reinvention. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding: an un-linted repo is a standing missed opportunity, not a neutral default. Ask explicitly on every defect: *which deterministic check (L1 types/schemas, L2 static analysis/lint, L3 behavioral/contract/property test) would have caught this automatically before review?* _Use when_ the agent made a mistake an automated check could have caught, or the repo has no guardrail at all.
++- **Operational metrics**: when session logs expose real friction, record measurable signals that guide decisions (queue wait, gate rounds per PR, duplicate runs on the same SHA, confirmed flakes, escaped regressions) instead of vanity counts (lines, comments, raw hook totals). _Use when_ comparing workflow changes across sessions.

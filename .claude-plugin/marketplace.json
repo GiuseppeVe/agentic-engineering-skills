@@ -9,7 +9,7 @@
     {
       "name": "agentic-engineering-skills",
       "description": "Engineering skills and general process rules for discovery, planning, implementation, review, and the PR workflow.",
-      "version": "1.4.1",
+      "version": "1.5.0",
       "source": "./plugins/agentic-engineering-skills"
     }
   ]

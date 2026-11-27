@@ -1,31 +1,31 @@
-# Coordinare un programma di progettazione
+# Coordinating a Design Programme
 
-Per programmi di design con più flussi o contratti condivisi, il master coordina una rotta e gli artefatti non implementativi autorizzati. Conserva i propri confini; l'implementazione resta un handoff.
+For design programmes spanning multiple streams or shared contracts, the master coordinates a route and authorized non-implementation artifacts while preserving its boundaries; implementation remains a handoff.
 
-## Mappa delle decisioni
+## Decision map
 
-Se serve Wayfinder, usa la versione **corrente**, non la copia storica. Le sedi di progetto sono `.agents/skills/wayfinder/SKILL.md` per Codex e `.claude/skills/wayfinder/SKILL.md` per Claude Code. Quando Wayfinder proviene da un plugin, usa la versione corrente resa disponibile dall’host o inclusa nello stesso plugin: quei percorsi di progetto sono esempi, non prerequisiti. Non copiarne le istruzioni; verifica disponibilità, caricamento e autorizzazioni. Leggere una skill non equivale a invocarla: se l'host richiede un'invocazione esplicita, chiedila o prepara un handoff. Per protocollo, capacità o tracker mancanti segui i fallback documentati e segnala il limite. Se Wayfinder non serve, usa il grafo del master senza presumere un tracker.
+If Wayfinder is needed, use the **current** version rather than a historical copy. Project paths such as `.agents/skills/wayfinder/SKILL.md` or `.claude/skills/wayfinder/SKILL.md` are examples, not prerequisites: when Wayfinder comes from a plugin, use the current version exposed by the host or bundled in the same plugin. Do not copy its instructions; check availability, loading, and authorizations. Reading a skill is not invoking it: when the host requires explicit invocation, ask for it or prepare a handoff. For missing protocol, capability, or tracker, follow documented fallbacks and disclose the limit. If Wayfinder is unnecessary, use the master graph without assuming a tracker.
 
-Definisci destinazione, ambito, questioni vaghe, decisioni e dipendenze; non inventare nodi prematuri. Verifica il mandato su artefatti e modifiche previste e applica le regole di ambito di Wayfinder se la usi.
+Define destination, scope, fog, decisions, and dependencies; do not invent premature nodes. Verify the mandate on planned artifacts and edits, and apply Wayfinder's scope rules when using it.
 
-## Mappa dei contratti
+## Contracts map
 
-Mantieni una mappa dei contratti distinta da quella delle decisioni, collegando le decisioni alla fonte. Se non puoi salvarla nella sede autorizzata, prepara un handoff e segnala che non è persistente.
+Maintain a contracts map distinct from the decision map, linking decisions to their sources. If it cannot be saved in an authorized location, prepare a handoff and state that it is not persistent.
 
-Registra per flusso ticket e sessione eventuali, stato, spec, piano, branch e SHA disponibili; per contratto, produttori, consumatori, fonte e stato: **OK**, **AGG** per emendamento, **CF** per conflitto. Includi dipendenze, file condivisi, decisioni dell'owner, limiti e cambiamenti. Distingui revisioni verificate, modifiche non committate e push; non attribuire uno SHA a contenuti non inclusi nel commit.
+Record per stream any ticket and session, status, spec, plan, branch, and available SHA; per contract, record producers, consumers, source, and status: **OK**, **AGG** (amendment), or **CF** (conflict). Include dependencies, shared files, owner decisions, limits, and changes. Distinguish verified revisions, uncommitted edits, and pushes; never attribute a SHA to content outside the commit.
 
-Il master coordina la mappa; un solo autore alla volta ne aggiorna ogni parte. Per Wayfinder segui le regole del tracker: il claim di un ticket non è un lock esclusivo sui file. Preserva le modifiche concorrenti.
+The master coordinates the map; only one author updates any given section at a time. With Wayfinder, follow tracker rules: claiming a ticket is not an exclusive file lock. Preserve concurrent edits.
 
-## Flussi e report
+## Streams and reports
 
-Scegli nodi sbloccati, non reclamati e autorizzati. Coordina al massimo **tre sessioni figlie attive** per programma, salvo limite dell'host più restrittivo. Anche per piccole decisioni preferisci una sessione di confronto secondo la skill master.
+Select unblocked, unclaimed, authorized nodes. Coordinate at most **three active child sessions** per programme unless a tighter host limit applies. Even for small decisions, prefer a dedicated dialogue session per the master skill.
 
-Nei brief includi ticket, fonti e revisioni, contratti e perimetro di scrittura, oltre ai campi richiesti dal master. Distingui autorizzazioni valide da quelle mancanti: non presumere commit o push, né richiedere di nuovo permessi già validi. Un flusso può produrre spec e poi piano; registra approvazioni, review indipendenti e controlli mancanti. I report includono risultati, revisioni, contratti prodotti o usati, emendamenti, conflitti, domande e limiti; non concedono autorizzazioni.
+Include in briefs: ticket, sources and revisions, contracts, write perimeter, and required master fields. Distinguish valid from missing authorizations: never assume commit or push rights, and never re-ask already-granted permissions. A stream may produce a spec and then a plan; record approvals, independent reviews, and missing checks. Reports include results, revisions, contracts produced or consumed, amendments, conflicts, questions, and limits; reports never grant authority.
 
-Integra i report nello stato e, con Wayfinder, nelle mappe secondo il tracker. Assegna gli **AGG** a un autore autorizzato dopo la conclusione accertata delle scritture concorrenti: il master non riscrive i deliverable. Per un **CF** su comportamento, dati, sicurezza o architettura porta opzioni e raccomandazione all'owner; resta aperto fino alla sua decisione e blocca solo i nodi interessati. Comunica alle sessioni se consentito, altrimenti prepara un handoff.
+Integrate reports into state and, when using Wayfinder, into tracker maps. Assign **AGG** amendments to an authorized author after concurrent writes conclude: the master never rewrites deliverables itself. For a **CF** affecting behavior, data, security, or architecture, bring options and a recommendation to the owner; it stays open until decided and blocks only affected nodes. Notify sessions where allowed, otherwise prepare a handoff.
 
-## Chiusura e handoff
+## Closure and handoff
 
-Verifica decisioni e questioni in perimetro risolte o dichiarate pendenti, stato ed evidenze di spec, piani e review, produttori, consumatori e stato dei contratti, AGG e CF risolti o assegnati. Chiudi solo se destinazione e criteri concordati sono soddisfatti; altrimenti consegna un handoff parziale con blocchi.
+Verify in-scope decisions and questions resolved or explicitly pending, status and evidence of specs, plans, and reviews, producers, consumers, and contract states, and all AGG/CF items resolved or assigned. Close only when destination and agreed criteria are met; otherwise deliver a partial handoff with blockers.
 
-Se richiesto e autorizzato, delega la bozza del workflow implementativo: pacchetti, ordine, dipendenze, fase 0, autorizzazioni, gate e arresti. Raccogli la necessaria approvazione prima di preparare il contesto per il master di implementazione con revisioni e limiti verificati. Non presumere Claude Code, `start_session`, push o merge; senza push autorizzato, l'handoff resta locale.
+When requested and authorized, delegate drafting the implementation workflow: packages, order, dependencies, phase 0, authorizations, gates, and stops. Collect required approval before preparing the handoff for `coordinating-implementation-plans` (or `plan-implement` for a single plan) with verified revisions and limits. Never assume a specific host tool, push, or merge; without authorized push, keep the handoff local.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Plan Implement"
+  short_description: "Execute an approved plan with slice subagents and L1-L3 verification"
+policy:
+  allow_implicit_invocation: true
