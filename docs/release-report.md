@@ -1,5 +1,14 @@
 # Release verification report
 
+## v1.8.0 release: 2026-11-28
+
+Bumps the plugin, both marketplaces, and the package to `1.8.0`, publishing two changes merged after `1.7.0`:
+
+- PR gates and PR phase (#46): the hook runs the repository's optional `gates:lint` on a draft PR, then `gates:lint` and `gates:pr` when the PR leaves draft; the PR phase runs fast checks and `simplify` before the independent review; `plan-implement` opens the plan PR with `gh pr create --draft`; hosted CI skips draft PRs.
+- Behavior model (#47, ADR 0010): stateful behavior is modelled, diagrammed with `statechart`, and approved by the owner before planning, then checked against the code in review. `statechart` needs its runtime (see `docs/selective-install.md`).
+
+The payload holds 31 skills for both hosts and 509 files. Fresh isolated installs (Codex `codex-cli 0.172.0`, Claude Code `2.1.330`) matched the source byte for byte, and `manifests/native-discovery.json` now records Codex `sha256:1345fc37bc708d3235c09c7e42e0327fb3849a68188cc3f6f37cf0bf0685d996`, Claude Code `sha256:0a7614a9d28965dad4c4528474ab7a3563bb4c1a642aee7b6a3149733a225bfb`, and full tree `sha256:5666533040e1fc296000790d73c8e94af0dfd9d822fa978a53a676fd97400e57`. These installs check packaging only: they run no hook and no model.
+
 ## v1.7.0 release: 2026-11-28
 
 Bumps the plugin, both marketplaces, and the package to `1.7.0`, publishing the formal verification skills (`statechart`, `create-formal-verification-skill`, `maintain-formal-verification-skill`), ADR 0009, and the shared static analysis presets with the edit-lint hook recorded below. `statechart` excludes the upstream `scripts/test/` corpus through `excludePaths` in `manifests/skill-sources.json`, so the corpus enters neither the payload nor `manifests/patches/statechart.patch`. The payload holds 31 skills for both hosts and 508 files. Fresh isolated installs (Codex `codex-cli 0.172.0`, Claude Code `2.1.330`) matched the source byte for byte, and `manifests/native-discovery.json` now records Codex `sha256:a0e677baba94453b899047d878eeb0282ea8b67b4ca56b58c9dd57dcb495b550`, Claude Code `sha256:8982754dde2c342d77534fcfc671e85fe688a3ab21cb67741faeaa1d68a57d4c`, and full tree `sha256:a11716aa8aa49b37a4de329c638445021ac18f5b2da7ca3c0e0eb08d428d9605`.
