@@ -20,6 +20,10 @@ within the agreed scope and state assumptions that affect the result.
 When a mockup or diagram would help resolve a decision, offer the
 [visual companion](visual-companion.md) and use it with the user's agreement.
 
+When behavior depends on state or on the order of events, follow the
+[behavior model](../development-process/references/behavior-model.md)
+before any plan: the owner approves the diagrammed behavior.
+
 Summarize the expected outcome, agreed decisions, constraints, and any open
 questions. When a standalone spec is needed, use the
 [`to-spec` template](../to-spec/SKILL.md).

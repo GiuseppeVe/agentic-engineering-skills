@@ -24,6 +24,8 @@ Announce: "I'm using the writing-plans skill to create the implementation plan."
 
 Before naming tasks, read actual files, schemas, actions, helpers, tests, docs, and project conventions. For each area, name reused files, symbols, components, and contracts before additions.
 
+When behavior depends on state or on the order of events, apply the [behavior model](../development-process/references/behavior-model.md) first: without the owner's recorded approval, do that step instead of planning. Its critical transitions become `REQ` entries.
+
 If an approved `to-spec` artifact exists, reference it as source of truth instead of restating or silently changing requirements. Keep planning/executor prompts outcome-focused: goal, relevant context, hard constraints, approval boundaries, validation, deliverable. State each rule once; omit boilerplate that changes no decision.
 
 Resolve hard-to-reverse choices before task breakdown: data models, public identifiers, wire formats, ownership/auth boundaries, migrations, worker topology, rollout. For unresolved architecture, UX, data, rollout, or scope decisions, choose a recommended default with rationale or record a question. Material gaps in requirements, authority, or acceptance evidence belong in `## Open Questions` at the bottom.

@@ -63,7 +63,7 @@ flowchart TD
 
 3. Gather planning artifacts for the template's `## Related Work` contract. Select existing test seams at the highest useful boundary; propose a new seam only where existing ones cannot verify required behavior. Use as few seams as needed. Record unresolved seam choices in Open Questions and continue drafting.
 
-4. Write the `.mdx` using the template, including its requirements, invariants, executor, status, and open-decision contracts. Continue the draft while decisions or publication remain blocked.
+4. Write the `.mdx` using the template, including its requirements, invariants, executor, status, and open-decision contracts. Continue the draft while decisions or publication remain blocked. When behavior depends on state or on the order of events, then follow the [behavior model](../development-process/references/behavior-model.md).
 
 5. Self-review before any publication. Verify `.mdx` extension, standalone context, complete template obligations and Related Work, no unresolved placeholders, and valid Markdown-compatible MDX, Mermaid, and tables. Trace known requirements, invariants, unknowns, and proposed defaults from context to the artifact; check acceptance drafts and testing decisions. Verify status, executor selection, and intended tracker labels against the template contracts.
    Verify that the expected outcome is supported by the requirements and draft
@@ -79,7 +79,7 @@ flowchart TD
 >
 > **Downstream execution:** State the executor selected explicitly by the user or applicable project instructions. If none is selected, write "Executor selection pending in planning."
 
-**Status:** State "Ready for planning" only when remaining questions do not block safe, testable planning. Otherwise write "Draft - blocked" and identify the blocking Open Questions. Unknown required invariants, unresolved requirements that prevent acceptance criteria, and unaccepted defaults needed to settle those decisions are blockers. Nonblocking executor selection or tracker setup remains explicitly pending without inventing a decision.
+**Status:** State "Ready for planning" only when remaining questions do not block safe, testable planning. Otherwise write "Draft - blocked" and identify the blocking Open Questions. A behavior model awaiting owner approval, unknown required invariants, unresolved requirements that prevent acceptance criteria, and unaccepted defaults needed to settle those decisions are blockers. Nonblocking executor selection or tracker setup remains explicitly pending without inventing a decision.
 
 ---
 

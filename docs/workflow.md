@@ -48,6 +48,8 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 `domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. Invoke `impeccable` for frontend visual, interaction, accessibility, and design-system decisions. Invoke `marketing-screenshots` to capture real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
 
+When behavior depends on state or on the order of events, design also produces a [behavior model](../plugins/agentic-engineering-skills/skills/development-process/references/behavior-model.md): a `statechart` diagram that the owner approves before planning.
+
 ## Plan
 
 `wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `handoff` saves a compact continuation document when work moves between agents. `writing-plans` turns requirements into testable implementation tasks with risk tags and optional slice boundaries, offering `plan-implement` for dependency-aware multi-task execution. `setup-goal` turns an agreed outcome into a runbook and activates the host-native Goal only after approval.

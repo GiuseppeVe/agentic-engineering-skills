@@ -31,4 +31,5 @@ Questo repository è pubblico: un ADR non contiene nomi di clienti, credenziali,
 | [0006](0006-analisi-statica-condivisa-e-hook-su-modifica.md) | Analisi statica condivisa con Oxlint e feedback rapido su modifica | Accettata |
 | [0007](0007-confine-plugin-workspace-prodotto.md) | Confine a tre livelli: plugin pubblico, workspace della factory e repository di prodotto | Accettata |
 | [0008](0008-verifica-leggera-e-plan-implement-a-slice.md) | Verifica leggera orientata ai layer deterministici e orchestrazione `plan-implement` a slice | Accettata |
-| [0009](0009-verifica-formale-statechart-e-skill-locali-di-prodotto.md) | Verifica formale con `statechart` ed eccezione per skill locali di verifica formale nei repository di prodotto | Accettata |
+| [0009](0009-verifica-formale-statechart-e-skill-locali-di-prodotto.md) | Verifica formale con `statechart` ed eccezione per skill locali di verifica formale nei repository di prodotto | Accettata, sostituita in parte dalla 0010 |
+| [0010](0010-modello-di-comportamento-approvato-prima-del-piano.md) | Il comportamento con stato è modellato e approvato prima del piano | Accettata |
