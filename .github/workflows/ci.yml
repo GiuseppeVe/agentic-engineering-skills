@@ -1,8 +1,12 @@
 name: CI
 
 on:
+  # One full run per final head: pushes to main, and PRs once they leave draft.
+  # A work-branch push alone runs nothing: its PR run covers it.
   push:
+    branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
 permissions:
@@ -10,6 +14,8 @@ permissions:
 
 jobs:
   verify:
+    # A draft PR runs no gate; ready_for_review starts the run on the final head.
+    if: github.event.pull_request.draft != true
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

@@ -137,7 +137,7 @@
     {
       "name": "development-process",
       "sourceType": "original",
-      "localSha256": "fc27fea3e63411f16782d86a2c3b35c79835375f238fb0fea366d92188aeddd4",
+      "localSha256": "208ee340ed639c99673a9be5bcad40716346ddbd3960a940bc94b97e893d7bfc",
       "releaseCommit": "544da2f5d83d8e8368593a8d67ba9187c38147b0",
       "license": "MIT",
       "payloadType": "directory",
