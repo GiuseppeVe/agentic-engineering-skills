@@ -404,10 +404,6 @@ export function gateScripts(root) {
   } catch { return []; }
 }
 
-export function hasGateScript(root) {
-  return gateScripts(root).length > 0;
-}
-
 // Start the gates in a detached copy of this script, which runs each script
 // in `scripts` with `npm run`, one after the other, with their output in one
 // log file. `ref` is reduced to a number or a GitHub pull URL and script names
