@@ -86,6 +86,12 @@ test('chained commands are read one by one', () => {
   assert.equal(action('gh pr create --draft --fill && gh pr ready'), 'ready');
   assert.equal(action('gh pr view 12 && gh pr checks 12'), null);
   assert.equal(action('gh pr create --draft --fill; gh pr view'), 'draft');
+  // gh takes the last value of a repeated --draft.
+  assert.equal(action('gh pr create --draft --draft=false --fill'), 'create');
+  assert.equal(action('gh pr create -d --draft=false --fill'), 'create');
+  assert.equal(action('gh pr create --draft=false --draft --fill'), 'draft');
+  // An unreadable cd after a draft leaves the rest in doubt: nothing is launched.
+  assert.equal(findPullRequestCommand('gh pr create --draft --fill && cd "$X" && gh pr ready'), null);
   assert.deepEqual(findPullRequestCommand('cd ../other && gh pr create --fill'), { action: 'create', ref: null, directory: '../other' });
   assert.equal(findPullRequestCommand('cd /srv/work && cd repo && gh pr ready 3').directory, '/srv/work/repo');
   assert.equal(action('cd "$WORKTREE" && gh pr create --fill'), null, 'an unknown directory means an unknown repository');

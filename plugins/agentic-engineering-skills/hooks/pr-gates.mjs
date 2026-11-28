@@ -239,8 +239,10 @@ export function classifyGhCommand(words) {
       if (NO_PR_FLAGS.includes(name)) return null;
       if (name === '--draft') {
         if (action !== 'create') return null;
+        // gh takes the last value of a repeated flag.
         if (value === undefined || value === 'true') draft = true;
-        else if (value !== 'false') return null;
+        else if (value === 'false') draft = false;
+        else return null;
         continue;
       }
       if (value === undefined && long.includes(name.slice(2))) index++;
@@ -302,7 +304,7 @@ export function findPullRequestCommand(command, options) {
   for (const words of commands) {
     if (/^(?:cd|pushd|Set-Location|sl)$/i.test(words[0])) {
       const target = words.length === 2 && !words[1].includes(DYNAMIC) && !words[1].startsWith('-') ? words[1] : null;
-      if (!target) return draft;
+      if (!target) return null;
       directory = directory && !isAbsolute(target) ? `${directory}/${target}` : target;
       continue;
     }

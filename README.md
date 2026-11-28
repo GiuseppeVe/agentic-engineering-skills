@@ -110,7 +110,7 @@ See [workflow guide](docs/workflow.md) for routing detail.
 
 For ordered work, `Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness through failing tests, implementation, and passing tests, backed by deterministic L1–L3 checks (typecheck, static analysis, and behavioral, contract, property, or real-runtime tests). Findings return through the TDD fix cycle before acceptance, then independent evidence informs host-native code review.
 
-The [process rules](plugins/agentic-engineering-skills/skills/development-process/SKILL.md) fix the order of the PR phase: a fast local check, one independent host-native review of the whole diff with `simplify` and Knip in parallel, fixes in one commit, and the full gates once on the frozen head. They are guidance the agent follows under the receiving project's rules; no hook enforces them.
+The [process rules](plugins/agentic-engineering-skills/skills/development-process/SKILL.md) fix the order of the PR phase: a draft PR, fast checks on the diff and their fixes, one `simplify` pass (and Knip), only then one independent host-native review of the whole diff, fixes in one commit, a delta review, `gh pr ready`, and the full gates once on the final head. They are guidance the agent follows under the receiving project's rules; no hook enforces them.
 
 ## Hooks I use
 
