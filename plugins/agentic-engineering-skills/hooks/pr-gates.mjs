@@ -479,8 +479,8 @@ export function run(text, options) {
   if (!event) return null;
   const root = findGitRoot(event.cwd);
   if (!root) return null;
-  // A draft gets the fast lint only (PR phase step 3); the full gates wait for
-  // `gh pr ready`, on the head that review closed (step 5).
+  // A draft gets the fast lint only (PR phase step 2); the full gates wait for
+  // `gh pr ready`, on the head that review closed (step 7).
   const scripts = gateScripts(root).filter(name => event.action !== 'draft' || name === LINT_SCRIPT);
   if (!scripts.length) return null;
   const { log, ref } = launchGates(root, event.ref, { ...options, scripts });

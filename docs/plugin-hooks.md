@@ -6,7 +6,7 @@ Invoke `Caveman` explicitly on either host. The plugin retired its startup hooks
 
 ## PR lint on a draft, lint and gates when a pull request leaves draft
 
-The plugin registers a `PostToolUse` hook matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` — as a draft, or `gh pr create` without `--draft` — or a `gh pr ready` without `--undo`. A draft gets only the lint, the fast check of PR phase step 2; the gates wait for `gh pr ready <number>` on the head that review closed (step 6). When one text opens a draft and then marks it ready, the ready wins. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
+The plugin registers a `PostToolUse` hook matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` — as a draft, or `gh pr create` without `--draft` — or a `gh pr ready` without `--undo`. A draft gets only the lint, the fast check of PR phase step 2; the gates wait for `gh pr ready <number>` on the head that review closed (step 7). When one text opens a draft and then marks it ready, the ready wins. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
 
 What it does:
 
