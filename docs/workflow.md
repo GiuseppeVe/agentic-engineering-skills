@@ -48,7 +48,7 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 `domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. Invoke `impeccable` for frontend visual, interaction, accessibility, and design-system decisions. Invoke `marketing-screenshots` to capture real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
 
-When behavior depends on state or on the order of events, design also produces a [behavior model](../plugins/agentic-engineering-skills/skills/development-process/references/behavior-model.md): a `statechart` diagram that the owner approves before planning.
+Start a small or simple design with `brainstorming`, and a structured or complex feature or component with `grilling`. When behavior depends on state or on the order of events, design also produces a [behavior model](../plugins/agentic-engineering-skills/skills/development-process/references/behavior-model.md): a `statechart` diagram that the owner approves before planning.
 
 ## Plan
 

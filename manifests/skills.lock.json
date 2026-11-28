@@ -31,7 +31,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/brainstorming/",
       "sha256": "a3782402a2ea2a0c57f1a79b1b0608f2b91bd098e12e8cb1ee8702fb4a882b68",
-      "localSha256": "f05485d9c74ed237c433fea3c044a17c1d06b1e91e320b20527e6e0dc82c9bec",
+      "localSha256": "c84c8f3f1ea83fdce9e93d1c98db819449a67ec15db7f7d7f93418547e3ed046",
       "dependencies": [
         "to-spec"
       ],
@@ -137,7 +137,7 @@
     {
       "name": "development-process",
       "sourceType": "original",
-      "localSha256": "9419649638129c869af4125dbfce7906b29c65bebef9d9cbb7cd1612380755ae",
+      "localSha256": "602507b78f1e3b0f08bef944fd3272a8ab4ae33303b9760ffe009b1c7da29722",
       "releaseCommit": "a449343013b2062de1884593818d888afaf67a54",
       "license": "MIT",
       "payloadType": "directory",
@@ -198,7 +198,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/productivity/grilling/",
       "sha256": "1468bb9078a95a6672a687cd37b97cbc25be2584ec327400b94613e69a1f5956",
-      "localSha256": "86dba73d74d8710990d07879f2fac8935ac562e35b62ea33ac9c3951ffe09088",
+      "localSha256": "89863a398cb2e3291849ec625853667266a1301653ed578af21cb7b8b4397d95",
       "dependencies": [],
       "changeNotice": "Added host metadata and host-aligned review guidance to the pinned upstream skill. Includes fresh-context dispatch guidance.",
       "patchPath": "manifests/patches/grilling.patch",
@@ -323,7 +323,7 @@
     {
       "name": "plan-implement",
       "sourceType": "original",
-      "localSha256": "c0249f6b2bfdb412341e6f45490368f42a7d18d8b6772ef705de2d60665874bf",
+      "localSha256": "d44460bbd12ec49608f3fbff95a8389c13fbfb7bcc35062959f1254899b88f83",
       "releaseCommit": "a449343013b2062de1884593818d888afaf67a54",
       "license": "MIT",
       "payloadType": "directory",
@@ -436,7 +436,7 @@
       "revision": "391a2701dd948f94f56a39f7533f8eea9a859c87",
       "upstreamPath": "skills/engineering/to-spec/",
       "sha256": "305911f9a65016bf31b209ade13da492042e3ebe1434db4161a777a4efc69dbb",
-      "localSha256": "238bbf69db282dedb9504dc8e8c258eae7927d2f307837e54ff75f025a5aafd9",
+      "localSha256": "80174aa0dda795fa46eeb948e64ffe0c526eac7636de8a22dd22597e6b5039a6",
       "dependencies": [],
       "changeNotice": "Enabled model invocation on both hosts, focused the spec template on key user scenarios, and retained explicit tracker-publication authorization.",
       "patchPath": "manifests/patches/to-spec.patch",
@@ -483,7 +483,7 @@
       "revision": "d884ae04edebef577e82ff7c4e143debd0bbec99",
       "upstreamPath": "skills/writing-plans/SKILL.md",
       "sha256": "272e1af349f5062c28dc282b3e21b220d58d683a7314a10c455b7432ec91d845",
-      "localSha256": "548cbb180cc4a5456be28ba984d909191feba59b979db9680db56c8b11a8e40b",
+      "localSha256": "716d22f36855a155172b762a7a9a214655537b2e4b4c4a1588ca37ccc2c410b8",
       "dependencies": [],
       "changeNotice": "Adapted for cross-host Agent Skills distribution; adds slice grouping, risk tags, and oracle selection guidance, routing multi-task plans to plan-implement.",
       "patchPath": "manifests/patches/writing-plans.patch",
