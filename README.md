@@ -110,13 +110,13 @@ See [workflow guide](docs/workflow.md) for routing detail.
 
 For ordered work, `Test-Driven Development` checks plan fidelity, requirement coverage, and implementation correctness through failing tests, implementation, and passing tests, backed by deterministic L1–L3 checks (typecheck, static analysis, and behavioral, contract, property, or real-runtime tests). Findings return through the TDD fix cycle before acceptance, then independent evidence informs host-native code review.
 
-The [process rules](plugins/agentic-engineering-skills/skills/development-process/SKILL.md) fix the order of the PR phase: a fast local check, one independent host-native review of the whole diff with `simplify` and Knip in parallel, fixes in one commit, and the full gates once on the frozen head. They are guidance the agent follows under the receiving project's rules; no hook enforces them.
+The [process rules](plugins/agentic-engineering-skills/skills/development-process/SKILL.md) fix the order of the PR phase: a draft PR, fast checks on the diff and their fixes, one `simplify` pass (and Knip), only then one independent host-native review of the whole diff, fixes in one commit, a delta review, `gh pr ready`, and the full gates once on the final head. They are guidance the agent follows under the receiving project's rules; no hook enforces them.
 
 ## Hooks I use
 
 The plugin registers one PR-gate launcher and one fast read-only edit-lint hook as `PostToolUse` hooks. Invoke `Caveman` explicitly when you want compact communication.
 
-After a shell command opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), a `PostToolUse` hook starts the repository's own `npm run gates:pr` in the background, if the root `package.json` defines that script, and tells the agent where the log is. It never blocks, verifies or reminds; without the script it does nothing. The repository decides what its gates are.
+After a shell command opens a draft pull request (`gh pr create --draft`), a `PostToolUse` hook starts the repository's own `npm run gates:lint` in the background. After one opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), it starts `npm run gates:lint` and then `npm run gates:pr`. Each script runs only if the root `package.json` defines it, and the hook tells the agent where the log is. It never blocks, verifies or reminds; without the scripts it does nothing. The repository decides what its gates are.
 
 After an edit tool modifies JS/TS files (`Edit`, `Write`, `MultiEdit`, `apply_patch`), a second `PostToolUse` hook (`edit-lint.mjs`) runs the repository's local Oxlint in fast syntactic read-only mode on only the edited files when `.oxlintrc.json` and local `oxlint` are present, returning only blocking errors and staying silent otherwise. Shared presets live in [`standards/static-analysis/`](standards/static-analysis/README.md).
 

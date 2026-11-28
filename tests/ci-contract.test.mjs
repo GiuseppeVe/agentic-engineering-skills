@@ -16,6 +16,10 @@ test("CI has exact triggers, permissions, runner, and timeout", async () => {
   assert.deepEqual(Object.keys(workflow.jobs), ["verify"]);
   assert.equal(workflow.jobs.verify["runs-on"], "ubuntu-latest");
   assert.equal(workflow.jobs.verify["timeout-minutes"], 15);
+  // One full run per final head: no push run beside the PR run, no run on a draft.
+  assert.deepEqual(workflow.on.push, { branches: ["main"] });
+  assert.deepEqual(workflow.on.pull_request.types, ["opened", "synchronize", "reopened", "ready_for_review"]);
+  assert.equal(workflow.jobs.verify.if, "github.event.pull_request.draft != true");
 });
 
 test("CI setup and executable gates are unique and ordered", async () => {

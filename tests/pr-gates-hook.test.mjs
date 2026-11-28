@@ -39,16 +39,25 @@ test('flag values are never read as flags', () => {
   assert.equal(action('gh pr create --title "run gh pr create --draft; then gh pr ready --undo"'), 'create');
 });
 
-test('draft, web, dry-run and help variants do nothing', () => {
+test('a draft gh pr create is detected as a draft', () => {
   for (const command of [
     'gh pr create --draft',
     'gh pr create -d',
     'gh pr create --fill -d',
     'gh pr create -fd',
     'gh pr create -df',
+    'gh pr create -dB main --fill',
     'gh pr create --draft=true',
     'gh pr create --title x --draft --body y',
     'gh -R acme/widgets pr create --draft',
+  ]) assert.equal(action(command), 'draft', command);
+  assert.equal(action('gh pr create --draft=maybe'), null);
+  assert.equal(action('gh pr ready -d'), null);
+});
+
+test('web, dry-run, help and undo variants do nothing', () => {
+  for (const command of [
+    'gh pr create --draft --web',
     'gh pr create --web',
     'gh pr create -w',
     'gh pr create --dry-run',
@@ -76,7 +85,13 @@ test('chained commands are read one by one', () => {
   assert.equal(action('git push\ngh pr create --fill\n'), 'create');
   assert.equal(action('gh pr create --draft --fill && gh pr ready'), 'ready');
   assert.equal(action('gh pr view 12 && gh pr checks 12'), null);
-  assert.equal(action('gh pr create --draft --fill; gh pr view'), null);
+  assert.equal(action('gh pr create --draft --fill; gh pr view'), 'draft');
+  // gh takes the last value of a repeated --draft.
+  assert.equal(action('gh pr create --draft --draft=false --fill'), 'create');
+  assert.equal(action('gh pr create -d --draft=false --fill'), 'create');
+  assert.equal(action('gh pr create --draft=false --draft --fill'), 'draft');
+  // An unreadable cd after a draft leaves the rest in doubt: nothing is launched.
+  assert.equal(findPullRequestCommand('gh pr create --draft --fill && cd "$X" && gh pr ready'), null);
   assert.deepEqual(findPullRequestCommand('cd ../other && gh pr create --fill'), { action: 'create', ref: null, directory: '../other' });
   assert.equal(findPullRequestCommand('cd /srv/work && cd repo && gh pr ready 3').directory, '/srv/work/repo');
   assert.equal(action('cd "$WORKTREE" && gh pr create --fill'), null, 'an unknown directory means an unknown repository');
@@ -91,7 +106,7 @@ test('bodies with substitutions and heredocs do not hide or fake the command', (
     ')"',
   ].join('\n');
   assert.equal(action(heredocBody), 'create');
-  assert.equal(action(`${heredocBody} --draft`), null);
+  assert.equal(action(`${heredocBody} --draft`), 'draft');
   const stdinBody = ['gh pr create --title x --body-file - <<EOF', 'text; gh pr ready --undo', 'EOF', 'echo done'].join('\n');
   assert.equal(action(stdinBody), 'create');
   assert.equal(action(['cat > notes.md <<EOF', 'gh pr create --fill', 'EOF'].join('\n')), null);
@@ -129,7 +144,7 @@ test('PowerShell quoting and separators are understood', () => {
   assert.equal(action('gh pr create --title "Add `"gates`"" --body $body', powershell), 'create');
   assert.equal(action("git push; gh pr create --title 'It''s ready' --fill", powershell), 'create');
   assert.equal(action('gh pr create --title x --body @"\nline one; gh pr create --draft\n"@', powershell), 'create');
-  assert.equal(action("gh pr create --title x --body @'\ntext\n'@ --draft", powershell), null);
+  assert.equal(action("gh pr create --title x --body @'\ntext\n'@ --draft", powershell), 'draft');
   assert.equal(action('gh pr ready 12', powershell), 'ready');
   assert.equal(action('Write-Output "gh pr create"', powershell), null);
   assert.equal(findPullRequestCommand('Set-Location ..\\other; gh pr create --fill', powershell).directory, '..\\other');
@@ -163,7 +178,7 @@ test('the hook input of both hosts is read, and failed commands are ignored', ()
   assert.equal(pullRequestEvent({ ...claude, tool_response: { stdout: pullUrl, interrupted: true } }), null);
   assert.equal(pullRequestEvent({ ...claude, tool_response: JSON.stringify({ output: 'failed', metadata: { exit_code: 1 } }) }), null);
   assert.equal(pullRequestEvent({ ...claude, is_error: true }), null);
-  assert.equal(pullRequestEvent({ ...claude, tool_input: { command: 'gh pr create --draft' } }), null);
+  assert.equal(pullRequestEvent({ ...claude, tool_input: { command: 'gh pr create --draft' } }).action, 'draft');
   assert.equal(pullRequestEvent({ ...claude, tool_input: {} }), null);
   assert.equal(pullRequestEvent(null), null);
 });
@@ -282,6 +297,67 @@ test('the hook launches gates:pr without --pr when the pull request is unknown',
     assert.equal(result.status, 0, result.stderr);
     assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /in the background from /);
     assert.ok(await waitFor(marker), 'the detached gates:pr run never wrote its marker');
+    assert.deepEqual(JSON.parse(readFileSync(marker, 'utf8')), []);
+  } finally { remove(base); }
+});
+
+test('the hook runs gates:lint before gates:pr, and a red lint does not skip the gates', async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:pr': 'node gate.mjs pr', 'gates:lint': 'node gate.mjs lint' });
+  const done = path.join(repository, 'pr.json');
+  writeFileSync(path.join(repository, 'gate.mjs'), [
+    "import { appendFileSync, writeFileSync } from 'node:fs';",
+    "const [role, ...rest] = process.argv.slice(2);",
+    "appendFileSync('order.txt', role + '\\n');",
+    "writeFileSync(role + '.json', JSON.stringify(rest));",
+    "if (role === 'lint') { console.log('lint error line'); process.exit(1); }",
+  ].join('\n'));
+  try {
+    const input = { tool_name: 'Bash', cwd: repository, tool_input: { command: 'gh pr create --fill' }, tool_response: { stdout: `${pullUrl}\n` } };
+    const result = runHook(input, home);
+    assert.equal(result.status, 0, result.stderr);
+    const context = JSON.parse(result.stdout).hookSpecificOutput.additionalContext;
+    assert.match(context, /^\[pr-gates\] Launched `npm run gates:lint`, then `npm run gates:pr` in the background for PR https:/);
+    assert.ok(await waitFor(done), 'the gates:pr run never started after a red lint');
+    assert.equal(readFileSync(path.join(repository, 'order.txt'), 'utf8'), 'lint\npr\n');
+    assert.deepEqual(JSON.parse(readFileSync(path.join(repository, 'lint.json'), 'utf8')), []);
+    assert.deepEqual(JSON.parse(readFileSync(done, 'utf8')), ['--pr', pullUrl]);
+    const [log] = readdirSync(path.join(home, '.agentic', 'pr-gates'));
+    const deadline = Date.now() + 30_000;
+    let text = '';
+    while (Date.now() < deadline && !/npm run gates:pr exited with/.test(text)) {
+      text = readFileSync(path.join(home, '.agentic', 'pr-gates', log), 'utf8');
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    assert.match(text, /lint error line/);
+    assert.match(text, /npm run gates:lint exited with 1/);
+    assert.match(text, /npm run gates:pr exited with 0/);
+  } finally { remove(base); }
+});
+
+test('a draft PR gets gates:lint only; the gates wait for gh pr ready', async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:pr': 'node gate.mjs pr', 'gates:lint': 'node gate.mjs lint' });
+  writeFileSync(path.join(repository, 'gate.mjs'), "import { writeFileSync } from 'node:fs';\nwriteFileSync(process.argv[2] + '.json', JSON.stringify(process.argv.slice(3)));\n");
+  try {
+    const result = runHook({ tool_name: 'Bash', cwd: repository, tool_input: { command: 'gh pr create --draft --fill' }, tool_response: { stdout: `${pullUrl}\n` } }, home);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /^\[pr-gates\] Launched `npm run gates:lint` in the background for PR https:/);
+    assert.ok(await waitFor(path.join(repository, 'lint.json')), 'the draft never got its lint run');
+    const [log] = readdirSync(path.join(home, '.agentic', 'pr-gates'));
+    const deadline = Date.now() + 30_000;
+    while (Date.now() < deadline && !/gates:lint exited with/.test(readFileSync(path.join(home, '.agentic', 'pr-gates', log), 'utf8'))) await new Promise(resolve => setTimeout(resolve, 100));
+    assert.ok(!existsSync(path.join(repository, 'pr.json')), 'a draft must not start gates:pr');
+  } finally { remove(base); }
+});
+
+test('a repository with only gates:lint gets the lint run', async () => {
+  const { base, repository, home } = temporaryRepository({ 'gates:lint': 'node lint.mjs' });
+  const marker = path.join(repository, 'marker.json');
+  writeFileSync(path.join(repository, 'lint.mjs'), "import { writeFileSync } from 'node:fs';\nwriteFileSync('marker.json', JSON.stringify(process.argv.slice(2)));\n");
+  try {
+    const result = runHook({ tool_name: 'Bash', cwd: repository, tool_input: { command: 'gh pr ready 12' }, tool_response: { stdout: '' } }, home);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, /^\[pr-gates\] Launched `npm run gates:lint` in the background for PR 12 /);
+    assert.ok(await waitFor(marker), 'the detached gates:lint run never wrote its marker');
     assert.deepEqual(JSON.parse(readFileSync(marker, 'utf8')), []);
   } finally { remove(base); }
 });
