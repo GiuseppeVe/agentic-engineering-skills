@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// PostToolUse hook: after a shell command opened a non-draft pull request or
-// marked one ready, start the repository's own `gates:lint` and `gates:pr`
-// scripts (each only if defined, lint first) in the background. It launches
+// PostToolUse hook: after a shell command opened a draft pull request, start
+// the repository's own `gates:lint` script in the background; after one opened
+// a non-draft pull request or marked one ready, start `gates:lint` and then
+// `gates:pr` (each only if defined). It launches
 // and reports where the log is; it never blocks, verifies or reminds. Any
 // doubt about the command means: do nothing.
 import { spawn, spawnSync } from 'node:child_process';
@@ -209,8 +210,9 @@ function skipHeredocBody(source, start, { delimiter, stripTabs }) {
   return null;
 }
 
-// Classify one simple command. Returns { action: 'create' | 'ready', ref }
-// for a command that takes a pull request out of draft, otherwise null.
+// Classify one simple command. Returns { action: 'create' | 'draft' | 'ready', ref }
+// for a command that opens a pull request (as draft or not) or takes one out
+// of draft, otherwise null.
 export function classifyGhCommand(words) {
   if (!Array.isArray(words)) return null;
   let index = 0;
@@ -226,6 +228,7 @@ export function classifyGhCommand(words) {
 
   const { long, short } = VALUE_FLAGS[action];
   const positionals = [];
+  let draft = false;
   for (; index < words.length; index++) {
     const arg = words[index];
     if (/^\d*[<>]/.test(arg)) { if (/^\d*[<>]+&?$/.test(arg)) index++; continue; }
@@ -235,7 +238,9 @@ export function classifyGhCommand(words) {
       if (name.includes(DYNAMIC)) return null;
       if (NO_PR_FLAGS.includes(name)) return null;
       if (name === '--draft') {
-        if (action !== 'create' || value !== 'false') return null;
+        if (action !== 'create') return null;
+        if (value === undefined || value === 'true') draft = true;
+        else if (value !== 'false') return null;
         continue;
       }
       if (value === undefined && long.includes(name.slice(2))) index++;
@@ -244,7 +249,12 @@ export function classifyGhCommand(words) {
     if (arg.startsWith('-') && arg.length > 1) {
       for (let position = 1; position < arg.length; position++) {
         const flag = arg[position];
-        if (flag === DYNAMIC || flag === 'd' || flag === 'w' || flag === 'h') return null;
+        if (flag === DYNAMIC || flag === 'w' || flag === 'h') return null;
+        if (flag === 'd') {
+          if (action !== 'create') return null;
+          draft = true;
+          continue;
+        }
         if (short.includes(flag)) {
           if (position === arg.length - 1) index++;
           break;
@@ -255,7 +265,7 @@ export function classifyGhCommand(words) {
     if (arg.includes(DYNAMIC)) return null;
     positionals.push(arg);
   }
-  if (action === 'create') return positionals.length ? null : { action, ref: null };
+  if (action === 'create') return positionals.length ? null : { action: draft ? 'draft' : 'create', ref: null };
   if (positionals.length > 1) return null;
   return { action, ref: pullReference(positionals[0]) };
 }
@@ -283,22 +293,25 @@ function pullReference(value) {
 }
 
 // Find the first command of a shell text that takes a pull request out of
-// draft. `directory` is the literal target of a `cd` that precedes it.
+// draft, or else the first that opens a draft. `directory` is the literal target of a `cd` that precedes it.
 export function findPullRequestCommand(command, options) {
   const commands = splitCommands(command, options);
   if (!commands) return null;
   let directory = null;
+  let draft = null;
   for (const words of commands) {
     if (/^(?:cd|pushd|Set-Location|sl)$/i.test(words[0])) {
       const target = words.length === 2 && !words[1].includes(DYNAMIC) && !words[1].startsWith('-') ? words[1] : null;
-      if (!target) return null;
+      if (!target) return draft;
       directory = directory && !isAbsolute(target) ? `${directory}/${target}` : target;
       continue;
     }
     const found = classifyGhCommand(words);
-    if (found) return { ...found, directory };
+    // A draft opened and then marked ready in one text gets the full gates.
+    if (found?.action === 'draft') draft ??= { ...found, directory };
+    else if (found) return { ...found, directory };
   }
-  return null;
+  return draft;
 }
 
 function isAbsolute(target) {
@@ -349,7 +362,7 @@ export function pullRequestEvent(input) {
   const output = responseText(input.tool_response);
   const url = PULL_URL.exec(output)?.[0] ?? null;
   // gh prints the pull request URL when it creates one: printed text without it means nothing was opened.
-  if (found.action === 'create' && !url && printedText(input.tool_response).trim()) return null;
+  if (found.action !== 'ready' && !url && printedText(input.tool_response).trim()) return null;
   const ref = found.ref ?? url ?? (found.action === 'ready' ? /[\w.-]+\/[\w.-]+#(\d{1,9})\b/.exec(output)?.[1] ?? null : null);
   return { action: found.action, ref, cwd: effectiveCwd(input, found.directory) };
 }
@@ -466,7 +479,9 @@ export function run(text, options) {
   if (!event) return null;
   const root = findGitRoot(event.cwd);
   if (!root) return null;
-  const scripts = gateScripts(root);
+  // A draft gets the fast lint only (PR phase step 3); the full gates wait for
+  // `gh pr ready`, on the head that review closed (step 5).
+  const scripts = gateScripts(root).filter(name => event.action !== 'draft' || name === LINT_SCRIPT);
   if (!scripts.length) return null;
   const { log, ref } = launchGates(root, event.ref, { ...options, scripts });
   const launched = scripts.map(name => `\`npm run ${name}\``).join(', then ');

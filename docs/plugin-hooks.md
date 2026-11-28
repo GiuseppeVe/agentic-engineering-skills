@@ -4,14 +4,14 @@ The plugin bundles one PR-gate launcher (ratchet lint and full gates) and one fa
 
 Invoke `Caveman` explicitly on either host. The plugin retired its startup hooks in v1.6.0.
 
-## PR lint and gates launched when a pull request leaves draft
+## PR lint on a draft, lint and gates when a pull request leaves draft
 
-The plugin registers a `PostToolUse` hook matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` without `--draft`, or a `gh pr ready` without `--undo`. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
+The plugin registers a `PostToolUse` hook matched on the shell tools (`Bash|PowerShell`). It acts only when the command that just ran was a successful `gh pr create` — as a draft, or `gh pr create` without `--draft` — or a `gh pr ready` without `--undo`. A draft gets only the lint, the fast check of PR phase step 2; the gates wait for `gh pr ready <number>` on the head that review closed (step 6). When one text opens a draft and then marks it ready, the ready wins. Chained commands, quoted bodies, heredocs and a repository flag before the subcommand are read; whenever the command cannot be read with confidence, the hook does nothing.
 
 What it does:
 
 1. It finds the Git root above the working directory of the command.
-2. It reads two optional scripts from the root `package.json`: `gates:lint` and `gates:pr`. In one detached process it runs `npm run gates:lint` first, then `npm run gates:pr -- --pr <number or URL>`, each only if defined. The lint script takes no arguments: it lints the files the branch changed against its base, the way the repository's CI does. The `--pr` argument is passed to `gates:pr` when the pull request is known from the command or its output and omitted otherwise. A red lint does not skip the gates: each script runs and gets its own `exited with` line in the log.
+2. It reads two optional scripts from the root `package.json`: `gates:lint` and `gates:pr`. For a draft it runs only `npm run gates:lint`. For a non-draft PR or `gh pr ready`, in one detached process it runs `npm run gates:lint` first, then `npm run gates:pr -- --pr <number or URL>`, each only if defined. The lint script takes no arguments: it lints the files the branch changed against its base, the way the repository's CI does. The `--pr` argument is passed to `gates:pr` when the pull request is known from the command or its output and omitted otherwise. A red lint does not skip the gates: each script runs and gets its own `exited with` line in the log.
 3. It returns one line of additional context that tells the agent which scripts were launched and where the log is. The output of the detached run goes to `~/.agentic/pr-gates/<repository>-<timestamp>-<pid>.log`.
 
 Without a `gates:lint` or `gates:pr` script it prints nothing and writes nothing. The hook never blocks the tool call, always exits 0, and does not wait for the gates. It never verifies their outcome, repeats a reminder or writes a marker: the launch is not a result. What the gates are, where they run and whether they have anything to do for a given pull request is decided by the repository's script, not by the plugin. The reason for the hook is recorded in [decision record 0005](adr/0005-hook-che-lancia-i-gate-della-pr.md).

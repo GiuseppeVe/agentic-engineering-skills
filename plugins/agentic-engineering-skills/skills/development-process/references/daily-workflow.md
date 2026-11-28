@@ -38,19 +38,19 @@ Anti-green-washing rules:
 
 Order on every PR (single PR, plan into `pkg/*`, or package into `main`):
 
-1. **Open draft PR** from the working branch. Include in the PR body: `ADR impact: none | NNNN | new`, `Plan: none | <id>` (for PRs targeting `pkg/*`), and `Docs: none | <spec, plan, and ADR paths>`. Reviewers and fixers read document paths from the PR body instead of repeating them in briefs.
-2. **Fast local verification:** run the repository's L1/L2 checks and affected L3 tests on the touched files.
-3. **Independent review of the full diff** in a fresh read-only context using the host's native code-review capability (started right after push without waiting for approval), in parallel with `simplify` (and `cleaning-repo-with-knip` when warranted) on the diff. One independent review per SHA. Focus review on contracts, states, concurrency, auth/privacy, test-oracle integrity, and L2 gaps — do not duplicate what L1/L2 already enforce. Output P0–P3 findings with `file:line` and failure scenario.
-4. **Fixes in one commit.** Evaluate each finding against code, contract, and evidence: confirm and fix if valid, or reject with reasoning. One thread fixes, reruns relevant checks, and makes one push.
-5. **Full gates once on the frozen head.** When the PR leaves draft, the plugin hook launches the repository's `gates:lint` script (ratchet lint on the PR diff) and then its `gates:pr` script, each if defined; where the hook does not run, invoke the repository's gate command explicitly. Launching is not an outcome: wait for and react to every final result, including red or timed-out runs. Proof is the commit status on the hosting platform, backed by the result file when produced.
-6. **Delta-only review** (in parallel with gates) if step 4 changed code, configuration, or tests.
-7. **Mark ready** once review is closed: this triggers step 5's gates. Green gate statuses on the frozen head are the merge condition. A hosted CI check that is red solely due to billing is not a blocker when the repository's fallback gate statuses are green.
+1. **Open draft PR** with `gh pr create --draft` in a shell tool, from the working branch toward the authorized target branch. Include in the PR body: `ADR impact: none | NNNN | new`, `Plan: none | <id>` (for PRs targeting `pkg/*`), and `Docs: none | <spec, plan, and ADR paths>`. Reviewers and fixers read document paths from the PR body instead of repeating them in briefs. The plugin hook then launches the repository's `gates:lint` script, if defined, on the PR diff.
+2. **Fast checks on the integrated diff:** lint (the `gates:lint` outcome, or the repository's lint command where the hook does not run), the repository's L1/L2 quick checks, and the L3 tests relevant to the touched files.
+3. **Independent review of the full diff** in a fresh read-only context using the host's native code-review capability (started right after push without waiting for approval), in parallel with one `simplify` pass (and `cleaning-repo-with-knip` when warranted) on the diff. One independent review per SHA. Focus review on contracts, states, concurrency, auth/privacy, test-oracle integrity, and L2 gaps — do not duplicate what L1/L2 already enforce. Output P0–P3 findings with `file:line` and failure scenario.
+4. **Fixes in one commit.** Evaluate each finding against code, contract, and evidence: fix the confirmed P0–P2 findings, or reject them with reasoning. For a red test, compare the expectation with the requirement, reproduce it on the base revision to establish a pre-existing defect, and rerun it on the same commit to establish flakiness. One thread fixes, reruns the affected checks, and makes one push.
+5. **Delta-only review** if step 4 changed code, configuration, or tests: the second review covers only the changes.
+6. **Gates on the final commit.** Once review is closed, run `gh pr ready <number>` as a standalone shell command with the actual PR number. The plugin hook then launches the repository's `gates:lint` and `gates:pr` scripts, each if defined; where the hook does not run, invoke the repository's gate command explicitly. Launching is not an outcome: verify the result on that head SHA, from GitHub Actions or from the repository's configured fallback, and react to every final result, including red or timed-out runs. If an outcome is missing, check the jobs still running before starting a missing gate. Proof is the commit status on the hosting platform, backed by the result file when produced.
+7. **Merge condition:** dependencies satisfied, review closed, and the required gates green on the final head. A hosted CI check that is red solely due to billing is not a blocker when the repository's fallback gate statuses are green. Merging into `main` still needs the owner's authorization for that PR; verify the merge on the target.
 
 Limits:
 
 - After two fix rounds without convergence, stop and deliver `partial` with the open conflicts.
 - A non-normative docs-only PR (touching no path read by test suites or CI guards) passes with documentation guards and agent verification: no full suites, no independent review.
-- Every new head requires fresh step-5 gates.
+- Every new head requires fresh step-6 gates: if the head changes, verify the required gates on the new head.
 
 ## Closing Report
 

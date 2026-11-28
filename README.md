@@ -116,7 +116,7 @@ The [process rules](plugins/agentic-engineering-skills/skills/development-proces
 
 The plugin registers one PR-gate launcher and one fast read-only edit-lint hook as `PostToolUse` hooks. Invoke `Caveman` explicitly when you want compact communication.
 
-After a shell command opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), a `PostToolUse` hook starts the repository's own `npm run gates:pr` in the background, if the root `package.json` defines that script, and tells the agent where the log is. It never blocks, verifies or reminds; without the script it does nothing. The repository decides what its gates are.
+After a shell command opens a draft pull request (`gh pr create --draft`), a `PostToolUse` hook starts the repository's own `npm run gates:lint` in the background. After one opens a non-draft pull request or marks one ready (`gh pr create` without `--draft`, or `gh pr ready`), it starts `npm run gates:lint` and then `npm run gates:pr`. Each script runs only if the root `package.json` defines it, and the hook tells the agent where the log is. It never blocks, verifies or reminds; without the scripts it does nothing. The repository decides what its gates are.
 
 After an edit tool modifies JS/TS files (`Edit`, `Write`, `MultiEdit`, `apply_patch`), a second `PostToolUse` hook (`edit-lint.mjs`) runs the repository's local Oxlint in fast syntactic read-only mode on only the edited files when `.oxlintrc.json` and local `oxlint` are present, returning only blocking errors and staying silent otherwise. Shared presets live in [`standards/static-analysis/`](standards/static-analysis/README.md).
 
