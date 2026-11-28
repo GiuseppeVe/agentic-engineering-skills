@@ -66,7 +66,7 @@ For new behavior and bug fixes, `test-driven-development` requires an observed b
 
 `plan-implement` dispatches clean-room native review checkpoints on `risk: high` slices and runs the full-diff PR review once on the integrated head. `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session, including promoting recurring review findings into deterministic L1–L3 checks.
 
-The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, in parallel with the independent native review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
+The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, after the fast checks and before the independent native review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
 
 ## Clean
 
