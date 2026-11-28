@@ -6,12 +6,12 @@ Applies when behavior depends on state or on the order of events, so that what h
 
 1. Derive the model from the conversation, in product terms. Existing code shows current behavior, not agreed behavior. Include every transition that changes the outcome for the user, with errors, cancellations, and retries where pertinent.
 2. Keep it next to the spec in `<spec-name>.model/`: the TLA+ module, its config, the view module, and the generated `chart.mmd`. Write the spec first if none exists.
-3. Draw it with `/statechart`. Its automatic invocation is off: read [the statechart skill](../../statechart/SKILL.md) and follow it; this procedure is the explicit request. Run it on a copy in a scratch folder, then bring the sources and `chart.mmd` back. If it cannot run, report the error and keep the behavior unapproved; never hand-draw a substitute.
+3. Draw it with `/statechart`. Its automatic invocation is off: read [the statechart skill](../../statechart/SKILL.md) and follow it; this procedure is the explicit request. Run it on a copy in a scratch folder, then bring the sources and `chart.mmd` back. If it cannot run, report the error and keep the behavior unapproved; never hand-draw a substitute. Every transition that changes the outcome is a visible labelled arrow: split labels instead of hiding it, even past the skill's arrow budget.
 4. Record in the spec the assumptions and what the model leaves out. A choice the conversation did not settle goes to Open Questions, even when the model needs a provisional value for it.
 
 ## Approval
 
-Show the owner the diagram, the assumptions, and each open choice, and ask them to approve the behavior. Writing the plan waits for that approval. Record in the spec who approved, when, and which `chart.mmd`.
+Show the owner the diagram, the assumptions, and each open choice, and ask them to approve the behavior. Choices that change a transition are settled before approval. Writing the plan waits for that approval. Record in the spec who approved, when, and the `git hash-object` of `chart.mmd`. The approval holds while that hash matches: after any model change, including one the owner asks for while approving, show the new diagram and record approval again.
 
 ## Plan
 
