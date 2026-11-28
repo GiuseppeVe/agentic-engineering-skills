@@ -6,7 +6,7 @@ Contract for a slice-implementer subagent dispatched by `plan-implement`. It rep
 
 - Start from the slice's expected outcome, task instructions, mapped `REQ-NNN` entries, allowed files, and referenced plan/spec sections. Read only the repository context needed for those decisions.
 - Work directly inside the assigned slice without spawning nested sub-packet agents unless explicitly authorized by `plan-implement`.
-- Scope is binding. If implementing a task requires editing an excluded file, changing a non-owned shared interface, or resolving a contradiction in scope, contracts, or acceptance criteria, pause that step and return `blocked` with the exact gap. Never silently expand scope.
+- Scope is binding. If implementing a task requires editing an excluded file, changing a non-owned shared interface, or resolving a contradiction in scope, contracts, or acceptance criteria, pause that step and return `blocked` with the exact gap. Never silently expand scope. The same applies when a [behavior model](../../development-process/references/behavior-model.md) is given and the task needs a change to modelled behavior or reaches an event the model does not cover: return `blocked`, never record it as an assumption.
 - Never infer permission to commit, push, open a PR, merge, deploy, or change global settings from a slice assignment. Leave verified changes uncommitted for `plan-implement` to verify and commit.
 
 ## Inner loop and verification

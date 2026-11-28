@@ -1,5 +1,5 @@
 diff --git a/brainstorming/SKILL.md b/brainstorming/SKILL.md
-index b0d52b2..e0b0deb 100644
+index b0d52b2..bf89c18 100644
 --- a/brainstorming/SKILL.md
 +++ b/brainstorming/SKILL.md
 @@ -3 +3 @@
@@ -29,9 +29,12 @@ index b0d52b2..e0b0deb 100644
 -## Anti-Pattern: "This Is Too Simple To Need A Design"
 +When a mockup or diagram would help resolve a decision, offer the
 +[visual companion](visual-companion.md) and use it with the user's agreement.
-@@ -18,142 +23,5 @@
+@@ -18 +23,3 @@
 -Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
--
++When behavior depends on state or on the order of events, follow the
++[behavior model](../development-process/references/behavior-model.md)
++before any plan: the owner approves the diagrammed behavior.
+@@ -20,140 +27,5 @@
 -## Checklist
 -
 -You MUST create a task for each of these items and complete them in order:

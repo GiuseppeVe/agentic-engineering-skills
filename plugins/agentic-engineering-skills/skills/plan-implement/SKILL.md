@@ -11,7 +11,7 @@ The main thread coordinates an approved implementation plan from its specificati
 
 1. Follow `## Slice N:` boundaries declared in the plan when present; otherwise group contiguous tasks touching the same module or area into one coherent slice. Keep slices disjoint in file ownership and shared-contract surfaces before running them in parallel in isolated worktrees.
 2. Assign **one persistent slice-implementer subagent** per slice so context stays warm across contiguous tasks of that module. Do not add a nested sub-packet layer inside a slice.
-3. Open each slice brief with the slice's expected outcome, then pass the exact task instructions, plan and spec paths, mapped `REQ-NNN` requirements, allowed files, risk level (`standard` or `high`), and [slice contract](references/slice-contract.md). Resolve any source disagreement on behavior or acceptance before dispatch.
+3. Open each slice brief with the slice's expected outcome, then pass the exact task instructions, plan and spec paths, mapped `REQ-NNN` requirements, allowed files, risk level (`standard` or `high`), and [slice contract](references/slice-contract.md). Resolve any source disagreement on behavior or acceptance before dispatch. When a [behavior model](../development-process/references/behavior-model.md) exists, pass its path too; a change or gap in modelled behavior goes to the owner under its `Behavior changes` section, never into a recorded assumption.
 4. Select role-appropriate models and reasoning effort only from options available in the host, plan, or operator workspace configuration; keep high-risk or architecture-sensitive slices on a high-reasoning profile and record effective routing.
 
 ## Verification, checkpoints, and commits

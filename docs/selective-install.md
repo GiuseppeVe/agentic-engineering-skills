@@ -44,6 +44,8 @@ The lock records unconditional skill dependencies only. For these branches, also
 - `improve-codebase-architecture`: install `grilling` when a candidate is selected; install `domain-modeling` when no terminology source exists or decisions crystallise.
 - `plan-implement`: optionally install `simplify` and `cleaning-repo-with-knip` for the plan-level PR phase (`development-process` and `test-driven-development` are already lock-declared dependencies). This also applies when invoked through `coordinating-implementation-plans`.
 - `create-formal-verification-skill`: install `statechart` when the generated project-local check uses TLA+ and TLC.
+- `brainstorming`, `grilling`, `to-spec`, `writing-plans`: install `development-process` and `statechart` when behavior depends on state or on the order of events.
+- `development-process`: install `statechart` for the same behavior model.
 
 ## Additional installation notes
 

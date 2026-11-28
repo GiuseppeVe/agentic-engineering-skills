@@ -48,6 +48,8 @@ Before adopting Graphify, weigh its indexing and upkeep costs against the time a
 
 `domain-modeling` sharpens vocabulary and boundaries. `codebase-design` deepens module interfaces. `improve-codebase-architecture` finds structural opportunities. `archify` creates checked diagrams and explainers from requirements or repository evidence. Invoke `impeccable` for frontend visual, interaction, accessibility, and design-system decisions. Invoke `marketing-screenshots` to capture real product UI for inspectable marketing assets. `writing-for-agents` shapes skills, agent instructions, and referenced documents.
 
+Start a small or simple design with `brainstorming`, and a structured or complex feature or component with `grilling`. When behavior depends on state or on the order of events, design also produces a [behavior model](../plugins/agentic-engineering-skills/skills/development-process/references/behavior-model.md): a `statechart` diagram that the owner approves before planning.
+
 ## Plan
 
 `wayfinder` maps work larger than one session. `to-spec` captures agreed behavior. `handoff` saves a compact continuation document when work moves between agents. `writing-plans` turns requirements into testable implementation tasks with risk tags and optional slice boundaries, offering `plan-implement` for dependency-aware multi-task execution. `setup-goal` turns an agreed outcome into a runbook and activates the host-native Goal only after approval.
@@ -64,7 +66,7 @@ For new behavior and bug fixes, `test-driven-development` requires an observed b
 
 `plan-implement` dispatches clean-room native review checkpoints on `risk: high` slices and runs the full-diff PR review once on the integrated head. `grilling` can challenge consequential design decisions before publication. `retro` guides a retrospective after a coding session, including promoting recurring review findings into deterministic L1–L3 checks.
 
-The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, in parallel with the independent native review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
+The PR phase in `development-process` runs `simplify` on the PR diff for behavior-preserving cleanup, after the fast checks and before the independent native review. It checks quality concerns such as reuse, efficiency, and abstraction level; it does not replace correctness review.
 
 ## Clean
 

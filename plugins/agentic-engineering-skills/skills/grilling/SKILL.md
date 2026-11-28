@@ -34,3 +34,5 @@ When using subagents, start each with a fresh context window. Provide the object
 Find environmental facts yourself: use a sub-agent where the host supports one rather than asking the user for anything you can look up. A running exploration is an unsettled prerequisite: defer only its downstream questions and ask the rest of the frontier now. User owns decisions; put each decision to them and wait.
 
 Finish when the frontier is empty, every branch visited, and no assumptions remain silent. Do not act on the result until the user confirms shared understanding.
+
+When the design under discussion has behavior that depends on state or on the order of events, follow the [behavior model](../development-process/references/behavior-model.md) before any plan: the owner approves the diagrammed behavior.
