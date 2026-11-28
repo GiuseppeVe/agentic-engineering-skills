@@ -11,7 +11,7 @@ Applies when behavior depends on state or on the order of events, so that what h
 
 ## Approval
 
-Show the owner the diagram, the assumptions, and each open choice, and ask them to approve the behavior. Choices that change a transition are settled before approval. Writing the plan waits for that approval. Record in the spec who approved, when, and the `git hash-object` of `chart.mmd`. The approval holds while that hash matches: after any model change, including one the owner asks for while approving, show the new diagram and record approval again.
+Show the owner the diagram, the assumptions, and each open choice, and ask them to approve the behavior. Choices that change a transition are settled before approval. Writing the plan waits for that approval. Record in the spec who approved, when, and the `git hash-object` of `chart.mmd`. The approval holds while a chart regenerated from the current sources has that hash: after any model change, including one the owner asks for while approving, show the new diagram and record approval again.
 
 ## Plan
 
